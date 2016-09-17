@@ -40,3 +40,6 @@ D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\Clinic
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.formInicioSesion.resources
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Properties.Resources.resources
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.csproj.GenerateResource.Cache
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Main.resources
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\Clases.dll
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\Clases.pdb

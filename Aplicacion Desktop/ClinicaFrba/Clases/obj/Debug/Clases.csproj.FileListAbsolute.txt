@@ -1,0 +1,13 @@
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\obj\Debug\Clases.csprojResolveAssemblyReference.cache
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\bin\Debug\Clases.dll
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\bin\Debug\Clases.pdb
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\bin\Debug\mscorlib.dll
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\bin\Debug\es\mscorlib.resources.dll
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\bin\Debug\he\mscorlib.resources.dll
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\bin\Debug\normidna.nlp
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\bin\Debug\normnfc.nlp
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\bin\Debug\normnfd.nlp
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\bin\Debug\normnfkc.nlp
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\bin\Debug\normnfkd.nlp
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\obj\Debug\Clases.dll
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\obj\Debug\Clases.pdb
