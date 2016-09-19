@@ -42,6 +42,30 @@ create table esquema.afiliado (
 )
 go
 
+create trigger aumentar_cantidad_hijos on esquema.afiliado for insert
+as
+Begin
+	declare @afiliado_nro numeric(18,0)
+	select @afiliado_nro = afiliado_nro from inserted
+	set @afiliado_nro = ROUND(@afiliado_nro / 100, 0)
+
+	update esquema.afiliado set afiliado_cant_hijos = afiliado_cant_hijos + 1
+		where ROUND(afiliado_nro/100, 0) = @afiliado_nro
+End
+go
+
+create trigger reducir_cantidad_hijos on esquema.afiliado for delete
+as
+Begin
+	declare @afiliado_nro numeric(18,0)
+	select @afiliado_nro = afiliado_nro from deleted
+	set @afiliado_nro = ROUND(@afiliado_nro / 100, 0)
+
+	update esquema.afiliado set afiliado_cant_hijos = afiliado_cant_hijos - 1
+		where ROUND(afiliado_nro/100, 0) = @afiliado_nro
+End
+go
+
 insert into esquema.afiliado
 (afiliado_nombre, afiliado_apellido, afiliado_dni, afiliado_estado_civil, 
 afiliado_sexo, afiliado_fecha_nac, afiliado_telefono, afiliado_mail, afiliado_direccion, afiliado_cant_hijos, afiliado_cant_bonos_consulta, afiliado_plan)
