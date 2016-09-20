@@ -51,7 +51,6 @@ Begin
 
 	update esquema.afiliado set afiliado_cant_hijos = afiliado_cant_hijos + 1
 		where ROUND(afiliado_nro/100, 0) = @afiliado_nro
-		and afiliado_nro - 1 = ROUND(afiliado_nro/100, 0)*100		-- modifico solo para afiliados q terminan en 01
 End
 go
 
@@ -64,10 +63,8 @@ Begin
 
 	update esquema.afiliado set afiliado_cant_hijos = afiliado_cant_hijos - 1
 		where ROUND(afiliado_nro/100, 0) = @afiliado_nro
-		and afiliado_nro - 1 = ROUND(afiliado_nro/100, 0)*100		-- modifico solo para afiliados q terminan en 01
 End
 go
-
 
 insert into esquema.afiliado
 (afiliado_nombre, afiliado_apellido, afiliado_dni, afiliado_estado_civil, 
