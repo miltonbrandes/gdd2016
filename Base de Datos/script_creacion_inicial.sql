@@ -6,7 +6,7 @@ go
 
 /*		PLAN		*/
 
-create table esquema.plan_medico (
+create table plan_medico (
 	 plan_id numeric(18,0) primary key, 
 	 plan_descripcion varchar(255),
 	 plan_precio_bono_consulta numeric(18,0),
@@ -14,7 +14,7 @@ create table esquema.plan_medico (
 )
 go
 
-insert into esquema.plan_medico
+insert into plan_medico
 (plan_id, plan_descripcion, plan_precio_bono_consulta)
 select Plan_Med_Codigo, Plan_Med_Descripcion, Plan_Med_Precio_Bono_Consulta 
 	from gd_esquema.Maestra
@@ -24,7 +24,7 @@ go
 
 /*		AFILIADO		*/
 
-create table esquema.afiliado (
+create table afiliado (
 	 afiliado_nro numeric(18,0) identity(101,100) primary key, 
 	 afiliado_nombre varchar(255),
 	 afiliado_apellido varchar(255),
@@ -36,40 +36,40 @@ create table esquema.afiliado (
 	 afiliado_mail varchar(255),
 	 afiliado_direccion varchar(255),
 	 afiliado_cant_hijos numeric(2,0),
-	 afiliado_plan numeric(18,0) foreign key references esquema.plan_medico(plan_id),
+	 afiliado_plan numeric(18,0) foreign key references plan_medico(plan_id),
 	 afiliado_habilitado numeric(2,0),
 	 afiliado_cant_bonos_consulta numeric(18,0)
 )
 go
 
-create trigger aumentar_cantidad_hijos on esquema.afiliado for insert
+create trigger aumentar_cantidad_hijos on afiliado for insert
 as
 Begin
 	declare @afiliado_nro numeric(18,0)
 	select @afiliado_nro = afiliado_nro from inserted
 	set @afiliado_nro = ROUND(@afiliado_nro / 100, 0)
 
-	update esquema.afiliado set afiliado_cant_hijos = afiliado_cant_hijos + 1
+	update afiliado set afiliado_cant_hijos = afiliado_cant_hijos + 1
 		where ROUND(afiliado_nro/100, 0) = @afiliado_nro
 		and afiliado_nro - 1 = ROUND(afiliado_nro/100, 0)*100		-- modifico solo para afiliados q terminan en 01
 End
 go
 
-create trigger reducir_cantidad_hijos on esquema.afiliado for delete
+create trigger reducir_cantidad_hijos on afiliado for delete
 as
 Begin
 	declare @afiliado_nro numeric(18,0)
 	select @afiliado_nro = afiliado_nro from deleted
 	set @afiliado_nro = ROUND(@afiliado_nro / 100, 0)
 
-	update esquema.afiliado set afiliado_cant_hijos = afiliado_cant_hijos - 1
+	update afiliado set afiliado_cant_hijos = afiliado_cant_hijos - 1
 		where ROUND(afiliado_nro/100, 0) = @afiliado_nro
 		and afiliado_nro - 1 = ROUND(afiliado_nro/100, 0)*100		-- modifico solo para afiliados q terminan en 01
 End
 go
 
 
-insert into esquema.afiliado
+insert into afiliado
 (afiliado_nombre, afiliado_apellido, afiliado_dni, afiliado_estado_civil, 
 afiliado_sexo, afiliado_fecha_nac, afiliado_telefono, afiliado_mail, afiliado_direccion, afiliado_cant_hijos, afiliado_cant_bonos_consulta, afiliado_plan)
 select Paciente_Nombre, Paciente_Apellido, Paciente_Dni, 'N', 'N', Paciente_Fecha_Nac, Paciente_Telefono, Paciente_Mail, Paciente_Direccion, 0, 0, Plan_Med_Codigo 
@@ -79,10 +79,10 @@ go
 
 /*		BONOS		*/
 
-create table esquema.bono_consulta (
+create table bono_consulta (
 	 bono_id numeric(18,0) primary key, 
-	 bono_afiliado numeric(18,0) foreign key references esquema.afiliado(afiliado_nro),
-	 bono_plan numeric(18,0) foreign key references esquema.plan_medico(plan_id),
+	 bono_afiliado numeric(18,0) foreign key references afiliado(afiliado_nro),
+	 bono_plan numeric(18,0) foreign key references plan_medico(plan_id),
 	 -- bono_turno numeric(18,0) foreign key references turno(turno_id),
 	 bono_fecha_compra datetime,
 	 bono_utilizado character(1)
@@ -90,14 +90,14 @@ create table esquema.bono_consulta (
 go
 
 /*			Tarda 7 siglos	->	buscar mejor solucion o no guardar la cantidad de bonos
-create trigger aumentar_cantidad_bonos_afiliado on esquema.bono_consulta after insert
+create trigger aumentar_cantidad_bonos_afiliado on bono_consulta after insert
 as
 Begin
 	declare @bono_afiliado numeric(18,0)
 	if (select count(*) from inserted) = 1
 	Begin
 		select @bono_afiliado = bono_afiliado from inserted
-		update esquema.afiliado set afiliado_cant_bonos_consulta = afiliado_cant_bonos_consulta + 1
+		update afiliado set afiliado_cant_bonos_consulta = afiliado_cant_bonos_consulta + 1
 				where afiliado_nro = @bono_afiliado
 	End
 	if (select count(*) from inserted) > 1
@@ -107,7 +107,7 @@ Begin
 		fetch next from unCursor into @bono_afiliado
 		while @@FETCH_STATUS = 0
 		Begin
-			update esquema.afiliado set afiliado_cant_bonos_consulta = afiliado_cant_bonos_consulta + (select count(*) from inserted where bono_afiliado = @bono_afiliado)
+			update afiliado set afiliado_cant_bonos_consulta = afiliado_cant_bonos_consulta + (select count(*) from inserted where bono_afiliado = @bono_afiliado)
 			where afiliado_nro = @bono_afiliado
 		End
 		close unCursor
@@ -117,20 +117,20 @@ End
 go
 */
 
-insert into esquema.bono_consulta (bono_id, bono_afiliado, bono_plan, bono_fecha_compra)
+insert into bono_consulta (bono_id, bono_afiliado, bono_plan, bono_fecha_compra)
 select Bono_Consulta_Numero, afiliado_nro, Plan_Med_Codigo, Compra_Bono_Fecha
-	from gd_esquema.Maestra, esquema.afiliado
+	from gd_esquema.Maestra, afiliado
 	where Bono_Consulta_Numero is not null and Compra_Bono_Fecha is not null and afiliado_dni = Paciente_Dni
 	order by Bono_Consulta_Numero, Paciente_Dni, Plan_Med_Codigo, Compra_Bono_Fecha
 go
 
 /*		MODIFICACION DE PLAN		*/
 
-create table esquema.modificacion_plan (
+create table modificacion_plan (
 	 modif_id numeric(18,0) identity(1,1) primary key,
-	 modif_afiliado numeric(18,0) foreign key references esquema.afiliado(afiliado_nro),
-	 modif_plan_viejo numeric(18,0) foreign key references esquema.plan_medico(plan_id),
-	 modif_plan_nuevo numeric(18,0) foreign key references esquema.plan_medico(plan_id),
+	 modif_afiliado numeric(18,0) foreign key references afiliado(afiliado_nro),
+	 modif_plan_viejo numeric(18,0) foreign key references plan_medico(plan_id),
+	 modif_plan_nuevo numeric(18,0) foreign key references plan_medico(plan_id),
 	 modif_plan_fecha datetime,
 	 modif_motivo varchar(255)		-- como necesito un motivo no lo registro con un trigger
 )
