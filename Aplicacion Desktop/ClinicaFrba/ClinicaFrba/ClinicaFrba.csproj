@@ -68,11 +68,29 @@
     <Compile Include="Abm Profesional\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmRol\Form1.cs">
+    <Compile Include="AbmRol\frmAlta.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmRol\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="AbmRol\frmAlta.Designer.cs">
+      <DependentUpon>frmAlta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmRol\frmBaja.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\frmBaja.Designer.cs">
+      <DependentUpon>frmBaja.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmRol\frmModificar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\frmModificar.Designer.cs">
+      <DependentUpon>frmModificar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmRol\Home.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\Home.Designer.cs">
+      <DependentUpon>Home.cs</DependentUpon>
     </Compile>
     <Compile Include="Cancelar Atencion\Form1.cs">
       <SubType>Form</SubType>
@@ -130,6 +148,9 @@
     <Compile Include="Registro Resultado\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AbmRol\Home.resx">
+      <DependentUpon>Home.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LogIn.resx">
       <DependentUpon>LogIn.cs</DependentUpon>
     </EmbeddedResource>
@@ -162,6 +183,10 @@
     <ProjectReference Include="..\Clases\Clases.csproj">
       <Project>{6dc12838-6697-4cb1-a808-8b2f091ca3e4}</Project>
       <Name>Clases</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Helpers\Helpers.csproj">
+      <Project>{7e6c5163-9514-4af8-b63b-8d4343f8f0c0}</Project>
+      <Name>Helpers</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,4 +1,3 @@
-D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\obj\Debug\Clases.csprojResolveAssemblyReference.cache
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\bin\Debug\Clases.dll
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\bin\Debug\Clases.pdb
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\bin\Debug\mscorlib.dll

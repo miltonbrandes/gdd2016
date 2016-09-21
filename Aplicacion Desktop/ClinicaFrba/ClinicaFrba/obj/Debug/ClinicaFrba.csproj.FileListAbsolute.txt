@@ -43,3 +43,6 @@ D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\Clinic
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Main.resources
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\Clases.dll
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\Clases.pdb
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\Helpers.dll
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\Helpers.pdb
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\GDD.ABM_Rol.frmHome.resources

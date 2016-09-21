@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClinicaFrba", "ClinicaFrba\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clases", "Clases\Clases.csproj", "{6DC12838-6697-4CB1-A808-8B2F091CA3E4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpers", "Helpers\Helpers.csproj", "{7E6C5163-9514-4AF8-B63B-8D4343F8F0C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{6DC12838-6697-4CB1-A808-8B2F091CA3E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DC12838-6697-4CB1-A808-8B2F091CA3E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DC12838-6697-4CB1-A808-8B2F091CA3E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E6C5163-9514-4AF8-B63B-8D4343F8F0C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E6C5163-9514-4AF8-B63B-8D4343F8F0C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E6C5163-9514-4AF8-B63B-8D4343F8F0C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E6C5163-9514-4AF8-B63B-8D4343F8F0C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

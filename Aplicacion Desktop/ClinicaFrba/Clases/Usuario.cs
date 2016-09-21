@@ -24,9 +24,9 @@ namespace Clases
         public string Direccion { get; set; }
         public string Apellido { get; set; }
         public int Dni { get; set; }
-        public string EstadoCivil { get; set; }
+        public char EstadoCivil { get; set; }
         public int PlanUsuario { get; set; }
-        public string Sexo { get; set; }
+        public char Sexo { get; set; }
         public int CantidadHijos { get; set; }
         public bool Habilitado { get; set; }
         public int CantBonosUsados { get; set; }
