@@ -348,7 +348,7 @@ End
 go
 
 /*INTENTOS USUARIO*/
-CREATE PROCEDURE esquema.Usuario_SumarIntento (@Username varchar(20))
+CREATE PROCEDURE esquema.Usuario_SumarIntento (@Username varchar(50))
 AS
 BEGIN
   UPDATE esquema.usuario
@@ -357,7 +357,7 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE esquema.Usuario_ResetearIntentos (@Username varchar(20))
+CREATE PROCEDURE esquema.Usuario_ResetearIntentos (@Username varchar(50))
 AS
 BEGIN
   UPDATE esquema.usuario
