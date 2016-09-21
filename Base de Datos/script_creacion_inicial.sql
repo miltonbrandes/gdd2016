@@ -4,6 +4,219 @@ go
 create schema esquema authorization gd
 go
 
+/*USUARIO*/
+CREATE TABLE esquema.usuario(
+	usuario_id varchar(50) NOT NULL,
+	usuario_password varchar(300) NULL,
+	usuario_descripcion varchar(50) NULL,
+	usuario_habilitado bit NULL,
+	usuario_cant_intentos int NULL,
+ CONSTRAINT [PK_esquema.usuario] PRIMARY KEY CLUSTERED 
+(
+	[usuario_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+/*FUNCION*/
+CREATE TABLE esquema.funcion(
+	funcion_id int NOT NULL,
+	funcion_descripcion varchar(50) NULL,
+ CONSTRAINT [PK_funcion] PRIMARY KEY CLUSTERED 
+(
+	[funcion_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+/*ROL*/
+CREATE TABLE esquema.rol(
+	rol_id int NOT NULL,
+	rol_descripcion varchar(50) NULL,
+	rol_habilitado bit NOT NULL,
+ CONSTRAINT [PK_rol] PRIMARY KEY CLUSTERED 
+(
+	[rol_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+/*FUNCION X ROL*/
+CREATE TABLE esquema.funcionXrol(
+	rol_id int NOT NULL,
+	funcion_id int NOT NULL,
+ CONSTRAINT [PK_esquema.funcionXrol] PRIMARY KEY CLUSTERED 
+(
+	[rol_id] ASC,
+	[funcion_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE esquema.funcionXrol  WITH CHECK ADD  CONSTRAINT [FK_esquema.funcionXrol_funcion] FOREIGN KEY([funcion_id])
+REFERENCES [esquema].[funcion] ([funcion_id])
+GO
+
+ALTER TABLE esquema.funcionXrol CHECK CONSTRAINT [FK_esquema.funcionXrol_funcion]
+GO
+
+ALTER TABLE esquema.funcionXrol  WITH CHECK ADD  CONSTRAINT [FK_esquema.funcionXrol_rol] FOREIGN KEY([rol_id])
+REFERENCES [esquema].[rol] ([rol_id])
+GO
+
+ALTER TABLE esquema.funcionXrol CHECK CONSTRAINT [FK_esquema.funcionXrol_rol]
+GO
+
+/*ROL X USUARIO*/
+CREATE TABLE esquema.rolXusuario(
+	rol_id int NOT NULL,
+	usuario_id varchar(50) NOT NULL,
+ CONSTRAINT [PK_esquema.rolXusuario] PRIMARY KEY CLUSTERED 
+(
+	[rol_id] ASC,
+	[usuario_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE esquema.rolXusuario WITH CHECK ADD  CONSTRAINT [FK_esquema.rolXusuario_rol] FOREIGN KEY([rol_id])
+REFERENCES [esquema].[rol] ([rol_id])
+GO
+
+ALTER TABLE esquema.rolXusuario CHECK CONSTRAINT [FK_esquema.rolXusuario_rol]
+GO
+
+ALTER TABLE esquema.rolXusuario  WITH CHECK ADD  CONSTRAINT [FK_esquema.rolXusuario_usuario] FOREIGN KEY([usuario_id])
+REFERENCES [esquema].[usuario] ([usuario_id])
+GO
+
+ALTER TABLE esquema.rolXusuario CHECK CONSTRAINT [FK_esquema.rolXusuario_usuario]
+GO
+
+/*TIPO ESPECIALIDAD*/
+CREATE TABLE esquema.tipo_especialidad(
+	tipo_especialidad_codigo numeric(18,0) NOT NULL,
+	tipo_especialidad_descripcion varchar(255) NULL,
+ CONSTRAINT [PK_tipo_especialidad] PRIMARY KEY CLUSTERED 
+(
+	[tipo_especialidad_codigo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+insert into esquema.tipo_especialidad
+(tipo_especialidad_codigo, tipo_especialidad_descripcion)
+select Tipo_Especialidad_Codigo, Tipo_Especialidad_Descripcion
+	from gd_esquema.Maestra
+	where Tipo_Especialidad_Codigo is not null
+	group by Tipo_Especialidad_Codigo, Tipo_Especialidad_Descripcion
+go
+
+/*ESPECIALIDAD*/
+CREATE TABLE esquema.especialidad(
+	especialidad_codigo numeric(18, 0) NOT NULL,
+	especialidad_descripcion varchar(255) NULL,
+	especialidad_tipo numeric(18, 0) NULL,
+ CONSTRAINT [PK_especialidad] PRIMARY KEY CLUSTERED 
+(
+	[especialidad_codigo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE esquema.especialidad  WITH CHECK ADD  CONSTRAINT [FK_especialidad_tipo_especialidad1] FOREIGN KEY([especialidad_tipo])
+REFERENCES esquema.tipo_especialidad ([tipo_especialidad_codigo])
+GO
+
+ALTER TABLE esquema.especialidad CHECK CONSTRAINT [FK_especialidad_tipo_especialidad1]
+GO
+
+insert into esquema.especialidad
+(especialidad_codigo, especialidad_descripcion, especialidad_tipo)
+select Especialidad_Codigo, Especialidad_Descripcion, Tipo_Especialidad_Codigo
+	from gd_esquema.Maestra
+	where Especialidad_Codigo is not null
+	group by Especialidad_Codigo, Especialidad_Descripcion, Tipo_Especialidad_Codigo
+go
+
+/*PROFESIONAL*/
+
+CREATE TABLE [esquema].[profesional](
+	[profesional_matricula] [int] IDENTITY(10,10) NOT NULL, --autoincremental de 10 en 10
+	[usuario_id] [varchar](50) NULL,
+	[profesional_nombre] [varchar](50) NULL,
+	[profesional_apellido] [varchar](50) NULL,
+	[profesional_dni] [numeric](8, 0) NULL,
+	[profesional_tipo_doc] [char](1) NULL, --D por defecto = dni, otros a ver
+	[profesional_telefono] [varchar](20) NULL,
+	[profesional_mail] [varchar](50) NULL,
+	[profesional_direccion] [varchar](50) NULL,
+	[profesional_sexo] [char](1) NULL, --inicialmente en N por no identificado, en general F o M
+	[profesional_fecha_nacimiento] [date] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[profesional_matricula] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+ALTER TABLE [esquema].[profesional]  WITH CHECK ADD  CONSTRAINT [FK_profesional_usuario] FOREIGN KEY([usuario_id])
+REFERENCES [esquema].[usuario] ([usuario_id])
+GO
+
+ALTER TABLE [esquema].[profesional] CHECK CONSTRAINT [FK_profesional_usuario]
+GO
+
+insert into esquema.profesional
+(profesional_nombre, profesional_apellido, profesional_dni, profesional_direccion, profesional_telefono, profesional_mail, profesional_fecha_nacimiento, profesional_sexo, profesional_tipo_doc)
+select Medico_Nombre, Medico_Apellido, Medico_Dni, Medico_Direccion, Medico_Telefono, Medico_Mail, Medico_Fecha_Nac, 'N', 'D' 
+	from gd_esquema.Maestra
+	where Medico_Nombre <> 'NULL'
+	group by Medico_Nombre, Medico_Apellido, Medico_Dni, Medico_Direccion, Medico_Telefono, Medico_Mail, Medico_Fecha_Nac 
+go
+
+/*MEDICO X ESPECIALIDAD*/
+CREATE TABLE esquema.medicoXespecialidad(
+	medxesp_id int IDENTITY(1,1) NOT NULL,
+	profesional_matricula int NOT NULL,
+	especialidad_id numeric(18, 0) NOT NULL,
+	agenda_id int NULL,
+ CONSTRAINT [PK_esquema.medicoXespecialidad] PRIMARY KEY CLUSTERED 
+(
+	[medxesp_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE esquema.medicoXespecialidad  WITH CHECK ADD  CONSTRAINT [FK_esquema.medicoXespecialidad_especialidad] FOREIGN KEY([especialidad_id])
+REFERENCES [esquema].[especialidad] ([especialidad_codigo])
+GO
+
+ALTER TABLE esquema.medicoXespecialidad CHECK CONSTRAINT [FK_esquema.medicoXespecialidad_especialidad]
+GO
+
+ALTER TABLE esquema.medicoXespecialidad  WITH CHECK ADD  CONSTRAINT [FK_esquema.medicoXespecialidad_profesional] FOREIGN KEY([profesional_matricula])
+REFERENCES [esquema].[profesional] ([profesional_matricula])
+GO
+
+ALTER TABLE esquema.medicoXespecialidad CHECK CONSTRAINT [FK_esquema.medicoXespecialidad_profesional]
+GO
+
+insert into esquema.medicoXespecialidad (profesional_matricula, especialidad_id) 
+select profesional_matricula, Especialidad_Codigo
+	from gd_esquema.Maestra, esquema.profesional
+	where Medico_Nombre = profesional_nombre and Medico_Dni = profesional_dni
+	group by profesional_matricula, Especialidad_Codigo
+	order by profesional_matricula
+go
+
 /*		PLAN		*/
 
 create table esquema.plan_medico (
@@ -96,8 +309,6 @@ select Bono_Consulta_Numero, afiliado_nro, Plan_Med_Codigo, Compra_Bono_Fecha
 	order by Bono_Consulta_Numero, Paciente_Dni, Plan_Med_Codigo, Compra_Bono_Fecha
 go
 
-
-
 SET NOCOUNT ON 
 go
 
@@ -135,6 +346,25 @@ Begin
 	End
 End
 go
+
+/*INTENTOS USUARIO*/
+CREATE PROCEDURE Usuario_SumarIntento (@Username varchar(20))
+AS
+BEGIN
+  UPDATE esquema.usuario
+  SET usuario_cant_intentos = usuario_cant_intentos + 1
+  WHERE usuario_id = @Username
+END
+GO
+
+CREATE PROCEDURE Usuario_ResetearIntentos (@Username varchar(20))
+AS
+BEGIN
+  UPDATE esquema.usuario
+  SET usuario_cant_intentos = 0
+  WHERE usuario_cant_intentos = @Username
+END
+GO
 
 /*		MODIFICACION DE PLAN		*/
 
