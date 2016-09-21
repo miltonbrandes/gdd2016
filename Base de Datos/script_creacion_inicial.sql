@@ -365,6 +365,15 @@ BEGIN
   WHERE usuario_cant_intentos = @Username
 END
 GO
+/* OBTENER UN USUARIO */
+CREATE PROCEDURE esquema.Usuario_Get(@usuario varchar(20))
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  SELECT * FROM esquema.usuario WHERE usuario_id = @usuario
+END
+GO
 
 /*		MODIFICACION DE PLAN		*/
 
