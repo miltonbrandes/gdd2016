@@ -234,11 +234,11 @@ select Plan_Med_Codigo, Plan_Med_Descripcion, Plan_Med_Precio_Bono_Consulta
 	group by Plan_Med_Codigo, Plan_Med_Descripcion, Plan_Med_Precio_Bono_Consulta
 go
 
-
 /*		AFILIADO		*/
 
 create table esquema.afiliado (
 	 afiliado_nro numeric(18,0) identity(101,100) primary key, 
+	 usuario_id varchar(50) foreign key references esquema.usuario(usuario_id),
 	 afiliado_nombre varchar(255),
 	 afiliado_apellido varchar(255),
 	 afiliado_dni numeric(18,0),
@@ -386,3 +386,65 @@ create table esquema.modificacion_plan (
 	 modif_motivo varchar(255)		-- como necesito un motivo no lo registro con un trigger
 )
 go
+
+/* CREAR TURNOS*/
+CREATE TABLE esquema.turno(
+	turno_id int NOT NULL,
+	afiliado_nro numeric(18, 0) NOT NULL,
+	turno_fecha date NULL,
+	turno_hora time(7) NULL,
+	turno_estado char(1) NULL,
+	turno_hora_llegada time(7) NULL,
+	turno_sintomas text NULL,
+	turno_enfermedades text NULL,
+	turno_medico_especialidad_id int NULL,
+ CONSTRAINT [PK_esquema.turno] PRIMARY KEY CLUSTERED 
+(
+	[turno_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+
+ALTER TABLE esquema.turno  WITH CHECK ADD  CONSTRAINT [FK_esquema.turno_afiliado] FOREIGN KEY([afiliado_nro])
+REFERENCES [esquema].[afiliado] ([afiliado_nro])
+GO
+
+ALTER TABLE esquema.turno CHECK CONSTRAINT [FK_esquema.turno_afiliado]
+GO
+
+ALTER TABLE esquema.turno  WITH CHECK ADD  CONSTRAINT [FK_esquema.turno_medicoXespecialidad] FOREIGN KEY([turno_medico_especialidad_id])
+REFERENCES [esquema].[medicoXespecialidad] ([medxesp_id])
+GO
+
+ALTER TABLE esquema.turno CHECK CONSTRAINT [FK_esquema.turno_medicoXespecialidad]
+GO
+
+/*CREAR TABLA CANCELACION TURNOS*/
+CREATE TABLE esquema.cancelacion_turno(
+	cancelacion_id int NOT NULL,
+	afiliado_nro numeric(18, 0) NOT NULL,
+	profesional_matricula int NOT NULL,
+	cancelacion_motivo text NULL,
+	cancelacion_fecha date NULL,
+ CONSTRAINT [PK_cancelacion_turno] PRIMARY KEY CLUSTERED 
+(
+	[cancelacion_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+
+ALTER TABLE esquema.cancelacion_turno  WITH CHECK ADD  CONSTRAINT [FK_cancelacion_turno_afiliado] FOREIGN KEY([afiliado_nro])
+REFERENCES [esquema].[afiliado] ([afiliado_nro])
+GO
+
+ALTER TABLE esquema.cancelacion_turno CHECK CONSTRAINT [FK_cancelacion_turno_afiliado]
+GO
+
+ALTER TABLE esquema.cancelacion_turno  WITH CHECK ADD  CONSTRAINT [FK_cancelacion_turno_profesional] FOREIGN KEY([profesional_matricula])
+REFERENCES [esquema].[profesional] ([profesional_matricula])
+GO
+
+ALTER TABLE esquema.cancelacion_turno CHECK CONSTRAINT [FK_cancelacion_turno_profesional]
+GO
