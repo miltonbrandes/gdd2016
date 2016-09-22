@@ -53,7 +53,8 @@ namespace ClinicaFrba
                         var usu = DBHelper.ExecuteReader("Usuario_Get", new Dictionary<string, object>() { { "@usuario", username } }).ToUsuario();
                         if (usu != null && usu.Intentos >= 3)
                         {
-                            DBHelper.ExecuteNonQuery("Usuario_Inhabilitar", new Dictionary<string, object> { { "@Username", username } });
+                            //INHABILITAR USUARIO, NO ESTA TODAVIA LO DE INHABILITAR EN EL SERVER
+                            //DBHelper.ExecuteNonQuery("Usuario_Inhabilitar", new Dictionary<string, object> { { "@Username", username } });
                             MessageBox.Show("Usuario ha quedado inhabilitado");
                         }
                         else
