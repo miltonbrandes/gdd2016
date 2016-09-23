@@ -10,7 +10,7 @@ namespace Clases
     {
         public int Id { get; set; }
         public int Dia { get; set; }
-        public string HoraInicio { get; set; }
-        public string HoraFin { get; set; }
+        public int HoraInicio { get; set; }
+        public int HoraFin { get; set; }
     }
 }
