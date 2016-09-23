@@ -1,17 +1,17 @@
 use GD2C2016
 go
 
-create schema esquema authorization gd
+create schema NOT_NULL authorization gd
 go
 
 /*USUARIO*/
-CREATE TABLE esquema.usuario(
+CREATE TABLE NOT_NULL.usuario(
 	usuario_id varchar(50) NOT NULL,
 	usuario_password varchar(300) NULL,
 	usuario_descripcion varchar(50) NULL,
 	usuario_habilitado bit NULL,
 	usuario_cant_intentos int NULL,
- CONSTRAINT [PK_esquema.usuario] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_NOT_NULL.usuario] PRIMARY KEY CLUSTERED 
 (
 	[usuario_id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -20,7 +20,7 @@ CREATE TABLE esquema.usuario(
 GO
 
 /*FUNCION*/
-CREATE TABLE esquema.funcion(
+CREATE TABLE NOT_NULL.funcion(
 	funcion_id int NOT NULL,
 	funcion_descripcion varchar(50) NULL,
  CONSTRAINT [PK_funcion] PRIMARY KEY CLUSTERED 
@@ -32,7 +32,7 @@ CREATE TABLE esquema.funcion(
 GO
 
 /*ROL*/
-CREATE TABLE esquema.rol(
+CREATE TABLE NOT_NULL.rol(
 	rol_id int NOT NULL,
 	rol_descripcion varchar(50) NULL,
 	rol_habilitado bit NOT NULL,
@@ -45,10 +45,10 @@ CREATE TABLE esquema.rol(
 GO
 
 /*FUNCION X ROL*/
-CREATE TABLE esquema.funcionXrol(
+CREATE TABLE NOT_NULL.funcionXrol(
 	rol_id int NOT NULL,
 	funcion_id int NOT NULL,
- CONSTRAINT [PK_esquema.funcionXrol] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_NOT_NULL.funcionXrol] PRIMARY KEY CLUSTERED 
 (
 	[rol_id] ASC,
 	[funcion_id] ASC
@@ -57,25 +57,25 @@ CREATE TABLE esquema.funcionXrol(
 
 GO
 
-ALTER TABLE esquema.funcionXrol  WITH CHECK ADD  CONSTRAINT [FK_esquema.funcionXrol_funcion] FOREIGN KEY([funcion_id])
-REFERENCES [esquema].[funcion] ([funcion_id])
+ALTER TABLE NOT_NULL.funcionXrol  WITH CHECK ADD  CONSTRAINT [FK_NOT_NULL.funcionXrol_funcion] FOREIGN KEY([funcion_id])
+REFERENCES [NOT_NULL].[funcion] ([funcion_id])
 GO
 
-ALTER TABLE esquema.funcionXrol CHECK CONSTRAINT [FK_esquema.funcionXrol_funcion]
+ALTER TABLE NOT_NULL.funcionXrol CHECK CONSTRAINT [FK_NOT_NULL.funcionXrol_funcion]
 GO
 
-ALTER TABLE esquema.funcionXrol  WITH CHECK ADD  CONSTRAINT [FK_esquema.funcionXrol_rol] FOREIGN KEY([rol_id])
-REFERENCES [esquema].[rol] ([rol_id])
+ALTER TABLE NOT_NULL.funcionXrol  WITH CHECK ADD  CONSTRAINT [FK_NOT_NULL.funcionXrol_rol] FOREIGN KEY([rol_id])
+REFERENCES [NOT_NULL].[rol] ([rol_id])
 GO
 
-ALTER TABLE esquema.funcionXrol CHECK CONSTRAINT [FK_esquema.funcionXrol_rol]
+ALTER TABLE NOT_NULL.funcionXrol CHECK CONSTRAINT [FK_NOT_NULL.funcionXrol_rol]
 GO
 
 /*ROL X USUARIO*/
-CREATE TABLE esquema.rolXusuario(
+CREATE TABLE NOT_NULL.rolXusuario(
 	rol_id int NOT NULL,
 	usuario_id varchar(50) NOT NULL,
- CONSTRAINT [PK_esquema.rolXusuario] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_NOT_NULL.rolXusuario] PRIMARY KEY CLUSTERED 
 (
 	[rol_id] ASC,
 	[usuario_id] ASC
@@ -84,22 +84,22 @@ CREATE TABLE esquema.rolXusuario(
 
 GO
 
-ALTER TABLE esquema.rolXusuario WITH CHECK ADD  CONSTRAINT [FK_esquema.rolXusuario_rol] FOREIGN KEY([rol_id])
-REFERENCES [esquema].[rol] ([rol_id])
+ALTER TABLE NOT_NULL.rolXusuario WITH CHECK ADD  CONSTRAINT [FK_NOT_NULL.rolXusuario_rol] FOREIGN KEY([rol_id])
+REFERENCES [NOT_NULL].[rol] ([rol_id])
 GO
 
-ALTER TABLE esquema.rolXusuario CHECK CONSTRAINT [FK_esquema.rolXusuario_rol]
+ALTER TABLE NOT_NULL.rolXusuario CHECK CONSTRAINT [FK_NOT_NULL.rolXusuario_rol]
 GO
 
-ALTER TABLE esquema.rolXusuario  WITH CHECK ADD  CONSTRAINT [FK_esquema.rolXusuario_usuario] FOREIGN KEY([usuario_id])
-REFERENCES [esquema].[usuario] ([usuario_id])
+ALTER TABLE NOT_NULL.rolXusuario  WITH CHECK ADD  CONSTRAINT [FK_NOT_NULL.rolXusuario_usuario] FOREIGN KEY([usuario_id])
+REFERENCES [NOT_NULL].[usuario] ([usuario_id])
 GO
 
-ALTER TABLE esquema.rolXusuario CHECK CONSTRAINT [FK_esquema.rolXusuario_usuario]
+ALTER TABLE NOT_NULL.rolXusuario CHECK CONSTRAINT [FK_NOT_NULL.rolXusuario_usuario]
 GO
 
 /*TIPO ESPECIALIDAD*/
-CREATE TABLE esquema.tipo_especialidad(
+CREATE TABLE NOT_NULL.tipo_especialidad(
 	tipo_especialidad_codigo numeric(18,0) NOT NULL,
 	tipo_especialidad_descripcion varchar(255) NULL,
  CONSTRAINT [PK_tipo_especialidad] PRIMARY KEY CLUSTERED 
@@ -109,7 +109,7 @@ CREATE TABLE esquema.tipo_especialidad(
 ) ON [PRIMARY]
 GO
 
-insert into esquema.tipo_especialidad
+insert into NOT_NULL.tipo_especialidad
 (tipo_especialidad_codigo, tipo_especialidad_descripcion)
 select Tipo_Especialidad_Codigo, Tipo_Especialidad_Descripcion
 	from gd_esquema.Maestra
@@ -118,7 +118,7 @@ select Tipo_Especialidad_Codigo, Tipo_Especialidad_Descripcion
 go
 
 /*ESPECIALIDAD*/
-CREATE TABLE esquema.especialidad(
+CREATE TABLE NOT_NULL.especialidad(
 	especialidad_codigo numeric(18, 0) NOT NULL,
 	especialidad_descripcion varchar(255) NULL,
 	especialidad_tipo numeric(18, 0) NULL,
@@ -130,14 +130,14 @@ CREATE TABLE esquema.especialidad(
 
 GO
 
-ALTER TABLE esquema.especialidad  WITH CHECK ADD  CONSTRAINT [FK_especialidad_tipo_especialidad1] FOREIGN KEY([especialidad_tipo])
-REFERENCES esquema.tipo_especialidad ([tipo_especialidad_codigo])
+ALTER TABLE NOT_NULL.especialidad  WITH CHECK ADD  CONSTRAINT [FK_especialidad_tipo_especialidad1] FOREIGN KEY([especialidad_tipo])
+REFERENCES NOT_NULL.tipo_especialidad ([tipo_especialidad_codigo])
 GO
 
-ALTER TABLE esquema.especialidad CHECK CONSTRAINT [FK_especialidad_tipo_especialidad1]
+ALTER TABLE NOT_NULL.especialidad CHECK CONSTRAINT [FK_especialidad_tipo_especialidad1]
 GO
 
-insert into esquema.especialidad
+insert into NOT_NULL.especialidad
 (especialidad_codigo, especialidad_descripcion, especialidad_tipo)
 select Especialidad_Codigo, Especialidad_Descripcion, Tipo_Especialidad_Codigo
 	from gd_esquema.Maestra
@@ -147,7 +147,7 @@ go
 
 /*PROFESIONAL*/
 
-CREATE TABLE [esquema].[profesional](
+CREATE TABLE [NOT_NULL].[profesional](
 	[profesional_matricula] [int] IDENTITY(10,10) NOT NULL, --autoincremental de 10 en 10
 	[usuario_id] [varchar](50) NULL,
 	[profesional_nombre] [varchar](50) NULL,
@@ -166,14 +166,14 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
-ALTER TABLE [esquema].[profesional]  WITH CHECK ADD  CONSTRAINT [FK_profesional_usuario] FOREIGN KEY([usuario_id])
-REFERENCES [esquema].[usuario] ([usuario_id])
+ALTER TABLE [NOT_NULL].[profesional]  WITH CHECK ADD  CONSTRAINT [FK_profesional_usuario] FOREIGN KEY([usuario_id])
+REFERENCES [NOT_NULL].[usuario] ([usuario_id])
 GO
 
-ALTER TABLE [esquema].[profesional] CHECK CONSTRAINT [FK_profesional_usuario]
+ALTER TABLE [NOT_NULL].[profesional] CHECK CONSTRAINT [FK_profesional_usuario]
 GO
 
-insert into esquema.profesional
+insert into NOT_NULL.profesional
 (profesional_nombre, profesional_apellido, profesional_dni, profesional_direccion, profesional_telefono, profesional_mail, profesional_fecha_nacimiento, profesional_sexo, profesional_tipo_doc)
 select Medico_Nombre, Medico_Apellido, Medico_Dni, Medico_Direccion, Medico_Telefono, Medico_Mail, Medico_Fecha_Nac, 'N', 'D' 
 	from gd_esquema.Maestra
@@ -182,12 +182,12 @@ select Medico_Nombre, Medico_Apellido, Medico_Dni, Medico_Direccion, Medico_Tele
 go
 
 /*MEDICO X ESPECIALIDAD*/
-CREATE TABLE esquema.medicoXespecialidad(
+CREATE TABLE NOT_NULL.medicoXespecialidad(
 	medxesp_id int IDENTITY(1,1) NOT NULL,
 	profesional_matricula int NOT NULL,
 	especialidad_id numeric(18, 0) NOT NULL,
 	agenda_id int NULL,
- CONSTRAINT [PK_esquema.medicoXespecialidad] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_NOT_NULL.medicoXespecialidad] PRIMARY KEY CLUSTERED 
 (
 	[medxesp_id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -195,23 +195,23 @@ CREATE TABLE esquema.medicoXespecialidad(
 
 GO
 
-ALTER TABLE esquema.medicoXespecialidad  WITH CHECK ADD  CONSTRAINT [FK_esquema.medicoXespecialidad_especialidad] FOREIGN KEY([especialidad_id])
-REFERENCES [esquema].[especialidad] ([especialidad_codigo])
+ALTER TABLE NOT_NULL.medicoXespecialidad  WITH CHECK ADD  CONSTRAINT [FK_NOT_NULL.medicoXespecialidad_especialidad] FOREIGN KEY([especialidad_id])
+REFERENCES [NOT_NULL].[especialidad] ([especialidad_codigo])
 GO
 
-ALTER TABLE esquema.medicoXespecialidad CHECK CONSTRAINT [FK_esquema.medicoXespecialidad_especialidad]
+ALTER TABLE NOT_NULL.medicoXespecialidad CHECK CONSTRAINT [FK_NOT_NULL.medicoXespecialidad_especialidad]
 GO
 
-ALTER TABLE esquema.medicoXespecialidad  WITH CHECK ADD  CONSTRAINT [FK_esquema.medicoXespecialidad_profesional] FOREIGN KEY([profesional_matricula])
-REFERENCES [esquema].[profesional] ([profesional_matricula])
+ALTER TABLE NOT_NULL.medicoXespecialidad  WITH CHECK ADD  CONSTRAINT [FK_NOT_NULL.medicoXespecialidad_profesional] FOREIGN KEY([profesional_matricula])
+REFERENCES [NOT_NULL].[profesional] ([profesional_matricula])
 GO
 
-ALTER TABLE esquema.medicoXespecialidad CHECK CONSTRAINT [FK_esquema.medicoXespecialidad_profesional]
+ALTER TABLE NOT_NULL.medicoXespecialidad CHECK CONSTRAINT [FK_NOT_NULL.medicoXespecialidad_profesional]
 GO
 
-insert into esquema.medicoXespecialidad (profesional_matricula, especialidad_id) 
+insert into NOT_NULL.medicoXespecialidad (profesional_matricula, especialidad_id) 
 select profesional_matricula, Especialidad_Codigo
-	from gd_esquema.Maestra, esquema.profesional
+	from gd_esquema.Maestra, NOT_NULL.profesional
 	where Medico_Nombre = profesional_nombre and Medico_Dni = profesional_dni
 	group by profesional_matricula, Especialidad_Codigo
 	order by profesional_matricula
@@ -219,7 +219,7 @@ go
 
 /*		PLAN		*/
 
-create table esquema.plan_medico (
+create table NOT_NULL.plan_medico (
 	 plan_id numeric(18,0) primary key, 
 	 plan_descripcion varchar(255),
 	 plan_precio_bono_consulta numeric(18,0),
@@ -227,7 +227,7 @@ create table esquema.plan_medico (
 )
 go
 
-insert into esquema.plan_medico
+insert into NOT_NULL.plan_medico
 (plan_id, plan_descripcion, plan_precio_bono_consulta)
 select Plan_Med_Codigo, Plan_Med_Descripcion, Plan_Med_Precio_Bono_Consulta 
 	from gd_esquema.Maestra
@@ -236,9 +236,9 @@ go
 
 /*		AFILIADO		*/
 
-create table esquema.afiliado (
+create table NOT_NULL.afiliado (
 	 afiliado_nro numeric(18,0) identity(101,100) primary key, 
-	 usuario_id varchar(50) foreign key references esquema.usuario(usuario_id),
+	 usuario_id varchar(50) foreign key references NOT_NULL.usuario(usuario_id),
 	 afiliado_nombre varchar(255),
 	 afiliado_apellido varchar(255),
 	 afiliado_dni numeric(18,0),
@@ -249,40 +249,40 @@ create table esquema.afiliado (
 	 afiliado_mail varchar(255),
 	 afiliado_direccion varchar(255),
 	 afiliado_cant_hijos numeric(2,0),
-	 afiliado_plan numeric(18,0) foreign key references esquema.plan_medico(plan_id),
+	 afiliado_plan numeric(18,0) foreign key references NOT_NULL.plan_medico(plan_id),
 	 afiliado_habilitado numeric(2,0),
 	 afiliado_cant_bonos_consulta numeric(18,0)
 )
 go
 
-create trigger aumentar_cantidad_hijos on esquema.afiliado for insert
+create trigger aumentar_cantidad_hijos on NOT_NULL.afiliado for insert
 as
 Begin
 	declare @afiliado_nro numeric(18,0)
 	select @afiliado_nro = afiliado_nro from inserted
 	set @afiliado_nro = ROUND(@afiliado_nro / 100, 0)
 
-	update esquema.afiliado set afiliado_cant_hijos = afiliado_cant_hijos + 1
+	update NOT_NULL.afiliado set afiliado_cant_hijos = afiliado_cant_hijos + 1
 		where ROUND(afiliado_nro/100, 0) = @afiliado_nro
 		and afiliado_nro - 1 = ROUND(afiliado_nro/100, 0)*100
 End
 go
 
-create trigger reducir_cantidad_hijos on esquema.afiliado for delete
+create trigger reducir_cantidad_hijos on NOT_NULL.afiliado for delete
 as
 Begin
 	declare @afiliado_nro numeric(18,0)
 	select @afiliado_nro = afiliado_nro from deleted
 	set @afiliado_nro = ROUND(@afiliado_nro / 100, 0)
 
-	update esquema.afiliado set afiliado_cant_hijos = afiliado_cant_hijos - 1
+	update NOT_NULL.afiliado set afiliado_cant_hijos = afiliado_cant_hijos - 1
 		where ROUND(afiliado_nro/100, 0) = @afiliado_nro
 		and afiliado_nro - 1 = ROUND(afiliado_nro/100, 0)*100		--
 End
 go
 
 
-insert into esquema.afiliado
+insert into NOT_NULL.afiliado
 (afiliado_nombre, afiliado_apellido, afiliado_dni, afiliado_estado_civil, 
 afiliado_sexo, afiliado_fecha_nac, afiliado_telefono, afiliado_mail, afiliado_direccion, afiliado_cant_hijos, afiliado_cant_bonos_consulta, afiliado_plan)
 select Paciente_Nombre, Paciente_Apellido, Paciente_Dni, 'N', 'N', Paciente_Fecha_Nac, Paciente_Telefono, Paciente_Mail, Paciente_Direccion, 0, 0, Plan_Med_Codigo 
@@ -292,19 +292,19 @@ go
 
 /*		BONOS		*/
 
-create table esquema.bono_consulta (
+create table NOT_NULL.bono_consulta (
 	 bono_id numeric(18,0) primary key, 
-	 bono_afiliado numeric(18,0) foreign key references esquema.afiliado(afiliado_nro),
-	 bono_plan numeric(18,0) foreign key references esquema.plan_medico(plan_id),
+	 bono_afiliado numeric(18,0) foreign key references NOT_NULL.afiliado(afiliado_nro),
+	 bono_plan numeric(18,0) foreign key references NOT_NULL.plan_medico(plan_id),
 	 -- bono_turno numeric(18,0) foreign key references turno(turno_id),
 	 bono_fecha_compra datetime,
 	 bono_utilizado character(1)
 )
 go
 
-insert into esquema.bono_consulta (bono_id, bono_afiliado, bono_plan, bono_fecha_compra)
+insert into NOT_NULL.bono_consulta (bono_id, bono_afiliado, bono_plan, bono_fecha_compra)
 select Bono_Consulta_Numero, afiliado_nro, Plan_Med_Codigo, Compra_Bono_Fecha
-	from gd_esquema.Maestra, esquema.afiliado
+	from gd_esquema.Maestra, NOT_NULL.afiliado
 	where Bono_Consulta_Numero is not null and Compra_Bono_Fecha is not null and afiliado_dni = Paciente_Dni
 	order by Bono_Consulta_Numero, Paciente_Dni, Plan_Med_Codigo, Compra_Bono_Fecha
 go
@@ -312,16 +312,16 @@ go
 SET NOCOUNT ON 
 go
 
-create procedure esquema.contarBonos
+create procedure NOT_NULL.contarBonos
 as
 Begin
 	declare @afiliado numeric(18,0)
-	declare unCursor cursor for select afiliado_nro from esquema.afiliado
+	declare unCursor cursor for select afiliado_nro from NOT_NULL.afiliado
 	open unCursor
 	fetch next from unCursor into @afiliado
 	while @@FETCH_STATUS = 0
 	Begin
-		update esquema.afiliado set afiliado_cant_bonos_consulta = (select count(*) from esquema.bono_consulta where bono_afiliado = @afiliado)
+		update NOT_NULL.afiliado set afiliado_cant_bonos_consulta = (select count(*) from NOT_NULL.bono_consulta where bono_afiliado = @afiliado)
 			where afiliado_nro = @afiliado
 		fetch next from unCursor into @afiliado
 	End
@@ -330,65 +330,65 @@ Begin
 End
 go
 
-exec esquema.contarBonos		-- comentar esto para q no tarde
+exec NOT_NULL.contarBonos		-- comentar esto para q no tarde
 go
 
 
-create trigger aumentar_cantidad_bonos_afiliado on esquema.bono_consulta after insert
+create trigger aumentar_cantidad_bonos_afiliado on NOT_NULL.bono_consulta after insert
 as
 Begin
 	declare @bono_afiliado numeric(18,0)
 	if (select count(*) from inserted) = 1
 	Begin
 		select @bono_afiliado = bono_afiliado from inserted
-		update esquema.afiliado set afiliado_cant_bonos_consulta = afiliado_cant_bonos_consulta + 1
+		update NOT_NULL.afiliado set afiliado_cant_bonos_consulta = afiliado_cant_bonos_consulta + 1
 				where afiliado_nro = @bono_afiliado
 	End
 End
 go
 
 /*INTENTOS USUARIO*/
-CREATE PROCEDURE esquema.Usuario_SumarIntento (@Username varchar(50))
+CREATE PROCEDURE NOT_NULL.Usuario_SumarIntento (@Username varchar(50))
 AS
 BEGIN
-  UPDATE esquema.usuario
+  UPDATE NOT_NULL.usuario
   SET usuario_cant_intentos = usuario_cant_intentos + 1
   WHERE usuario_id = @Username
 END
 GO
 
-CREATE PROCEDURE esquema.Usuario_ResetearIntentos (@Username varchar(50))
+CREATE PROCEDURE NOT_NULL.Usuario_ResetearIntentos (@Username varchar(50))
 AS
 BEGIN
-  UPDATE esquema.usuario
+  UPDATE NOT_NULL.usuario
   SET usuario_cant_intentos = 0
   WHERE usuario_cant_intentos = @Username
 END
 GO
 /* OBTENER UN USUARIO */
-CREATE PROCEDURE esquema.Usuario_Get(@usuario varchar(20))
+CREATE PROCEDURE NOT_NULL.Usuario_Get(@usuario varchar(20))
 AS
 BEGIN
   SET NOCOUNT ON;
 
-  SELECT * FROM esquema.usuario WHERE usuario_id = @usuario
+  SELECT * FROM NOT_NULL.usuario WHERE usuario_id = @usuario
 END
 GO
 
 /*		MODIFICACION DE PLAN		*/
 
-create table esquema.modificacion_plan (
+create table NOT_NULL.modificacion_plan (
 	 modif_id numeric(18,0) identity(1,1) primary key,
-	 modif_afiliado numeric(18,0) foreign key references esquema.afiliado(afiliado_nro),
-	 modif_plan_viejo numeric(18,0) foreign key references esquema.plan_medico(plan_id),
-	 modif_plan_nuevo numeric(18,0) foreign key references esquema.plan_medico(plan_id),
+	 modif_afiliado numeric(18,0) foreign key references NOT_NULL.afiliado(afiliado_nro),
+	 modif_plan_viejo numeric(18,0) foreign key references NOT_NULL.plan_medico(plan_id),
+	 modif_plan_nuevo numeric(18,0) foreign key references NOT_NULL.plan_medico(plan_id),
 	 modif_plan_fecha datetime,
 	 modif_motivo varchar(255)		-- como necesito un motivo no lo registro con un trigger
 )
 go
 
 /* CREAR TURNOS*/
-CREATE TABLE esquema.turno(
+CREATE TABLE NOT_NULL.turno(
 	turno_id int NOT NULL,
 	afiliado_nro numeric(18, 0) NOT NULL,
 	turno_fecha date NULL,
@@ -398,7 +398,7 @@ CREATE TABLE esquema.turno(
 	turno_sintomas text NULL,
 	turno_enfermedades text NULL,
 	turno_medico_especialidad_id int NULL,
- CONSTRAINT [PK_esquema.turno] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_NOT_NULL.turno] PRIMARY KEY CLUSTERED 
 (
 	[turno_id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -406,22 +406,22 @@ CREATE TABLE esquema.turno(
 
 GO
 
-ALTER TABLE esquema.turno  WITH CHECK ADD  CONSTRAINT [FK_esquema.turno_afiliado] FOREIGN KEY([afiliado_nro])
-REFERENCES [esquema].[afiliado] ([afiliado_nro])
+ALTER TABLE NOT_NULL.turno  WITH CHECK ADD  CONSTRAINT [FK_NOT_NULL.turno_afiliado] FOREIGN KEY([afiliado_nro])
+REFERENCES [NOT_NULL].[afiliado] ([afiliado_nro])
 GO
 
-ALTER TABLE esquema.turno CHECK CONSTRAINT [FK_esquema.turno_afiliado]
+ALTER TABLE NOT_NULL.turno CHECK CONSTRAINT [FK_NOT_NULL.turno_afiliado]
 GO
 
-ALTER TABLE esquema.turno  WITH CHECK ADD  CONSTRAINT [FK_esquema.turno_medicoXespecialidad] FOREIGN KEY([turno_medico_especialidad_id])
-REFERENCES [esquema].[medicoXespecialidad] ([medxesp_id])
+ALTER TABLE NOT_NULL.turno  WITH CHECK ADD  CONSTRAINT [FK_NOT_NULL.turno_medicoXespecialidad] FOREIGN KEY([turno_medico_especialidad_id])
+REFERENCES [NOT_NULL].[medicoXespecialidad] ([medxesp_id])
 GO
 
-ALTER TABLE esquema.turno CHECK CONSTRAINT [FK_esquema.turno_medicoXespecialidad]
+ALTER TABLE NOT_NULL.turno CHECK CONSTRAINT [FK_NOT_NULL.turno_medicoXespecialidad]
 GO
 
 /*CREAR TABLA CANCELACION TURNOS*/
-CREATE TABLE esquema.cancelacion_turno(
+CREATE TABLE NOT_NULL.cancelacion_turno(
 	cancelacion_id int NOT NULL,
 	afiliado_nro numeric(18, 0) NOT NULL,
 	profesional_matricula int NOT NULL,
@@ -435,16 +435,16 @@ CREATE TABLE esquema.cancelacion_turno(
 
 GO
 
-ALTER TABLE esquema.cancelacion_turno  WITH CHECK ADD  CONSTRAINT [FK_cancelacion_turno_afiliado] FOREIGN KEY([afiliado_nro])
-REFERENCES [esquema].[afiliado] ([afiliado_nro])
+ALTER TABLE NOT_NULL.cancelacion_turno  WITH CHECK ADD  CONSTRAINT [FK_cancelacion_turno_afiliado] FOREIGN KEY([afiliado_nro])
+REFERENCES [NOT_NULL].[afiliado] ([afiliado_nro])
 GO
 
-ALTER TABLE esquema.cancelacion_turno CHECK CONSTRAINT [FK_cancelacion_turno_afiliado]
+ALTER TABLE NOT_NULL.cancelacion_turno CHECK CONSTRAINT [FK_cancelacion_turno_afiliado]
 GO
 
-ALTER TABLE esquema.cancelacion_turno  WITH CHECK ADD  CONSTRAINT [FK_cancelacion_turno_profesional] FOREIGN KEY([profesional_matricula])
-REFERENCES [esquema].[profesional] ([profesional_matricula])
+ALTER TABLE NOT_NULL.cancelacion_turno  WITH CHECK ADD  CONSTRAINT [FK_cancelacion_turno_profesional] FOREIGN KEY([profesional_matricula])
+REFERENCES [NOT_NULL].[profesional] ([profesional_matricula])
 GO
 
-ALTER TABLE esquema.cancelacion_turno CHECK CONSTRAINT [FK_cancelacion_turno_profesional]
+ALTER TABLE NOT_NULL.cancelacion_turno CHECK CONSTRAINT [FK_cancelacion_turno_profesional]
 GO
