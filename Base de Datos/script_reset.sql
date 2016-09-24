@@ -41,3 +41,34 @@ GO
 
 DROP TABLE NOT_NULL.modificacion_plan
 GO
+
+DROP TABLE NOT_NULL.cancelacion_turno
+GO
+
+DROP TABLE NOT_NULL.profesional
+GO
+
+
+DROP TABLE NOT_NULL.afiliado
+GO
+
+DROP TABLE NOT_NULL.plan_medico
+GO
+
+DROP TABLE NOT_NULL.usuario
+GO
+
+DROP procedure NOT_NULL.contarBonos
+GO
+
+DROP procedure NOT_NULL.Usuario_Get
+GO
+
+DROP procedure NOT_NULL.Usuario_ResetearIntentos
+GO
+
+DROP procedure NOT_NULL.Usuario_SumarIntento
+GO
+
+DROP SCHEMA NOT_NULL
+GO

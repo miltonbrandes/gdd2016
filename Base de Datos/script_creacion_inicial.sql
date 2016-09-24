@@ -184,9 +184,9 @@ go
 /*MEDICO X ESPECIALIDAD*/
 CREATE TABLE NOT_NULL.medicoXespecialidad(
 	medxesp_id int IDENTITY(1,1) NOT NULL,
-	profesional_matricula int NOT NULL,
-	especialidad_id numeric(18, 0) NOT NULL,
-	agenda_id int NULL,
+	medxesp_profesional int NOT NULL,
+	medxesp_especialidad numeric(18, 0) NOT NULL,
+	medxesp_agenda int NULL,
  CONSTRAINT [PK_NOT_NULL.medicoXespecialidad] PRIMARY KEY CLUSTERED 
 (
 	[medxesp_id] ASC
@@ -195,21 +195,21 @@ CREATE TABLE NOT_NULL.medicoXespecialidad(
 
 GO
 
-ALTER TABLE NOT_NULL.medicoXespecialidad  WITH CHECK ADD  CONSTRAINT [FK_NOT_NULL.medicoXespecialidad_especialidad] FOREIGN KEY([especialidad_id])
+ALTER TABLE NOT_NULL.medicoXespecialidad  WITH CHECK ADD  CONSTRAINT [FK_NOT_NULL.medicoXespecialidad_especialidad] FOREIGN KEY(medxesp_especialidad)
 REFERENCES [NOT_NULL].[especialidad] ([especialidad_codigo])
 GO
 
 ALTER TABLE NOT_NULL.medicoXespecialidad CHECK CONSTRAINT [FK_NOT_NULL.medicoXespecialidad_especialidad]
 GO
 
-ALTER TABLE NOT_NULL.medicoXespecialidad  WITH CHECK ADD  CONSTRAINT [FK_NOT_NULL.medicoXespecialidad_profesional] FOREIGN KEY([profesional_matricula])
+ALTER TABLE NOT_NULL.medicoXespecialidad  WITH CHECK ADD  CONSTRAINT [FK_NOT_NULL.medicoXespecialidad_profesional] FOREIGN KEY(medxesp_profesional)
 REFERENCES [NOT_NULL].[profesional] ([profesional_matricula])
 GO
 
 ALTER TABLE NOT_NULL.medicoXespecialidad CHECK CONSTRAINT [FK_NOT_NULL.medicoXespecialidad_profesional]
 GO
 
-insert into NOT_NULL.medicoXespecialidad (profesional_matricula, especialidad_id) 
+insert into NOT_NULL.medicoXespecialidad (medxesp_profesional, medxesp_especialidad) 
 select profesional_matricula, Especialidad_Codigo
 	from gd_esquema.Maestra, NOT_NULL.profesional
 	where Medico_Nombre = profesional_nombre and Medico_Dni = profesional_dni
@@ -255,7 +255,7 @@ create table NOT_NULL.afiliado (
 )
 go
 
-create trigger aumentar_cantidad_hijos on NOT_NULL.afiliado for insert
+create trigger NOT_NULL.aumentar_cantidad_hijos on NOT_NULL.afiliado for insert
 as
 Begin
 	declare @afiliado_nro numeric(18,0)
@@ -268,7 +268,7 @@ Begin
 End
 go
 
-create trigger reducir_cantidad_hijos on NOT_NULL.afiliado for delete
+create trigger NOT_NULL.reducir_cantidad_hijos on NOT_NULL.afiliado for delete
 as
 Begin
 	declare @afiliado_nro numeric(18,0)
@@ -334,7 +334,7 @@ exec NOT_NULL.contarBonos		-- comentar esto para q no tarde
 go
 
 
-create trigger aumentar_cantidad_bonos_afiliado on NOT_NULL.bono_consulta after insert
+create trigger NOT_NULL.aumentar_cantidad_bonos_afiliado on NOT_NULL.bono_consulta after insert
 as
 Begin
 	declare @bono_afiliado numeric(18,0)
@@ -387,23 +387,21 @@ create table NOT_NULL.modificacion_plan (
 )
 go
 
-/* CREAR TURNOS*/
+/*			TURNOS			*/
 CREATE TABLE NOT_NULL.turno(
-	turno_id int NOT NULL,
+	turno_nro numeric(18, 0) NOT NULL,
 	afiliado_nro numeric(18, 0) NOT NULL,
-	turno_fecha date NULL,
+	turno_fecha datetime NULL,
 	turno_hora time(7) NULL,
 	turno_estado char(1) NULL,
 	turno_hora_llegada time(7) NULL,
-	turno_sintomas text NULL,
-	turno_enfermedades text NULL,
+	turno_sintomas varchar(255) NULL,
+	turno_enfermedades varchar(255) NULL,
 	turno_medico_especialidad_id int NULL,
- CONSTRAINT [PK_NOT_NULL.turno] PRIMARY KEY CLUSTERED 
-(
-	[turno_id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-
+	CONSTRAINT [PK_NOT_NULL.turno] PRIMARY KEY CLUSTERED 
+	(turno_nro ASC)
+		WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 GO
 
 ALTER TABLE NOT_NULL.turno  WITH CHECK ADD  CONSTRAINT [FK_NOT_NULL.turno_afiliado] FOREIGN KEY([afiliado_nro])
@@ -419,6 +417,18 @@ GO
 
 ALTER TABLE NOT_NULL.turno CHECK CONSTRAINT [FK_NOT_NULL.turno_medicoXespecialidad]
 GO
+
+
+
+insert into NOT_NULL.turno(turno_nro, afiliado_nro, turno_fecha, turno_estado, /*turno_hora_llegada,*/ turno_sintomas , turno_enfermedades, turno_medico_especialidad_id)
+select Turno_Numero, afiliado_nro, Turno_Fecha, 'N', Consulta_Sintomas, Consulta_Enfermedades, medxesp_id 
+	from gd_esquema.Maestra, NOT_NULL.afiliado, NOT_NULL.medicoXespecialidad, NOT_NULL.profesional
+	where afiliado_dni = Paciente_Dni and medxesp_especialidad = Especialidad_Codigo and medXesp_profesional = profesional_matricula
+go
+
+
+
+
 
 /*CREAR TABLA CANCELACION TURNOS*/
 CREATE TABLE NOT_NULL.cancelacion_turno(
