@@ -290,63 +290,6 @@ select Paciente_Nombre, Paciente_Apellido, Paciente_Dni, 'N', 'N', Paciente_Fech
 	group by Paciente_Nombre, Paciente_Apellido, Paciente_Dni, Paciente_Fecha_Nac, Paciente_Telefono, Paciente_Mail, Paciente_Direccion, Plan_Med_Codigo
 go
 
-/*		BONOS		*/
-
-create table NOT_NULL.bono_consulta (
-	 bono_id numeric(18,0) primary key, 
-	 bono_afiliado numeric(18,0) foreign key references NOT_NULL.afiliado(afiliado_nro),
-	 bono_plan numeric(18,0) foreign key references NOT_NULL.plan_medico(plan_id),
-	 -- bono_turno numeric(18,0) foreign key references turno(turno_id),
-	 bono_fecha_compra datetime,
-	 bono_utilizado character(1)
-)
-go
-
-insert into NOT_NULL.bono_consulta (bono_id, bono_afiliado, bono_plan, bono_fecha_compra)
-select Bono_Consulta_Numero, afiliado_nro, Plan_Med_Codigo, Compra_Bono_Fecha
-	from gd_esquema.Maestra, NOT_NULL.afiliado
-	where Bono_Consulta_Numero is not null and Compra_Bono_Fecha is not null and afiliado_dni = Paciente_Dni
-	order by Bono_Consulta_Numero, Paciente_Dni, Plan_Med_Codigo, Compra_Bono_Fecha
-go
-
-SET NOCOUNT ON 
-go
-
-create procedure NOT_NULL.contarBonos
-as
-Begin
-	declare @afiliado numeric(18,0)
-	declare unCursor cursor for select afiliado_nro from NOT_NULL.afiliado
-	open unCursor
-	fetch next from unCursor into @afiliado
-	while @@FETCH_STATUS = 0
-	Begin
-		update NOT_NULL.afiliado set afiliado_cant_bonos_consulta = (select count(*) from NOT_NULL.bono_consulta where bono_afiliado = @afiliado)
-			where afiliado_nro = @afiliado
-		fetch next from unCursor into @afiliado
-	End
-	close unCursor
-	deallocate unCursor
-End
-go
-
-exec NOT_NULL.contarBonos		-- comentar esto para q no tarde
-go
-
-
-create trigger NOT_NULL.aumentar_cantidad_bonos_afiliado on NOT_NULL.bono_consulta after insert
-as
-Begin
-	declare @bono_afiliado numeric(18,0)
-	if (select count(*) from inserted) = 1
-	Begin
-		select @bono_afiliado = bono_afiliado from inserted
-		update NOT_NULL.afiliado set afiliado_cant_bonos_consulta = afiliado_cant_bonos_consulta + 1
-				where afiliado_nro = @bono_afiliado
-	End
-End
-go
-
 /*INTENTOS USUARIO*/
 CREATE PROCEDURE NOT_NULL.Usuario_SumarIntento (@Username varchar(50))
 AS
@@ -421,11 +364,12 @@ GO
 
 
 insert into NOT_NULL.turno(turno_nro, afiliado_nro, turno_fecha, turno_estado, /*turno_hora_llegada,*/ turno_sintomas , turno_enfermedades, turno_medico_especialidad_id)
-select Turno_Numero, afiliado_nro, Turno_Fecha, 'N', Consulta_Sintomas, Consulta_Enfermedades, medxesp_id 
+select Turno_Numero, afiliado_nro, Turno_Fecha, 'N', Consulta_Sintomas, Consulta_Enfermedades, medxesp_id
 	from gd_esquema.Maestra, NOT_NULL.afiliado, NOT_NULL.medicoXespecialidad, NOT_NULL.profesional
 	where afiliado_dni = Paciente_Dni and medxesp_especialidad = Especialidad_Codigo and medXesp_profesional = profesional_matricula
+		and profesional_dni = Medico_Dni
+		and Bono_Consulta_Fecha_Impresion is not null and Bono_Consulta_Numero is not null and Turno_Numero is not null  order by Turno_Numero 
 go
-
 
 
 
@@ -479,3 +423,65 @@ GO
 ALTER TABLE NOT_NULL.franja_horaria
 	ADD CONSTRAINT hora_fin_mayor_hora_inicio CHECK( (hora_fin * 60 + minuto_fin) > (hora_inicio * 60 + minuto_inicio) )
 GO
+
+
+/*		BONOS		*/
+
+create table NOT_NULL.bono_consulta (
+	 bono_id numeric(18,0) primary key, 
+	 bono_afiliado numeric(18,0) foreign key references NOT_NULL.afiliado(afiliado_nro),
+	 bono_plan numeric(18,0) foreign key references NOT_NULL.plan_medico(plan_id),
+	 bono_turno numeric(18,0) foreign key references  NOT_NULL.turno(turno_nro),
+	 bono_fecha_compra datetime,
+	 bono_utilizado character(1)
+)
+go
+
+insert into NOT_NULL.bono_consulta (bono_id, bono_afiliado, bono_plan, bono_fecha_compra)
+select Bono_Consulta_Numero, afiliado_nro, Plan_Med_Codigo, Compra_Bono_Fecha
+	from gd_esquema.Maestra, NOT_NULL.afiliado
+	where Bono_Consulta_Numero is not null and Compra_Bono_Fecha is not null and afiliado_dni = Paciente_Dni
+	order by Bono_Consulta_Numero, Paciente_Dni, Plan_Med_Codigo, Compra_Bono_Fecha
+go
+
+update NOT_NULL.bono_consulta set bono_turno = Turno_Numero from gd_esquema.Maestra where bono_id = Bono_Consulta_Numero and Compra_Bono_Fecha is null
+
+
+SET NOCOUNT ON 
+go
+
+create procedure NOT_NULL.contarBonos
+as
+Begin
+	declare @afiliado numeric(18,0)
+	declare unCursor cursor for select afiliado_nro from NOT_NULL.afiliado
+	open unCursor
+	fetch next from unCursor into @afiliado
+	while @@FETCH_STATUS = 0
+	Begin
+		update NOT_NULL.afiliado set afiliado_cant_bonos_consulta = (select count(*) from NOT_NULL.bono_consulta where bono_afiliado = @afiliado)
+			where afiliado_nro = @afiliado
+		fetch next from unCursor into @afiliado
+	End
+	close unCursor
+	deallocate unCursor
+End
+go
+
+/*
+exec NOT_NULL.contarBonos		-- comentar esto para q no tarde
+go*/
+
+
+create trigger NOT_NULL.aumentar_cantidad_bonos_afiliado on NOT_NULL.bono_consulta after insert
+as
+Begin
+	declare @bono_afiliado numeric(18,0)
+	if (select count(*) from inserted) = 1
+	Begin
+		select @bono_afiliado = bono_afiliado from inserted
+		update NOT_NULL.afiliado set afiliado_cant_bonos_consulta = afiliado_cant_bonos_consulta + 1
+				where afiliado_nro = @bono_afiliado
+	End
+End
+go
