@@ -250,7 +250,7 @@ create table NOT_NULL.afiliado (
 	 afiliado_direccion varchar(255),
 	 afiliado_cant_hijos numeric(2,0),
 	 afiliado_plan numeric(18,0) foreign key references NOT_NULL.plan_medico(plan_id),
-	 afiliado_habilitado numeric(2,0),
+	 afiliado_habilitado character(1),
 	 afiliado_cant_bonos_consulta numeric(18,0)
 )
 go
@@ -284,8 +284,8 @@ go
 
 insert into NOT_NULL.afiliado
 (afiliado_nombre, afiliado_apellido, afiliado_dni, afiliado_estado_civil, 
-afiliado_sexo, afiliado_fecha_nac, afiliado_telefono, afiliado_mail, afiliado_direccion, afiliado_cant_hijos, afiliado_cant_bonos_consulta, afiliado_plan)
-select Paciente_Nombre, Paciente_Apellido, Paciente_Dni, 'N', 'N', Paciente_Fecha_Nac, Paciente_Telefono, Paciente_Mail, Paciente_Direccion, 0, 0, Plan_Med_Codigo 
+afiliado_sexo, afiliado_fecha_nac, afiliado_telefono, afiliado_mail, afiliado_direccion, afiliado_cant_hijos, afiliado_cant_bonos_consulta, afiliado_habilitado, afiliado_plan)
+select Paciente_Nombre, Paciente_Apellido, Paciente_Dni, 'N', 'N', Paciente_Fecha_Nac, Paciente_Telefono, Paciente_Mail, Paciente_Direccion, 0, 0, 'S', Plan_Med_Codigo 
 	from gd_esquema.Maestra
 	group by Paciente_Nombre, Paciente_Apellido, Paciente_Dni, Paciente_Fecha_Nac, Paciente_Telefono, Paciente_Mail, Paciente_Direccion, Plan_Med_Codigo
 go
@@ -335,7 +335,6 @@ CREATE TABLE NOT_NULL.turno(
 	turno_nro numeric(18, 0) NOT NULL,
 	afiliado_nro numeric(18, 0) NOT NULL,
 	turno_fecha datetime NULL,
-	turno_hora time(7) NULL,
 	turno_estado char(1) NULL,
 	turno_hora_llegada time(7) NULL,
 	turno_sintomas varchar(255) NULL,
@@ -403,11 +402,10 @@ GO
 ALTER TABLE NOT_NULL.cancelacion_turno CHECK CONSTRAINT [FK_cancelacion_turno_profesional]
 GO
 
-/*Creacion de agenda*/
+/*		AGENDA		*/
 CREATE TABLE NOT_NULL.agenda(
 	agenda_id int PRIMARY KEY IDENTITY(0,1),
-	agenda_profesional int NOT NULL references NOT_NULL.profesional,
-	agenda_especialidad numeric(18,0) NOT NULL references NOT_NULL.especialidad)
+	agenda_medxesp int NOT NULL references NOT_NULL.medicoXespecialidad
 GO
 
 CREATE TABLE NOT_NULL.franja_horaria(
@@ -437,15 +435,14 @@ create table NOT_NULL.bono_consulta (
 )
 go
 
-insert into NOT_NULL.bono_consulta (bono_id, bono_afiliado, bono_plan, bono_fecha_compra)
-select Bono_Consulta_Numero, afiliado_nro, Plan_Med_Codigo, Compra_Bono_Fecha
+insert into NOT_NULL.bono_consulta (bono_id, bono_afiliado, bono_plan, bono_fecha_compra, bono_utilizado)
+select Bono_Consulta_Numero, afiliado_nro, Plan_Med_Codigo, Compra_Bono_Fecha, 'S'
 	from gd_esquema.Maestra, NOT_NULL.afiliado
 	where Bono_Consulta_Numero is not null and Compra_Bono_Fecha is not null and afiliado_dni = Paciente_Dni
 	order by Bono_Consulta_Numero, Paciente_Dni, Plan_Med_Codigo, Compra_Bono_Fecha
 go
 
 update NOT_NULL.bono_consulta set bono_turno = Turno_Numero from gd_esquema.Maestra where bono_id = Bono_Consulta_Numero and Compra_Bono_Fecha is null
-
 
 SET NOCOUNT ON 
 go
@@ -468,9 +465,9 @@ Begin
 End
 go
 
-/*
+
 exec NOT_NULL.contarBonos		-- comentar esto para q no tarde
-go*/
+go
 
 
 create trigger NOT_NULL.aumentar_cantidad_bonos_afiliado on NOT_NULL.bono_consulta after insert
