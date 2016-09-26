@@ -30,7 +30,6 @@ D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\Clinic
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\ClinicaFrba.pdb
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\mscorlib.dll
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\es\mscorlib.resources.dll
-D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\he\mscorlib.resources.dll
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\normidna.nlp
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\normnfc.nlp
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\normnfd.nlp
@@ -45,4 +44,8 @@ D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\Clases
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\Clases.pdb
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\Helpers.dll
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\Helpers.pdb
-D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\GDD.ABM_Rol.frmHome.resources
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Abm_Usuario.homeAbmUsuario.resources
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frmHome.resources
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frmAlta.resources
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frmModificar.resources
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frmBaja.resources

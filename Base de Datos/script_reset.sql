@@ -14,8 +14,7 @@ GO
 DROP TABLE NOT_NULL.rolXusuario
 GO
 
-DROP TABLE NOT_NULL.medicoXespecialidad
-GO
+
 /* ***************************************** */
 
 
@@ -30,8 +29,11 @@ DROP TABLE NOT_NULL.franja_horaria
 GO
 
 DROP TABLE NOT_NULL.agenda
+
 GO
 
+DROP TABLE NOT_NULL.medicoXespecialidad
+GO
 DROP TABLE NOT_NULL.especialidad
 GO
 
@@ -69,6 +71,12 @@ GO
 
 DROP procedure NOT_NULL.Usuario_SumarIntento
 GO
+
+DROP procedure NOT_NULL.Usuario_GetAll
+
+DROP procedure NOT_NULL.Usuario_LogIn
+
+DROP procedure NOT_NULL.UsuarioXRol_GetRolesByUser
 
 DROP SCHEMA NOT_NULL
 GO

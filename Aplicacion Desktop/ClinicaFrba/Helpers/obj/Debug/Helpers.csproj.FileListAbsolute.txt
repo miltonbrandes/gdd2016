@@ -5,7 +5,6 @@ D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Helpers\bin\Debug\Clases.dll
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Helpers\bin\Debug\mscorlib.dll
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Helpers\bin\Debug\Clases.pdb
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Helpers\bin\Debug\es\mscorlib.resources.dll
-D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Helpers\bin\Debug\he\mscorlib.resources.dll
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Helpers\bin\Debug\normidna.nlp
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Helpers\bin\Debug\normnfc.nlp
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Helpers\bin\Debug\normnfd.nlp

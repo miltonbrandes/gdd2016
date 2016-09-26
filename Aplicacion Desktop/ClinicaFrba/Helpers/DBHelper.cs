@@ -23,7 +23,7 @@ namespace Helpers
         {
             if (parametros == null) parametros = new Dictionary<string, object>();
             DB.Open();
-            SqlCommand command = new SqlCommand("esquema." + SP, DB);
+            SqlCommand command = new SqlCommand("NOT_NULL." + SP, DB);
             command.CommandType = System.Data.CommandType.StoredProcedure;
             foreach (var parametro in parametros)
             {
@@ -38,7 +38,7 @@ namespace Helpers
         {
             if (parametros == null) parametros = new Dictionary<string, object>();
             DB.Open();
-            SqlCommand command = new SqlCommand("esquema." + SP, DB);
+            SqlCommand command = new SqlCommand("NOT_NULL." + SP, DB);
             command.CommandType = System.Data.CommandType.StoredProcedure;
             foreach (var parametro in parametros)
             {

@@ -16,11 +16,11 @@ namespace Clases
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public int Dni { get; set; }
-        public string TipoDocumento { get; set; }
+        public char TipoDocumento { get; set; }
         public string Mail { get; set; }
         public string Telefono { get; set; }
         public string Direccion { get; set; }
-        public string sexo { get; set; }
+        public char sexo { get; set; }
         public DateTime FechaNacimiento { get; set; }
     }
 }

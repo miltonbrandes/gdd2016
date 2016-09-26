@@ -33,7 +33,7 @@ namespace Helpers
         #endregion
 
         #region AFILIADO
-        public static Afiliado ToCliente(this SqlDataReader rdr)
+        public static Afiliado ToAfiliados(this SqlDataReader rdr)
         {
             return rdr.ToAfiliado().FirstOrDefault();
         }
@@ -44,7 +44,7 @@ namespace Helpers
             {
                 list.Add(new Afiliado()
                 {
-                    //Username = (string)rdr[""], definir si usuario va a tener id usuario
+                    Username = (string)rdr["usuario_id"], //definir si usuario va a tener id usuario
                     NroAfiliado = (int)rdr["afiliado_nro"],
                     Nombre = (string)rdr["afiliado_nombre"],
                     Apellido = (string)rdr["afiliado_apellido"],
@@ -60,6 +60,37 @@ namespace Helpers
                     CantBonosUsados = (int)rdr["afiliado_cant_bonos_consulta"],
                     Habilitado = (bool)rdr["afiliado_habilitado"],
                     CantidadHijos = (int)rdr["afiliado_cant_hijos"]
+                });
+            }
+            DBHelper.DB.Close();
+            return list;
+        }
+        #endregion
+
+        #region PROFESIONAL
+        public static Profesional ToProfesionales(this SqlDataReader rdr)
+        {
+            return rdr.ToProfesional().FirstOrDefault();
+        }
+        public static List<Profesional> ToProfesional(this SqlDataReader rdr)
+        {
+            List<Profesional> list = new List<Profesional>();
+            while (rdr.Read())
+            {
+                list.Add(new Profesional()
+                {
+                    Username = (string)rdr["usuario_id"], //definir si usuario va a tener id usuario
+                    Matricula = (int)rdr["profesional_matricula"],
+                    Nombre = (string)rdr["profesional_nombre"],
+                    Apellido = (string)rdr["profesional_apellido"],
+                    Dni = (int)rdr["profesional_dni"],
+                    TipoDocumento = (char)rdr["profesional_tipo_documento"],// tipo documento
+                    Mail = (string)rdr["profesional_mail"],
+                    Telefono = (string)rdr["profesional_telefono"],
+                    Direccion = (string)rdr["profesional_direccion"],
+                    //fecha = (DateTime)rdr["clie_fecha_nacimiento"], fecha nacimiento
+                    sexo = (char)rdr["profesional_sexo"],
+                  
                 });
             }
             DBHelper.DB.Close();
@@ -101,8 +132,8 @@ namespace Helpers
             {
                 list.Add(new Funcion()
                 {
-                    Id = (int)rdr["func_id"],
-                    Descripcion = (string)rdr["func_descripcion"]
+                    Id = (int)rdr["funcion_id"],
+                    Descripcion = (string)rdr["funcion_descripcion"]
                 });
             }
             DBHelper.DB.Close();

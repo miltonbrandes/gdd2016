@@ -68,6 +68,12 @@
     <Compile Include="Abm Profesional\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Usuario\homeAbmUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Usuario\homeAbmUsuario.Designer.cs">
+      <DependentUpon>homeAbmUsuario.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmRol\frmAlta.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,17 +86,17 @@
     <Compile Include="AbmRol\frmBaja.Designer.cs">
       <DependentUpon>frmBaja.cs</DependentUpon>
     </Compile>
+    <Compile Include="AbmRol\frmHome.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\frmHome.Designer.cs">
+      <DependentUpon>frmHome.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmRol\frmModificar.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AbmRol\frmModificar.Designer.cs">
       <DependentUpon>frmModificar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AbmRol\Home.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AbmRol\Home.Designer.cs">
-      <DependentUpon>Home.cs</DependentUpon>
     </Compile>
     <Compile Include="Cancelar Atencion\Form1.cs">
       <SubType>Form</SubType>
@@ -148,8 +154,20 @@
     <Compile Include="Registro Resultado\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="AbmRol\Home.resx">
-      <DependentUpon>Home.cs</DependentUpon>
+    <EmbeddedResource Include="Abm Usuario\homeAbmUsuario.resx">
+      <DependentUpon>homeAbmUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\frmAlta.resx">
+      <DependentUpon>frmAlta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\frmBaja.resx">
+      <DependentUpon>frmBaja.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\frmHome.resx">
+      <DependentUpon>frmHome.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\frmModificar.resx">
+      <DependentUpon>frmModificar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LogIn.resx">
       <DependentUpon>LogIn.cs</DependentUpon>

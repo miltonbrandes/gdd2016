@@ -20,7 +20,7 @@ namespace Clases
         public string Apellido { get; set; }
         public int Dni { get; set; }
         public char EstadoCivil { get; set; }
-        public Plan PlanUsuario { get; set; }
+        public int PlanUsuario { get; set; }
         public char Sexo { get; set; }
         public int CantidadHijos { get; set; }
         public bool Habilitado { get; set; }
