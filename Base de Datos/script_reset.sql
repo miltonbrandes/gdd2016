@@ -78,5 +78,35 @@ DROP procedure NOT_NULL.Usuario_LogIn
 
 DROP procedure NOT_NULL.UsuarioXRol_GetRolesByUser
 
+drop procedure NOT_NULL.Afiliado_Add
+drop procedure NOT_NULL.Afiliado_GetAll
+drop procedure NOT_NULL.Afiliado_GetAfiliadoSegunUsuario
+drop procedure NOT_NULL.Afiliado_GetByDni
+drop procedure NOT_NULL.Afiliado_GetByFilters
+drop procedure NOT_NULL.Afiliado_Modify
+drop procedure NOT_NULL.Bonos_GetBonosSegunAfiliado
+drop procedure NOT_NULL.Funciones_GetAll
+drop procedure NOT_NULL.Profesional_Add
+drop procedure NOT_NULL.Profesional_GetByDni
+drop procedure NOT_NULL.Profesional_GetByFilters
+drop procedure NOT_NULL.Profesional_GetProfesionalSegunUsuario
+drop procedure NOT_NULL.Profesional_Modify
+drop procedure NOT_NULL.Profesionales_GetAll
+drop procedure NOT_NULL.Rol_Activate
+drop procedure NOT_NULL.Rol_Add
+drop procedure NOT_NULL.Rol_Deactivate
+drop procedure NOT_NULL.Rol_Exists
+drop procedure NOT_NULL.Rol_GetAll
+drop procedure NOT_NULL.Rol_GetByName
+drop procedure NOT_NULL.Rol_ModifyName
+drop procedure NOT_NULL.RolXFuncion_Add
+drop procedure NOT_NULL.RolXFuncion_GetFunByRol
+drop procedure NOT_NULL.RolXFuncion_Remove
+drop procedure NOT_NULL.Usuario_Activo
+drop procedure NOT_NULL.Usuario_Add
+drop procedure NOT_NULL.Usuario_CambiarContraseña
+drop procedure NOT_NULL.Usuario_Habilitar
+drop procedure NOT_NULL.Usuario_Inhabilitar
+
 DROP SCHEMA NOT_NULL
 GO

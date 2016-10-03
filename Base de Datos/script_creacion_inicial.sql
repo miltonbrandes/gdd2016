@@ -175,12 +175,28 @@ GO
 ALTER TABLE [NOT_NULL].[profesional] CHECK CONSTRAINT [FK_profesional_usuario]
 GO
 
+
+create trigger NOT_NULL.crear_usuario_profesional on NOT_NULL.profesional for insert
+as
+Begin
+	--declare @afiliado_usuario varchar(50)
+	insert into NOT_NULL.usuario (usuario_id, usuario_cant_intentos, usuario_descripcion, usuario_password, usuario_habilitado)
+	select profesional_nombre + profesional_apellido + CAST(profesional_dni as varchar(8)), 0, 'Profesional',HASHBYTES('SHA2_256', 'profesional'), 1 from inserted where inserted.profesional_nombre is not null and inserted.profesional_apellido is not null and inserted.profesional_dni is not null
+End
+go
+
+
 insert into NOT_NULL.profesional
 (profesional_nombre, profesional_apellido, profesional_dni, profesional_direccion, profesional_telefono, profesional_mail, profesional_fecha_nacimiento, profesional_sexo, profesional_tipo_doc)
 select Medico_Nombre, Medico_Apellido, Medico_Dni, Medico_Direccion, Medico_Telefono, Medico_Mail, Medico_Fecha_Nac, 'N', 'D' 
 	from gd_esquema.Maestra
 	where Medico_Nombre <> 'NULL'
 	group by Medico_Nombre, Medico_Apellido, Medico_Dni, Medico_Direccion, Medico_Telefono, Medico_Mail, Medico_Fecha_Nac 
+go
+
+insert into NOT_NULL.rolXusuario (usuario_id, rol_id, rolXusuario_habilitado) (select profesional_nombre + profesional_apellido + CAST(profesional_dni as varchar(8)) from NOT_NULL.profesional)
+go
+update NOT_NULL.profesional set NOT_NULL.profesional.usuario_id = profesional_nombre + profesional_apellido + cast(profesional_dni as varchar(8)) 
 go
 
 /*MEDICO X ESPECIALIDAD*/
@@ -240,7 +256,7 @@ go
 
 create table NOT_NULL.afiliado (
 	 afiliado_nro numeric(18,0) identity(101,100) primary key, 
-	 usuario_id varchar(50) foreign key references NOT_NULL.usuario(usuario_id),
+	 usuario_id varchar(50) NULL foreign key references NOT_NULL.usuario(usuario_id),
 	 afiliado_nombre varchar(255),
 	 afiliado_apellido varchar(255),
 	 afiliado_dni numeric(18,0),
@@ -252,7 +268,6 @@ create table NOT_NULL.afiliado (
 	 afiliado_direccion varchar(255),
 	 afiliado_cant_hijos numeric(2,0),
 	 afiliado_plan numeric(18,0) foreign key references NOT_NULL.plan_medico(plan_id),
-	 afiliado_habilitado character(1),
 	 afiliado_cant_bonos_consulta numeric(18,0)
 )
 go
@@ -283,14 +298,29 @@ Begin
 End
 go
 
+create trigger NOT_NULL.crear_usuario on NOT_NULL.afiliado for insert
+as
+Begin
+	--declare @afiliado_usuario varchar(50)
+	insert into NOT_NULL.usuario (usuario_id, usuario_cant_intentos, usuario_descripcion, usuario_password, usuario_habilitado)
+	select afiliado_nombre + afiliado_apellido + CAST(afiliado_dni as varchar(8)), 0, 'Afiliado',HASHBYTES('SHA2_256', 'afiliado'), 1 from inserted where inserted.afiliado_nombre is not null and inserted.afiliado_apellido is not null and inserted.afiliado_dni is not null
+End
+go
+
 
 insert into NOT_NULL.afiliado
-(afiliado_nombre, afiliado_apellido, afiliado_dni, afiliado_estado_civil, 
-afiliado_sexo, afiliado_fecha_nac, afiliado_telefono, afiliado_mail, afiliado_direccion, afiliado_cant_hijos, afiliado_cant_bonos_consulta, afiliado_habilitado, afiliado_plan)
-select Paciente_Nombre, Paciente_Apellido, Paciente_Dni, 'N', 'N', Paciente_Fecha_Nac, Paciente_Telefono, Paciente_Mail, Paciente_Direccion, 0, 0, 'S', Plan_Med_Codigo 
+(afiliado_nombre, afiliado_apellido,  afiliado_dni, afiliado_estado_civil, 
+afiliado_sexo, afiliado_fecha_nac, afiliado_telefono, afiliado_mail, afiliado_direccion, afiliado_cant_hijos, afiliado_cant_bonos_consulta, afiliado_plan)
+select Paciente_Nombre, Paciente_Apellido,Paciente_Dni, 'N', 'N', Paciente_Fecha_Nac, Paciente_Telefono, Paciente_Mail, Paciente_Direccion, 0, 0, Plan_Med_Codigo 
 	from gd_esquema.Maestra
 	group by Paciente_Nombre, Paciente_Apellido, Paciente_Dni, Paciente_Fecha_Nac, Paciente_Telefono, Paciente_Mail, Paciente_Direccion, Plan_Med_Codigo
 go
+
+update NOT_NULL.afiliado set usuario_id = afiliado_nombre + afiliado_apellido + cast(afiliado_dni as varchar(8))
+go
+
+/*COMPRA BONO*/
+--create table NOT_NULL.compra_bono
 
 /*INTENTOS USUARIO*/
 CREATE PROCEDURE NOT_NULL.Usuario_SumarIntento (@Username varchar(50))
@@ -469,8 +499,8 @@ End
 go
 
 
-exec NOT_NULL.contarBonos		-- comentar esto para q no tarde
-go
+--exec NOT_NULL.contarBonos		-- comentar esto para q no tarde
+--go
 
 
 create trigger NOT_NULL.aumentar_cantidad_bonos_afiliado on NOT_NULL.bono_consulta after insert
@@ -542,7 +572,7 @@ GO
   GO
   --CREO UN USUARIO PROFESIONAL PARA EL ADMIN
   INSERT INTO NOT_NULL.profesional(profesional_nombre, profesional_apellido, profesional_dni, profesional_tipo_doc, profesional_telefono, profesional_direccion, profesional_fecha_nacimiento, profesional_sexo, profesional_mail,  usuario_id)
-  VALUES ('admin', 'istrador', 32405354, 'D',  '+5491168489235', 'Avenida Leandro N. Alem 5458 piso 18 depto Q 1558', CONVERT(DATETIME,1995-07-12), 'M','admin@gdd.com', 'admin')
+  VALUES ('admin', 'istrador', 32405353, 'D',  '+5491168489235', 'Avenida Leandro N. Alem 5458 piso 18 depto Q 1558', CONVERT(DATETIME,1995-07-12), 'M','admin@gdd.com', 'admin')
   GO
   --LOGIN PARA LOS USUARIOS
   CREATE PROCEDURE NOT_NULL.Usuario_LogIn (@username varchar(20), @password varchar(20))
@@ -685,12 +715,12 @@ GO
   GO
 
   --CREAR AFILIADO
-  CREATE PROCEDURE NOT_NULL.Afiliado_Add(@Username varchar(50), @Nombre varchar(50),@Apellido varchar(50), @Dni numeric(8,0), @Mail varchar(50),@Telefono varchar(20), @Direccion varchar(50), @CantHijos numeric(2,0),@CantBonos numeric(18,0), @EstadoCivil char(1), @Fecha datetime, @Habilitado bit, @Plan numeric(18,0), @Sexo char(1))
+  CREATE PROCEDURE NOT_NULL.Afiliado_Add(@Username varchar(50), @Nombre varchar(50),@Apellido varchar(50), @Dni numeric(8,0), @Mail varchar(50),@Telefono varchar(20), @Direccion varchar(50), @CantHijos numeric(2,0),@CantBonos numeric(18,0), @EstadoCivil char(1), @Fecha datetime, @Plan numeric(18,0), @Sexo char(1))
   AS
 	BEGIN
 	SET NOCOUNT ON;
-		INSERT INTO NOT_NULL.afiliado(usuario_id,afiliado_nombre,afiliado_apellido,afiliado_dni,afiliado_mail,afiliado_telefono,afiliado_direccion,afiliado_cant_hijos,afiliado_cant_bonos_consulta, afiliado_estado_civil, afiliado_fecha_nac, afiliado_habilitado, afiliado_plan, afiliado_sexo)
-		VALUES (@Username, @Nombre, @Apellido, @Dni, @Mail, @Telefono,@Direccion, @CantHijos, @CantBonos, @EstadoCivil, @Fecha, @Habilitado, @Plan, @Sexo)
+		INSERT INTO NOT_NULL.afiliado(usuario_id,afiliado_nombre,afiliado_apellido,afiliado_dni,afiliado_mail,afiliado_telefono,afiliado_direccion,afiliado_cant_hijos,afiliado_cant_bonos_consulta, afiliado_estado_civil, afiliado_fecha_nac, afiliado_plan, afiliado_sexo)
+		VALUES (@Username, @Nombre, @Apellido, @Dni, @Mail, @Telefono,@Direccion, @CantHijos, @CantBonos, @EstadoCivil, @Fecha, @Plan, @Sexo)
 		INSERT INTO NOT_NULL.rolXusuario(usuario_id, rol_id)
 		VALUES (@Username, 2)
 	END
@@ -709,12 +739,12 @@ GO
 
 
   --MODIFICAR AFILIADO
-  CREATE PROCEDURE NOT_NULL.Afiliado_Modify(@Username varchar(50), @Nombre varchar(50),@Apellido varchar(50), @Dni numeric(8,0), @Mail varchar(50),@Telefono varchar(20), @Direccion varchar(50), @CantHijos numeric(2,0),@CantBonos numeric(18,0), @EstadoCivil char(1), @Fecha datetime, @Habilitado bit, @Plan numeric(18,0), @Sexo char(1))
+  CREATE PROCEDURE NOT_NULL.Afiliado_Modify(@Username varchar(50), @Nombre varchar(50),@Apellido varchar(50), @Dni numeric(8,0), @Mail varchar(50),@Telefono varchar(20), @Direccion varchar(50), @CantHijos numeric(2,0),@CantBonos numeric(18,0), @EstadoCivil char(1), @Fecha datetime,@Plan numeric(18,0), @Sexo char(1))
   AS
 	BEGIN
 	SET NOCOUNT ON;
 		UPDATE NOT_NULL.afiliado
-		SET usuario_id = @Username,afiliado_nombre=@Nombre,afiliado_apellido=@Apellido,afiliado_dni=@Dni,afiliado_mail=@Mail,afiliado_telefono=@Telefono,afiliado_direccion=@Direccion,afiliado_cant_hijos=@CantHijos,afiliado_cant_bonos_consulta=@CantBonos, afiliado_estado_civil=@EstadoCivil, afiliado_fecha_nac=@Fecha, afiliado_habilitado=@Habilitado, afiliado_plan=@Plan, afiliado_sexo=@Sexo
+		SET usuario_id = @Username,afiliado_nombre=@Nombre,afiliado_apellido=@Apellido,afiliado_dni=@Dni,afiliado_mail=@Mail,afiliado_telefono=@Telefono,afiliado_direccion=@Direccion,afiliado_cant_hijos=@CantHijos,afiliado_cant_bonos_consulta=@CantBonos, afiliado_estado_civil=@EstadoCivil, afiliado_fecha_nac=@Fecha,  afiliado_plan=@Plan, afiliado_sexo=@Sexo
 		WHERE usuario_id = @Username
 	END
   GO
