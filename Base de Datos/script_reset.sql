@@ -107,6 +107,6 @@ drop procedure NOT_NULL.Usuario_Add
 drop procedure NOT_NULL.Usuario_CambiarContraseña
 drop procedure NOT_NULL.Usuario_Habilitar
 drop procedure NOT_NULL.Usuario_Inhabilitar
-
+drop procedure NOT_NULL.RolXFuncion_Active
 DROP SCHEMA NOT_NULL
 GO

@@ -56,6 +56,7 @@ namespace ClinicaFrba.AbmRol
                             if (funcionesXRol.Exists(x => x.Descripcion == nombre))
                             {
                                 DBHelper.ExecuteNonQuery("RolXFuncion_Remove", new Dictionary<string, object>() { { "@rol", ((Rol)cmbRoles.SelectedItem).Id }, { "@funcion", funciones.First(x => x.Descripcion == nombre).Id } });
+            //                    lstFunciones.CheckedItems = false;
                             }
                         }
                     }
@@ -93,7 +94,7 @@ namespace ClinicaFrba.AbmRol
         {
             lstFunciones.Enabled = true;
             var rol = (Rol)cmbRoles.SelectedItem;
-            funcionesXRol = DBHelper.ExecuteReader("RolXFuncion_GetFunByRol", new Dictionary<string, object>() { { "@rol", rol.Id } }).ToFunciones();
+            funcionesXRol = DBHelper.ExecuteReader("RolXFuncion_Active", new Dictionary<string, object>() { { "@rol", rol.Descripcion } }).ToFunciones();
             lstFunciones.Items.Clear();
             foreach (var fun in funciones)
             {

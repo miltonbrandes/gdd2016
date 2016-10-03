@@ -202,9 +202,9 @@
       <Project>{6dc12838-6697-4cb1-a808-8b2f091ca3e4}</Project>
       <Name>Clases</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Helpers\Helpers.csproj">
+    <ProjectReference Include="..\Helpers\BaseDatos.csproj">
       <Project>{7e6c5163-9514-4af8-b63b-8d4343f8f0c0}</Project>
-      <Name>Helpers</Name>
+      <Name>BaseDatos</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

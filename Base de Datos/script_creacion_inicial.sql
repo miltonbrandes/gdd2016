@@ -194,8 +194,6 @@ select Medico_Nombre, Medico_Apellido, Medico_Dni, Medico_Direccion, Medico_Tele
 	group by Medico_Nombre, Medico_Apellido, Medico_Dni, Medico_Direccion, Medico_Telefono, Medico_Mail, Medico_Fecha_Nac 
 go
 
-insert into NOT_NULL.rolXusuario (usuario_id, rol_id, rolXusuario_habilitado) (select profesional_nombre + profesional_apellido + CAST(profesional_dni as varchar(8)) from NOT_NULL.profesional)
-go
 update NOT_NULL.profesional set NOT_NULL.profesional.usuario_id = profesional_nombre + profesional_apellido + cast(profesional_dni as varchar(8)) 
 go
 
@@ -606,7 +604,7 @@ GO
   AS
 	BEGIN
 		SET NOCOUNT ON;
-		SELECT * FROM NOT_NULL.Funcion WHERE funcion_id in (SELECT funcion_id FROM NOT_NULL.funcionXrol WHERE rol_id = @rol)
+		SELECT * FROM NOT_NULL.Funcion WHERE funcion_id in (SELECT funcion_id FROM NOT_NULL.funcionXrol WHERE rol_id = @rol and funcionXrol_activo = 1)
 	END
   GO
 
@@ -639,10 +637,20 @@ GO
 			VALUES (@rol, @funcion)
 		ELSE
 			UPDATE NOT_NULL.funcionXrol
-			SET funcionXrol_activo=0 WHERE funcion_id = @funcion AND rol_id = @rol  
+			SET funcionXrol_activo=1 WHERE funcion_id = @funcion AND rol_id = @rol  
 	END
   GO
 
+  --OBTENGO TODOS LOS ROLES DE UNA FUNCION QUE ESTAN ACTIVOS
+  CREATE PROCEDURE NOT_NULL.RolXFuncion_Active(@rol varchar(50))
+  AS
+	BEGIN
+		SET NOCOUNT ON;
+		SELECT funcion.funcion_id, funcion_descripcion
+		FROM NOT_NULL.funcion, NOT_NULL.funcionXrol, NOT_NULL.rol where NOT_NULL.funcionXrol.funcionXrol_activo = 1 and NOT_NULL.rol.rol_descripcion = @rol and NOT_NULL.funcionXrol.rol_id = NOT_NULL.rol.rol_id  and NOT_NULL.funcion.funcion_id = NOT_NULL.funcionXrol.funcion_id
+		group by funcion.funcion_id, funcion_descripcion
+	END
+  GO
   --SACARLE UNA FUNCION A UN ROL
   CREATE PROCEDURE NOT_NULL.RolXFuncion_Remove(@rol int, @funcion int)
   AS
@@ -909,6 +917,7 @@ GO
 	SET NOCOUNT ON;
 		UPDATE NOT_NULL.Rol
 		SET rol_habilitado = 0 WHERE rol_id = @rol
+		--Agrego aca para que cuando se deshabilite un rol tambien se deshabiliten los usuarios que tienen ese rol
 		UPDATE NOT_NULL.rolXusuario
 		SET rolXusuario_habilitado = 0 WHERE rol_id = @rol
 	END

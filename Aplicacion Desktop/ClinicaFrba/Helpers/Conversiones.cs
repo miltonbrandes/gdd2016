@@ -4,9 +4,10 @@ using System.Linq;
 using System.Data.SqlClient;
 using Clases;
 
+
 namespace Helpers
 {
-    public static class ConversionHelper
+    public static class Conversiones
     {
         #region USUARIO
         public static Usuario ToUsuario(this SqlDataReader rdr)
@@ -133,13 +134,15 @@ namespace Helpers
                 list.Add(new Funcion()
                 {
                     Id = (int)rdr["funcion_id"],
-                    Descripcion = (string)rdr["funcion_descripcion"]
+                    Descripcion = (string)rdr["funcion_descripcion"],
+                    //Activo = (bool)rdr["funcionXrol_activo"]
                 });
             }
             DBHelper.DB.Close();
             return list;
         }
         #endregion
+
 
     }
 }

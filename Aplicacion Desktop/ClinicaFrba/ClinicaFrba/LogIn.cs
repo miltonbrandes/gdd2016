@@ -98,7 +98,7 @@ namespace ClinicaFrba
             {
                 Main main = new Main(usuario, (Rol)cmbRol.SelectedItem);
                 main.Show();
-                Hide();
+                this.Hide();
             }
         }
     }
