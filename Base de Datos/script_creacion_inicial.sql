@@ -904,8 +904,6 @@ GO
 	SET NOCOUNT ON;
 		UPDATE NOT_NULL.Rol
 		SET rol_habilitado = 1 WHERE rol_id = @rol
-		UPDATE NOT_NULL.rolXusuario
-		SET rolXusuario_habilitado = 1 WHERE rol_id = @rol
 	END
   GO
 
