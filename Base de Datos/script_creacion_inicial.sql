@@ -577,7 +577,7 @@ GO
   AS
   BEGIN
    SET NOCOUNT ON;
-   SELECT * FROM NOT_NULL.Usuario WHERE usuario_id = @username AND usuario_password =  HASHBYTES('SHA2_256', @password) And usuario_habilitado = 1
+   SELECT * FROM NOT_NULL.Usuario WHERE usuario_id = @username AND usuario_password =  HASHBYTES('SHA2_256', @password)
   END
   GO
   
