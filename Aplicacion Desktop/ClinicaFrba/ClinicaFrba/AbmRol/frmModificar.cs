@@ -36,7 +36,17 @@ namespace ClinicaFrba.AbmRol
                 {
                     if (txtNombre.Text != rolAsignado.Descripcion.Trim())
                     {
-                        DBHelper.ExecuteNonQuery("Rol_ModifyName", new Dictionary<string, object>() { { "@nombre", txtNombre.Text }, { "@id", rolAsignado.Id } });
+                        var rol = DBHelper.ExecuteReader("Rol_Exists", new Dictionary<string, object>() { { "@rol", txtNombre.Text } }).ToRol();
+                        if (rol == null)
+                        {
+                            DBHelper.ExecuteNonQuery("Rol_ModifyName", new Dictionary<string, object>() { { "@nombre", txtNombre.Text }, { "@id", rolAsignado.Id } });
+                        }
+                        else
+                        {
+                            MessageBox.Show("Ya existe el rol", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            txtNombre.Focus();
+                            return;
+                        }
                     }
 
                     foreach (var item in lstFunciones.Items)
