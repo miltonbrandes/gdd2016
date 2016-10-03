@@ -74,8 +74,14 @@ namespace ClinicaFrba.AbmRol
 
         private void frmAlta_FormClosing_1(object sender, FormClosingEventArgs e)
         {
-            frmHome home = new frmHome();
-            home.Show();
+            FormCollection fc = Application.OpenForms;
+            foreach (Form frm in fc)
+            {
+                if (frm.Name == "frmHome")
+                {
+                    frm.Show();
+                }
+            }
             Hide();
         }
     }

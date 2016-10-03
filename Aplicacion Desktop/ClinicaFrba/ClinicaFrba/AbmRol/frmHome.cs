@@ -8,41 +8,47 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClinicaFrba;
+using Clases;
 
 namespace ClinicaFrba.AbmRol
 {
     public partial class frmHome : Form
     {
-        public frmHome()
+        public Usuario usua;
+        public Rol rolactual;
+        public frmHome(Usuario us, Rol rol)
         {
+
             InitializeComponent();
+            rolactual = rol;
+            usua = us;
         }
 
         private void frmHome_FormClosed(object sender, FormClosedEventArgs e)
         {
-            this.Hide();
-            FormCollection fc = Application.OpenForms;
-            foreach (Form frm in fc)
-            {
-                if (frm.Name == "Main")
-                {
-                    ClinicaFrba.Main.load++;
-                    //frm.Activate();
-                    frm.Show();
-                }
-            }
+            Main princ = new Main(usua, rolactual);
+            Hide();
+            princ.Show();
         }
 
         private void frmHome_Load(object sender, EventArgs e)
         {
+            Main acerrar = null;
             FormCollection fc = Application.OpenForms;
             foreach (Form frm in fc)
             {
                 if (frm.Name == "Main")
                 {
-                    frm.Hide();
+                    acerrar = (Main)frm;
+                    
                 }
             }
+            if (acerrar != null)
+            {
+                acerrar.Close();
+            }
+
+            
         }
 
         private void button1_Click_1(object sender, EventArgs e)

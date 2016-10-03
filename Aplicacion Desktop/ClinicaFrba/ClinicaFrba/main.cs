@@ -74,7 +74,7 @@ namespace ClinicaFrba
 
 
         public static void ABMRol(object sender, EventArgs e) {
-            var home = new AbmRol.frmHome();
+            var home = new AbmRol.frmHome(usuario, rol);
             home.Show();
           
         }
@@ -142,58 +142,13 @@ namespace ClinicaFrba
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Application.Exit();
+            //Application.Exit();
         }
 
     
         private void Main_Activated(object sender, EventArgs e)
         {
-            /*if (load > 1)
-            {
-                int tamanio = 0;
-                int cantbot = 0;
-                var funciones = DBHelper.ExecuteReader("RolXFuncion_GetFunByRol", new Dictionary<string, object>() { { "@rol", rol.Id } }).ToFunciones();
-                var botones = new List<Control>();
-                //var peopleInOrder = people.OrderBy(person => person.LastName);
-                
-                //Obtengo los botones de la vista
-                int j = 0;
-                foreach (Control control in Controls)
-                {
-                    if (control.GetType() == typeof(Button))
-                    {
-                        tamanio = control.Height;
-                        botones.Add(control);
-                        botones[j].Visible = false;
-                        j++;
-                    }
-                }
-               // botones.Reverse();
-                botones.OrderBy(boton => boton.Location.Y);
-                int i = 0;
-                foreach (Funcion fun in funciones)
-                {
-                    cantbot++;
-                    botones[i].Visible = true;
-                    botones[i].Text = fun.Descripcion;
-                    botones[i].Click += dicFunciones[fun.Id];
-                    
-                    i++;
-                }
-                botones.OrderBy(boton => boton.Visible);
-                int h = 0;
-                foreach (Control control in Controls)
-                {
-                    if (control.GetType() == typeof(Button))
-                    {
-                        control.Location = new Point(12, control.Height * h + 12); 
-                        control.Margin = new Padding(0, 0, 0, 10);
-                         h++;
-                    }
-                }
-                
-                this.Size = new Size(this.Width, (tamanio * cantbot) + 120);*/
-            //}
+        
         }
     }
 }
