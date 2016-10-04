@@ -275,10 +275,9 @@ Begin
 	declare @afiliado_nro numeric(18,0)
 	select @afiliado_nro = afiliado_nro from inserted
 	set @afiliado_nro = ROUND(@afiliado_nro / 100, 0)
-
-	update NOT_NULL.afiliado set afiliado_cant_hijos = afiliado_cant_hijos + 1
-		where ROUND(afiliado_nro/100, 0) = @afiliado_nro
-		and afiliado_nro - 1 = ROUND(afiliado_nro/100, 0)*100
+	update NOT_NULL.afiliado set afiliado_cant_hijos = afiliado.afiliado_cant_hijos + 1
+		where ROUND(afiliado.afiliado_nro/100, 0) = @afiliado_nro
+			and afiliado.afiliado_nro - 1 = ROUND(afiliado.afiliado_nro/100, 0)*100
 End
 go
 
@@ -303,7 +302,6 @@ Begin
 End
 go
 
-
 insert into NOT_NULL.afiliado
 (afiliado_nombre, afiliado_apellido,  afiliado_dni, afiliado_estado_civil, 
 afiliado_sexo, afiliado_fecha_nac, afiliado_telefono, afiliado_mail, afiliado_direccion, afiliado_cant_hijos, afiliado_plan)
@@ -315,13 +313,7 @@ go
 update NOT_NULL.afiliado set usuario_id = afiliado_nombre + afiliado_apellido + cast(afiliado_dni as varchar(8))
 go
 
-/*		COMPRA BONO		*/
-create table NOT_NULL.compra_bono(
-	compra_id numeric(18,0) identity(10,1) primary key,
-	compra_cantidad int,
-	compra_precio int,
-	compra_afiliado numeric(18,0) foreign key references NOT_NULL.afiliado(afiliado_nro)
-)
+update NOT_NULL.afiliado set afiliado_cant_hijos = 0
 go
 
 /*INTENTOS USUARIO*/
@@ -370,7 +362,7 @@ CREATE TABLE NOT_NULL.turno(
 	afiliado_nro numeric(18, 0) NOT NULL,
 	turno_fecha datetime NULL,
 	turno_estado char(1) NULL,
-	turno_hora_llegada time(7) NULL,
+	turno_hora_llegada datetime NULL,
 	turno_sintomas varchar(255) NULL,
 	turno_enfermedades varchar(255) NULL,
 	turno_medico_especialidad_id int NULL,
@@ -394,17 +386,13 @@ GO
 ALTER TABLE NOT_NULL.turno CHECK CONSTRAINT [FK_NOT_NULL.turno_medicoXespecialidad]
 GO
 
-
-
-insert into NOT_NULL.turno(turno_nro, afiliado_nro, turno_fecha, turno_estado, /*turno_hora_llegada,*/ turno_sintomas , turno_enfermedades, turno_medico_especialidad_id)
-select Turno_Numero, afiliado_nro, Turno_Fecha, 'N', Consulta_Sintomas, Consulta_Enfermedades, medxesp_id
+insert into NOT_NULL.turno(turno_nro, afiliado_nro, turno_fecha, turno_estado, turno_hora_llegada, turno_sintomas , turno_enfermedades, turno_medico_especialidad_id)
+select Turno_Numero, afiliado_nro, Turno_Fecha, 'N', Bono_Consulta_Fecha_Impresion, Consulta_Sintomas, Consulta_Enfermedades, medxesp_id
 	from gd_esquema.Maestra, NOT_NULL.afiliado, NOT_NULL.medicoXespecialidad, NOT_NULL.profesional
 	where afiliado_dni = Paciente_Dni and medxesp_especialidad = Especialidad_Codigo and medXesp_profesional = profesional_matricula
 		and profesional_dni = Medico_Dni
 		and Bono_Consulta_Fecha_Impresion is not null and Bono_Consulta_Numero is not null and Turno_Numero is not null  order by Turno_Numero 
 go
-
-
 
 
 /*CREAR TABLA CANCELACION TURNOS*/
@@ -510,8 +498,35 @@ go
 update NOT_NULL.bono_consulta set bono_turno = Turno_Numero from gd_esquema.Maestra where bono_id = Bono_Consulta_Numero and Compra_Bono_Fecha is null
 go
 
-exec NOT_NULL.asignar_nro_bonos_afiliado
+exec NOT_NULL.asignar_nro_bonos_afiliado																				/*		Comentar para que no tarde		*/
 go
+
+
+/*		COMPRA BONO		*/
+create table NOT_NULL.compra_bono(
+	compra_id numeric(18,0) identity(1,1) primary key,
+	compra_cantidad int,
+	compra_precio int,
+	compra_afiliado numeric(18,0) foreign key references NOT_NULL.afiliado(afiliado_nro)
+)
+go
+
+insert into NOT_NULL.compra_bono (compra_cantidad, compra_afiliado)
+	select count(Compra_Bono_Fecha), afiliado_nro
+	from gd_esquema.Maestra, NOT_NULL.afiliado
+	where afiliado_dni = Paciente_Dni and
+		Compra_Bono_Fecha is not null and
+		Turno_Numero is null and Compra_Bono_Fecha = Bono_Consulta_Fecha_Impresion
+	group by Compra_Bono_Fecha, afiliado_nro
+
+
+
+
+
+
+
+
+
 
 /*AGREGO USUARIOS, ROLES y FUNCIONES*/
 INSERT INTO NOT_NULL.Funcion(funcion_descripcion)

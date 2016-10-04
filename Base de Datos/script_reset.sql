@@ -62,7 +62,6 @@ GO
 DROP TABLE NOT_NULL.plan_medico
 GO
 
-
 DROP procedure NOT_NULL.asignar_nro_bonos_afiliado
 GO
 
