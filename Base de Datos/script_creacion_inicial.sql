@@ -265,8 +265,7 @@ create table NOT_NULL.afiliado (
 	 afiliado_mail varchar(255),
 	 afiliado_direccion varchar(255),
 	 afiliado_cant_hijos numeric(2,0),
-	 afiliado_plan numeric(18,0) foreign key references NOT_NULL.plan_medico(plan_id),
-	 afiliado_cant_bonos_consulta numeric(18,0)
+	 afiliado_plan numeric(18,0) foreign key references NOT_NULL.plan_medico(plan_id)
 )
 go
 
@@ -299,7 +298,6 @@ go
 create trigger NOT_NULL.crear_usuario on NOT_NULL.afiliado for insert
 as
 Begin
-	--declare @afiliado_usuario varchar(50)
 	insert into NOT_NULL.usuario (usuario_id, usuario_cant_intentos, usuario_descripcion, usuario_password, usuario_habilitado)
 	select afiliado_nombre + afiliado_apellido + CAST(afiliado_dni as varchar(8)), 0, 'Afiliado',HASHBYTES('SHA2_256', 'afiliado'), 1 from inserted where inserted.afiliado_nombre is not null and inserted.afiliado_apellido is not null and inserted.afiliado_dni is not null
 End
@@ -308,8 +306,8 @@ go
 
 insert into NOT_NULL.afiliado
 (afiliado_nombre, afiliado_apellido,  afiliado_dni, afiliado_estado_civil, 
-afiliado_sexo, afiliado_fecha_nac, afiliado_telefono, afiliado_mail, afiliado_direccion, afiliado_cant_hijos, afiliado_cant_bonos_consulta, afiliado_plan)
-select Paciente_Nombre, Paciente_Apellido,Paciente_Dni, 'N', 'N', Paciente_Fecha_Nac, Paciente_Telefono, Paciente_Mail, Paciente_Direccion, 0, 0, Plan_Med_Codigo 
+afiliado_sexo, afiliado_fecha_nac, afiliado_telefono, afiliado_mail, afiliado_direccion, afiliado_cant_hijos, afiliado_plan)
+select Paciente_Nombre, Paciente_Apellido,Paciente_Dni, 'N', 'N', Paciente_Fecha_Nac, Paciente_Telefono, Paciente_Mail, Paciente_Direccion, 0, Plan_Med_Codigo 
 	from gd_esquema.Maestra
 	group by Paciente_Nombre, Paciente_Apellido, Paciente_Dni, Paciente_Fecha_Nac, Paciente_Telefono, Paciente_Mail, Paciente_Direccion, Plan_Med_Codigo
 go
@@ -317,8 +315,14 @@ go
 update NOT_NULL.afiliado set usuario_id = afiliado_nombre + afiliado_apellido + cast(afiliado_dni as varchar(8))
 go
 
-/*COMPRA BONO*/
---create table NOT_NULL.compra_bono
+/*		COMPRA BONO		*/
+create table NOT_NULL.compra_bono(
+	compra_id numeric(18,0) identity(10,1) primary key,
+	compra_cantidad int,
+	compra_precio int,
+	compra_afiliado numeric(18,0) foreign key references NOT_NULL.afiliado(afiliado_nro)
+)
+go
 
 /*INTENTOS USUARIO*/
 CREATE PROCEDURE NOT_NULL.Usuario_SumarIntento (@Username varchar(50))
@@ -462,11 +466,41 @@ create table NOT_NULL.bono_consulta (
 	 bono_plan numeric(18,0) foreign key references NOT_NULL.plan_medico(plan_id),
 	 bono_turno numeric(18,0) foreign key references  NOT_NULL.turno(turno_nro),
 	 bono_fecha_compra datetime,
-	 bono_utilizado character(1)
+	 bono_utilizado character(1),
+	 bono_nro_bono_afiliado numeric(18,0)
 )
 go
 
-insert into NOT_NULL.bono_consulta (bono_id, bono_afiliado, bono_plan, bono_fecha_compra, bono_utilizado)
+create procedure NOT_NULL.asignar_nro_bonos_afiliado
+as
+Begin
+	set nocount on
+	declare @bono numeric(18,0)
+	declare @afiliado numeric(18,0)
+	declare @afiliado_estatico numeric(18,0)
+	set @afiliado_estatico = 0
+	declare @cantidadAcum numeric(18,0)
+	set @cantidadAcum = 0
+	declare unCursor cursor for select bono_id, bono_afiliado from NOT_NULL.bono_consulta order by bono_afiliado, bono_id
+	open unCursor
+	fetch next from unCursor into @bono, @afiliado
+	while @@FETCH_STATUS = 0
+	Begin
+		if(@afiliado_estatico <> @afiliado)
+		Begin
+			set @afiliado_estatico = @afiliado
+			set @cantidadAcum = 0
+		End
+		set @cantidadAcum = @cantidadAcum + 1
+		update NOT_NULL.bono_consulta set bono_nro_bono_afiliado = @cantidadAcum where bono_id = @bono
+		fetch next from unCursor into @bono, @afiliado
+	End
+	close unCursor
+	deallocate unCursor
+End
+go
+
+insert into NOT_NULL.bono_consulta (bono_id, bono_afiliado, bono_plan, bono_fecha_compra, bono_utilizado )
 select Bono_Consulta_Numero, afiliado_nro, Plan_Med_Codigo, Compra_Bono_Fecha, 'S'
 	from gd_esquema.Maestra, NOT_NULL.afiliado
 	where Bono_Consulta_Numero is not null and Compra_Bono_Fecha is not null and afiliado_dni = Paciente_Dni
@@ -474,44 +508,9 @@ select Bono_Consulta_Numero, afiliado_nro, Plan_Med_Codigo, Compra_Bono_Fecha, '
 go
 
 update NOT_NULL.bono_consulta set bono_turno = Turno_Numero from gd_esquema.Maestra where bono_id = Bono_Consulta_Numero and Compra_Bono_Fecha is null
-
-SET NOCOUNT ON 
 go
 
-create procedure NOT_NULL.contarBonos
-as
-Begin
-	declare @afiliado numeric(18,0)
-	declare unCursor cursor for select afiliado_nro from NOT_NULL.afiliado
-	open unCursor
-	fetch next from unCursor into @afiliado
-	while @@FETCH_STATUS = 0
-	Begin
-		update NOT_NULL.afiliado set afiliado_cant_bonos_consulta = (select count(*) from NOT_NULL.bono_consulta where bono_afiliado = @afiliado)
-			where afiliado_nro = @afiliado
-		fetch next from unCursor into @afiliado
-	End
-	close unCursor
-	deallocate unCursor
-End
-go
-
-
---exec NOT_NULL.contarBonos		-- comentar esto para q no tarde
---go
-
-
-create trigger NOT_NULL.aumentar_cantidad_bonos_afiliado on NOT_NULL.bono_consulta after insert
-as
-Begin
-	declare @bono_afiliado numeric(18,0)
-	if (select count(*) from inserted) = 1
-	Begin
-		select @bono_afiliado = bono_afiliado from inserted
-		update NOT_NULL.afiliado set afiliado_cant_bonos_consulta = afiliado_cant_bonos_consulta + 1
-				where afiliado_nro = @bono_afiliado
-	End
-End
+exec NOT_NULL.asignar_nro_bonos_afiliado
 go
 
 /*AGREGO USUARIOS, ROLES y FUNCIONES*/
@@ -565,8 +564,8 @@ GO
   GO
 
   --CREO UN USUARIO AFILIADO PARA EL ADMIN
-  INSERT INTO NOT_NULL.afiliado(afiliado_nombre, afiliado_apellido, afiliado_dni, afiliado_mail, afiliado_telefono, afiliado_direccion, afiliado_cant_hijos, afiliado_cant_bonos_consulta, afiliado_fecha_nac, afiliado_estado_civil, afiliado_plan, afiliado_sexo, usuario_id)
-  VALUES ('admin', 'istrador', 32405354, 'admin@gdd.com', '+5491168489235', 'Avenida Leandro N. Alem 5458 piso 18 depto Q 1558', 0, 0, CONVERT(DATETIME,1995-07-12), 'S',NULL, 'M', 'admin')
+  INSERT INTO NOT_NULL.afiliado(afiliado_nombre, afiliado_apellido, afiliado_dni, afiliado_mail, afiliado_telefono, afiliado_direccion, afiliado_cant_hijos, afiliado_fecha_nac, afiliado_estado_civil, afiliado_plan, afiliado_sexo, usuario_id)
+  VALUES ('admin', 'istrador', 32405354, 'admin@gdd.com', '+5491168489235', 'Avenida Leandro N. Alem 5458 piso 18 depto Q 1558', 0, CONVERT(DATETIME,1995-07-12), 'S',NULL, 'M', 'admin')
   GO
   --CREO UN USUARIO PROFESIONAL PARA EL ADMIN
   INSERT INTO NOT_NULL.profesional(profesional_nombre, profesional_apellido, profesional_dni, profesional_tipo_doc, profesional_telefono, profesional_direccion, profesional_fecha_nacimiento, profesional_sexo, profesional_mail,  usuario_id)
@@ -723,12 +722,12 @@ GO
   GO
 
   --CREAR AFILIADO
-  CREATE PROCEDURE NOT_NULL.Afiliado_Add(@Username varchar(50), @Nombre varchar(50),@Apellido varchar(50), @Dni numeric(8,0), @Mail varchar(50),@Telefono varchar(20), @Direccion varchar(50), @CantHijos numeric(2,0),@CantBonos numeric(18,0), @EstadoCivil char(1), @Fecha datetime, @Plan numeric(18,0), @Sexo char(1))
+  CREATE PROCEDURE NOT_NULL.Afiliado_Add(@Username varchar(50), @Nombre varchar(50),@Apellido varchar(50), @Dni numeric(8,0), @Mail varchar(50),@Telefono varchar(20), @Direccion varchar(50), @CantHijos numeric(2,0), @EstadoCivil char(1), @Fecha datetime, @Plan numeric(18,0), @Sexo char(1))
   AS
 	BEGIN
 	SET NOCOUNT ON;
-		INSERT INTO NOT_NULL.afiliado(usuario_id,afiliado_nombre,afiliado_apellido,afiliado_dni,afiliado_mail,afiliado_telefono,afiliado_direccion,afiliado_cant_hijos,afiliado_cant_bonos_consulta, afiliado_estado_civil, afiliado_fecha_nac, afiliado_plan, afiliado_sexo)
-		VALUES (@Username, @Nombre, @Apellido, @Dni, @Mail, @Telefono,@Direccion, @CantHijos, @CantBonos, @EstadoCivil, @Fecha, @Plan, @Sexo)
+		INSERT INTO NOT_NULL.afiliado(usuario_id,afiliado_nombre,afiliado_apellido,afiliado_dni,afiliado_mail,afiliado_telefono,afiliado_direccion,afiliado_cant_hijos,afiliado_estado_civil, afiliado_fecha_nac, afiliado_plan, afiliado_sexo)
+		VALUES (@Username, @Nombre, @Apellido, @Dni, @Mail, @Telefono,@Direccion, @CantHijos, @EstadoCivil, @Fecha, @Plan, @Sexo)
 		INSERT INTO NOT_NULL.rolXusuario(usuario_id, rol_id)
 		VALUES (@Username, 2)
 	END
@@ -747,12 +746,12 @@ GO
 
 
   --MODIFICAR AFILIADO
-  CREATE PROCEDURE NOT_NULL.Afiliado_Modify(@Username varchar(50), @Nombre varchar(50),@Apellido varchar(50), @Dni numeric(8,0), @Mail varchar(50),@Telefono varchar(20), @Direccion varchar(50), @CantHijos numeric(2,0),@CantBonos numeric(18,0), @EstadoCivil char(1), @Fecha datetime,@Plan numeric(18,0), @Sexo char(1))
+  CREATE PROCEDURE NOT_NULL.Afiliado_Modify(@Username varchar(50), @Nombre varchar(50),@Apellido varchar(50), @Dni numeric(8,0), @Mail varchar(50),@Telefono varchar(20), @Direccion varchar(50), @CantHijos numeric(2,0), @EstadoCivil char(1), @Fecha datetime,@Plan numeric(18,0), @Sexo char(1))
   AS
 	BEGIN
 	SET NOCOUNT ON;
 		UPDATE NOT_NULL.afiliado
-		SET usuario_id = @Username,afiliado_nombre=@Nombre,afiliado_apellido=@Apellido,afiliado_dni=@Dni,afiliado_mail=@Mail,afiliado_telefono=@Telefono,afiliado_direccion=@Direccion,afiliado_cant_hijos=@CantHijos,afiliado_cant_bonos_consulta=@CantBonos, afiliado_estado_civil=@EstadoCivil, afiliado_fecha_nac=@Fecha,  afiliado_plan=@Plan, afiliado_sexo=@Sexo
+		SET usuario_id = @Username,afiliado_nombre=@Nombre,afiliado_apellido=@Apellido,afiliado_dni=@Dni,afiliado_mail=@Mail,afiliado_telefono=@Telefono,afiliado_direccion=@Direccion,afiliado_cant_hijos=@CantHijos, afiliado_estado_civil=@EstadoCivil, afiliado_fecha_nac=@Fecha,  afiliado_plan=@Plan, afiliado_sexo=@Sexo
 		WHERE usuario_id = @Username
 	END
   GO

@@ -50,17 +50,20 @@ GO
 DROP TABLE NOT_NULL.profesional
 GO
 
-
-DROP TABLE NOT_NULL.afiliado
+DROP TABLE NOT_NULL.compra_bono
 GO
 
-DROP TABLE NOT_NULL.plan_medico
+DROP TABLE NOT_NULL.afiliado
 GO
 
 DROP TABLE NOT_NULL.usuario
 GO
 
-DROP procedure NOT_NULL.contarBonos
+DROP TABLE NOT_NULL.plan_medico
+GO
+
+
+DROP procedure NOT_NULL.asignar_nro_bonos_afiliado
 GO
 
 DROP procedure NOT_NULL.Usuario_Get
