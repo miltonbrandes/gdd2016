@@ -38,8 +38,8 @@ namespace ClinicaFrba
                     usuario = DBHelper.ExecuteReader("Usuario_Get", new Dictionary<string, object>() { { "@usuario", username } }).ToUsuario();
                     if (usuario != null && !usuario.Activo)
                     {
-                        //MessageBox.Show("Usuario Inhabilitado.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        //return;
+                        MessageBox.Show("Usuario Inhabilitado. Contactese con el administrador para que lo habilite", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
                     }
                     Dictionary<string, object> parametros = new Dictionary<string, object>();
                     parametros.Add("@Username", username);
@@ -48,11 +48,6 @@ namespace ClinicaFrba
                     usuario = DBHelper.ExecuteReader("Usuario_LogIn", parametros).ToUsuario();
                     if (usuario != null)
                     {
-                        if (!usuario.Activo)
-                        {
-                            MessageBox.Show("Se volvio a habilitar su usuario, Felicidades.", "EXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            DBHelper.ExecuteNonQuery("Usuario_Habilitar", new Dictionary<string, object> { { "@Username", usuario.Username } });
-                        }
                         //OBTENGO LOS ROLES DEL USUARIO
                         roles = DBHelper.ExecuteReader("UsuarioXRol_GetRolesByUser", new Dictionary<string, object>() { { "@Username", usuario.Username } }).ToRoles();
                         if (roles.Count > 1)
@@ -93,6 +88,8 @@ namespace ClinicaFrba
                         else
                         {
                             MessageBox.Show("Password no corresponde con Username.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            cmbRol.Visible = false;
+                            buttonContinuar.Visible = false;
                             txtContrasenia.Focus();
                         }
                     }

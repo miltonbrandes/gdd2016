@@ -387,7 +387,7 @@ ALTER TABLE NOT_NULL.turno CHECK CONSTRAINT [FK_NOT_NULL.turno_medicoXespecialid
 GO
 
 insert into NOT_NULL.turno(turno_nro, afiliado_nro, turno_fecha, turno_estado, turno_hora_llegada, turno_sintomas , turno_enfermedades, turno_medico_especialidad_id)
-select Turno_Numero, afiliado_nro, Turno_Fecha, 'N', Bono_Consulta_Fecha_Impresion, Consulta_Sintomas, Consulta_Enfermedades, medxesp_id
+select Turno_Numero, afiliado_nro, Turno_Fecha, 'U', Bono_Consulta_Fecha_Impresion, Consulta_Sintomas, Consulta_Enfermedades, medxesp_id
 	from gd_esquema.Maestra, NOT_NULL.afiliado, NOT_NULL.medicoXespecialidad, NOT_NULL.profesional
 	where afiliado_dni = Paciente_Dni and medxesp_especialidad = Especialidad_Codigo and medXesp_profesional = profesional_matricula
 		and profesional_dni = Medico_Dni
@@ -507,26 +507,18 @@ create table NOT_NULL.compra_bono(
 	compra_id numeric(18,0) identity(1,1) primary key,
 	compra_cantidad int,
 	compra_precio int,
-	compra_afiliado numeric(18,0) foreign key references NOT_NULL.afiliado(afiliado_nro)
+	compra_afiliado numeric(18,0) foreign key references NOT_NULL.afiliado(afiliado_nro),
+	compra_fecha datetime
 )
 go
 
-insert into NOT_NULL.compra_bono (compra_cantidad, compra_afiliado)
-	select count(Compra_Bono_Fecha), afiliado_nro
+insert into NOT_NULL.compra_bono (compra_cantidad, compra_afiliado, compra_fecha)
+	select count(Compra_Bono_Fecha), afiliado_nro, Compra_Bono_Fecha
 	from gd_esquema.Maestra, NOT_NULL.afiliado
 	where afiliado_dni = Paciente_Dni and
 		Compra_Bono_Fecha is not null and
 		Turno_Numero is null and Compra_Bono_Fecha = Bono_Consulta_Fecha_Impresion
 	group by Compra_Bono_Fecha, afiliado_nro
-
-
-
-
-
-
-
-
-
 
 /*AGREGO USUARIOS, ROLES y FUNCIONES*/
 INSERT INTO NOT_NULL.Funcion(funcion_descripcion)
@@ -591,7 +583,8 @@ GO
   AS
   BEGIN
    SET NOCOUNT ON;
-   SELECT * FROM NOT_NULL.Usuario WHERE usuario_id = @username AND usuario_password =  HASHBYTES('SHA2_256', @password)
+   SELECT * FROM NOT_NULL.Usuario WHERE usuario_id = @username AND usuario_password =  HASHBYTES('SHA2_256', @password) and usuario_habilitado = 1
+   UPDATE NOT_NULL.usuario SET usuario_cant_intentos = 0 WHERE usuario_id = @username and usuario_password = HASHBYTES('SHA2_256', @password) and usuario_habilitado = 1 
   END
   GO
   
