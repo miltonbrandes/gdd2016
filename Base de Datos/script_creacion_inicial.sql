@@ -838,9 +838,8 @@ GO
 	begin 
 	set nocount on;
 	insert into modificacion_plan (modif_afiliado, modif_plan_viejo, modif_motivo, modif_plan_fecha, modif_plan_nuevo)
-	values ((select afiliado_nro from afiliado where usuario_id = @Username),
+	values((select afiliado_nro from afiliado where usuario_id = @Username),
 	(select afiliado_plan from afiliado where usuario_id = @Username), @Motivo, GETDATE(), @PlanNuevoId)
-	update NOT_NULL.afiliado set afiliado_plan = @PlanNuevoId where usuario_id = @Username
 	end
   go
 
@@ -997,4 +996,13 @@ GO
 
   /*Le agrego un plan al administrador*/
   update NOT_NULL.afiliado set afiliado_plan = (select top 1 NOT_NULL.plan_medico.plan_id from NOT_NULL.plan_medico) where usuario_id = 'administrador32405354'
+  go
+
+  /*DAR DE BAJA LOGICA UN AFILIADO*/
+  create procedure NOT_NULL.Afiliado_Baja_Logica(@UsuarioId varchar(50))
+  as
+	begin
+	set nocount on;
+		update NOT_NULL.rolXusuario set rolXusuario_habilitado = 0 where usuario_id = @UsuarioId
+	end
   go

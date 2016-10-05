@@ -53,11 +53,13 @@
             this.ckbEstado = new System.Windows.Forms.CheckBox();
             this.cmbSexo = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txtCambioPlan = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnHabilitar
             // 
-            this.btnHabilitar.Location = new System.Drawing.Point(9, 459);
+            this.btnHabilitar.Location = new System.Drawing.Point(9, 505);
             this.btnHabilitar.Margin = new System.Windows.Forms.Padding(4);
             this.btnHabilitar.Name = "btnHabilitar";
             this.btnHabilitar.Size = new System.Drawing.Size(320, 33);
@@ -68,7 +70,7 @@
             // 
             // btnContraseña
             // 
-            this.btnContraseña.Location = new System.Drawing.Point(10, 391);
+            this.btnContraseña.Location = new System.Drawing.Point(10, 437);
             this.btnContraseña.Margin = new System.Windows.Forms.Padding(4);
             this.btnContraseña.Name = "btnContraseña";
             this.btnContraseña.Size = new System.Drawing.Size(320, 33);
@@ -102,7 +104,6 @@
             this.txtDireccion.Name = "txtDireccion";
             this.txtDireccion.Size = new System.Drawing.Size(190, 22);
             this.txtDireccion.TabIndex = 39;
-            this.txtDireccion.Text = "La haya 3974";
             this.txtDireccion.TextChanged += new System.EventHandler(this.txtDireccion_TextChanged);
             // 
             // label6
@@ -122,7 +123,6 @@
             this.txtTelefono.Name = "txtTelefono";
             this.txtTelefono.Size = new System.Drawing.Size(190, 22);
             this.txtTelefono.TabIndex = 37;
-            this.txtTelefono.Text = "45214434";
             // 
             // label7
             // 
@@ -141,7 +141,6 @@
             this.txtMail.Name = "txtMail";
             this.txtMail.Size = new System.Drawing.Size(190, 22);
             this.txtMail.TabIndex = 35;
-            this.txtMail.Text = "miltonbrandes@gmail.com";
             // 
             // label8
             // 
@@ -160,7 +159,6 @@
             this.txtDni.Name = "txtDni";
             this.txtDni.Size = new System.Drawing.Size(190, 22);
             this.txtDni.TabIndex = 31;
-            this.txtDni.Text = "38992753";
             // 
             // label4
             // 
@@ -179,7 +177,6 @@
             this.txtApellido.Name = "txtApellido";
             this.txtApellido.Size = new System.Drawing.Size(190, 22);
             this.txtApellido.TabIndex = 29;
-            this.txtApellido.Text = "brandes";
             // 
             // label2
             // 
@@ -198,7 +195,6 @@
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(190, 22);
             this.txtNombre.TabIndex = 27;
-            this.txtNombre.Text = "milton";
             // 
             // label1
             // 
@@ -212,7 +208,7 @@
             // 
             // btnGuardar
             // 
-            this.btnGuardar.Location = new System.Drawing.Point(10, 425);
+            this.btnGuardar.Location = new System.Drawing.Point(10, 471);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(320, 33);
             this.btnGuardar.TabIndex = 49;
@@ -242,7 +238,6 @@
             this.cmbEstadoCivil.Name = "cmbEstadoCivil";
             this.cmbEstadoCivil.Size = new System.Drawing.Size(190, 24);
             this.cmbEstadoCivil.TabIndex = 51;
-            this.cmbEstadoCivil.Text = "Soltero/a";
             // 
             // label9
             // 
@@ -260,6 +255,7 @@
             this.cmbPlan.Name = "cmbPlan";
             this.cmbPlan.Size = new System.Drawing.Size(190, 24);
             this.cmbPlan.TabIndex = 53;
+            this.cmbPlan.SelectedIndexChanged += new System.EventHandler(this.cmbPlan_SelectedIndexChanged);
             // 
             // lblEstado
             // 
@@ -293,7 +289,6 @@
             this.cmbSexo.Name = "cmbSexo";
             this.cmbSexo.Size = new System.Drawing.Size(190, 24);
             this.cmbSexo.TabIndex = 55;
-            this.cmbSexo.Text = "Masculino";
             // 
             // label5
             // 
@@ -304,11 +299,31 @@
             this.label5.TabIndex = 54;
             this.label5.Text = "Sexo";
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(9, 400);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(132, 17);
+            this.label11.TabIndex = 56;
+            this.label11.Text = "Motivo Cambio Plan";
+            this.label11.Visible = false;
+            // 
+            // txtCambioPlan
+            // 
+            this.txtCambioPlan.Location = new System.Drawing.Point(140, 400);
+            this.txtCambioPlan.Name = "txtCambioPlan";
+            this.txtCambioPlan.Size = new System.Drawing.Size(189, 22);
+            this.txtCambioPlan.TabIndex = 57;
+            this.txtCambioPlan.Visible = false;
+            // 
             // frmAfiliado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(342, 506);
+            this.ClientSize = new System.Drawing.Size(342, 546);
+            this.Controls.Add(this.txtCambioPlan);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.cmbSexo);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.cmbPlan);
@@ -370,5 +385,7 @@
         private System.Windows.Forms.CheckBox ckbEstado;
         private System.Windows.Forms.ComboBox cmbSexo;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox txtCambioPlan;
     }
 }

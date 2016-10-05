@@ -16,10 +16,11 @@ namespace ClinicaFrba.Abm_Afiliado
     {
         //OPCION 1 ES ALTA AFILIADO OPCION 2 ES MODIFICAR AFILIADO (ES EN LA MISMA PANTALLA)
         public static Usuario usuario;
+        public static Plan planactual;
         public static Rol rol;
         public static Afiliado afiliadoModificar;
         public int opcionelegida;
-        
+        public int i = 0;
         public frmAfiliado(Usuario us, Rol ro, Afiliado afil, int opcion)
         {
             InitializeComponent();
@@ -49,6 +50,7 @@ namespace ClinicaFrba.Abm_Afiliado
                 txtDireccion.Text = afiliadoModificar.Direccion;
                 dtpFecha.Value = afiliadoModificar.FechaNacimiento;
                 dtpFecha.Enabled = false;
+                planactual = (Plan)cmbPlan.SelectedItem;
                 ckbEstado.Checked = usuario.Activo;
                 btnContraseña.Visible = true;
                 cmbSexo.Text = reconocerSexo(afiliadoModificar);
@@ -246,6 +248,26 @@ namespace ClinicaFrba.Abm_Afiliado
         
         private bool Modificar(Dictionary<string, object> afiliado)
         {
+            if (((Plan)cmbPlan.SelectedItem).Id != planactual.Id)
+            {
+                //HAY QUE CREAR UNA MODIFICACION DEL PLAN
+                var planmodif = new Dictionary<string, object>()
+                    {
+                        { "@PlanNuevoId", ((Plan)cmbPlan.SelectedItem).Id },
+                        { "@Username", txtNombre.Text+txtApellido.Text+txtDni.Text.ToString()},
+                        { "@Motivo", txtCambioPlan.Text},
+                    };
+
+                try
+                {
+                    DBHelper.ExecuteNonQuery("Agregar_Modif_Plan", planmodif);
+                }
+                catch
+                {
+                    MessageBox.Show("Error al modificar el plan", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+            }
             afiliado.Add("@Username", txtNombre.Text+txtApellido.Text+txtDni.Text.ToString());
             try
             {
@@ -369,6 +391,25 @@ namespace ClinicaFrba.Abm_Afiliado
         private void txtDireccion_TextChanged(object sender, EventArgs e)
         {
 
+        }
+        
+        private void cmbPlan_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (i == 0)
+            {
+                planactual = (Plan)cmbPlan.SelectedItem;
+                i++;
+            }
+            if (opcionelegida == 2 && planactual.Id != ((Plan)cmbPlan.SelectedItem).Id)
+            {
+                txtCambioPlan.Visible = true;
+                label11.Visible = true;
+            }
+            if (opcionelegida == 2 && planactual.Id == ((Plan)cmbPlan.SelectedItem).Id)
+            {
+                txtCambioPlan.Visible = false;
+                label11.Visible = false;
+            }
         }
 
     }
