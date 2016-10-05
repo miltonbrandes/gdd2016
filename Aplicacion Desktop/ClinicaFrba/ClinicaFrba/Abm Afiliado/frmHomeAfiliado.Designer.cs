@@ -30,6 +30,8 @@
         {
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.btnBajaAfiliado = new System.Windows.Forms.Button();
             this.btnTodosAfiliados = new System.Windows.Forms.Button();
             this.btnFiltrarAfiliados = new System.Windows.Forms.Button();
             this.btnAlta = new System.Windows.Forms.Button();
@@ -42,8 +44,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnBajaAfiliado = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
+            this.btnHistorialCambiosPlan = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAfiliado)).BeginInit();
             this.SuspendLayout();
@@ -61,6 +62,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnHistorialCambiosPlan);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.btnBajaAfiliado);
             this.groupBox1.Controls.Add(this.btnLimpiar);
@@ -85,6 +87,25 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Afiliado";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(692, 452);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(214, 17);
+            this.label5.TabIndex = 21;
+            this.label5.Text = "Hacer Doble Click para modificar";
+            // 
+            // btnBajaAfiliado
+            // 
+            this.btnBajaAfiliado.Location = new System.Drawing.Point(28, 452);
+            this.btnBajaAfiliado.Margin = new System.Windows.Forms.Padding(4);
+            this.btnBajaAfiliado.Name = "btnBajaAfiliado";
+            this.btnBajaAfiliado.Size = new System.Drawing.Size(146, 28);
+            this.btnBajaAfiliado.TabIndex = 20;
+            this.btnBajaAfiliado.Text = "Dar De Baja Afiliado";
+            this.btnBajaAfiliado.UseVisualStyleBackColor = true;
             // 
             // btnTodosAfiliados
             // 
@@ -202,24 +223,15 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Nombre";
             // 
-            // btnBajaAfiliado
+            // btnHistorialCambiosPlan
             // 
-            this.btnBajaAfiliado.Location = new System.Drawing.Point(28, 452);
-            this.btnBajaAfiliado.Margin = new System.Windows.Forms.Padding(4);
-            this.btnBajaAfiliado.Name = "btnBajaAfiliado";
-            this.btnBajaAfiliado.Size = new System.Drawing.Size(146, 28);
-            this.btnBajaAfiliado.TabIndex = 20;
-            this.btnBajaAfiliado.Text = "Dar De Baja Afiliado";
-            this.btnBajaAfiliado.UseVisualStyleBackColor = true;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(692, 452);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(214, 17);
-            this.label5.TabIndex = 21;
-            this.label5.Text = "Hacer Doble Click para modificar";
+            this.btnHistorialCambiosPlan.Location = new System.Drawing.Point(181, 452);
+            this.btnHistorialCambiosPlan.Name = "btnHistorialCambiosPlan";
+            this.btnHistorialCambiosPlan.Size = new System.Drawing.Size(188, 28);
+            this.btnHistorialCambiosPlan.TabIndex = 17;
+            this.btnHistorialCambiosPlan.Text = "Ver Historial Cambios Plan";
+            this.btnHistorialCambiosPlan.UseVisualStyleBackColor = true;
+            this.btnHistorialCambiosPlan.Click += new System.EventHandler(this.btnHistorialCambiosPlan_Click);
             // 
             // frmHomeAfiliado
             // 
@@ -256,5 +268,6 @@
         private System.Windows.Forms.Button btnAlta;
         private System.Windows.Forms.Button btnBajaAfiliado;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btnHistorialCambiosPlan;
     }
 }

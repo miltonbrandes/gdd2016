@@ -50,6 +50,18 @@
     <Compile Include="Abm Afiliado\frmAfiliado.Designer.cs">
       <DependentUpon>frmAfiliado.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Afiliado\frmBajaAfiliado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Afiliado\frmBajaAfiliado.Designer.cs">
+      <DependentUpon>frmBajaAfiliado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Afiliado\frmHistorialModificaciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Afiliado\frmHistorialModificaciones.Designer.cs">
+      <DependentUpon>frmHistorialModificaciones.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Afiliado\frmHomeAfiliado.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,6 +128,16 @@
     <Compile Include="Compra Bono\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GD2C2016DataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GD2C2016DataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="GD2C2016DataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GD2C2016DataSet1.xsd</DependentUpon>
+    </Compile>
     <Compile Include="LogIn.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -163,6 +185,9 @@
     <EmbeddedResource Include="Abm Afiliado\frmAfiliado.resx">
       <DependentUpon>frmAfiliado.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Abm Afiliado\frmHistorialModificaciones.resx">
+      <DependentUpon>frmHistorialModificaciones.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Abm Afiliado\frmHomeAfiliado.resx">
       <DependentUpon>frmHomeAfiliado.cs</DependentUpon>
     </EmbeddedResource>
@@ -196,6 +221,28 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="GD2C2016DataSet.xsc">
+      <DependentUpon>GD2C2016DataSet.xsd</DependentUpon>
+    </None>
+    <None Include="GD2C2016DataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GD2C2016DataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="GD2C2016DataSet.xss">
+      <DependentUpon>GD2C2016DataSet.xsd</DependentUpon>
+    </None>
+    <None Include="GD2C2016DataSet1.xsc">
+      <DependentUpon>GD2C2016DataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="GD2C2016DataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GD2C2016DataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="GD2C2016DataSet1.xss">
+      <DependentUpon>GD2C2016DataSet1.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

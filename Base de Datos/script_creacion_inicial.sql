@@ -843,6 +843,18 @@ GO
 	end
   go
 
+  --OBTENER TODAS LAS MODIFICACIONES DE PLAN
+  create procedure NOT_NULL.Modif_Plan_Get_All
+  as
+	begin
+	set nocount on;
+		select afiliado.afiliado_nombre, afiliado.afiliado_apellido, modif_motivo, modif_plan_fecha, p1.plan_descripcion, p2.plan_descripcion
+		 from NOT_NULL.modificacion_plan, NOT_NULL.afiliado, NOT_NULL.plan_medico p1, NOT_NULL.plan_medico p2
+		 where modif_afiliado = afiliado_nro and modif_plan_nuevo = p1.plan_id and modif_plan_viejo = p2.plan_id
+	end
+  go
+
+
   --ACTIVAR USUARIO
   CREATE PROCEDURE NOT_NULL.Usuario_Activo(@Username varchar(20), @Activo bit)
   AS

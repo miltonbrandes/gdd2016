@@ -115,5 +115,6 @@ drop procedure NOT_NULL.Agregar_Modif_Plan
 drop procedure NOT_NULL.Planes_GetPlanAfiliado
 drop procedure NOT_NULL.Planes_GetPorId
 drop procedure NOT_NULL.Usuario_Exists
+drop procedure NOT_NULL.Modif_Plan_Get_All
 DROP SCHEMA NOT_NULL
 GO

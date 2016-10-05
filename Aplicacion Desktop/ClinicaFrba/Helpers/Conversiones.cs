@@ -68,6 +68,31 @@ namespace Helpers
         }
         #endregion
 
+        #region MODIFICACION PLAN
+        public static ModifPlan ToModifPlan(this SqlDataReader rdr)
+        {
+            return rdr.ToModifPlanes().FirstOrDefault();
+        }
+        public static List<ModifPlan> ToModifPlanes(this SqlDataReader rdr)
+        {
+            List<ModifPlan> list = new List<ModifPlan>();
+            while (rdr.Read())
+            {
+                list.Add(new ModifPlan()
+                {
+                    FechaNacimiento = (DateTime)rdr["modif_plan_fecha"],
+                    ModifId = (decimal)rdr["modif_id"],
+                    Motivo = (string)rdr["modif_motivo"],
+                    NroAfiliado = (decimal)rdr["modif_afiliado"],
+                    PlanNuevo = (decimal)rdr["modif_plan_nuevo"],
+                    PlanViejo = (decimal)rdr["modif_plan_viejo"],
+                });
+            }
+            DBHelper.DB.Close();
+            return list;
+        }
+        #endregion
+
         #region AFILIADO
         public static Afiliado ToAfiliados(this SqlDataReader rdr)
         {

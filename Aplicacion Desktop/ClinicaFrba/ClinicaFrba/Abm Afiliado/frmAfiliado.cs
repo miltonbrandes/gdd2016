@@ -250,24 +250,34 @@ namespace ClinicaFrba.Abm_Afiliado
         {
             if (((Plan)cmbPlan.SelectedItem).Id != planactual.Id)
             {
-                //HAY QUE CREAR UNA MODIFICACION DEL PLAN
-                var planmodif = new Dictionary<string, object>()
+                if (txtCambioPlan.Text != "")
+                {
+                    //HAY QUE CREAR UNA MODIFICACION DEL PLAN
+                    var planmodif = new Dictionary<string, object>()
                     {
                         { "@PlanNuevoId", ((Plan)cmbPlan.SelectedItem).Id },
                         { "@Username", txtNombre.Text+txtApellido.Text+txtDni.Text.ToString()},
                         { "@Motivo", txtCambioPlan.Text},
                     };
 
-                try
-                {
-                    DBHelper.ExecuteNonQuery("Agregar_Modif_Plan", planmodif);
+                    try
+                    {
+                        DBHelper.ExecuteNonQuery("Agregar_Modif_Plan", planmodif);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Error al modificar el plan", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
                 }
-                catch
+                else
                 {
-                    MessageBox.Show("Error al modificar el plan", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Debe completar el campo motivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
             }
+            
+
             afiliado.Add("@Username", txtNombre.Text+txtApellido.Text+txtDni.Text.ToString());
             try
             {

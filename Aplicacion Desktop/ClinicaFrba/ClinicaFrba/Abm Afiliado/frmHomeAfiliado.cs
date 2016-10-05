@@ -165,5 +165,11 @@ namespace ClinicaFrba.Abm_Afiliado
         {
 
         }
+
+        private void btnHistorialCambiosPlan_Click(object sender, EventArgs e)
+        {
+            frmHistorialModificaciones nuevo = new frmHistorialModificaciones();
+            nuevo.Show();
+        }
     }
 }
