@@ -116,5 +116,6 @@ drop procedure NOT_NULL.Planes_GetPlanAfiliado
 drop procedure NOT_NULL.Planes_GetPorId
 drop procedure NOT_NULL.Usuario_Exists
 drop procedure NOT_NULL.Modif_Plan_Get_All
+drop procedure NOT_NULL.Afiliado_Baja_Logica
 DROP SCHEMA NOT_NULL
 GO

@@ -432,20 +432,23 @@ GO
 
 /*		AGENDA		*/
 CREATE TABLE NOT_NULL.agenda(
-	agenda_id int PRIMARY KEY IDENTITY(0,1),
+	agenda_id int IDENTITY(0,1),
 	agenda_medxesp int NOT NULL foreign key references NOT_NULL.medicoXespecialidad(medxesp_id)
+	primary key (agenda_id, agenda_medxesp)
 )
 GO
 
+
+/*TABLA FRANJA HORARIA*/
 CREATE TABLE NOT_NULL.franja_horaria(
 	franja_id int PRIMARY KEY IDENTITY(0,1),
-	agenda int NOT NULL foreign key references NOT_NULL.agenda,
 	dia int NOT NULL CHECK(dia >=1 AND dia <=7),
 	hora_inicio int NOT NULL CHECK(hora_inicio<24 AND hora_inicio>=0),
 	minuto_inicio int NOT NULL CHECK(minuto_inicio<60 AND minuto_inicio>=0),
 	hora_fin int NOT NULL CHECK(hora_fin<24 AND hora_fin>=0),
 	minuto_fin int NOT NULL CHECK(minuto_fin<60 AND minuto_fin>=0)	)
 GO
+
 
 ALTER TABLE NOT_NULL.franja_horaria
 	ADD CONSTRAINT hora_fin_mayor_hora_inicio CHECK( (hora_fin * 60 + minuto_fin) > (hora_inicio * 60 + minuto_inicio) )
