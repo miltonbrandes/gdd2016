@@ -294,11 +294,17 @@ Begin
 End
 go
 
-create trigger NOT_NULL.crear_usuario on NOT_NULL.afiliado for insert
+create trigger NOT_NULL.crear_usuario on NOT_NULL.afiliado instead of insert
 as
 Begin
 	insert into NOT_NULL.usuario (usuario_id, usuario_cant_intentos, usuario_descripcion, usuario_password, usuario_habilitado)
 	select afiliado_nombre + afiliado_apellido + CAST(afiliado_dni as varchar(8)), 0, 'Afiliado',HASHBYTES('SHA2_256', 'afiliado'), 1 from inserted where inserted.afiliado_nombre is not null and inserted.afiliado_apellido is not null and inserted.afiliado_dni is not null
+	insert into NOT_NULL.afiliado (usuario_id, afiliado_nombre, afiliado_apellido, afiliado_dni, afiliado_cant_hijos, afiliado_direccion, afiliado_estado_civil, afiliado_fecha_nac, afiliado_mail, afiliado_plan, afiliado_sexo, afiliado_telefono)
+	(select afiliado_nombre + afiliado_apellido + CAST(afiliado_dni as varchar(8)), afiliado_nombre, afiliado_apellido, afiliado_dni, afiliado_cant_hijos, afiliado_direccion, afiliado_estado_civil, afiliado_fecha_nac, afiliado_mail, afiliado_plan, afiliado_sexo, afiliado_telefono from inserted  
+	where inserted.afiliado_nombre is not null and inserted.afiliado_apellido is not null and inserted.afiliado_dni is not null)
+	--insert into NOT_NULL.rolXusuario (usuario_id, rolXusuario_habilitado, rol_id)
+	--(select afiliado_nombre + afiliado_apellido + CAST(afiliado_dni as varchar(8)), 1, 2 from inserted 
+	--where inserted.afiliado_nombre is not null and inserted.afiliado_apellido is not null and inserted.afiliado_dni is not null)
 End
 go
 
@@ -625,6 +631,17 @@ GO
 	END
   GO
 
+  
+  --ME FIJO SI UN USUARIO EXISTE
+  CREATE PROCEDURE NOT_NULL.Usuario_Exists (@usuarioid varchar(50))
+  AS
+	BEGIN
+		SET NOCOUNT ON;
+		SELECT * FROM NOT_NULL.Usuario WHERE usuario_id = @usuarioid
+	END
+  GO
+
+
   --OBTENER TODAS LAS FUNCIONES 
   CREATE PROCEDURE NOT_NULL.Funciones_GetAll
   AS
@@ -708,12 +725,12 @@ GO
   GO
 
   --CREAR USUARIO
-  CREATE PROCEDURE NOT_NULL.Usuario_Add(@Username varchar(20), @Password varchar(20))
+  CREATE PROCEDURE NOT_NULL.Usuario_Add(@Username varchar(20), @Password varchar(20), @Descripcion varchar(50))
   AS
 	BEGIN
 	SET NOCOUNT ON;
-		INSERT INTO NOT_NULL.Usuario (usuario_id, usuario_password)
-		VALUES (@Username, HASHBYTES('SHA2_256', @Password))
+		INSERT INTO NOT_NULL.Usuario (usuario_id, usuario_password, usuario_descripcion, usuario_habilitado, usuario_cant_intentos)
+		VALUES (@Username, HASHBYTES('SHA2_256', @Password), @Descripcion, 1, 0)
 	END
   GO
 
@@ -729,6 +746,16 @@ GO
 	END
   GO
 
+  --OBTENER EL ULTIMO NUMERO DE AFILIADO
+  create procedure NOT_NULL.Afiliado_Obtener_Nro
+  as
+	begin 
+	set nocount on;
+		select top 1 * from afiliado 
+		order by afiliado_nro desc
+	end
+  go
+
   --CREAR AFILIADO
   CREATE PROCEDURE NOT_NULL.Afiliado_Add(@Username varchar(50), @Nombre varchar(50),@Apellido varchar(50), @Dni numeric(8,0), @Mail varchar(50),@Telefono varchar(20), @Direccion varchar(50), @CantHijos numeric(2,0), @EstadoCivil char(1), @Fecha datetime, @Plan numeric(18,0), @Sexo char(1))
   AS
@@ -736,8 +763,8 @@ GO
 	SET NOCOUNT ON;
 		INSERT INTO NOT_NULL.afiliado(usuario_id,afiliado_nombre,afiliado_apellido,afiliado_dni,afiliado_mail,afiliado_telefono,afiliado_direccion,afiliado_cant_hijos,afiliado_estado_civil, afiliado_fecha_nac, afiliado_plan, afiliado_sexo)
 		VALUES (@Username, @Nombre, @Apellido, @Dni, @Mail, @Telefono,@Direccion, @CantHijos, @EstadoCivil, @Fecha, @Plan, @Sexo)
-		INSERT INTO NOT_NULL.rolXusuario(usuario_id, rol_id)
-		VALUES (@Username, 2)
+		--INSERT INTO NOT_NULL.rolXusuario(usuario_id, rol_id)
+		--VALUES (@Username, 2)
 	END
   GO
 
@@ -765,8 +792,37 @@ GO
   GO
 
 
+  --OBTENER PLAN AFILIADO
+  CREATE PROCEDURE NOT_NULL.Planes_GetPlanAfiliado(@Afiliado_nro int)
+  as
+	begin
+	set nocount on;
+		select plan_cuota_precio, plan_descripcion, plan_id, plan_precio_bono_consulta from NOT_NULL.plan_medico, afiliado where afiliado_nro = @Afiliado_nro and afiliado_plan = plan_id 
+	end
+  go
+
+
+  --OBTENER PLAN POR ID
+  create procedure NOT_NULL.Planes_GetPorId(@IdPlan int)
+  as
+	begin
+	set nocount on;
+		select * from plan_medico where plan_id = @IdPlan
+	end
+  go
+
+  --OBTENER TODOS LOS PLANES MENOS EL DEL AFILIADO ACTUAL
+  CREATE PROCEDURE NOT_NULL.Planes_GetAll
+  AS
+	BEGIN
+	SET NOCOUNT ON;
+		SELECT * FROM NOT_NULL.plan_medico ORDER BY plan_id
+	END
+  GO
+
+
   --CAMBIAR CONTRASEÑA DE USUARIO
-  CREATE PROCEDURE NOT_NULL.Usuario_CambiarContraseña(@Username varchar(20), @Password varchar(20))
+  CREATE PROCEDURE NOT_NULL.Usuario_CambiarContraseña(@Username varchar(50), @Password varchar(20))
   AS
 	BEGIN
 	SET NOCOUNT ON;
@@ -776,6 +832,17 @@ GO
 	END
   GO
 
+  --ACTUALIZAR PLAN AFILIADO
+  CREATE PROCEDURE NOT_NULL.Agregar_Modif_Plan(@PlanNuevoId int, @Username varchar(50), @Motivo varchar(255))
+  as
+	begin 
+	set nocount on;
+	insert into modificacion_plan (modif_afiliado, modif_plan_viejo, modif_motivo, modif_plan_fecha, modif_plan_nuevo)
+	values ((select afiliado_nro from afiliado where usuario_id = @Username),
+	(select afiliado_plan from afiliado where usuario_id = @Username), @Motivo, GETDATE(), @PlanNuevoId)
+	update NOT_NULL.afiliado set afiliado_plan = @PlanNuevoId where usuario_id = @Username
+	end
+  go
 
   --ACTIVAR USUARIO
   CREATE PROCEDURE NOT_NULL.Usuario_Activo(@Username varchar(20), @Activo bit)
@@ -788,13 +855,13 @@ GO
 	END
   GO
 
-
+  --drop procedure NOT_NULL.Afiliado_GetAll
   --OBTENER TODOS LOS AFILIADOS
   CREATE PROCEDURE NOT_NULL.Afiliado_GetAll
   AS
 	BEGIN
 	SET NOCOUNT ON;
-		SELECT * FROM NOT_NULL.afiliado ORDER BY afiliado_dni
+		SELECT * FROM NOT_NULL.afiliado ORDER BY afiliado_nombre, afiliado_apellido, afiliado_dni
 	END
   GO
 
@@ -927,3 +994,7 @@ GO
 		SET rolXusuario_habilitado = 0 WHERE rol_id = @rol
 	END
   GO
+
+  /*Le agrego un plan al administrador*/
+  update NOT_NULL.afiliado set afiliado_plan = (select top 1 NOT_NULL.plan_medico.plan_id from NOT_NULL.plan_medico) where usuario_id = 'administrador32405354'
+  go

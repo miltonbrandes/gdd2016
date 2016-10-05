@@ -24,11 +24,13 @@ D:\Descargas\TP GDD VERSION 2\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Deb
 D:\Descargas\TP GDD VERSION 2\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.csproj.GenerateResource.Cache
 D:\Descargas\TP GDD VERSION 2\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.formInicioSesion.resources
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\ClinicaFrba.exe.config
-D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.exe
-D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.pdb
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\ClinicaFrba.exe
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\ClinicaFrba.pdb
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\Clases.dll
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\Helpers.dll
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\mscorlib.dll
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\Clases.pdb
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\Helpers.pdb
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\es\mscorlib.resources.dll
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\normidna.nlp
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\normnfc.nlp
@@ -36,16 +38,16 @@ D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\normnf
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\normnfkc.nlp
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\normnfkd.nlp
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.csprojResolveAssemblyReference.cache
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Abm_Afiliado.frmAfiliado.resources
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Abm_Afiliado.frmHomeAfiliado.resources
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Abm_Usuario.homeAbmUsuario.resources
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frmAlta.resources
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frmBaja.resources
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frmHome.resources
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frmModificar.resources
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.formInicioSesion.resources
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Main.resources
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Properties.Resources.resources
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.csproj.GenerateResource.Cache
-D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Main.resources
-D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\Clases.dll
-D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\Clases.pdb
-D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\Helpers.dll
-D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\Helpers.pdb
-D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Abm_Usuario.homeAbmUsuario.resources
-D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frmHome.resources
-D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frmAlta.resources
-D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frmModificar.resources
-D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frmBaja.resources
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.exe
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.pdb

@@ -37,7 +37,7 @@
             // 
             // btnActivar
             // 
-            this.btnActivar.Location = new System.Drawing.Point(13, 225);
+            this.btnActivar.Location = new System.Drawing.Point(13, 378);
             this.btnActivar.Margin = new System.Windows.Forms.Padding(4);
             this.btnActivar.Name = "btnActivar";
             this.btnActivar.Size = new System.Drawing.Size(254, 28);
@@ -68,7 +68,7 @@
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(13, 189);
+            this.btnModificar.Location = new System.Drawing.Point(13, 342);
             this.btnModificar.Margin = new System.Windows.Forms.Padding(4);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(254, 28);
@@ -84,14 +84,14 @@
             this.lstFunciones.Location = new System.Drawing.Point(13, 75);
             this.lstFunciones.Margin = new System.Windows.Forms.Padding(4);
             this.lstFunciones.Name = "lstFunciones";
-            this.lstFunciones.Size = new System.Drawing.Size(254, 106);
+            this.lstFunciones.Size = new System.Drawing.Size(254, 259);
             this.lstFunciones.TabIndex = 15;
             // 
             // frmModificar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(280, 278);
+            this.ClientSize = new System.Drawing.Size(298, 411);
             this.Controls.Add(this.btnActivar);
             this.Controls.Add(this.txtNombre);
             this.Controls.Add(this.cmbRoles);

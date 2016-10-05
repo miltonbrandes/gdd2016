@@ -39,7 +39,7 @@
             this.cmbRoles.Location = new System.Drawing.Point(13, 13);
             this.cmbRoles.Margin = new System.Windows.Forms.Padding(4);
             this.cmbRoles.Name = "cmbRoles";
-            this.cmbRoles.Size = new System.Drawing.Size(267, 24);
+            this.cmbRoles.Size = new System.Drawing.Size(445, 24);
             this.cmbRoles.TabIndex = 16;
             this.cmbRoles.SelectedIndexChanged += new System.EventHandler(this.cmbRoles_SelectedIndexChanged);
             // 
@@ -49,9 +49,9 @@
             this.btnGuardar.Location = new System.Drawing.Point(13, 45);
             this.btnGuardar.Margin = new System.Windows.Forms.Padding(4);
             this.btnGuardar.Name = "btnGuardar";
-            this.btnGuardar.Size = new System.Drawing.Size(267, 28);
+            this.btnGuardar.Size = new System.Drawing.Size(445, 28);
             this.btnGuardar.TabIndex = 15;
-            this.btnGuardar.Text = "Dar de baja";
+            this.btnGuardar.Text = "Dar de baja este rol";
             this.btnGuardar.UseVisualStyleBackColor = true;
             this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
@@ -59,7 +59,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(293, 91);
+            this.ClientSize = new System.Drawing.Size(471, 90);
             this.Controls.Add(this.cmbRoles);
             this.Controls.Add(this.btnGuardar);
             this.Name = "frmBaja";

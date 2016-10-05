@@ -12,18 +12,19 @@ namespace Clases
 {
 	public class Afiliado : Usuario
     {
-        public int NroAfiliado { get; set; }
+        public decimal NroAfiliado { get; set; }
         public string Nombre { get; set; }
         public string Mail { get; set; }
-        public string Telefono { get; set; }
+        public decimal Telefono { get; set; }
         public string Direccion { get; set; }
         public string Apellido { get; set; }
-        public int Dni { get; set; }
-        public char EstadoCivil { get; set; }
-        public int PlanUsuario { get; set; }
-        public char Sexo { get; set; }
-        public int CantidadHijos { get; set; }
-        public bool Habilitado { get; set; }
-        public int CantBonosUsados { get; set; }
+        public decimal Dni { get; set; }
+        public string EstadoCivil { get; set; }
+        public decimal PlanUsuario { get; set; }
+        public string Sexo { get; set; }
+        public decimal CantidadHijos { get; set; }
+        //public bool Habilitado { get; set; }
+        public decimal CantBonosUsados { get; set; }
+        public DateTime FechaNacimiento { get; set; }
     }
 }

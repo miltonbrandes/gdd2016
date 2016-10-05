@@ -23,13 +23,23 @@ namespace ClinicaFrba.AbmRol
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             var rol = (Rol)cmbRoles.SelectedItem;
-            DBHelper.ExecuteNonQuery("Rol_Deactivate", new Dictionary<string, object>() { { "@rol", rol.Id } });
+            try
+            {
+                DBHelper.ExecuteNonQuery("Rol_Deactivate", new Dictionary<string, object>() { { "@rol", rol.Id } });
+            }
+            catch { MessageBox.Show("Error al acceder a database", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information); }
+            
             MessageBox.Show("Dado de baja con exito", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             LoadRoles();
         }
         private void LoadRoles()
         {
-            roles = DBHelper.ExecuteReader("Rol_GetAll").ToRoles();
+            try
+            {
+                roles = DBHelper.ExecuteReader("Rol_GetAll").ToRoles();
+            }
+            catch { MessageBox.Show("Error al acceder a database", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information); }
+            
             cmbRoles.DataSource = roles;
             cmbRoles.DisplayMember = "Descripcion";
         }

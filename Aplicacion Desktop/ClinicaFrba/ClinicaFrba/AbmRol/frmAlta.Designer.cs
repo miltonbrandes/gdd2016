@@ -35,7 +35,7 @@
             // 
             // btnCrear
             // 
-            this.btnCrear.Location = new System.Drawing.Point(13, 149);
+            this.btnCrear.Location = new System.Drawing.Point(13, 305);
             this.btnCrear.Margin = new System.Windows.Forms.Padding(4);
             this.btnCrear.Name = "btnCrear";
             this.btnCrear.Size = new System.Drawing.Size(250, 28);
@@ -50,7 +50,7 @@
             this.lstFunciones.Location = new System.Drawing.Point(13, 35);
             this.lstFunciones.Margin = new System.Windows.Forms.Padding(4);
             this.lstFunciones.Name = "lstFunciones";
-            this.lstFunciones.Size = new System.Drawing.Size(250, 106);
+            this.lstFunciones.Size = new System.Drawing.Size(250, 259);
             this.lstFunciones.TabIndex = 7;
             // 
             // txtNombre
@@ -66,7 +66,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(278, 198);
+            this.ClientSize = new System.Drawing.Size(280, 346);
             this.Controls.Add(this.btnCrear);
             this.Controls.Add(this.lstFunciones);
             this.Controls.Add(this.txtNombre);

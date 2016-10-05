@@ -44,11 +44,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abm Afiliado\Form1.cs">
+    <Compile Include="Abm Afiliado\frmAfiliado.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Afiliado\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Abm Afiliado\frmAfiliado.Designer.cs">
+      <DependentUpon>frmAfiliado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Afiliado\frmHomeAfiliado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Afiliado\frmHomeAfiliado.Designer.cs">
+      <DependentUpon>frmHomeAfiliado.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Especialidades Medicas\Form1.cs">
       <SubType>Form</SubType>
@@ -154,6 +160,12 @@
     <Compile Include="Registro Resultado\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Abm Afiliado\frmAfiliado.resx">
+      <DependentUpon>frmAfiliado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Afiliado\frmHomeAfiliado.resx">
+      <DependentUpon>frmHomeAfiliado.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Abm Usuario\homeAbmUsuario.resx">
       <DependentUpon>homeAbmUsuario.cs</DependentUpon>
     </EmbeddedResource>

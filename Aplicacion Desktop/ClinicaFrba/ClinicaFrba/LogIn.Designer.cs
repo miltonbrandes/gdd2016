@@ -63,6 +63,7 @@
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(198, 22);
             this.txtUsuario.TabIndex = 2;
+            this.txtUsuario.Text = "admin";
             // 
             // txtContrasenia
             // 
@@ -71,6 +72,7 @@
             this.txtContrasenia.PasswordChar = '*';
             this.txtContrasenia.Size = new System.Drawing.Size(198, 22);
             this.txtContrasenia.TabIndex = 3;
+            this.txtContrasenia.Text = "w23e";
             // 
             // label2
             // 

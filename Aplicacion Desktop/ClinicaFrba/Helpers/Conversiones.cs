@@ -33,6 +33,41 @@ namespace Helpers
         }
         #endregion
 
+        #region PLAN
+        public static Plan ToPlan(this SqlDataReader rdr)
+        {
+            return rdr.ToPlanes().FirstOrDefault();
+        }
+        public static List<Plan> ToPlanes(this SqlDataReader rdr)
+        {
+            List<Plan> list = new List<Plan>();
+            while (rdr.Read())
+            {
+                decimal preciocuot;
+                if (rdr["plan_cuota_precio"].ToString() == "")
+                {
+                    preciocuot = 0;
+                }
+                else
+                {
+                    preciocuot = (decimal)rdr["plan_cuota_precio"];
+                }
+                    list.Add(new Plan()
+                    {
+
+                        Id = (decimal)rdr["plan_id"],
+                        PrecioBonoConsulta = (decimal)rdr["plan_precio_bono_consulta"],
+                        Descripcion = (string)rdr["plan_descripcion"],
+                        CuotaPrecio = preciocuot
+
+                    });
+                
+            }
+            DBHelper.DB.Close();
+            return list;
+        }
+        #endregion
+
         #region AFILIADO
         public static Afiliado ToAfiliados(this SqlDataReader rdr)
         {
@@ -40,27 +75,24 @@ namespace Helpers
         }
         public static List<Afiliado> ToAfiliado(this SqlDataReader rdr)
         {
+            SqlDataReader milector = rdr;
             List<Afiliado> list = new List<Afiliado>();
-            while (rdr.Read())
-            {
-                list.Add(new Afiliado()
+            while (milector.Read())
+            {list.Add(new Afiliado()
                 {
                     Username = (string)rdr["usuario_id"], //definir si usuario va a tener id usuario
-                    NroAfiliado = (int)rdr["afiliado_nro"],
+                    NroAfiliado = (decimal)rdr["afiliado_nro"],
                     Nombre = (string)rdr["afiliado_nombre"],
                     Apellido = (string)rdr["afiliado_apellido"],
-                    Dni = (int)rdr["afiliado_dni"],
-                    // = (string)rdr["clie_tipo_documento"], tipo documento
+                    Dni = (decimal)rdr["afiliado_dni"],
                     Mail = (string)rdr["afiliado_mail"],
-                    Telefono = (string)rdr["afiliado_telefono"],
+                    Telefono = (decimal)rdr["afiliado_telefono"],
                     Direccion = (string)rdr["afiliado_direccion"],
-                    EstadoCivil = (char)rdr["afiliado_estado_civil"],
-                    //fecha = (DateTime)rdr["clie_fecha_nacimiento"], fecha nacimiento
-                    Sexo = (char)rdr["afiliado_sexo"],
-                    PlanUsuario = (int)rdr["afiliado_plan"],
-                    CantBonosUsados = (int)rdr["afiliado_cant_bonos_consulta"],
-                    Habilitado = (bool)rdr["afiliado_habilitado"],
-                    CantidadHijos = (int)rdr["afiliado_cant_hijos"]
+                    EstadoCivil = (string)rdr["afiliado_estado_civil"],
+                    FechaNacimiento = (DateTime)rdr["afiliado_fecha_nac"], //fecha nacimiento
+                    Sexo = (string)rdr["afiliado_sexo"],
+                    PlanUsuario = (decimal)rdr["afiliado_plan"],
+                    CantidadHijos = (decimal)rdr["afiliado_cant_hijos"],
                 });
             }
             DBHelper.DB.Close();

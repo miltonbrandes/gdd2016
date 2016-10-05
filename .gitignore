@@ -3,3 +3,6 @@
 *.exe
 *.dll
 Aplicacion Desktop/ClinicaFrba/ClinicaFrba/obj/Debug/ClinicaFrba.csprojResolveAssemblyReference.cache
+Aplicacion Desktop/ClinicaFrba/Clases/bin/Debug/Clases.pdb
+*.pdb
+Aplicacion Desktop/ClinicaFrba/Clases/obj/Debug/Clases.dll

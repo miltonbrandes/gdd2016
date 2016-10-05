@@ -8,10 +8,9 @@ namespace Clases
 {
     public class Plan
     {
-        public int Id { get; set; }
+        public decimal Id { get; set; }
         public string Descripcion { get; set; }
-        public string PrecioBonoConsulta { get; set; }
-        public int PrecioBonoFarmacia { get; set; }
-        public string CuotaPrecio { get; set; }
+        public decimal PrecioBonoConsulta { get; set; }
+        public decimal CuotaPrecio { get; set; }
     }
 }

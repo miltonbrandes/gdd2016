@@ -50,15 +50,15 @@ namespace ClinicaFrba
                 botones[i].Click += dicFunciones[fun.Id];
                 i++;
             }
-          this.Size = new Size(this.Width, (tamanio*cantbot)+100);
+          this.Size = new Size(this.Width, (tamanio*cantbot)+150);
           //  this.Size= new Size((tamanio*cantbot)+70, this.Height);
           load+= 1;
         }
 
         Dictionary<int, EventHandler> dicFunciones = new Dictionary<int, EventHandler>() {
             { 1, new EventHandler(ABMRol)},
-            { 2, new EventHandler(ABMAfiliado)},
-            { 3, new EventHandler(ABMUsuario)},
+            { 3, new EventHandler(ABMAfiliado)},
+            { 2, new EventHandler(ABMUsuario)},
             { 4, new EventHandler(ABMPlan)},
             { 5, new EventHandler(ABMProfesional)},
             { 6, new EventHandler(ABMEspecialidad)},
@@ -67,8 +67,8 @@ namespace ClinicaFrba
             { 9, new EventHandler(PedirTurno)},
             { 10, new EventHandler(RegistrarLlegada)},
             { 11, new EventHandler(RegistrarResultado)},
-            { 12, new EventHandler(CancelarTurno)},
-            { 13, new EventHandler(HistorialUsuario)}
+            { 13, new EventHandler(CancelarTurno)},
+            { 12, new EventHandler(HistorialUsuario)}
         };
         
 
@@ -80,7 +80,7 @@ namespace ClinicaFrba
         }
         public static void ABMAfiliado(object sender, EventArgs e)
         {
-            var home = new Abm_Afiliado.Form1();
+            var home = new Abm_Afiliado.frmHomeAfiliado(usuario, rol);
             home.Show();
         }
         public static void ABMUsuario(object sender, EventArgs e)

@@ -18,7 +18,11 @@ namespace ClinicaFrba.AbmRol
         public frmAlta()
         {
             InitializeComponent();
-            funciones = DBHelper.ExecuteReader("Funciones_GetAll").ToFunciones();
+            try
+            {
+                funciones = DBHelper.ExecuteReader("Funciones_GetAll").ToFunciones();
+            }
+            catch { MessageBox.Show("Error al acceder a database", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information); }
             foreach (var fun in funciones)
             {
                 //Chequeo aquellas que tiene seleccionada

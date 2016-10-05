@@ -35,7 +35,14 @@ namespace ClinicaFrba
                 if (username != null && password != null)
                 {
                     //OBTENGO EL USUARIO Y ME FIJO SI ESTA ACTIVO
-                    usuario = DBHelper.ExecuteReader("Usuario_Get", new Dictionary<string, object>() { { "@usuario", username } }).ToUsuario();
+                    try
+                    {
+                        usuario = DBHelper.ExecuteReader("Usuario_Get", new Dictionary<string, object>() { { "@usuario", username } }).ToUsuario();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    } 
                     if (usuario != null && !usuario.Activo)
                     {
                         MessageBox.Show("Usuario Inhabilitado. Contactese con el administrador para que lo habilite", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -45,11 +52,27 @@ namespace ClinicaFrba
                     parametros.Add("@Username", username);
                     parametros.Add("@Password", password);
                     //REALIZO EL LOGIN
-                    usuario = DBHelper.ExecuteReader("Usuario_LogIn", parametros).ToUsuario();
+                    try
+                    {
+                        usuario = DBHelper.ExecuteReader("Usuario_LogIn", parametros).ToUsuario();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    
                     if (usuario != null)
                     {
                         //OBTENGO LOS ROLES DEL USUARIO
-                        roles = DBHelper.ExecuteReader("UsuarioXRol_GetRolesByUser", new Dictionary<string, object>() { { "@Username", usuario.Username } }).ToRoles();
+                        try
+                        {
+                            roles = DBHelper.ExecuteReader("UsuarioXRol_GetRolesByUser", new Dictionary<string, object>() { { "@Username", usuario.Username } }).ToRoles();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        
                         if (roles.Count > 1)
                         {
                             cmbRol.Visible = true;
@@ -73,12 +96,34 @@ namespace ClinicaFrba
                     else
                     {
                         //LE SUMO UN INTENTO PORQUE FALLO LA CONTRASEÑA
-                        DBHelper.ExecuteNonQuery("Usuario_SumarIntento", new Dictionary<string, object>() { { "@Username", username } });
+                        try
+                        {
+                            DBHelper.ExecuteNonQuery("Usuario_SumarIntento", new Dictionary<string, object>() { { "@Username", username } });
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        try
+                        {
+                            
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
                         var usu = DBHelper.ExecuteReader("Usuario_Get", new Dictionary<string, object>() { { "@usuario", username } }).ToUsuario();
                         if (usu != null && usu.Intentos >= 3)
                         {
                             //LO INHABILITO SI YA HIZO 3 INTENTOS MAL
-                            DBHelper.ExecuteNonQuery("Usuario_Inhabilitar", new Dictionary<string, object> { { "@Username", username } });
+                            try
+                            {
+                                DBHelper.ExecuteNonQuery("Usuario_Inhabilitar", new Dictionary<string, object> { { "@Username", username } });
+                            }
+                            catch
+                            {
+                                MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
                             MessageBox.Show("Password no corresponde con Username.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             MessageBox.Show("Usuario ha quedado inhabilitado", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             txtContrasenia.Focus();

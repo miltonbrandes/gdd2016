@@ -79,7 +79,7 @@ DROP procedure NOT_NULL.Usuario_GetAll
 DROP procedure NOT_NULL.Usuario_LogIn
 
 DROP procedure NOT_NULL.UsuarioXRol_GetRolesByUser
-
+drop procedure NOT_NULL.Afiliado_Obtener_Nro
 drop procedure NOT_NULL.Afiliado_Add
 drop procedure NOT_NULL.Afiliado_GetAll
 drop procedure NOT_NULL.Afiliado_GetAfiliadoSegunUsuario
@@ -110,5 +110,10 @@ drop procedure NOT_NULL.Usuario_CambiarContraseña
 drop procedure NOT_NULL.Usuario_Habilitar
 drop procedure NOT_NULL.Usuario_Inhabilitar
 drop procedure NOT_NULL.RolXFuncion_Active
+drop procedure NOT_NULL.Planes_GetAll
+drop procedure NOT_NULL.Agregar_Modif_Plan
+drop procedure NOT_NULL.Planes_GetPlanAfiliado
+drop procedure NOT_NULL.Planes_GetPorId
+drop procedure NOT_NULL.Usuario_Exists
 DROP SCHEMA NOT_NULL
 GO
