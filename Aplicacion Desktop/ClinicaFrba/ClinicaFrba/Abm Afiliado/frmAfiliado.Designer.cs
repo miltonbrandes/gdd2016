@@ -55,11 +55,12 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.txtCambioPlan = new System.Windows.Forms.TextBox();
+            this.btnLimpiar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnHabilitar
             // 
-            this.btnHabilitar.Location = new System.Drawing.Point(9, 505);
+            this.btnHabilitar.Location = new System.Drawing.Point(10, 535);
             this.btnHabilitar.Margin = new System.Windows.Forms.Padding(4);
             this.btnHabilitar.Name = "btnHabilitar";
             this.btnHabilitar.Size = new System.Drawing.Size(320, 33);
@@ -67,10 +68,11 @@
             this.btnHabilitar.Text = "Usuario inhabilitado, volver a habilitar";
             this.btnHabilitar.UseVisualStyleBackColor = true;
             this.btnHabilitar.Visible = false;
+            this.btnHabilitar.Click += new System.EventHandler(this.btnHabilitar_Click);
             // 
             // btnContraseña
             // 
-            this.btnContraseña.Location = new System.Drawing.Point(10, 437);
+            this.btnContraseña.Location = new System.Drawing.Point(10, 503);
             this.btnContraseña.Margin = new System.Windows.Forms.Padding(4);
             this.btnContraseña.Name = "btnContraseña";
             this.btnContraseña.Size = new System.Drawing.Size(320, 33);
@@ -269,6 +271,7 @@
             // 
             // ckbEstado
             // 
+            this.ckbEstado.Enabled = false;
             this.ckbEstado.Location = new System.Drawing.Point(140, 365);
             this.ckbEstado.Margin = new System.Windows.Forms.Padding(4);
             this.ckbEstado.Name = "ckbEstado";
@@ -317,11 +320,22 @@
             this.txtCambioPlan.TabIndex = 57;
             this.txtCambioPlan.Visible = false;
             // 
+            // btnLimpiar
+            // 
+            this.btnLimpiar.Location = new System.Drawing.Point(10, 439);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(320, 33);
+            this.btnLimpiar.TabIndex = 58;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            // 
             // frmAfiliado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(342, 546);
+            this.ClientSize = new System.Drawing.Size(342, 571);
+            this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.txtCambioPlan);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.cmbSexo);
@@ -387,5 +401,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txtCambioPlan;
+        private System.Windows.Forms.Button btnLimpiar;
     }
 }

@@ -433,11 +433,12 @@ GO
 /*		AGENDA		*/
 CREATE TABLE NOT_NULL.agenda(
 	agenda_id int IDENTITY(0,1),
-	agenda_medxesp int NOT NULL foreign key references NOT_NULL.medicoXespecialidad(medxesp_id)
+	agenda_medxesp int NOT NULL foreign key references NOT_NULL.medicoXespecialidad(medxesp_id),
+	agenda_fecha_inicio date,
+	agenda_fecha_fin date,
 	primary key (agenda_id, agenda_medxesp)
 )
 GO
-
 
 /*TABLA FRANJA HORARIA*/
 CREATE TABLE NOT_NULL.franja_horaria(
@@ -446,7 +447,8 @@ CREATE TABLE NOT_NULL.franja_horaria(
 	hora_inicio int NOT NULL CHECK(hora_inicio<24 AND hora_inicio>=0),
 	minuto_inicio int NOT NULL CHECK(minuto_inicio<60 AND minuto_inicio>=0),
 	hora_fin int NOT NULL CHECK(hora_fin<24 AND hora_fin>=0),
-	minuto_fin int NOT NULL CHECK(minuto_fin<60 AND minuto_fin>=0)	)
+	minuto_fin int NOT NULL CHECK(minuto_fin<60 AND minuto_fin>=0),
+	franja_cancelada bit default 0	)
 GO
 
 
@@ -566,7 +568,7 @@ GO
 
   -- ROLES ADMINISTRADOR, le pongo todos para poder probar todo
   INSERT INTO NOT_NULL.rolXusuario(usuario_id, rol_id)
-  VALUES ('admin', 1), ('admin', 2), ('admin', 3)
+  VALUES ('admin', 1), ('admin', 2), ('admin',3)
   GO
 
   -- ROLES PROFESIONAL
@@ -612,6 +614,15 @@ GO
 	BEGIN
 		SET NOCOUNT ON;
 		SELECT * FROM NOT_NULL.Rol WHERE rol_id in (SELECT rol_id FROM NOT_NULL.rolXusuario WHERE usuario_id = @username and rolXusuario_habilitado = 1)
+	END
+  GO
+
+  --OBTENER TODOS LOS ROLES INHABILITADOS DE UN USUARIO
+  CREATE PROCEDURE NOT_NULL.UsuarioXRol_GetRolesInhabxUser (@username varchar(20))
+  AS
+	BEGIN
+		SET NOCOUNT ON;
+		SELECT * FROM NOT_NULL.Rol WHERE rol_id in (SELECT rol_id FROM NOT_NULL.rolXusuario WHERE usuario_id = @username and rolXusuario_habilitado = 0)
 	END
   GO
 
@@ -996,6 +1007,16 @@ GO
   GO
 
 
+  --VOLVER A ACTIVAR USUARIO X ROL
+  CREATE PROCEDURE NOT_NULL.RolXUsuario_Activate(@rol int, @usuario varchar(50))
+  AS
+	BEGIN
+	SET NOCOUNT ON;
+		UPDATE NOT_NULL.rolXusuario
+		SET rolXusuario_habilitado = 1 WHERE rol_id = @rol and rolXusuario.usuario_id = @usuario
+	END
+  GO
+
   --DESACTIVAR ROL
   CREATE PROCEDURE NOT_NULL.Rol_Deactivate(@rol int)
   AS
@@ -1018,6 +1039,7 @@ GO
   as
 	begin
 	set nocount on;
-		update NOT_NULL.rolXusuario set rolXusuario_habilitado = 0 where usuario_id = @UsuarioId
+		update NOT_NULL.rolXusuario set rolXusuario_habilitado = 0 where usuario_id = @UsuarioId and rol_id = 2
+		--set @ret = (select count(*) from NOT_NULL.rolXusuario where usuario_id = @UsuarioId and rol_id = 2 and rolXusuario_habilitado = 0) 
 	end
   go

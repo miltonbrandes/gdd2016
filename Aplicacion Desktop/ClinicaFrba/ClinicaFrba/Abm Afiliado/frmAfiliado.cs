@@ -37,6 +37,7 @@ namespace ClinicaFrba.Abm_Afiliado
             }
             else if (opcion == 2)
             {
+            
                 txtNombre.Text = afiliadoModificar.Nombre;
                 txtNombre.Enabled = false;
                 txtApellido.Enabled = false;
@@ -51,15 +52,58 @@ namespace ClinicaFrba.Abm_Afiliado
                 dtpFecha.Value = afiliadoModificar.FechaNacimiento;
                 dtpFecha.Enabled = false;
                 planactual = (Plan)cmbPlan.SelectedItem;
-                ckbEstado.Checked = usuario.Activo;
+                verActivo();
+                //ckbEstado.Checked = usuario.Activo;
                 btnContraseña.Visible = true;
                 cmbSexo.Text = reconocerSexo(afiliadoModificar);
 
-                if (!usuario.Activo)
+                
+            }
+        }
+        public void verActivo()
+        {
+                List<Rol> roles = null;
+                try
                 {
+
+                    if (afiliadoModificar.Username == "administrador32405354")
+                    {
+                        var parametros = new Dictionary<string, object>() {
+                    { "@username", afiliadoModificar.Username.Substring(0,5)}};
+                        roles = DBHelper.ExecuteReader("UsuarioXRol_GetRolesByUser", parametros).ToRoles();
+                    }
+                    else
+                    {
+                        var parametros = new Dictionary<string, object>() {
+                    { "@username", afiliadoModificar.Username}};
+                        roles = DBHelper.ExecuteReader("UsuarioXRol_GetRolesByUser", parametros).ToRoles();
+                    
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("No se pudo obtener el rol del usuario a modificar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                foreach (Rol r in roles)
+                {
+                    if (r.Id == 2)
+                    {
+                        if (r.Habilitado)
+                        {
+                            ckbEstado.Checked = true;
+                            btnHabilitar.Visible = false;
+                            return;
+                        }
+                    }
+                }
+                ckbEstado.Checked = false;
+                if (roles.Count > 0)
+                {
+                    
                     btnHabilitar.Visible = true;
                 }
-            }
+                return;
         }
         
         public void agregarPlanes(decimal planUsuario)
@@ -298,6 +342,7 @@ namespace ClinicaFrba.Abm_Afiliado
             try
             {
                 user = DBHelper.ExecuteReader("Usuario_Exists", new Dictionary<string, object>() { { "@usuarioid", txtNombre.Text + txtApellido.Text + txtDni.Text } }).ToUsuario();
+                
             }
             catch
             {
@@ -420,6 +465,72 @@ namespace ClinicaFrba.Abm_Afiliado
                 txtCambioPlan.Visible = false;
                 label11.Visible = false;
             }
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            if(opcionelegida == 1){
+                txtApellido.Text = "";
+                txtCambioPlan.Text = "";
+                txtDireccion.Text = "";
+                txtDni.Text = "";
+                txtMail.Text = "";
+                txtNombre.Text = "";
+                txtTelefono.Text = "";
+                cmbEstadoCivil.SelectedItem = cmbEstadoCivil.Items[0];
+                cmbPlan.SelectedItem = cmbPlan.Items[0];
+                cmbSexo.SelectedItem = cmbSexo.Items[0];
+                dtpFecha.Value = DateTime.Today;
+            }
+        }
+
+        private void btnHabilitar_Click(object sender, EventArgs e)
+        {
+            //TENGO QUE VOLVER A HABILITAR EL ROL DEL USUARIO
+            List<Rol> roles = null; 
+            string usu;
+            try
+            {
+               
+                if (afiliadoModificar.Username == "administrador32405354")
+                {
+                    var parametros = new Dictionary<string, object>() {
+                    { "@username", afiliadoModificar.Username.Substring(0,5)}};
+                    roles = DBHelper.ExecuteReader("UsuarioXRol_GetRolesInhabxUser", parametros).ToRoles();
+                    usu = afiliadoModificar.Username.Substring(0, 5);
+                }
+                else
+                {
+                    var parametros = new Dictionary<string, object>() {
+                    { "@username", afiliadoModificar.Username}};
+                    roles = DBHelper.ExecuteReader("UsuarioXRol_GetRolesInhabxUser", parametros).ToRoles();
+                    usu = afiliadoModificar.Username;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("No se pudo obtener el rol del usuario a modificar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            Rol rolAsignado = null;
+            foreach (Rol r in roles)
+            {
+                if (r.Id == 2)
+                {
+                    rolAsignado = r;
+                }
+            }
+            try
+            {
+                DBHelper.ExecuteNonQuery("RolXUsuario_Activate", new Dictionary<string, object>() { { "@rol", rolAsignado.Id } , {"@usuario", usu}});
+
+            }
+            catch { MessageBox.Show("Error al acceder a database", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information); }
+
+            MessageBox.Show("Rol activado nuevamente", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            ckbEstado.Checked = true;
+            btnHabilitar.Visible = false;
+        
         }
 
     }

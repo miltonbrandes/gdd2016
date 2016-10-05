@@ -30,6 +30,7 @@
         {
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnHistorialCambiosPlan = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.btnBajaAfiliado = new System.Windows.Forms.Button();
             this.btnTodosAfiliados = new System.Windows.Forms.Button();
@@ -44,7 +45,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnHistorialCambiosPlan = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAfiliado)).BeginInit();
             this.SuspendLayout();
@@ -88,6 +88,16 @@
             this.groupBox1.Text = "Afiliado";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
+            // btnHistorialCambiosPlan
+            // 
+            this.btnHistorialCambiosPlan.Location = new System.Drawing.Point(181, 452);
+            this.btnHistorialCambiosPlan.Name = "btnHistorialCambiosPlan";
+            this.btnHistorialCambiosPlan.Size = new System.Drawing.Size(188, 28);
+            this.btnHistorialCambiosPlan.TabIndex = 17;
+            this.btnHistorialCambiosPlan.Text = "Ver Historial Cambios Plan";
+            this.btnHistorialCambiosPlan.UseVisualStyleBackColor = true;
+            this.btnHistorialCambiosPlan.Click += new System.EventHandler(this.btnHistorialCambiosPlan_Click);
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -106,6 +116,7 @@
             this.btnBajaAfiliado.TabIndex = 20;
             this.btnBajaAfiliado.Text = "Dar De Baja Afiliado";
             this.btnBajaAfiliado.UseVisualStyleBackColor = true;
+            this.btnBajaAfiliado.Click += new System.EventHandler(this.btnBajaAfiliado_Click);
             // 
             // btnTodosAfiliados
             // 
@@ -222,16 +233,6 @@
             this.label1.Size = new System.Drawing.Size(58, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "Nombre";
-            // 
-            // btnHistorialCambiosPlan
-            // 
-            this.btnHistorialCambiosPlan.Location = new System.Drawing.Point(181, 452);
-            this.btnHistorialCambiosPlan.Name = "btnHistorialCambiosPlan";
-            this.btnHistorialCambiosPlan.Size = new System.Drawing.Size(188, 28);
-            this.btnHistorialCambiosPlan.TabIndex = 17;
-            this.btnHistorialCambiosPlan.Text = "Ver Historial Cambios Plan";
-            this.btnHistorialCambiosPlan.UseVisualStyleBackColor = true;
-            this.btnHistorialCambiosPlan.Click += new System.EventHandler(this.btnHistorialCambiosPlan_Click);
             // 
             // frmHomeAfiliado
             // 

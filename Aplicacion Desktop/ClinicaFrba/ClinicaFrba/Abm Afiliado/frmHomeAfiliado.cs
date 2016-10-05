@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Helpers;
 using Clases;
+using System.Data.SqlClient;
 
 namespace ClinicaFrba.Abm_Afiliado
 {
@@ -170,6 +171,56 @@ namespace ClinicaFrba.Abm_Afiliado
         {
             frmHistorialModificaciones nuevo = new frmHistorialModificaciones();
             nuevo.Show();
+        }
+
+        private void btnBajaAfiliado_Click(object sender, EventArgs e)
+        {
+           // Afiliado afil = ;
+            //frmBajaAfiliado baja = new frmBajaAfiliado(usuario, rol);
+            //baja.Show();
+            //Hide();
+            if (dgvAfiliado.SelectedRows.Count == 1)
+            {
+                Afiliado afil = (Afiliado)dgvAfiliado.CurrentRow.DataBoundItem;
+                if (afil != null)
+                {
+                    //LE DOY DE BAJA LOGICA, REVISAR LO UNICO QUE QUEDA ES LA PARTE DE PORQUE NO ME DEVUELVE SI SE MODIFICO
+                    string user = null;
+                    if (afil.Username == "administrador32405354")
+                    {
+                        user = afil.Username.Substring(0, 5);
+                    }
+                    else
+                    {
+                        user = afil.Username;
+                    }
+                    //int resp= 0;
+                    
+                    try
+                    {
+                        DBHelper.ExecuteNonQuery("Afiliado_Baja_Logica", (new Dictionary<string, object> { { "@UsuarioId", user }/*, {"@ret", resp} */}));
+                        
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Error al dar de baja afiliado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                  //  if(resp > 0)
+                        MessageBox.Show("Se dio de baja al afiliado: " + afil.Username, "Baja", MessageBoxButtons.OK, MessageBoxIcon.Information); 
+                 //   else
+                  //      MessageBox.Show("No se dio de baja al afiliado: " + afil.Username + "porque no tenia ningun rol o porque ya estaba de baja", "Baja", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    DBHelper.DB.Close();
+                    return;
+                    
+                }
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar 1 solo afiliado a dar de baja", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
         }
     }
 }

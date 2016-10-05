@@ -185,6 +185,9 @@
     <EmbeddedResource Include="Abm Afiliado\frmAfiliado.resx">
       <DependentUpon>frmAfiliado.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Abm Afiliado\frmBajaAfiliado.resx">
+      <DependentUpon>frmBajaAfiliado.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Abm Afiliado\frmHistorialModificaciones.resx">
       <DependentUpon>frmHistorialModificaciones.cs</DependentUpon>
     </EmbeddedResource>
