@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Clases
 {
-    class Especialidad
+    public class Especialidad
     {
         public int Id { get; set; }
         public string Descripcion { get; set; }

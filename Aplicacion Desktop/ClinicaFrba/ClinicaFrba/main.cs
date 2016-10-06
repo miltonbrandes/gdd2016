@@ -55,6 +55,7 @@ namespace ClinicaFrba
           load+= 1;
         }
 
+        //Esto es mucho mas facil con un enum.
         Dictionary<int, EventHandler> dicFunciones = new Dictionary<int, EventHandler>() {
             { 1, new EventHandler(ABMRol)},
             { 3, new EventHandler(ABMAfiliado)},
@@ -110,7 +111,7 @@ namespace ClinicaFrba
         }
         public static void RegistrarAgenda(object sender, EventArgs e)
         {
-            var home = new Registrar_Agenta_Medico.Form1();
+        	var home = new Registro_Agenda.RegistroAgenda();
             home.Show();
         }
         public static void PedirTurno(object sender, EventArgs e)

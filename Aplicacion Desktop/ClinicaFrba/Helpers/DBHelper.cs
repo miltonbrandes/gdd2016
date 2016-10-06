@@ -3,6 +3,7 @@ using System.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+
 namespace Helpers
 {
     //http://www.codeproject.com/Articles/4416/Beginners-guide-to-accessing-SQL-Server-through-C
