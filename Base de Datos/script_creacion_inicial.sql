@@ -432,11 +432,11 @@ GO
 
 /*		AGENDA		*/
 CREATE TABLE NOT_NULL.agenda(
-	agenda_id int IDENTITY(0,1),
-	agenda_medxesp int NOT NULL foreign key references NOT_NULL.medicoXespecialidad(medxesp_id),
+	agenda_id int IDENTITY(0,1) primary key,
+	--agenda_medxesp int NOT NULL foreign key references NOT_NULL.medicoXespecialidad(medxesp_id),
 	agenda_fecha_inicio date,
 	agenda_fecha_fin date,
-	primary key (agenda_id, agenda_medxesp)
+	--primary key (agenda_id)
 )
 GO
 
@@ -448,7 +448,8 @@ CREATE TABLE NOT_NULL.franja_horaria(
 	minuto_inicio int NOT NULL CHECK(minuto_inicio<60 AND minuto_inicio>=0),
 	hora_fin int NOT NULL CHECK(hora_fin<24 AND hora_fin>=0),
 	minuto_fin int NOT NULL CHECK(minuto_fin<60 AND minuto_fin>=0),
-	franja_cancelada bit default 0	)
+	franja_cancelada bit default 0	,
+	agenda_id int foreign key references NOT_NULL.agenda(agenda_id))
 GO
 
 
