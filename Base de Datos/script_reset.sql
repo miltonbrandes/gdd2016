@@ -106,7 +106,7 @@ drop procedure NOT_NULL.RolXFuncion_GetFunByRol
 drop procedure NOT_NULL.RolXFuncion_Remove
 drop procedure NOT_NULL.Usuario_Activo
 drop procedure NOT_NULL.Usuario_Add
-drop procedure NOT_NULL.Usuario_CambiarContraseña
+drop procedure NOT_NULL.Usuario_CambiarContrasenia
 drop procedure NOT_NULL.Usuario_Habilitar
 drop procedure NOT_NULL.Usuario_Inhabilitar
 drop procedure NOT_NULL.RolXFuncion_Active

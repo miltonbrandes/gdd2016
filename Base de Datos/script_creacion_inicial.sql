@@ -852,7 +852,7 @@ GO
   GO
 
   --CAMBIAR CONTRASEÑA DE USUARIO
-  CREATE PROCEDURE NOT_NULL.Usuario_CambiarContraseña(@Username varchar(50), @Password varchar(20), @cambiada int output)
+  CREATE PROCEDURE NOT_NULL.Usuario_CambiarContrasenia(@Username varchar(50), @Password varchar(20), @cambiada int output)
   AS
 	BEGIN
 	SET NOCOUNT ON;
