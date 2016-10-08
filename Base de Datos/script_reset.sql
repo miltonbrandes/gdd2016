@@ -119,5 +119,7 @@ drop procedure NOT_NULL.Modif_Plan_Get_All
 drop procedure NOT_NULL.Afiliado_Baja_Logica
 drop procedure NOT_NULL.RolXUsuario_Activate
 drop procedure NOT_NULL.UsuarioXRol_GetRolesInhabxUser
+drop procedure NOT_NULL.Afiliado_Agregar_Familiar
+drop procedure NOT_NULL.Hijos_En_Cero
 DROP SCHEMA NOT_NULL
 GO

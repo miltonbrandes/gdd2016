@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Clases;
 using Helpers;
-
+//TODO: VER PORQUE al afiliado le queda 1 hijo mas de los que tiene 
 namespace ClinicaFrba.Abm_Afiliado
 {
     public partial class frmAfiliado : Form
@@ -34,6 +34,10 @@ namespace ClinicaFrba.Abm_Afiliado
                 ckbEstado.Visible = false;
                 btnHabilitar.Visible = false;
                 cargarPlanes();
+                cmbPlan.Enabled = true;
+                button1.Visible = false;/*
+                cmbSexo.SelectedText = "No especificado";
+                cmbEstadoCivil.SelectedValue = "No Especifica";*/
             }
             else if (opcion == 2)
             {
@@ -56,10 +60,22 @@ namespace ClinicaFrba.Abm_Afiliado
                 //ckbEstado.Checked = usuario.Activo;
                 btnContraseña.Visible = true;
                 cmbSexo.Text = reconocerSexo(afiliadoModificar);
-
+                cmbPlan.Enabled = true;
+                button1.Visible = true;
+            }
+            else if (opcion == 3 || opcion == 4)
+            {
+                //SE ESTA AGREGANDO UN FAMILIAR (EL NRO DE AFILIADO ES EL MISMO QUE LE PASO CON EL AFILIADO POR PARAMETRO, SE LE SUMA 1 DIRECTO EN LA BASE)
                 
+                lblEstado.Visible = false;
+                ckbEstado.Visible = false;
+                btnHabilitar.Visible = false;
+                agregarPlanes(afiliadoModificar.PlanUsuario);
+                cmbPlan.Enabled = false;
+                button1.Visible = false;
             }
         }
+        
         public void verActivo()
         {
                 List<Rol> roles = null;
@@ -223,9 +239,29 @@ namespace ClinicaFrba.Abm_Afiliado
 
         private void frmAltaAfiliado_FormClosed(object sender, FormClosedEventArgs e)
         {
-            frmHomeAfiliado princ = new frmHomeAfiliado(usuario, rol);
-            Hide();
-            princ.Show();
+            if (opcionelegida != 3 && opcionelegida != 4)
+            {
+                frmAfiliado abierto = null;
+                FormCollection fc = Application.OpenForms;
+                foreach (Form frm in fc)
+                {
+                    if (frm.Name == "frmAfiliado")
+                    {
+                        abierto = (frmAfiliado)frm;
+
+                    }
+                }
+                if (abierto == null)
+                {
+                    frmHomeAfiliado princ = new frmHomeAfiliado(usuario, rol);
+                    Hide();
+                    princ.Show();
+                }
+                else {
+                    abierto.Show();
+                }
+                
+            }
         }
 
         private void btnIngresarFamiliar_Click(object sender, EventArgs e)
@@ -285,8 +321,58 @@ namespace ClinicaFrba.Abm_Afiliado
                         Close();
                     }
                 }
+                else if (opcionelegida == 3) //alta conyuge
+                {
+                    Plan planElegido = (Plan)cmbPlan.SelectedValue;
+                    var afiliado = new Dictionary<string, object>()
+                    {
+                        { "@Afiliado_nro_familiar", afiliadoModificar.NroAfiliado},
+                        { "@Username", txtNombre.Text+txtApellido.Text+txtDni.Text.ToString()},
+                        { "@Nombre", txtNombre.Text },
+                        { "@Apellido", txtApellido.Text },
+                        { "@Dni", Convert.ToInt32(txtDni.Text)  },
+                        { "@Mail",  txtMail.Text  },
+                        { "@Telefono", txtTelefono.Text  },
+                        { "@Direccion",txtDireccion.Text  },
+                        { "@CantHijos",  0 },
+                        { "@EstadoCivil", cmbEstadoCivil.Text.Substring(0,1)},
+                        { "@Fecha", dtpFecha.Value},
+                        { "@Plan", Convert.ToDecimal(planElegido.Id) },
+                        { "@Sexo", cmbSexo.Text.Substring(0,1)},
+                    };
 
-       
+                    if (Alta(afiliado))
+                    {
+                        Close();
+                    }
+
+                    
+                }
+                else if (opcionelegida == 4) //alta familiar
+                {
+                    Plan planElegido = (Plan)cmbPlan.SelectedValue;
+                    var afiliado = new Dictionary<string, object>()
+                    {
+                        { "@Afiliado_nro_familiar", afiliadoModificar.NroAfiliado},
+                        { "@Username", txtNombre.Text+txtApellido.Text+txtDni.Text.ToString()},
+                        { "@Nombre", txtNombre.Text },
+                        { "@Apellido", txtApellido.Text },
+                        { "@Dni", Convert.ToInt32(txtDni.Text)  },
+                        { "@Mail",  txtMail.Text  },
+                        { "@Telefono", txtTelefono.Text  },
+                        { "@Direccion",txtDireccion.Text  },
+                        { "@CantHijos",  0 },
+                        { "@EstadoCivil", cmbEstadoCivil.Text.Substring(0,1)},
+                        { "@Fecha", dtpFecha.Value},
+                        { "@Plan", Convert.ToDecimal(planElegido.Id) },
+                        { "@Sexo", cmbSexo.Text.Substring(0,1)},
+                    };
+
+                    if (Alta(afiliado))
+                    {
+                        Close();
+                    }
+                }      
             }
         }
         
@@ -338,52 +424,215 @@ namespace ClinicaFrba.Abm_Afiliado
 
         private bool Alta(Dictionary<string, object> afiliado)
         {
-            Usuario user;
-            try
+            #region OPCION 3
+            if (opcionelegida == 3)
             {
-                user = DBHelper.ExecuteReader("Usuario_Exists", new Dictionary<string, object>() { { "@usuarioid", txtNombre.Text + txtApellido.Text + txtDni.Text } }).ToUsuario();
-                
-            }
-            catch
-            {
-                MessageBox.Show("El Afiliado ingresado ya existia", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            if (user == null)
-            {
+                Usuario user;
                 try
                 {
-                    DBHelper.ExecuteNonQuery("Afiliado_Add", afiliado);
+                    user = DBHelper.ExecuteReader("Usuario_Exists", new Dictionary<string, object>() { { "@usuarioid", txtNombre.Text + txtApellido.Text + txtDni.Text } }).ToUsuario();
+
                 }
                 catch
                 {
-                    MessageBox.Show("No se pudo agregar el afiliado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("El Afiliado ingresado ya existia", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
-                MessageBox.Show("Se agrego correctamente el afiliado", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                if (cmbEstadoCivil.Text.Substring(0,1) == "C")//esta casado, ofrezco si quiere registrar a su conyuge
+                if (user == null)
                 {
-                    DialogResult resultado = MessageBox.Show("Desea agregar a su conyuge a la clinica?", "Consulta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (resultado == DialogResult.Yes)//quiere decir que quiere registrar a su conyuge
+                    try
                     {
-                        //ACA TENGO QUE IR A UN NUEVO FORMULARIO DE ALTA PARA EL CONYUGE
+                        DBHelper.ExecuteNonQuery("Afiliado_Agregar_Familiar", afiliado);
                     }
-                    else // no quiere registrar a su conyuge
+                    catch
                     {
-                        DialogResult resultado2 = MessageBox.Show("Desea agregar a algun otro familiar a la clinica?", "Consulta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                        if (resultado2 == DialogResult.Yes)//quiere decir que quiere registrar a su conyuge
+                        MessageBox.Show("No se pudo agregar el afiliado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+                    MessageBox.Show("Se agrego correctamente el afiliado", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    DialogResult resultado2 = MessageBox.Show("Desea agregar a algun otro familiar a la clinica?", "Consulta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (resultado2 == DialogResult.Yes)//quiere decir que quiere registrar a su conyuge
+                    {
+                        //ACA TENGO QUE IR A UN NUEVO FORM DE ALTA PARA EL FAMILIAR
+                        Afiliado afilAgregado;
+                        try
                         {
-                            //ACA TENGO QUE IR A UN NUEVO FORM DE ALTA PARA EL FAMILIAR
+                            var dict = new Dictionary<string, object>() { { "@username", txtNombre.Text + txtApellido.Text + txtDni.Text.ToString() } };
+                            afilAgregado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", dict).ToAfiliados();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("No se ha podido agregar un familiar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return false;
+                        }
+                        opcionelegida = 4;
+                        frmAfiliado conyuge = new frmAfiliado(usuario, rol, afilAgregado, 4);
+                        conyuge.Show();
+                        return true;
+                    }
+                    else
+                    {
+                        opcionelegida = 1;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Ese Afiliado ya esta registrado en la clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                return true;
+            }
+            #endregion
+            #region OPCION 1
+            else if (opcionelegida == 1)
+            {
+                Usuario user;
+                try
+                {
+                    user = DBHelper.ExecuteReader("Usuario_Exists", new Dictionary<string, object>() { { "@usuarioid", txtNombre.Text + txtApellido.Text + txtDni.Text } }).ToUsuario();
+
+                }
+                catch
+                {
+                    MessageBox.Show("El Afiliado ingresado ya existia", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                if (user == null)
+                {
+                    try
+                    {
+                        DBHelper.ExecuteNonQuery("Afiliado_Add", afiliado);
+                        DBHelper.ExecuteNonQuery("Hijos_En_Cero", new Dictionary<string, object>{{"@username", txtNombre.Text+txtApellido.Text+txtDni.Text.ToString()}});
+                    }
+                    catch
+                    {
+                        MessageBox.Show("No se pudo agregar el afiliado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+                    MessageBox.Show("Se agrego correctamente el afiliado", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (cmbEstadoCivil.Text.Substring(0, 1) == "C")//esta casado, ofrezco si quiere registrar a su conyuge
+                    {
+                        DialogResult resultado = MessageBox.Show("Desea agregar a su conyuge a la clinica?", "Consulta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (resultado == DialogResult.Yes)//quiere decir que quiere registrar a su conyuge
+                        {
+                            //VER PORQUE AL AFILIADO LE QUEDA 1 HIJO MAS QUE LOS QUE TIENE
+                            //ACA TENGO QUE IR A UN NUEVO FORMULARIO DE ALTA PARA EL CONYUGE
+                            //LEO EL NRO AFILIADO DEL QUE ACABO DE AGREGAR PARA PASRLO
+                            Afiliado afilAgregado;
+                            try
+                            {
+                                var dict = new Dictionary<string, object>() { { "@username", txtNombre.Text + txtApellido.Text + txtDni.Text.ToString() } };
+                                afilAgregado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", dict).ToAfiliados();
+                            }
+                            catch
+                            {
+                                MessageBox.Show("No se ha podido agregar un familiar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return false;
+                            }
+                            opcionelegida = 3;
+                            frmAfiliado conyuge = new frmAfiliado(usuario, rol, afilAgregado, 3);
+                            conyuge.Show();
+                            return true;
+                        }
+                        else // no quiere registrar a su conyuge
+                        {
+                            DialogResult resultado2 = MessageBox.Show("Desea agregar a algun otro familiar a la clinica?", "Consulta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                            if (resultado2 == DialogResult.Yes)//quiere decir que quiere registrar a su conyuge
+                            {
+                                //ACA TENGO QUE IR A UN NUEVO FORM DE ALTA PARA EL FAMILIAR
+                                //OPCION 4 es Agregar otro familiar
+                                //VER PORQUE AL AFILIADO LE QUEDA 1 HIJO MAS QUE LOS QUE TIENE
+                                //ACA TENGO QUE IR A UN NUEVO FORMULARIO DE ALTA PARA EL CONYUGE
+                                //LEO EL NRO AFILIADO DEL QUE ACABO DE AGREGAR PARA PASRLO
+                                Afiliado afilAgregado;
+                                try
+                                {
+                                    var dict = new Dictionary<string, object>() { { "@username", txtNombre.Text + txtApellido.Text + txtDni.Text.ToString() } };
+                                    afilAgregado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", dict).ToAfiliados();
+                                }
+                                catch
+                                {
+                                    MessageBox.Show("No se ha podido agregar un familiar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return false;
+                                }
+                                opcionelegida = 4;
+                                frmAfiliado conyuge = new frmAfiliado(usuario, rol, afilAgregado, 4);
+                                conyuge.Show();
+                                return true;
+                            }
                         }
                     }
                 }
+                else
+                {
+                    MessageBox.Show("Ese Afiliado ya esta registrado en la clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                return true;
             }
-            else
+            #endregion
+            #region OPCION 4 (FAMILIAR)
+            if (opcionelegida == 4)
             {
-                MessageBox.Show("Ese Afiliado ya esta registrado en la clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                Usuario user;
+                try
+                {
+                    user = DBHelper.ExecuteReader("Usuario_Exists", new Dictionary<string, object>() { { "@usuarioid", txtNombre.Text + txtApellido.Text + txtDni.Text } }).ToUsuario();
+
+                }
+                catch
+                {
+                    MessageBox.Show("El Afiliado ingresado ya existia", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                if (user == null)
+                {
+                    try
+                    {
+                        DBHelper.ExecuteNonQuery("Afiliado_Agregar_Familiar", afiliado);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("No se pudo agregar el afiliado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+                    MessageBox.Show("Se agrego correctamente el afiliado", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    DialogResult resultado2 = MessageBox.Show("Desea agregar a algun otro familiar a la clinica?", "Consulta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (resultado2 == DialogResult.Yes)//quiere decir que quiere registrar a su conyuge
+                    {
+                        //ACA TENGO QUE IR A UN NUEVO FORM DE ALTA PARA EL FAMILIAR
+                        Afiliado afilAgregado;
+                        try
+                        {
+                            var dict = new Dictionary<string, object>() { { "@username", txtNombre.Text + txtApellido.Text + txtDni.Text.ToString() } };
+                            afilAgregado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", dict).ToAfiliados();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("No se ha podido agregar un familiar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return false;
+                        }
+                        opcionelegida = 4;
+                        frmAfiliado conyuge = new frmAfiliado(usuario, rol, afilAgregado, 4);
+                        conyuge.Show();
+                        return true;
+                    }
+                    else
+                    {
+                        opcionelegida = 1;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Ese Afiliado ya esta registrado en la clinica", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                return true;
             }
-            return true;
+            
+            #endregion
+
+            return false;
         }
 
         private bool DatosCompletados()
@@ -403,6 +652,10 @@ namespace ClinicaFrba.Abm_Afiliado
             {
                 sb.AppendLine("Complete dni.");
             }
+            if (txtDni.Text.ToString().Length > 8)
+            {
+                sb.AppendLine("El dni no puede tener mas de 8 numeros.");
+            }
             if (txtMail.Text == string.Empty)
             {
                 sb.AppendLine("Complete mail.");
@@ -414,6 +667,10 @@ namespace ClinicaFrba.Abm_Afiliado
             if (txtDireccion.Text == string.Empty)
             {
                 sb.AppendLine("Complete direccion.");
+            }
+            if (cmbSexo.Text == string.Empty)
+            {
+                sb.AppendLine("Complete el sexo");
             }
             if (cmbEstadoCivil.Text == string.Empty)
             {
@@ -443,11 +700,6 @@ namespace ClinicaFrba.Abm_Afiliado
             return true;
         }
 
-        private void txtDireccion_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-        
         private void cmbPlan_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (i == 0)
@@ -479,6 +731,19 @@ namespace ClinicaFrba.Abm_Afiliado
                 txtTelefono.Text = "";
                 cmbEstadoCivil.SelectedItem = cmbEstadoCivil.Items[0];
                 cmbPlan.SelectedItem = cmbPlan.Items[0];
+                cmbSexo.SelectedItem = cmbSexo.Items[0];
+                dtpFecha.Value = DateTime.Today;
+            }
+            else if (opcionelegida == 3 || opcionelegida == 4)
+            {
+                txtApellido.Text = "";
+                txtCambioPlan.Text = "";
+                txtDireccion.Text = "";
+                txtDni.Text = "";
+                txtMail.Text = "";
+                txtNombre.Text = "";
+                txtTelefono.Text = "";
+                cmbEstadoCivil.SelectedItem = cmbEstadoCivil.Items[0];
                 cmbSexo.SelectedItem = cmbSexo.Items[0];
                 dtpFecha.Value = DateTime.Today;
             }
@@ -531,6 +796,12 @@ namespace ClinicaFrba.Abm_Afiliado
             ckbEstado.Checked = true;
             btnHabilitar.Visible = false;
         
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            frmAfiliado familiar = new frmAfiliado(usuario, rol, afiliadoModificar, 4);
+            familiar.Show();
         }
 
     }

@@ -67,3 +67,5 @@ D:\UTN\Gestion de Datos\repo\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\
 D:\UTN\Gestion de Datos\repo\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Properties.Resources.resources
 D:\UTN\Gestion de Datos\repo\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.csproj.GenerateResource.Cache
 D:\UTN\Gestion de Datos\repo\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.exe
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Abm_Afiliado.frmBajaAfiliado.resources
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Registro_Agenda.RegistroAgenda.resources

@@ -14,3 +14,4 @@ D:\UTN\Gestion de Datos\repo\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\bin\D
 D:\UTN\Gestion de Datos\repo\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\obj\Debug\Clases.csprojResolveAssemblyReference.cache
 D:\UTN\Gestion de Datos\repo\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\obj\Debug\Clases.dll
 D:\UTN\Gestion de Datos\repo\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\obj\Debug\Clases.pdb
+D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\obj\Debug\Clases.csprojResolveAssemblyReference.cache

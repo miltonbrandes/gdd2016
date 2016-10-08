@@ -56,11 +56,12 @@
             this.label11 = new System.Windows.Forms.Label();
             this.txtCambioPlan = new System.Windows.Forms.TextBox();
             this.btnLimpiar = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnHabilitar
             // 
-            this.btnHabilitar.Location = new System.Drawing.Point(10, 535);
+            this.btnHabilitar.Location = new System.Drawing.Point(10, 567);
             this.btnHabilitar.Margin = new System.Windows.Forms.Padding(4);
             this.btnHabilitar.Name = "btnHabilitar";
             this.btnHabilitar.Size = new System.Drawing.Size(320, 33);
@@ -72,7 +73,7 @@
             // 
             // btnContraseña
             // 
-            this.btnContraseña.Location = new System.Drawing.Point(10, 503);
+            this.btnContraseña.Location = new System.Drawing.Point(10, 535);
             this.btnContraseña.Margin = new System.Windows.Forms.Padding(4);
             this.btnContraseña.Name = "btnContraseña";
             this.btnContraseña.Size = new System.Drawing.Size(320, 33);
@@ -106,7 +107,6 @@
             this.txtDireccion.Name = "txtDireccion";
             this.txtDireccion.Size = new System.Drawing.Size(190, 22);
             this.txtDireccion.TabIndex = 39;
-            this.txtDireccion.TextChanged += new System.EventHandler(this.txtDireccion_TextChanged);
             // 
             // label6
             // 
@@ -229,6 +229,7 @@
             // 
             // cmbEstadoCivil
             // 
+            this.cmbEstadoCivil.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbEstadoCivil.FormattingEnabled = true;
             this.cmbEstadoCivil.Items.AddRange(new object[] {
             "No Especifica",
@@ -252,6 +253,7 @@
             // 
             // cmbPlan
             // 
+            this.cmbPlan.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPlan.FormattingEnabled = true;
             this.cmbPlan.Location = new System.Drawing.Point(140, 187);
             this.cmbPlan.Name = "cmbPlan";
@@ -283,6 +285,7 @@
             // 
             // cmbSexo
             // 
+            this.cmbSexo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSexo.FormattingEnabled = true;
             this.cmbSexo.Items.AddRange(new object[] {
             "No especificado",
@@ -330,11 +333,24 @@
             this.btnLimpiar.UseVisualStyleBackColor = true;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(10, 503);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(320, 33);
+            this.button1.TabIndex = 59;
+            this.button1.Text = "Agregar Familiar";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // frmAfiliado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(342, 571);
+            this.ClientSize = new System.Drawing.Size(342, 602);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.txtCambioPlan);
             this.Controls.Add(this.label11);
@@ -402,5 +418,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txtCambioPlan;
         private System.Windows.Forms.Button btnLimpiar;
+        private System.Windows.Forms.Button button1;
     }
 }
