@@ -851,25 +851,17 @@ GO
 	END
   GO
 
-
   --CAMBIAR CONTRASEÑA DE USUARIO
-  CREATE PROCEDURE NOT_NULL.Usuario_CambiarContraseña(@Username varchar(50), @Password varchar(20), @OldPass varchar(20), @cambiada int output)
+  CREATE PROCEDURE NOT_NULL.Usuario_CambiarContraseña(@Username varchar(50), @Password varchar(20), @cambiada int output)
   AS
 	BEGIN
 	SET NOCOUNT ON;
 		declare @vieja varchar(20);
 		set @vieja = (select usuario.usuario_password from usuario where usuario_id = @Username)
-		set @OldPass = HASHBYTES('SHA2_256', @OldPass)
-		if(@vieja = @OldPass)
-		begin
-			UPDATE NOT_NULL.Usuario
-			SET usuario_password = HASHBYTES('SHA2_256', @Password)
-			WHERE usuario_id = @Username 
-			set @cambiada = 1;
-			return @cambiada;
-		end
-		else
-			set @cambiada = 0;
+		UPDATE NOT_NULL.Usuario
+		SET usuario_password = HASHBYTES('SHA2_256', @Password)
+		WHERE usuario_id = @Username 
+		set @cambiada = 1;
 	END
   GO
 

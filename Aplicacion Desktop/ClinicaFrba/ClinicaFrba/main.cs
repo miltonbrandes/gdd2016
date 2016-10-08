@@ -86,21 +86,28 @@ namespace ClinicaFrba
         }
         public static void ABMUsuario(object sender, EventArgs e)
         {
+            MessageBox.Show("En proceso de implementacion", "No disponible", MessageBoxButtons.OK, MessageBoxIcon.Information);
             var home = new Abm_Usuario.homeAbmUsuario();
             home.Show();
         }
         public static void ABMPlan(object sender, EventArgs e)
         {
+
+            MessageBox.Show("En proceso de implementacion", "No disponible", MessageBoxButtons.OK, MessageBoxIcon.Information);
             var home = new Abm_Planes.Form1();
             home.Show();
         }
         public static void ABMProfesional(object sender, EventArgs e)
         {
+
+            MessageBox.Show("En proceso de implementacion", "No disponible", MessageBoxButtons.OK, MessageBoxIcon.Information);
             var home = new Abm_Profesional.Form1();
             home.Show();
         }
         public static void ABMEspecialidad(object sender, EventArgs e)
         {
+
+            MessageBox.Show("En proceso de implementacion", "No disponible", MessageBoxButtons.OK, MessageBoxIcon.Information);
             var home = new Abm_Especialidades_Medicas.Form1();
             home.Show();
         }
@@ -111,8 +118,9 @@ namespace ClinicaFrba
         }
         public static void RegistrarAgenda(object sender, EventArgs e)
         {
-        	var home = new Registro_Agenda.RegistroAgenda();
-            home.Show();
+            //PASARLE EL PROFESIONAL QUE ESTA REGISTRANDO LA AGENDA
+        	//var home = new Registro_Agenda.RegistroAgenda();
+           // home.Show();
         }
         public static void PedirTurno(object sender, EventArgs e)
         {

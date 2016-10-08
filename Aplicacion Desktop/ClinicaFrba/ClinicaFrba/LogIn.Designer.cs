@@ -95,12 +95,12 @@
             // 
             // cmbRol
             // 
+            this.cmbRol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRol.FormattingEnabled = true;
             this.cmbRol.Location = new System.Drawing.Point(30, 241);
             this.cmbRol.Name = "cmbRol";
             this.cmbRol.Size = new System.Drawing.Size(195, 24);
             this.cmbRol.TabIndex = 6;
-            this.cmbRol.Text = "Rol";
             this.cmbRol.Visible = false;
             // 
             // buttonContinuar

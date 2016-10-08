@@ -29,7 +29,7 @@ namespace ClinicaFrba.Abm_Afiliado
         private void button1_Click(object sender, EventArgs e)
         {
             int cambio = 0;
-            if (txtNueva.Text == string.Empty ||  txtRepita.Text == string.Empty || txtVieja.Text == string.Empty)
+            if (txtNueva.Text == string.Empty ||  txtRepita.Text == string.Empty)
             {
                 MessageBox.Show("Debe completar los 3 campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }//else completo todos los campos
@@ -41,12 +41,14 @@ namespace ClinicaFrba.Abm_Afiliado
                 else {
                 try
                 {
-                    DBHelper.ExecuteNonQuery("Usuario_CambiarContraseña", new Dictionary<string, object>() { { "@Username", afiliadoCambiar.Username }, { "@Password", txtNueva.Text }, {"@OldPass", txtVieja.Text}, {"@cambiada", cambio} });
+                    DBHelper.ExecuteNonQuery("Usuario_CambiarContraseña", new Dictionary<string, object>() { { "@Username", afiliadoCambiar.Username }, { "@Password", txtNueva.Text }, {"@cambiada", cambio} });
                     //if(cambio == 1)
-                        MessageBox.Show("Contraseña cambiada");
+                    //    MessageBox.Show("Contraseña cambiada");
                     //TODO: ver porque no me devuelve 1 aca
                     //else
                     //    MessageBox.Show("La contraseña ingresada no coincide con la guardada", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Se ha cambiado. Chequee el cambio de contraseña", "Cambiada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 }
                 catch
                 {
