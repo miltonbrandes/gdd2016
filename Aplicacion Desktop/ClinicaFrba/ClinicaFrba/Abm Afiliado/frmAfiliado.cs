@@ -8,8 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Clases;
-using Helpers;
-//TODO: VER PORQUE al afiliado le queda 1 hijo mas de los que tiene 
+using Helpers; 
 namespace ClinicaFrba.Abm_Afiliado
 {
     public partial class frmAfiliado : Form
@@ -57,6 +56,7 @@ namespace ClinicaFrba.Abm_Afiliado
                 dtpFecha.Enabled = false;
                 planactual = (Plan)cmbPlan.SelectedItem;
                 verActivo();
+                
                 //ckbEstado.Checked = usuario.Activo;
                 btnContraseña.Visible = true;
                 cmbSexo.Text = reconocerSexo(afiliadoModificar);
@@ -114,11 +114,11 @@ namespace ClinicaFrba.Abm_Afiliado
                     }
                 }
                 ckbEstado.Checked = false;
-                if (roles.Count > 0)
-                {
+                //if (roles.Count > 0)
+                //{
                     
                     btnHabilitar.Visible = true;
-                }
+                //}
                 return;
         }
         
@@ -207,7 +207,7 @@ namespace ClinicaFrba.Abm_Afiliado
         {
             if (afiliadoModificar.Sexo == "N")
             {
-                return "No Especifica";
+                return "No especificado";
             }
             else if (afiliadoModificar.Sexo == "M")
             {
@@ -777,31 +777,45 @@ namespace ClinicaFrba.Abm_Afiliado
                 MessageBox.Show("No se pudo obtener el rol del usuario a modificar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            Rol rolAsignado = null;
-            foreach (Rol r in roles)
+            if (roles.Count > 0 && roles[0].Id == 2 && roles[0].Habilitado)
             {
-                if (r.Id == 2)
+                Rol rolAsignado = null;
+                foreach (Rol r in roles)
                 {
-                    rolAsignado = r;
+                    if (r.Id == 2)
+                    {
+                        rolAsignado = r;
+                    }
                 }
+                try
+                {
+                    DBHelper.ExecuteNonQuery("RolXUsuario_Activate", new Dictionary<string, object>() { { "@rol", rolAsignado.Id }, { "@usuario", usu } });
+
+                }
+                catch { MessageBox.Show("Error al acceder a database", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information); }
+
+                MessageBox.Show("Rol activado nuevamente", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ckbEstado.Checked = true;
+                btnHabilitar.Visible = false;
             }
-            try
+            else
             {
-                DBHelper.ExecuteNonQuery("RolXUsuario_Activate", new Dictionary<string, object>() { { "@rol", rolAsignado.Id } , {"@usuario", usu}});
-
+                MessageBox.Show("El rol estaba deshabilitado, habilitelo e intente nuevamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch { MessageBox.Show("Error al acceder a database", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-
-            MessageBox.Show("Rol activado nuevamente", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            ckbEstado.Checked = true;
-            btnHabilitar.Visible = false;
-        
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             frmAfiliado familiar = new frmAfiliado(usuario, rol, afiliadoModificar, 4);
             familiar.Show();
+        }
+
+        private void btnContraseña_Click(object sender, EventArgs e)
+        {
+            Hide();
+            contraseña frmcontra = new contraseña(usuario, rol, afiliadoModificar);
+            frmcontra.Show();
+
         }
 
     }

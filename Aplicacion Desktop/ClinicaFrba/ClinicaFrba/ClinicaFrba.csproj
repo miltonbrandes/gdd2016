@@ -44,6 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abm Afiliado\contraseña.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Afiliado\contraseña.Designer.cs">
+      <DependentUpon>contraseña.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Afiliado\frmAfiliado.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -182,6 +188,9 @@
     <Compile Include="Registro Resultado\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Abm Afiliado\contraseña.resx">
+      <DependentUpon>contraseña.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Abm Afiliado\frmAfiliado.resx">
       <DependentUpon>frmAfiliado.cs</DependentUpon>
     </EmbeddedResource>

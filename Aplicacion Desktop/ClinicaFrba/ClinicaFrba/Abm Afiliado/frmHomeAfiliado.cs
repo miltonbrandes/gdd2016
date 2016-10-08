@@ -222,5 +222,10 @@ namespace ClinicaFrba.Abm_Afiliado
             }
 
         }
+
+        private void dgvAfiliado_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

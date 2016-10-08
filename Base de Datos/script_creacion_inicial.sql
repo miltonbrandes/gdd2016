@@ -43,6 +43,9 @@ CREATE TABLE NOT_NULL.rol(
 ) ON [PRIMARY]
 
 GO
+Insert INTO NOT_NULL.Rol(rol_descripcion)
+  VALUES ('Administrador'), ('Afiliado'), ('Profesional')
+GO
 
 /*FUNCION X ROL*/
 CREATE TABLE NOT_NULL.funcionXrol(
@@ -182,6 +185,8 @@ Begin
 	--declare @afiliado_usuario varchar(50)
 	insert into NOT_NULL.usuario (usuario_id, usuario_cant_intentos, usuario_descripcion, usuario_password, usuario_habilitado)
 	select profesional_nombre + profesional_apellido + CAST(profesional_dni as varchar(8)), 0, 'Profesional',HASHBYTES('SHA2_256', 'profesional'), 1 from inserted where inserted.profesional_nombre is not null and inserted.profesional_apellido is not null and inserted.profesional_dni is not null
+	insert into NOT_NULL.rolXusuario (usuario_id, rolXusuario_habilitado, rol_id)
+	(select profesional_nombre + profesional_apellido + CAST(profesional_dni as varchar(8)), 1, 3 from inserted where profesional_nombre is not null and profesional_apellido is not null and profesional_dni is not null)
 End
 go
 
@@ -306,6 +311,9 @@ as
 		insert into NOT_NULL.afiliado (usuario_id, afiliado_nombre, afiliado_apellido, afiliado_dni, afiliado_cant_hijos, afiliado_direccion, afiliado_estado_civil, afiliado_fecha_nac, afiliado_mail, afiliado_plan, afiliado_sexo, afiliado_telefono)
 		(select afiliado_nombre + afiliado_apellido + CAST(afiliado_dni as varchar(8)), afiliado_nombre, afiliado_apellido, afiliado_dni, 0, afiliado_direccion, afiliado_estado_civil, afiliado_fecha_nac, afiliado_mail, afiliado_plan, afiliado_sexo, afiliado_telefono from inserted  
 		where inserted.afiliado_nombre is not null and inserted.afiliado_apellido is not null and inserted.afiliado_dni is not null);
+		insert into NOT_NULL.rolXusuario (rolXusuario_habilitado, rol_id, usuario_id) 
+		(select 1, 2, afiliado_nombre + afiliado_apellido + CAST(afiliado_dni as varchar(8)) from inserted
+		where inserted.afiliado_nombre is not null and inserted.afiliado_apellido is not null and inserted.afiliado_dni is not null)
 		--ENABLE TRIGGER NOT_NULL.crear_usuario on NOT_NULL.afiliado
 	End
 go
@@ -547,12 +555,10 @@ INSERT INTO NOT_NULL.Funcion(funcion_descripcion)
   VALUES ('ABM Rol'), ('ABM Usuario'),('ABM Afiliado'),('ABM Plan'),('ABM Profesional'),('ABM Especialidades'),
     ('Registrar Agenda'),('Comprar Bonos'), ('Pedir Turno'),('Registrar llegada'),('Registrar resultado'),('Listado Estadistico'), ('Cancelar atencion')
 GO
-  Insert INTO NOT_NULL.Rol(rol_descripcion)
-  VALUES ('Administrador'), ('Afiliado'), ('Profesional')
-GO
+  
   -- Roles administrador
   INSERT INTO NOT_NULL.funcionXrol(rol_id, funcion_id)
-  VALUES (1, 1),(1, 2),(1, 3),(1, 4),(1, 5),(1, 6), (1,10), (1,12)
+  VALUES (1, 1),(1, 2),(1, 3),(1, 4),(1, 5),(1, 6),(1,8) , (1,10), (1,12)
   GO
   -- Roles afiliado
   INSERT INTO NOT_NULL.funcionXrol(rol_id, funcion_id)
@@ -601,7 +607,7 @@ GO
   VALUES ('admin', 'istrador', 32405353, 'D',  '+5491168489235', 'Avenida Leandro N. Alem 5458 piso 18 depto Q 1558', CONVERT(DATETIME,1995-07-12), 'M','admin@gdd.com', 'admin')
   GO
   --LOGIN PARA LOS USUARIOS
-  CREATE PROCEDURE NOT_NULL.Usuario_LogIn (@username varchar(20), @password varchar(20))
+  CREATE PROCEDURE NOT_NULL.Usuario_LogIn (@username varchar(50), @password varchar(20))
   AS
   BEGIN
    SET NOCOUNT ON;
@@ -620,7 +626,7 @@ GO
   GO
 
   --OBTENER TODOS LOS ROLES DE UN USUARIO
-  CREATE PROCEDURE NOT_NULL.UsuarioXRol_GetRolesByUser (@username varchar(20))
+  CREATE PROCEDURE NOT_NULL.UsuarioXRol_GetRolesByUser (@username varchar(50))
   AS
 	BEGIN
 		SET NOCOUNT ON;
@@ -629,7 +635,7 @@ GO
   GO
 
   --OBTENER TODOS LOS ROLES INHABILITADOS DE UN USUARIO
-  CREATE PROCEDURE NOT_NULL.UsuarioXRol_GetRolesInhabxUser (@username varchar(20))
+  CREATE PROCEDURE NOT_NULL.UsuarioXRol_GetRolesInhabxUser (@username varchar(50))
   AS
 	BEGIN
 		SET NOCOUNT ON;
@@ -750,7 +756,7 @@ GO
   GO
 
   --CREAR USUARIO
-  CREATE PROCEDURE NOT_NULL.Usuario_Add(@Username varchar(20), @Password varchar(20), @Descripcion varchar(50))
+  CREATE PROCEDURE NOT_NULL.Usuario_Add(@Username varchar(50), @Password varchar(20), @Descripcion varchar(50))
   AS
 	BEGIN
 	SET NOCOUNT ON;
@@ -766,8 +772,8 @@ GO
 	SET NOCOUNT ON;
 		INSERT INTO NOT_NULL.profesional(usuario_id, profesional_nombre, profesional_apellido,profesional_dni, profesional_tipo_doc, profesional_mail, profesional_telefono, profesional_direccion, profesional_sexo,profesional_fecha_nacimiento)
 		VALUES (@Username,@Nombre, @Apellido, @Dni, @TipoDoc, @Mail, @Telefono, @Direccion, @Sexo, @FechaNacimiento )
-		INSERT INTO NOT_NULL.rolXusuario(usuario_id, rol_id)
-		VALUES (@Username, 3)
+		--INSERT INTO NOT_NULL.rolXusuario(usuario_id, rol_id)
+		--VALUES (@Username, 3)
 	END
   GO
 
@@ -847,15 +853,27 @@ GO
 
 
   --CAMBIAR CONTRASEÑA DE USUARIO
-  CREATE PROCEDURE NOT_NULL.Usuario_CambiarContraseña(@Username varchar(50), @Password varchar(20))
+  CREATE PROCEDURE NOT_NULL.Usuario_CambiarContraseña(@Username varchar(50), @Password varchar(20), @OldPass varchar(20), @cambiada int output)
   AS
 	BEGIN
 	SET NOCOUNT ON;
-		UPDATE NOT_NULL.Usuario
-		SET usuario_password = HASHBYTES('SHA2_256', @Password)
-		WHERE usuario_id = @Username
+		declare @vieja varchar(20);
+		set @vieja = (select usuario.usuario_password from usuario where usuario_id = @Username)
+		set @OldPass = HASHBYTES('SHA2_256', @OldPass)
+		if(@vieja = @OldPass)
+		begin
+			UPDATE NOT_NULL.Usuario
+			SET usuario_password = HASHBYTES('SHA2_256', @Password)
+			WHERE usuario_id = @Username 
+			set @cambiada = 1;
+			return @cambiada;
+		end
+		else
+			set @cambiada = 0;
 	END
   GO
+
+  
 
   --ACTUALIZAR PLAN AFILIADO
   CREATE PROCEDURE NOT_NULL.Agregar_Modif_Plan(@PlanNuevoId int, @Username varchar(50), @Motivo varchar(255))
@@ -881,7 +899,7 @@ GO
 
 
   --ACTIVAR USUARIO
-  CREATE PROCEDURE NOT_NULL.Usuario_Activo(@Username varchar(20), @Activo bit)
+  CREATE PROCEDURE NOT_NULL.Usuario_Activo(@Username varchar(50), @Activo bit)
   AS
 	BEGIN
 	SET NOCOUNT ON;
@@ -977,7 +995,7 @@ GO
 
 
   --OBTENER PROFESIONAL POR USUARIO
-  CREATE PROCEDURE NOT_NULL.Profesional_GetProfesionalSegunUsuario (@username varchar(20))
+  CREATE PROCEDURE NOT_NULL.Profesional_GetProfesionalSegunUsuario (@username varchar(50))
   AS
 	BEGIN
 		SELECT * FROM NOT_NULL.profesional WHERE usuario_id = @username
@@ -1045,6 +1063,8 @@ GO
   update NOT_NULL.afiliado set afiliado_plan = (select top 1 NOT_NULL.plan_medico.plan_id from NOT_NULL.plan_medico) where usuario_id = 'administrador32405354'
   go
 
+  
+
   /*DAR DE BAJA LOGICA UN AFILIADO*/
   create procedure NOT_NULL.Afiliado_Baja_Logica(@UsuarioId varchar(50))
   as
@@ -1054,6 +1074,9 @@ GO
 		--set @ret = (select count(*) from NOT_NULL.rolXusuario where usuario_id = @UsuarioId and rol_id = 2 and rolXusuario_habilitado = 0) 
 	end
   go
+
+  
+
 
 
   /*AGREGAR UN FAMILIAR AL AFIIADO*/
@@ -1069,7 +1092,9 @@ GO
 			values (@Nombre + @Apellido + CAST(@Dni as varchar(8)), 0, 'Afiliado',HASHBYTES('SHA2_256', 'afiliado'), 1)
 			insert into NOT_NULL.afiliado (afiliado_nro, usuario_id, afiliado_nombre, afiliado_apellido, afiliado_dni, afiliado_cant_hijos, afiliado_direccion, afiliado_estado_civil, afiliado_fecha_nac, afiliado_mail, afiliado_plan, afiliado_sexo, afiliado_telefono)
 		     values(@nroafil, @Nombre + @Apellido + CAST(@Dni as varchar(8)), @Nombre, @Apellido, @Dni, @CantHijos, @Direccion, @EstadoCivil, @Fecha, @Mail, @Plan, @Sexo, @Telefono) 
-		SET IDENTITY_INSERT NOT_NULL.afiliado OFF;
+			insert into NOT_NULL.rolXusuario (rolXusuario_habilitado, rol_id, usuario_id) 
+			values (1, 2, @Nombre + @Apellido + CAST(@Dni as varchar(8)))
+			SET IDENTITY_INSERT NOT_NULL.afiliado OFF;
 		ENABLE TRIGGER NOT_NULL.crear_usuario ON NOT_NULL.afiliado
 	end 
   go

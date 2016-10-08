@@ -81,6 +81,7 @@
             this.btnContraseña.Text = "Cambiar contraseña";
             this.btnContraseña.UseVisualStyleBackColor = true;
             this.btnContraseña.Visible = false;
+            this.btnContraseña.Click += new System.EventHandler(this.btnContraseña_Click);
             // 
             // dtpFecha
             // 

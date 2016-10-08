@@ -160,6 +160,7 @@
             this.dgvAfiliado.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvAfiliado.Size = new System.Drawing.Size(878, 351);
             this.dgvAfiliado.TabIndex = 11;
+            this.dgvAfiliado.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAfiliado_CellContentClick);
             this.dgvAfiliado.DoubleClick += new System.EventHandler(this.dgvAfiliado_DoubleClick);
             // 
             // txtMailAfiliado
