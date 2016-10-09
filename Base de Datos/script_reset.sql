@@ -101,8 +101,6 @@ GO
 
 DROP TABLE NOT_NULL.plan_medico
 GO
-DROP TABLE NOT_NULL.modificacion_plan
-GO
 
 DROP procedure NOT_NULL.asignar_nro_bonos_afiliado
 GO
@@ -163,5 +161,7 @@ drop procedure NOT_NULL.RolXUsuario_Activate
 drop procedure NOT_NULL.UsuarioXRol_GetRolesInhabxUser
 drop procedure NOT_NULL.Afiliado_Agregar_Familiar
 drop procedure NOT_NULL.Hijos_En_Cero
+drop procedure NOT_NULL.Especialidad_GetByMatricula
+drop procedure NOT_NULL.Afiliado_MismoDni
 DROP SCHEMA NOT_NULL
 GO

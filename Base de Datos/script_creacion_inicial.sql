@@ -690,6 +690,15 @@ GO
 	END
   GO
 
+  --ME FIJO SI YA HAY ALGUIEN CON ESE DNI
+  create procedure NOT_NULL.Afiliado_MismoDni(@dni varchar(8))
+  as
+	begin
+		SET NOCOUNT ON;
+		select * from NOT_NULL.afiliado where afiliado_dni = @dni
+	end
+  go
+
 
   --OBTENER TODAS LAS FUNCIONES 
   CREATE PROCEDURE NOT_NULL.Funciones_GetAll
@@ -941,7 +950,7 @@ GO
 
 
   --OBTENER AFILIADOS CON FILTROS
-  CREATE PROCEDURE NOT_NULL.Afiliado_GetByFilters(@nombre varchar(20), @apellido varchar(20), @mail varchar(50))
+  CREATE PROCEDURE NOT_NULL.Afiliado_GetByFilters(@nombre varchar(50), @apellido varchar(50), @mail varchar(50))
   AS
 	BEGIN
 	SET NOCOUNT ON;
