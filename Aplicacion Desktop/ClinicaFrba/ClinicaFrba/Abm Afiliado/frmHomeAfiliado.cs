@@ -179,6 +179,7 @@ namespace ClinicaFrba.Abm_Afiliado
             //frmBajaAfiliado baja = new frmBajaAfiliado(usuario, rol);
             //baja.Show();
             //Hide();
+            //ACORDARSE QUE CUANDO LE DOY DE BAJA, HAY QUE PONER SUS TURNOS COMO DISPONIBLES, ESO ES UN TRIGGER
             if (dgvAfiliado.SelectedRows.Count == 1)
             {
                 Afiliado afil = (Afiliado)dgvAfiliado.CurrentRow.DataBoundItem;
