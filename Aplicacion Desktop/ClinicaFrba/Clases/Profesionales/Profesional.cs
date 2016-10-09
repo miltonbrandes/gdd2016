@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Collections.Generic;
 
 namespace Clases
 {
@@ -22,5 +23,6 @@ namespace Clases
         public string Direccion { get; set; }
         public char sexo { get; set; }
         public DateTime FechaNacimiento { get; set; }
+        public List<Especialidad> Especialidades { get; set; }
     }
 }

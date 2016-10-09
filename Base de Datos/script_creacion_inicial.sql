@@ -968,6 +968,17 @@ GO
 	END
   GO
 
+  --OBTENER ESPECIALIDAD POR MATRICULA Profesional
+  CREATE PROCEDURE NOT_NULL.Especialidad_GetByMatricula(@matricula int)
+  AS BEGIN
+	SET NOCOUNT ON;
+		SELECT e.especialidad_codigo, e.especialidad_descripcion, et.tipo_especialidad_descripcion
+		FROM NOT_NULL.especialidad e, NOT_NULL.especialidad_tipo et, NOT_NULL.medicoXespecialidad mxe
+		WHERE mxe.medxesp_profesional = @matricula AND e.especialidad_codigo = mxe.medxesp_especialidad
+			AND et.tipo_especialidad_codigo = e.especialidad_tipo
+	END
+  GO
+  
   --OBTENER AFILIADO SEGUN USUARIO
   CREATE PROCEDURE NOT_NULL.Afiliado_GetAfiliadoSegunUsuario (@username varchar(50))
   AS

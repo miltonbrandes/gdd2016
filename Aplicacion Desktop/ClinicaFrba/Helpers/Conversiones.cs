@@ -154,6 +154,22 @@ namespace Helpers
             DBHelper.DB.Close();
             return list;
         }
+        
+        public static Especialidad ToEspecialidades(this SqlDataReader rdr){
+        	return rdr.ToEspecialidad().FirstOrDefault();
+        }
+        public static List<Especialidad> ToEspecialidad(this SqlDataReader rdr){
+        	List<Especialidad> list = new List<Especialidad>();
+        	while(rdr.Read()){
+        		list.Add(new Especialidad(){
+        		         	Id = (int)rdr["especialidad_codigo"],
+        		         	Descripcion = (string)rdr["especialidad_descripcion"],
+        		         	Tipo = (string)rdr["tipo_especialidad_descripcion"]
+        		         });
+        	}
+        	DBHelper.DB.Close();
+        	return list;
+        }
         #endregion
 
         #region ROL

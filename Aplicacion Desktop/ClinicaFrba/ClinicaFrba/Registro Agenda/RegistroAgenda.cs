@@ -17,17 +17,13 @@ namespace ClinicaFrba.Registro_Agenda
 {
 	public partial class RegistroAgenda : Form
 	{
-		List<Especialidad> especialidades;
 		Profesional profesional;
 		
 		public RegistroAgenda(Profesional profesional)
 		{
 			InitializeComponent();
 			
-			this.especialidades = new List<Especialidad>();
 			this.profesional = profesional;
-			
-			//Tengo que obtener la lista
 		}
 
 	}

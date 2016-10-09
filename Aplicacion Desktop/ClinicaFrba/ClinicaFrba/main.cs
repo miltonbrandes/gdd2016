@@ -17,6 +17,7 @@ namespace ClinicaFrba
     {
         public static Usuario usuario { get; private set; }
         public static Rol rol;
+        public static Profesional profesional;
 
         public static int load = 0;
         public Main(Usuario us, Rol ro)
@@ -55,6 +56,16 @@ namespace ClinicaFrba
           load+= 1;
         }
 
+        private void cargarProfesional(){
+        	Dictionary<string, object> parametros = new Dictionary<string, object>()
+        		{ {"Username", usuario.Username} };
+        	profesional = DBHelper.ExecuteReader("Profesional_GetProfesionalSegunUsuario", parametros).ToProfesionales();
+        	
+        	parametros = new Dictionary<string, object>()
+        		{ {"matricula",profesional.Matricula} };
+        	profesional.Especialidades = DBHelper.ExecuteReader("Especialidad_GetByMatricula",parametros).ToEspecialidad();
+        }
+        
         //Esto es mucho mas facil con un enum.
         Dictionary<int, EventHandler> dicFunciones = new Dictionary<int, EventHandler>() {
             { 1, new EventHandler(ABMRol)},
@@ -119,8 +130,8 @@ namespace ClinicaFrba
         public static void RegistrarAgenda(object sender, EventArgs e)
         {
             //PASARLE EL PROFESIONAL QUE ESTA REGISTRANDO LA AGENDA
-        	//var home = new Registro_Agenda.RegistroAgenda();
-           // home.Show();
+        	var home = new Registro_Agenda.RegistroAgenda(this.profesional);
+            home.Show();
         }
         public static void PedirTurno(object sender, EventArgs e)
         {
