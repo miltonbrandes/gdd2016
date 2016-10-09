@@ -1128,3 +1128,10 @@ GO
 		ENABLE TRIGGER NOT_NULL.crear_usuario ON NOT_NULL.afiliado
 	end 
   go
+
+  update NOT_NULL.plan_medico set plan_cuota_precio = 500 where plan_id = 555555
+  update NOT_NULL.plan_medico set plan_cuota_precio = 1000 where plan_id = 555556
+  update NOT_NULL.plan_medico set plan_cuota_precio = 2000 where plan_id = 555557
+  update NOT_NULL.plan_medico set plan_cuota_precio = 5000 where plan_id = 555558
+  update NOT_NULL.plan_medico set plan_cuota_precio = 10000 where plan_id = 555559
+  go

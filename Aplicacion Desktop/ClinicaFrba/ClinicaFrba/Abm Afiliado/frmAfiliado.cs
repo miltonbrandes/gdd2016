@@ -279,6 +279,10 @@ namespace ClinicaFrba.Abm_Afiliado
         {
             if (DatosCompletados())
             {
+                //if (txtCambioPlan.Text != string.Empty)
+                //{
+                    /*ACA AGREGAR LA PARTE DE QUE SI CAMBIO PLAN, DESHABILITAR A TODOS LOS BONOS QUE TENIA ASOCIADOS, SI EL GRUPO FAM, SIGUE CON EL MISMO PLAN, el bono queda para ellos*/
+                //}
                 if (opcionelegida == 1)
                 {
                     Plan planElegido = (Plan)cmbPlan.SelectedValue;
