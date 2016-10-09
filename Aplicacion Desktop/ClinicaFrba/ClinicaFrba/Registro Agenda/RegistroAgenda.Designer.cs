@@ -15,30 +15,30 @@ namespace ClinicaFrba.Registro_Agenda
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.TextBox textBox1;
-		private System.Windows.Forms.TextBox textBox2;
-		private System.Windows.Forms.TextBox textBox3;
-		private System.Windows.Forms.TextBox textBox4;
-		private System.Windows.Forms.TextBox textBox5;
-		private System.Windows.Forms.TextBox textBox6;
-		private System.Windows.Forms.TextBox textBox7;
-		private System.Windows.Forms.TextBox textBox8;
-		private System.Windows.Forms.TextBox textBox9;
-		private System.Windows.Forms.TextBox textBox10;
-		private System.Windows.Forms.TextBox textBox11;
-		private System.Windows.Forms.TextBox textBox12;
-		private System.Windows.Forms.TextBox textBox13;
-		private System.Windows.Forms.TextBox textBox14;
-		private System.Windows.Forms.TextBox textBox15;
-		private System.Windows.Forms.TextBox textBox16;
-		private System.Windows.Forms.TextBox textBox17;
-		private System.Windows.Forms.TextBox textBox18;
-		private System.Windows.Forms.TextBox textBox19;
-		private System.Windows.Forms.TextBox textBox20;
-		private System.Windows.Forms.TextBox textBox21;
-		private System.Windows.Forms.TextBox textBox22;
-		private System.Windows.Forms.TextBox textBox23;
-		private System.Windows.Forms.TextBox textBox24;
+		private System.Windows.Forms.TextBox horaInicio1Lunes;
+		private System.Windows.Forms.TextBox horaFin1Lunes;
+		private System.Windows.Forms.TextBox horaInicio2Lunes;
+		private System.Windows.Forms.TextBox horaFin2Lunes;
+		private System.Windows.Forms.TextBox horaInicio1Martes;
+		private System.Windows.Forms.TextBox horaFin1Martes;
+		private System.Windows.Forms.TextBox horaInicio2Martes;
+		private System.Windows.Forms.TextBox horaFin2Martes;
+		private System.Windows.Forms.TextBox horaInicio1Miercoles;
+		private System.Windows.Forms.TextBox horaFin1Miercoles;
+		private System.Windows.Forms.TextBox horaInicio2Miercoles;
+		private System.Windows.Forms.TextBox horaFin2Miercoles;
+		private System.Windows.Forms.TextBox horaInicio1Jueves;
+		private System.Windows.Forms.TextBox horaFin1Jueves;
+		private System.Windows.Forms.TextBox horaInicio2Jueves;
+		private System.Windows.Forms.TextBox horaFin2Jueves;
+		private System.Windows.Forms.TextBox horaInicio1Viernes;
+		private System.Windows.Forms.TextBox horaFin1Viernes;
+		private System.Windows.Forms.TextBox horaInicio2Viernes;
+		private System.Windows.Forms.TextBox horaFin2Viernes;
+		private System.Windows.Forms.TextBox horaInicio1Sabado;
+		private System.Windows.Forms.TextBox horaFin1Sabado;
+		private System.Windows.Forms.TextBox horaInicio2Sabado;
+		private System.Windows.Forms.TextBox horaFin2Sabado;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label label4;
@@ -52,8 +52,9 @@ namespace ClinicaFrba.Registro_Agenda
 		private System.Windows.Forms.MonthCalendar monthCalendar2;
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.Label label12;
-		private System.Windows.Forms.ComboBox comboBox1;
+		private System.Windows.Forms.ComboBox listaEspecialidades;
 		private System.Windows.Forms.Label label13;
+		private System.Windows.Forms.Button buttonOK;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -76,30 +77,30 @@ namespace ClinicaFrba.Registro_Agenda
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.textBox2 = new System.Windows.Forms.TextBox();
-			this.textBox3 = new System.Windows.Forms.TextBox();
-			this.textBox4 = new System.Windows.Forms.TextBox();
-			this.textBox5 = new System.Windows.Forms.TextBox();
-			this.textBox6 = new System.Windows.Forms.TextBox();
-			this.textBox7 = new System.Windows.Forms.TextBox();
-			this.textBox8 = new System.Windows.Forms.TextBox();
-			this.textBox9 = new System.Windows.Forms.TextBox();
-			this.textBox10 = new System.Windows.Forms.TextBox();
-			this.textBox11 = new System.Windows.Forms.TextBox();
-			this.textBox12 = new System.Windows.Forms.TextBox();
-			this.textBox13 = new System.Windows.Forms.TextBox();
-			this.textBox14 = new System.Windows.Forms.TextBox();
-			this.textBox15 = new System.Windows.Forms.TextBox();
-			this.textBox16 = new System.Windows.Forms.TextBox();
-			this.textBox17 = new System.Windows.Forms.TextBox();
-			this.textBox18 = new System.Windows.Forms.TextBox();
-			this.textBox19 = new System.Windows.Forms.TextBox();
-			this.textBox20 = new System.Windows.Forms.TextBox();
-			this.textBox21 = new System.Windows.Forms.TextBox();
-			this.textBox22 = new System.Windows.Forms.TextBox();
-			this.textBox23 = new System.Windows.Forms.TextBox();
-			this.textBox24 = new System.Windows.Forms.TextBox();
+			this.horaInicio1Lunes = new System.Windows.Forms.TextBox();
+			this.horaFin1Lunes = new System.Windows.Forms.TextBox();
+			this.horaInicio2Lunes = new System.Windows.Forms.TextBox();
+			this.horaFin2Lunes = new System.Windows.Forms.TextBox();
+			this.horaInicio1Martes = new System.Windows.Forms.TextBox();
+			this.horaFin1Martes = new System.Windows.Forms.TextBox();
+			this.horaInicio2Martes = new System.Windows.Forms.TextBox();
+			this.horaFin2Martes = new System.Windows.Forms.TextBox();
+			this.horaInicio1Miercoles = new System.Windows.Forms.TextBox();
+			this.horaFin1Miercoles = new System.Windows.Forms.TextBox();
+			this.horaInicio2Miercoles = new System.Windows.Forms.TextBox();
+			this.horaFin2Miercoles = new System.Windows.Forms.TextBox();
+			this.horaInicio1Jueves = new System.Windows.Forms.TextBox();
+			this.horaFin1Jueves = new System.Windows.Forms.TextBox();
+			this.horaInicio2Jueves = new System.Windows.Forms.TextBox();
+			this.horaFin2Jueves = new System.Windows.Forms.TextBox();
+			this.horaInicio1Viernes = new System.Windows.Forms.TextBox();
+			this.horaFin1Viernes = new System.Windows.Forms.TextBox();
+			this.horaInicio2Viernes = new System.Windows.Forms.TextBox();
+			this.horaFin2Viernes = new System.Windows.Forms.TextBox();
+			this.horaInicio1Sabado = new System.Windows.Forms.TextBox();
+			this.horaFin1Sabado = new System.Windows.Forms.TextBox();
+			this.horaInicio2Sabado = new System.Windows.Forms.TextBox();
+			this.horaFin2Sabado = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
@@ -112,179 +113,180 @@ namespace ClinicaFrba.Registro_Agenda
 			this.monthCalendar2 = new System.Windows.Forms.MonthCalendar();
 			this.label11 = new System.Windows.Forms.Label();
 			this.label12 = new System.Windows.Forms.Label();
-			this.comboBox1 = new System.Windows.Forms.ComboBox();
+			this.listaEspecialidades = new System.Windows.Forms.ComboBox();
 			this.label9 = new System.Windows.Forms.Label();
 			this.label10 = new System.Windows.Forms.Label();
 			this.label13 = new System.Windows.Forms.Label();
+			this.buttonOK = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
-			// textBox1
+			// horaInicio1Lunes
 			// 
-			this.textBox1.Location = new System.Drawing.Point(93, 117);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(72, 20);
-			this.textBox1.TabIndex = 0;
+			this.horaInicio1Lunes.Location = new System.Drawing.Point(93, 117);
+			this.horaInicio1Lunes.Name = "horaInicio1Lunes";
+			this.horaInicio1Lunes.Size = new System.Drawing.Size(72, 20);
+			this.horaInicio1Lunes.TabIndex = 0;
 			// 
-			// textBox2
+			// horaFin1Lunes
 			// 
-			this.textBox2.Location = new System.Drawing.Point(93, 143);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(72, 20);
-			this.textBox2.TabIndex = 1;
+			this.horaFin1Lunes.Location = new System.Drawing.Point(93, 143);
+			this.horaFin1Lunes.Name = "horaFin1Lunes";
+			this.horaFin1Lunes.Size = new System.Drawing.Size(72, 20);
+			this.horaFin1Lunes.TabIndex = 1;
 			// 
-			// textBox3
+			// horaInicio2Lunes
 			// 
-			this.textBox3.Location = new System.Drawing.Point(93, 169);
-			this.textBox3.Name = "textBox3";
-			this.textBox3.Size = new System.Drawing.Size(72, 20);
-			this.textBox3.TabIndex = 2;
+			this.horaInicio2Lunes.Location = new System.Drawing.Point(93, 169);
+			this.horaInicio2Lunes.Name = "horaInicio2Lunes";
+			this.horaInicio2Lunes.Size = new System.Drawing.Size(72, 20);
+			this.horaInicio2Lunes.TabIndex = 2;
 			// 
-			// textBox4
+			// horaFin2Lunes
 			// 
-			this.textBox4.Location = new System.Drawing.Point(93, 195);
-			this.textBox4.Name = "textBox4";
-			this.textBox4.Size = new System.Drawing.Size(72, 20);
-			this.textBox4.TabIndex = 3;
+			this.horaFin2Lunes.Location = new System.Drawing.Point(93, 195);
+			this.horaFin2Lunes.Name = "horaFin2Lunes";
+			this.horaFin2Lunes.Size = new System.Drawing.Size(72, 20);
+			this.horaFin2Lunes.TabIndex = 3;
 			// 
-			// textBox5
+			// horaInicio1Martes
 			// 
-			this.textBox5.Location = new System.Drawing.Point(171, 117);
-			this.textBox5.Name = "textBox5";
-			this.textBox5.Size = new System.Drawing.Size(72, 20);
-			this.textBox5.TabIndex = 4;
+			this.horaInicio1Martes.Location = new System.Drawing.Point(171, 117);
+			this.horaInicio1Martes.Name = "horaInicio1Martes";
+			this.horaInicio1Martes.Size = new System.Drawing.Size(72, 20);
+			this.horaInicio1Martes.TabIndex = 4;
 			// 
-			// textBox6
+			// horaFin1Martes
 			// 
-			this.textBox6.Location = new System.Drawing.Point(171, 143);
-			this.textBox6.Name = "textBox6";
-			this.textBox6.Size = new System.Drawing.Size(72, 20);
-			this.textBox6.TabIndex = 5;
+			this.horaFin1Martes.Location = new System.Drawing.Point(171, 143);
+			this.horaFin1Martes.Name = "horaFin1Martes";
+			this.horaFin1Martes.Size = new System.Drawing.Size(72, 20);
+			this.horaFin1Martes.TabIndex = 5;
 			// 
-			// textBox7
+			// horaInicio2Martes
 			// 
-			this.textBox7.Location = new System.Drawing.Point(171, 169);
-			this.textBox7.Name = "textBox7";
-			this.textBox7.Size = new System.Drawing.Size(72, 20);
-			this.textBox7.TabIndex = 6;
+			this.horaInicio2Martes.Location = new System.Drawing.Point(171, 169);
+			this.horaInicio2Martes.Name = "horaInicio2Martes";
+			this.horaInicio2Martes.Size = new System.Drawing.Size(72, 20);
+			this.horaInicio2Martes.TabIndex = 6;
 			// 
-			// textBox8
+			// horaFin2Martes
 			// 
-			this.textBox8.Location = new System.Drawing.Point(171, 195);
-			this.textBox8.Name = "textBox8";
-			this.textBox8.Size = new System.Drawing.Size(72, 20);
-			this.textBox8.TabIndex = 7;
+			this.horaFin2Martes.Location = new System.Drawing.Point(171, 195);
+			this.horaFin2Martes.Name = "horaFin2Martes";
+			this.horaFin2Martes.Size = new System.Drawing.Size(72, 20);
+			this.horaFin2Martes.TabIndex = 7;
 			// 
-			// textBox9
+			// horaInicio1Miercoles
 			// 
-			this.textBox9.Location = new System.Drawing.Point(249, 117);
-			this.textBox9.Name = "textBox9";
-			this.textBox9.Size = new System.Drawing.Size(72, 20);
-			this.textBox9.TabIndex = 8;
+			this.horaInicio1Miercoles.Location = new System.Drawing.Point(249, 117);
+			this.horaInicio1Miercoles.Name = "horaInicio1Miercoles";
+			this.horaInicio1Miercoles.Size = new System.Drawing.Size(72, 20);
+			this.horaInicio1Miercoles.TabIndex = 8;
 			// 
-			// textBox10
+			// horaFin1Miercoles
 			// 
-			this.textBox10.Location = new System.Drawing.Point(249, 143);
-			this.textBox10.Name = "textBox10";
-			this.textBox10.Size = new System.Drawing.Size(72, 20);
-			this.textBox10.TabIndex = 9;
+			this.horaFin1Miercoles.Location = new System.Drawing.Point(249, 143);
+			this.horaFin1Miercoles.Name = "horaFin1Miercoles";
+			this.horaFin1Miercoles.Size = new System.Drawing.Size(72, 20);
+			this.horaFin1Miercoles.TabIndex = 9;
 			// 
-			// textBox11
+			// horaInicio2Miercoles
 			// 
-			this.textBox11.Location = new System.Drawing.Point(249, 169);
-			this.textBox11.Name = "textBox11";
-			this.textBox11.Size = new System.Drawing.Size(72, 20);
-			this.textBox11.TabIndex = 10;
+			this.horaInicio2Miercoles.Location = new System.Drawing.Point(249, 169);
+			this.horaInicio2Miercoles.Name = "horaInicio2Miercoles";
+			this.horaInicio2Miercoles.Size = new System.Drawing.Size(72, 20);
+			this.horaInicio2Miercoles.TabIndex = 10;
 			// 
-			// textBox12
+			// horaFin2Miercoles
 			// 
-			this.textBox12.Location = new System.Drawing.Point(249, 195);
-			this.textBox12.Name = "textBox12";
-			this.textBox12.Size = new System.Drawing.Size(72, 20);
-			this.textBox12.TabIndex = 11;
+			this.horaFin2Miercoles.Location = new System.Drawing.Point(249, 195);
+			this.horaFin2Miercoles.Name = "horaFin2Miercoles";
+			this.horaFin2Miercoles.Size = new System.Drawing.Size(72, 20);
+			this.horaFin2Miercoles.TabIndex = 11;
 			// 
-			// textBox13
+			// horaInicio1Jueves
 			// 
-			this.textBox13.Location = new System.Drawing.Point(327, 117);
-			this.textBox13.Name = "textBox13";
-			this.textBox13.Size = new System.Drawing.Size(72, 20);
-			this.textBox13.TabIndex = 12;
+			this.horaInicio1Jueves.Location = new System.Drawing.Point(327, 117);
+			this.horaInicio1Jueves.Name = "horaInicio1Jueves";
+			this.horaInicio1Jueves.Size = new System.Drawing.Size(72, 20);
+			this.horaInicio1Jueves.TabIndex = 12;
 			// 
-			// textBox14
+			// horaFin1Jueves
 			// 
-			this.textBox14.Location = new System.Drawing.Point(327, 143);
-			this.textBox14.Name = "textBox14";
-			this.textBox14.Size = new System.Drawing.Size(72, 20);
-			this.textBox14.TabIndex = 13;
+			this.horaFin1Jueves.Location = new System.Drawing.Point(327, 143);
+			this.horaFin1Jueves.Name = "horaFin1Jueves";
+			this.horaFin1Jueves.Size = new System.Drawing.Size(72, 20);
+			this.horaFin1Jueves.TabIndex = 13;
 			// 
-			// textBox15
+			// horaInicio2Jueves
 			// 
-			this.textBox15.Location = new System.Drawing.Point(327, 169);
-			this.textBox15.Name = "textBox15";
-			this.textBox15.Size = new System.Drawing.Size(72, 20);
-			this.textBox15.TabIndex = 14;
+			this.horaInicio2Jueves.Location = new System.Drawing.Point(327, 169);
+			this.horaInicio2Jueves.Name = "horaInicio2Jueves";
+			this.horaInicio2Jueves.Size = new System.Drawing.Size(72, 20);
+			this.horaInicio2Jueves.TabIndex = 14;
 			// 
-			// textBox16
+			// horaFin2Jueves
 			// 
-			this.textBox16.Location = new System.Drawing.Point(327, 195);
-			this.textBox16.Name = "textBox16";
-			this.textBox16.Size = new System.Drawing.Size(72, 20);
-			this.textBox16.TabIndex = 15;
+			this.horaFin2Jueves.Location = new System.Drawing.Point(327, 195);
+			this.horaFin2Jueves.Name = "horaFin2Jueves";
+			this.horaFin2Jueves.Size = new System.Drawing.Size(72, 20);
+			this.horaFin2Jueves.TabIndex = 15;
 			// 
-			// textBox17
+			// horaInicio1Viernes
 			// 
-			this.textBox17.Location = new System.Drawing.Point(405, 117);
-			this.textBox17.Name = "textBox17";
-			this.textBox17.Size = new System.Drawing.Size(72, 20);
-			this.textBox17.TabIndex = 16;
+			this.horaInicio1Viernes.Location = new System.Drawing.Point(405, 117);
+			this.horaInicio1Viernes.Name = "horaInicio1Viernes";
+			this.horaInicio1Viernes.Size = new System.Drawing.Size(72, 20);
+			this.horaInicio1Viernes.TabIndex = 16;
 			// 
-			// textBox18
+			// horaFin1Viernes
 			// 
-			this.textBox18.Location = new System.Drawing.Point(405, 143);
-			this.textBox18.Name = "textBox18";
-			this.textBox18.Size = new System.Drawing.Size(72, 20);
-			this.textBox18.TabIndex = 17;
+			this.horaFin1Viernes.Location = new System.Drawing.Point(405, 143);
+			this.horaFin1Viernes.Name = "horaFin1Viernes";
+			this.horaFin1Viernes.Size = new System.Drawing.Size(72, 20);
+			this.horaFin1Viernes.TabIndex = 17;
 			// 
-			// textBox19
+			// horaInicio2Viernes
 			// 
-			this.textBox19.Location = new System.Drawing.Point(405, 169);
-			this.textBox19.Name = "textBox19";
-			this.textBox19.Size = new System.Drawing.Size(72, 20);
-			this.textBox19.TabIndex = 18;
+			this.horaInicio2Viernes.Location = new System.Drawing.Point(405, 169);
+			this.horaInicio2Viernes.Name = "horaInicio2Viernes";
+			this.horaInicio2Viernes.Size = new System.Drawing.Size(72, 20);
+			this.horaInicio2Viernes.TabIndex = 18;
 			// 
-			// textBox20
+			// horaFin2Viernes
 			// 
-			this.textBox20.Location = new System.Drawing.Point(405, 195);
-			this.textBox20.Name = "textBox20";
-			this.textBox20.Size = new System.Drawing.Size(72, 20);
-			this.textBox20.TabIndex = 19;
+			this.horaFin2Viernes.Location = new System.Drawing.Point(405, 195);
+			this.horaFin2Viernes.Name = "horaFin2Viernes";
+			this.horaFin2Viernes.Size = new System.Drawing.Size(72, 20);
+			this.horaFin2Viernes.TabIndex = 19;
 			// 
-			// textBox21
+			// horaInicio1Sabado
 			// 
-			this.textBox21.Location = new System.Drawing.Point(483, 117);
-			this.textBox21.Name = "textBox21";
-			this.textBox21.Size = new System.Drawing.Size(72, 20);
-			this.textBox21.TabIndex = 20;
+			this.horaInicio1Sabado.Location = new System.Drawing.Point(483, 117);
+			this.horaInicio1Sabado.Name = "horaInicio1Sabado";
+			this.horaInicio1Sabado.Size = new System.Drawing.Size(72, 20);
+			this.horaInicio1Sabado.TabIndex = 20;
 			// 
-			// textBox22
+			// horaFin1Sabado
 			// 
-			this.textBox22.Location = new System.Drawing.Point(483, 143);
-			this.textBox22.Name = "textBox22";
-			this.textBox22.Size = new System.Drawing.Size(72, 20);
-			this.textBox22.TabIndex = 21;
+			this.horaFin1Sabado.Location = new System.Drawing.Point(483, 143);
+			this.horaFin1Sabado.Name = "horaFin1Sabado";
+			this.horaFin1Sabado.Size = new System.Drawing.Size(72, 20);
+			this.horaFin1Sabado.TabIndex = 21;
 			// 
-			// textBox23
+			// horaInicio2Sabado
 			// 
-			this.textBox23.Location = new System.Drawing.Point(483, 169);
-			this.textBox23.Name = "textBox23";
-			this.textBox23.Size = new System.Drawing.Size(72, 20);
-			this.textBox23.TabIndex = 22;
+			this.horaInicio2Sabado.Location = new System.Drawing.Point(483, 169);
+			this.horaInicio2Sabado.Name = "horaInicio2Sabado";
+			this.horaInicio2Sabado.Size = new System.Drawing.Size(72, 20);
+			this.horaInicio2Sabado.TabIndex = 22;
 			// 
-			// textBox24
+			// horaFin2Sabado
 			// 
-			this.textBox24.Location = new System.Drawing.Point(483, 195);
-			this.textBox24.Name = "textBox24";
-			this.textBox24.Size = new System.Drawing.Size(72, 20);
-			this.textBox24.TabIndex = 23;
+			this.horaFin2Sabado.Location = new System.Drawing.Point(483, 195);
+			this.horaFin2Sabado.Name = "horaFin2Sabado";
+			this.horaFin2Sabado.Size = new System.Drawing.Size(72, 20);
+			this.horaFin2Sabado.TabIndex = 23;
 			// 
 			// label1
 			// 
@@ -340,7 +342,7 @@ namespace ClinicaFrba.Registro_Agenda
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(72, 20);
 			this.label7.TabIndex = 30;
-			this.label7.Text = "Hora Inicio";
+			this.label7.Text = "Hora Inicio 1";
 			// 
 			// label8
 			// 
@@ -348,17 +350,17 @@ namespace ClinicaFrba.Registro_Agenda
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(72, 20);
 			this.label8.TabIndex = 31;
-			this.label8.Text = "Hora Fin";
+			this.label8.Text = "Hora Fin 1";
 			// 
 			// monthCalendar1
 			// 
-			this.monthCalendar1.Location = new System.Drawing.Point(83, 261);
+			this.monthCalendar1.Location = new System.Drawing.Point(83, 251);
 			this.monthCalendar1.Name = "monthCalendar1";
 			this.monthCalendar1.TabIndex = 34;
 			// 
 			// monthCalendar2
 			// 
-			this.monthCalendar2.Location = new System.Drawing.Point(328, 261);
+			this.monthCalendar2.Location = new System.Drawing.Point(328, 251);
 			this.monthCalendar2.Name = "monthCalendar2";
 			this.monthCalendar2.TabIndex = 35;
 			// 
@@ -378,13 +380,13 @@ namespace ClinicaFrba.Registro_Agenda
 			this.label12.TabIndex = 37;
 			this.label12.Text = "Fecha Fin";
 			// 
-			// comboBox1
+			// listaEspecialidades
 			// 
-			this.comboBox1.FormattingEnabled = true;
-			this.comboBox1.Location = new System.Drawing.Point(15, 49);
-			this.comboBox1.Name = "comboBox1";
-			this.comboBox1.Size = new System.Drawing.Size(94, 21);
-			this.comboBox1.TabIndex = 38;
+			this.listaEspecialidades.FormattingEnabled = true;
+			this.listaEspecialidades.Location = new System.Drawing.Point(15, 49);
+			this.listaEspecialidades.Name = "listaEspecialidades";
+			this.listaEspecialidades.Size = new System.Drawing.Size(94, 21);
+			this.listaEspecialidades.TabIndex = 38;
 			// 
 			// label9
 			// 
@@ -400,7 +402,7 @@ namespace ClinicaFrba.Registro_Agenda
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(72, 20);
 			this.label10.TabIndex = 41;
-			this.label10.Text = "Hora Fin";
+			this.label10.Text = "Hora Fin 2";
 			// 
 			// label13
 			// 
@@ -408,17 +410,28 @@ namespace ClinicaFrba.Registro_Agenda
 			this.label13.Name = "label13";
 			this.label13.Size = new System.Drawing.Size(72, 20);
 			this.label13.TabIndex = 40;
-			this.label13.Text = "Hora Inicio";
+			this.label13.Text = "Hora Inicio 2";
+			// 
+			// buttonOK
+			// 
+			this.buttonOK.Location = new System.Drawing.Point(494, 432);
+			this.buttonOK.Name = "buttonOK";
+			this.buttonOK.Size = new System.Drawing.Size(75, 23);
+			this.buttonOK.TabIndex = 42;
+			this.buttonOK.Text = "OK";
+			this.buttonOK.UseVisualStyleBackColor = true;
+			this.buttonOK.Click += new System.EventHandler(this.ButtonOKClick);
 			// 
 			// RegistroAgenda
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(575, 441);
+			this.ClientSize = new System.Drawing.Size(581, 467);
+			this.Controls.Add(this.buttonOK);
 			this.Controls.Add(this.label10);
 			this.Controls.Add(this.label13);
 			this.Controls.Add(this.label9);
-			this.Controls.Add(this.comboBox1);
+			this.Controls.Add(this.listaEspecialidades);
 			this.Controls.Add(this.label12);
 			this.Controls.Add(this.label11);
 			this.Controls.Add(this.monthCalendar2);
@@ -431,30 +444,30 @@ namespace ClinicaFrba.Registro_Agenda
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
-			this.Controls.Add(this.textBox24);
-			this.Controls.Add(this.textBox23);
-			this.Controls.Add(this.textBox22);
-			this.Controls.Add(this.textBox21);
-			this.Controls.Add(this.textBox20);
-			this.Controls.Add(this.textBox19);
-			this.Controls.Add(this.textBox18);
-			this.Controls.Add(this.textBox17);
-			this.Controls.Add(this.textBox16);
-			this.Controls.Add(this.textBox15);
-			this.Controls.Add(this.textBox14);
-			this.Controls.Add(this.textBox13);
-			this.Controls.Add(this.textBox12);
-			this.Controls.Add(this.textBox11);
-			this.Controls.Add(this.textBox10);
-			this.Controls.Add(this.textBox9);
-			this.Controls.Add(this.textBox8);
-			this.Controls.Add(this.textBox7);
-			this.Controls.Add(this.textBox6);
-			this.Controls.Add(this.textBox5);
-			this.Controls.Add(this.textBox4);
-			this.Controls.Add(this.textBox3);
-			this.Controls.Add(this.textBox2);
-			this.Controls.Add(this.textBox1);
+			this.Controls.Add(this.horaFin2Sabado);
+			this.Controls.Add(this.horaInicio2Sabado);
+			this.Controls.Add(this.horaFin1Sabado);
+			this.Controls.Add(this.horaInicio1Sabado);
+			this.Controls.Add(this.horaFin2Viernes);
+			this.Controls.Add(this.horaInicio2Viernes);
+			this.Controls.Add(this.horaFin1Viernes);
+			this.Controls.Add(this.horaInicio1Viernes);
+			this.Controls.Add(this.horaFin2Jueves);
+			this.Controls.Add(this.horaInicio2Jueves);
+			this.Controls.Add(this.horaFin1Jueves);
+			this.Controls.Add(this.horaInicio1Jueves);
+			this.Controls.Add(this.horaFin2Miercoles);
+			this.Controls.Add(this.horaInicio2Miercoles);
+			this.Controls.Add(this.horaFin1Miercoles);
+			this.Controls.Add(this.horaInicio1Miercoles);
+			this.Controls.Add(this.horaFin2Martes);
+			this.Controls.Add(this.horaInicio2Martes);
+			this.Controls.Add(this.horaFin1Martes);
+			this.Controls.Add(this.horaInicio1Martes);
+			this.Controls.Add(this.horaFin2Lunes);
+			this.Controls.Add(this.horaInicio2Lunes);
+			this.Controls.Add(this.horaFin1Lunes);
+			this.Controls.Add(this.horaInicio1Lunes);
 			this.Name = "RegistroAgenda";
 			this.Text = "RegistroAgenda";
 			this.ResumeLayout(false);

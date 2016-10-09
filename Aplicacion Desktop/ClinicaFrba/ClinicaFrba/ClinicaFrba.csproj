@@ -170,6 +170,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registro Agenda\CustomHour.cs" />
     <Compile Include="Registro Agenda\RegistroAgenda.cs">
       <SubType>Form</SubType>
     </Compile>

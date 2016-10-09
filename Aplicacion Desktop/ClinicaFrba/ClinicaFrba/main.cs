@@ -130,7 +130,7 @@ namespace ClinicaFrba
         public static void RegistrarAgenda(object sender, EventArgs e)
         {
             //PASARLE EL PROFESIONAL QUE ESTA REGISTRANDO LA AGENDA
-        	var home = new Registro_Agenda.RegistroAgenda(this.profesional);
+        	var home = new Registro_Agenda.RegistroAgenda(profesional);
             home.Show();
         }
         public static void PedirTurno(object sender, EventArgs e)

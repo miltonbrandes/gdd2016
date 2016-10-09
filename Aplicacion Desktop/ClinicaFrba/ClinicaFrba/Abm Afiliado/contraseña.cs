@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Clases;
-using Helpers;
 
 namespace ClinicaFrba.Abm_Afiliado
 {
