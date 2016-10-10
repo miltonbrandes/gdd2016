@@ -1193,12 +1193,21 @@ GO
   go
   
   -- FILTRADO DE DIAS DE TURNOS SEGUN CODIGO_PROFESIONAL
-  CREATE PROCEDURE NOT_NULL.turnos_GetByFilerProfesional (@profesional varchar(20), @especialidad varchar(20))
+  CREATE PROCEDURE NOT_NULL.turnos_GetByFilerProfesional (@profesional varchar(20) /*,@especialidad varchar(20)*/)
   AS
 	BEGIN
 	SET NOCOUNT ON;
 	SELECT STR(franja_id) as id,
-		   STR(dia) as dia,
+	dia = 
+		CASE dia
+		when 2 then 'Lunes'
+		when 3 then 'Martes'
+		when 4 then 'Miércoles'
+		when 5 then 'Jueves'
+		when 6 then 'Viernes'
+		when 7 then 'Sábado'
+		when 1 then 'Domingo'
+		END,
 		   STR(hora_inicio) as hora_inicio,
 		   STR(minuto_inicio) as minuto_inicio, 
 		   STR(hora_fin) as hora_fin,
@@ -1208,12 +1217,31 @@ GO
 				  	 SELECT agenda_id 
 					 FROM NOT_NULL.agenda 
 					 WHERE id_profesional = @profesional 
-					 and id_especialidad = @especialidad
+--					 and id_especialidad = @especialidad
 					 and agenda_fecha_inicio >= '09/10/2016'
 				 )
 	END
   GO  
+  /*
+  drop procedure NOT_NULL.turnos_GetByFilerProfesional
+  select * From NOT_NULL.profesional
+  select * From NOT_NULL.medicoXespecialidad
+  select * From NOT_NULL.especialidad where especialidad_codigo = '10018'
+  -- Agenda
+  select * from NOT_NULL.agenda
+  insert into NOT_NULL.agenda values ('10/10/2016', '10/10/2016', '10', '10018' )
+  -- Carga Franja Horaria para la agenda 0
+  select * from NOT_NULL.franja_horaria
+  insert into NOT_NULL.franja_horaria values (1, 10,00, 10,30, 0, 0)
+  insert into NOT_NULL.franja_horaria values (1, 10,30, 11,00, 0, 0);
+  insert into NOT_NULL.franja_horaria values (1, 11,00, 11,30, 0, 0);
+  insert into NOT_NULL.franja_horaria values (1, 11,30, 12,00, 0, 0);
+  insert into NOT_NULL.franja_horaria values (2, 10,00, 10,30, 0, 0);
+  insert into NOT_NULL.franja_horaria values (1, 10,30, 11,00, 0, 0);
   
+  exec NOT_NULL.turnos_GetByFilerProfesional '10' , '10018'
+				turnos_GetByFilerProfesional
+  */
   --FILTRADO DE PROFESIONALES POR ESPECIALIDAD
   CREATE PROCEDURE NOT_NULL.profesional_GetByFilerEspecialidad (@especialidad varchar(20))
   AS
@@ -1228,14 +1256,15 @@ GO
 	       FROM NOT_NULL.profesional 
 	WHERE profesional_matricula IN 
 									(
-									 SELECT medxesp_profesional, medxesp_agenda 
+									 SELECT medxesp_profesional 
 									 FROM NOT_NULL.medicoXespecialidad 
 									 WHERE medxesp_especialidad = str(@especialidad)
 									 )	
 	END
   GO  
   
-  
+  exec NOT_NULL.profesional_GetByFilerEspecialidad '120'
+  drop procedure NOT_NULL.profesional_GetByFilerEspecialidad 
   /*
   alter table not_null.agenda add id_profesional varchar(20)
   alter table not_null.agenda add id_especialidad varchar(20)

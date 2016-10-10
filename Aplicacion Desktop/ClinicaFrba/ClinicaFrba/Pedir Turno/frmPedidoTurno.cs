@@ -15,10 +15,14 @@ namespace ClinicaFrba.Pedir_Turno
     public partial class frmPedidoTurno : Form
     {
         public static Profesional profesional;
+        public static string esp = "";
 
         public frmPedidoTurno()
         {
             InitializeComponent();
+            dgvProfesionales.Visible = false;
+            labelProfesional.Visible = false;
+            this.Width = 400;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -29,6 +33,12 @@ namespace ClinicaFrba.Pedir_Turno
 
         private void filtrarEspecialidades_Click(object sender, EventArgs e)
         {
+            dgvEspecialidades.Visible = true;
+            labelEspecialidad.Visible = true;
+            this.Width = 400;
+            dgvProfesionales.Visible = false;
+            labelProfesional.Visible = false;
+
             List<Especialidad> especialidadesFiltradas = null;
             if (!string.IsNullOrEmpty(textEspecialidad.Text))
             {
@@ -48,6 +58,41 @@ namespace ClinicaFrba.Pedir_Turno
             }
             LoadEspecialidades(especialidadesFiltradas);
         }
+
+        private void dgvProfesionales_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+            string codigo_profesional = dgvProfesionales.CurrentCell.Value.ToString();
+            frmTurnosxProf turnosDisponibles = new frmTurnosxProf(codigo_profesional, esp);
+            turnosDisponibles.Show();
+            this.Hide();
+        }
+
+        private void dgvEspecialidades_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+            string codigo_especialidad = dgvEspecialidades.CurrentCell.Value.ToString();
+            List<Profesional> profesionalesFiltrados = null;
+            var parametros = new Dictionary<string, object>() {
+                    { "@especialidad", codigo_especialidad}
+                };
+
+            esp = codigo_especialidad;
+
+            try
+            {
+                profesionalesFiltrados = DBHelper.ExecuteReader("profesional_GetByFilerEspecialidad", parametros).ToProfesional2();
+            }
+            catch
+            {
+                MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            LoadProfesionales(profesionalesFiltrados);
+            dgvProfesionales.Visible = true;
+            labelProfesional.Visible = true;
+            this.Width = 575;
+            dgvEspecialidades.Visible = false;
+            labelEspecialidad.Visible = false;
+        }
+
 
         private void LoadEspecialidades(List<Especialidad> especialidades)
         {
@@ -84,14 +129,14 @@ namespace ClinicaFrba.Pedir_Turno
             {
                 DataPropertyName = "Matricula",
                 HeaderText = "Matricula",
-                Width = 128,
+                Width = 64,
                 ReadOnly = true
             });
             dgvProfesionales.Columns.Add(new DataGridViewTextBoxColumn()
             {
                 DataPropertyName = "Nombre",
                 HeaderText = "Nombre",
-                Width = 128,
+                Width = 70,
                 ReadOnly = true
             });
             dgvProfesionales.Columns.Add(new DataGridViewTextBoxColumn()
@@ -99,7 +144,7 @@ namespace ClinicaFrba.Pedir_Turno
 
                 DataPropertyName = "Apellido",
                 HeaderText = "Apellido",
-                Width = 140,
+                Width = 75,
                 ReadOnly = true
             });
             dgvProfesionales.Columns.Add(new DataGridViewTextBoxColumn()
@@ -113,37 +158,10 @@ namespace ClinicaFrba.Pedir_Turno
             {
                 DataPropertyName = "Mail",
                 HeaderText = "Mail",
-                Width = 230,
+                Width = 175,
                 ReadOnly = true
             });
         }
 
-
-        private void dgvProfesionales_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
-        {
-            string codigo_profesional = dgvProfesionales.CurrentCell.Value.ToString();
-            frmTurnosxProf turnosDisponibles = new frmTurnosxProf(codigo_profesional);
-            turnosDisponibles.Show();
-            this.Hide();
-        }
-
-        private void dgvEspecialidades_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
-        {
-            string codigo_especialidad = dgvEspecialidades.CurrentCell.Value.ToString();
-            List<Profesional> profesionalesFiltrados = null;
-            var parametros = new Dictionary<string, object>() {
-                    { "@especialidad", codigo_especialidad}
-                };
-
-            try
-            {
-                profesionalesFiltrados = DBHelper.ExecuteReader("profesional_GetByFilerEspecialidad", parametros).ToProfesional2();
-            }
-            catch
-            {
-                MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            LoadProfesionales(profesionalesFiltrados);
-        }
     }
 }
