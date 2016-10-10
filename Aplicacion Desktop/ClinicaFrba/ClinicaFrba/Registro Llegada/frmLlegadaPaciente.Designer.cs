@@ -36,15 +36,25 @@
             this.profesionaldireccionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.especialidaddescripcionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.getMedicoXEspAllBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
-            this.gD2C2016DataSet5 = new ClinicaFrba.Abm_Planes.GD2C2016DataSet5();
+            this.gD2C2016DataSet5 = new ClinicaFrba.GD2C2016DataSet5();
             this.cmbEspecialidades = new System.Windows.Forms.ComboBox();
             this.getEspecialidadesAllBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.gD2C2016DataSet3 = new ClinicaFrba.Abm_Planes.GD2C2016DataSet3();
+            this.gD2C2016DataSet3 = new ClinicaFrba.GD2C2016DataSet3();
             this.getMedicoXEspAllBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            //this.get_MedicoXEsp_AllTableAdapter = new ClinicaFrba.GD2C2016DataSet2TableAdapters.Get_MedicoXEsp_AllTableAdapter();
             this.btnFiltrar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.get_Especialidades_AllTableAdapter = new ClinicaFrba.Abm_Planes.GD2C2016DataSet3TableAdapters.Get_Especialidades_AllTableAdapter();
+            this.get_Especialidades_AllTableAdapter = new ClinicaFrba.GD2C2016DataSet3TableAdapters.Get_Especialidades_AllTableAdapter();
             this.dgvTurnos = new System.Windows.Forms.DataGridView();
+            this.getMedicoXEspAllBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.get_MedicoXEsp_AllTableAdapter1 = new ClinicaFrba.GD2C2016DataSet4TableAdapters.Get_MedicoXEsp_AllTableAdapter();
+            this.get_MedicoXEsp_AllTableAdapter2 = new ClinicaFrba.GD2C2016DataSet5TableAdapters.Get_MedicoXEsp_AllTableAdapter();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnTraerTurnos = new System.Windows.Forms.Button();
+            this.txtNroAfiliado = new System.Windows.Forms.TextBox();
+            this.gD2C2016DataSet6 = new ClinicaFrba.GD2C2016DataSet6();
+            this.getTurnosTodayBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.get_Turnos_TodayTableAdapter = new ClinicaFrba.GD2C2016DataSet6TableAdapters.Get_Turnos_TodayTableAdapter();
             this.turnonroDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.afiliadonroDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.turnofechaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -53,16 +63,6 @@
             this.turnosintomasDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.turnoenfermedadesDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.turnomedicoespecialidadidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.getTurnosTodayBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.gD2C2016DataSet6 = new ClinicaFrba.Abm_Planes.GD2C2016DataSet6();
-            this.getMedicoXEspAllBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.get_MedicoXEsp_AllTableAdapter1 = new ClinicaFrba.Abm_Planes.GD2C2016DataSet4TableAdapters.Get_MedicoXEsp_AllTableAdapter();
-            this.get_MedicoXEsp_AllTableAdapter2 = new ClinicaFrba.Abm_Planes.GD2C2016DataSet5TableAdapters.Get_MedicoXEsp_AllTableAdapter();
-            this.label2 = new System.Windows.Forms.Label();
-            this.btnTraerTurnos = new System.Windows.Forms.Button();
-            this.txtNroAfiliado = new System.Windows.Forms.TextBox();
-            this.get_Turnos_TodayTableAdapter = new ClinicaFrba.Abm_Planes.GD2C2016DataSet6TableAdapters.Get_Turnos_TodayTableAdapter();
-            this.btnMostrar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMedicoXEspecialidad)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.getMedicoXEspAllBindingSource2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gD2C2016DataSet5)).BeginInit();
@@ -70,9 +70,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.gD2C2016DataSet3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.getMedicoXEspAllBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTurnos)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.getTurnosTodayBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gD2C2016DataSet6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.getMedicoXEspAllBindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gD2C2016DataSet6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.getTurnosTodayBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvMedicoXEspecialidad
@@ -153,7 +153,7 @@
             this.cmbEspecialidades.FormattingEnabled = true;
             this.cmbEspecialidades.Location = new System.Drawing.Point(180, 12);
             this.cmbEspecialidades.Name = "cmbEspecialidades";
-            this.cmbEspecialidades.Size = new System.Drawing.Size(189, 24);
+            this.cmbEspecialidades.Size = new System.Drawing.Size(273, 24);
             this.cmbEspecialidades.TabIndex = 1;
             this.cmbEspecialidades.ValueMember = "especialidad_descripcion";
             // 
@@ -167,11 +167,15 @@
             this.gD2C2016DataSet3.DataSetName = "GD2C2016DataSet3";
             this.gD2C2016DataSet3.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
+            // get_MedicoXEsp_AllTableAdapter
+            // 
+           // this.get_MedicoXEsp_AllTableAdapter.ClearBeforeFill = true;
+            // 
             // btnFiltrar
             // 
-            this.btnFiltrar.Location = new System.Drawing.Point(375, 12);
+            this.btnFiltrar.Location = new System.Drawing.Point(459, 12);
             this.btnFiltrar.Name = "btnFiltrar";
-            this.btnFiltrar.Size = new System.Drawing.Size(128, 24);
+            this.btnFiltrar.Size = new System.Drawing.Size(233, 24);
             this.btnFiltrar.TabIndex = 2;
             this.btnFiltrar.Text = "Filtrar";
             this.btnFiltrar.UseVisualStyleBackColor = true;
@@ -209,6 +213,54 @@
             this.dgvTurnos.RowTemplate.Height = 24;
             this.dgvTurnos.Size = new System.Drawing.Size(623, 459);
             this.dgvTurnos.TabIndex = 4;
+            // 
+            // get_MedicoXEsp_AllTableAdapter1
+            // 
+            this.get_MedicoXEsp_AllTableAdapter1.ClearBeforeFill = true;
+            // 
+            // get_MedicoXEsp_AllTableAdapter2
+            // 
+            this.get_MedicoXEsp_AllTableAdapter2.ClearBeforeFill = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(698, 15);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(164, 17);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Ingrese el nro de afiliado";
+            // 
+            // btnTraerTurnos
+            // 
+            this.btnTraerTurnos.Location = new System.Drawing.Point(1088, 12);
+            this.btnTraerTurnos.Name = "btnTraerTurnos";
+            this.btnTraerTurnos.Size = new System.Drawing.Size(233, 24);
+            this.btnTraerTurnos.TabIndex = 6;
+            this.btnTraerTurnos.Text = "Traer Turnos";
+            this.btnTraerTurnos.UseVisualStyleBackColor = true;
+            this.btnTraerTurnos.Click += new System.EventHandler(this.btnTraerTurnos_Click);
+            // 
+            // txtNroAfiliado
+            // 
+            this.txtNroAfiliado.Location = new System.Drawing.Point(868, 13);
+            this.txtNroAfiliado.Name = "txtNroAfiliado";
+            this.txtNroAfiliado.Size = new System.Drawing.Size(214, 22);
+            this.txtNroAfiliado.TabIndex = 7;
+            // 
+            // gD2C2016DataSet6
+            // 
+            this.gD2C2016DataSet6.DataSetName = "GD2C2016DataSet6";
+            this.gD2C2016DataSet6.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // getTurnosTodayBindingSource
+            // 
+            this.getTurnosTodayBindingSource.DataMember = "Get_Turnos_Today";
+            this.getTurnosTodayBindingSource.DataSource = this.gD2C2016DataSet6;
+            // 
+            // get_Turnos_TodayTableAdapter
+            // 
+            this.get_Turnos_TodayTableAdapter.ClearBeforeFill = true;
             // 
             // turnonroDataGridViewTextBoxColumn
             // 
@@ -258,70 +310,11 @@
             this.turnomedicoespecialidadidDataGridViewTextBoxColumn.HeaderText = "turno_medico_especialidad_id";
             this.turnomedicoespecialidadidDataGridViewTextBoxColumn.Name = "turnomedicoespecialidadidDataGridViewTextBoxColumn";
             // 
-            // getTurnosTodayBindingSource
-            // 
-            this.getTurnosTodayBindingSource.DataMember = "Get_Turnos_Today";
-            this.getTurnosTodayBindingSource.DataSource = this.gD2C2016DataSet6;
-            // 
-            // gD2C2016DataSet6
-            // 
-            this.gD2C2016DataSet6.DataSetName = "GD2C2016DataSet6";
-            this.gD2C2016DataSet6.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // get_MedicoXEsp_AllTableAdapter1
-            // 
-            this.get_MedicoXEsp_AllTableAdapter1.ClearBeforeFill = true;
-            // 
-            // get_MedicoXEsp_AllTableAdapter2
-            // 
-            this.get_MedicoXEsp_AllTableAdapter2.ClearBeforeFill = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(698, 15);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(164, 17);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Ingrese el nro de afiliado";
-            // 
-            // btnTraerTurnos
-            // 
-            this.btnTraerTurnos.Location = new System.Drawing.Point(1088, 12);
-            this.btnTraerTurnos.Name = "btnTraerTurnos";
-            this.btnTraerTurnos.Size = new System.Drawing.Size(233, 24);
-            this.btnTraerTurnos.TabIndex = 6;
-            this.btnTraerTurnos.Text = "Traer Turnos";
-            this.btnTraerTurnos.UseVisualStyleBackColor = true;
-            this.btnTraerTurnos.Click += new System.EventHandler(this.btnTraerTurnos_Click);
-            // 
-            // txtNroAfiliado
-            // 
-            this.txtNroAfiliado.Location = new System.Drawing.Point(868, 13);
-            this.txtNroAfiliado.Name = "txtNroAfiliado";
-            this.txtNroAfiliado.Size = new System.Drawing.Size(214, 22);
-            this.txtNroAfiliado.TabIndex = 7;
-            // 
-            // get_Turnos_TodayTableAdapter
-            // 
-            this.get_Turnos_TodayTableAdapter.ClearBeforeFill = true;
-            // 
-            // btnMostrar
-            // 
-            this.btnMostrar.Location = new System.Drawing.Point(509, 11);
-            this.btnMostrar.Name = "btnMostrar";
-            this.btnMostrar.Size = new System.Drawing.Size(183, 24);
-            this.btnMostrar.TabIndex = 8;
-            this.btnMostrar.Text = "Mostrar Todos";
-            this.btnMostrar.UseVisualStyleBackColor = true;
-            this.btnMostrar.Click += new System.EventHandler(this.btnMostrar_Click);
-            // 
             // frmLlegadaPaciente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1333, 513);
-            this.Controls.Add(this.btnMostrar);
             this.Controls.Add(this.txtNroAfiliado);
             this.Controls.Add(this.btnTraerTurnos);
             this.Controls.Add(this.label2);
@@ -340,9 +333,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.gD2C2016DataSet3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.getMedicoXEspAllBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTurnos)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.getTurnosTodayBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gD2C2016DataSet6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.getMedicoXEspAllBindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gD2C2016DataSet6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.getTurnosTodayBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -356,15 +349,15 @@
         //private GD2C2016DataSet2TableAdapters.Get_MedicoXEsp_AllTableAdapter get_MedicoXEsp_AllTableAdapter;
         private System.Windows.Forms.Button btnFiltrar;
         private System.Windows.Forms.Label label1;
-        private Abm_Planes.GD2C2016DataSet3 gD2C2016DataSet3;
+        private GD2C2016DataSet3 gD2C2016DataSet3;
         private System.Windows.Forms.BindingSource getEspecialidadesAllBindingSource;
-        private Abm_Planes.GD2C2016DataSet3TableAdapters.Get_Especialidades_AllTableAdapter get_Especialidades_AllTableAdapter;
+        private GD2C2016DataSet3TableAdapters.Get_Especialidades_AllTableAdapter get_Especialidades_AllTableAdapter;
         private System.Windows.Forms.DataGridView dgvTurnos;
         private System.Windows.Forms.BindingSource getMedicoXEspAllBindingSource1;
-        private Abm_Planes.GD2C2016DataSet4TableAdapters.Get_MedicoXEsp_AllTableAdapter get_MedicoXEsp_AllTableAdapter1;
-        private Abm_Planes.GD2C2016DataSet5 gD2C2016DataSet5;
+        private GD2C2016DataSet4TableAdapters.Get_MedicoXEsp_AllTableAdapter get_MedicoXEsp_AllTableAdapter1;
+        private GD2C2016DataSet5 gD2C2016DataSet5;
         private System.Windows.Forms.BindingSource getMedicoXEspAllBindingSource2;
-        private Abm_Planes.GD2C2016DataSet5TableAdapters.Get_MedicoXEsp_AllTableAdapter get_MedicoXEsp_AllTableAdapter2;
+        private GD2C2016DataSet5TableAdapters.Get_MedicoXEsp_AllTableAdapter get_MedicoXEsp_AllTableAdapter2;
         private System.Windows.Forms.DataGridViewTextBoxColumn medxespidDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn profesionalnombreDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn profesionalapellidoDataGridViewTextBoxColumn;
@@ -373,9 +366,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnTraerTurnos;
         private System.Windows.Forms.TextBox txtNroAfiliado;
-        private Abm_Planes.GD2C2016DataSet6 gD2C2016DataSet6;
+        private GD2C2016DataSet6 gD2C2016DataSet6;
         private System.Windows.Forms.BindingSource getTurnosTodayBindingSource;
-        private Abm_Planes.GD2C2016DataSet6TableAdapters.Get_Turnos_TodayTableAdapter get_Turnos_TodayTableAdapter;
+        private GD2C2016DataSet6TableAdapters.Get_Turnos_TodayTableAdapter get_Turnos_TodayTableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn turnonroDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn afiliadonroDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn turnofechaDataGridViewTextBoxColumn;
@@ -384,6 +377,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn turnosintomasDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn turnoenfermedadesDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn turnomedicoespecialidadidDataGridViewTextBoxColumn;
-        private System.Windows.Forms.Button btnMostrar;
     }
 }

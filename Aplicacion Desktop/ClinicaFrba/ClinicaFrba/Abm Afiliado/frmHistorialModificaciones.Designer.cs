@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.gD2C2016DataSet = new ClinicaFrba.Abm_Planes.GD2C2016DataSet();
+            this.gD2C2016DataSet = new ClinicaFrba.GD2C2016DataSet();
             this.modifPlanGetAllBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.modif_Plan_Get_AllTableAdapter = new ClinicaFrba.Abm_Planes.GD2C2016DataSetTableAdapters.Modif_Plan_Get_AllTableAdapter();
+            this.modif_Plan_Get_AllTableAdapter = new ClinicaFrba.GD2C2016DataSetTableAdapters.Modif_Plan_Get_AllTableAdapter();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.afiliadonombreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.afiliadoapellidoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -40,8 +40,8 @@
             this.plandescripcionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.plandescripcion1DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.modifPlanGetAllBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.gD2C2016DataSet1 = new ClinicaFrba.Abm_Planes.GD2C2016DataSet1();
-            this.modif_Plan_Get_AllTableAdapter1 = new ClinicaFrba.Abm_Planes.GD2C2016DataSet1TableAdapters.Modif_Plan_Get_AllTableAdapter();
+            this.gD2C2016DataSet1 = new ClinicaFrba.GD2C2016DataSet1();
+            this.modif_Plan_Get_AllTableAdapter1 = new ClinicaFrba.GD2C2016DataSet1TableAdapters.Modif_Plan_Get_AllTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.gD2C2016DataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.modifPlanGetAllBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -171,13 +171,13 @@
 
         #endregion
 
-        private Abm_Planes.GD2C2016DataSet gD2C2016DataSet;
+        private GD2C2016DataSet gD2C2016DataSet;
         private System.Windows.Forms.BindingSource modifPlanGetAllBindingSource;
-        private Abm_Planes.GD2C2016DataSetTableAdapters.Modif_Plan_Get_AllTableAdapter modif_Plan_Get_AllTableAdapter;
+        private GD2C2016DataSetTableAdapters.Modif_Plan_Get_AllTableAdapter modif_Plan_Get_AllTableAdapter;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private Abm_Planes.GD2C2016DataSet1 gD2C2016DataSet1;
+        private GD2C2016DataSet1 gD2C2016DataSet1;
         private System.Windows.Forms.BindingSource modifPlanGetAllBindingSource1;
-        private Abm_Planes.GD2C2016DataSet1TableAdapters.Modif_Plan_Get_AllTableAdapter modif_Plan_Get_AllTableAdapter1;
+        private GD2C2016DataSet1TableAdapters.Modif_Plan_Get_AllTableAdapter modif_Plan_Get_AllTableAdapter1;
         private System.Windows.Forms.DataGridViewTextBoxColumn afiliadonombreDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn afiliadoapellidoDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn modifmotivoDataGridViewTextBoxColumn;

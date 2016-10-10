@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace ClinicaFrba.Abm_Planes {
+namespace ClinicaFrba {
     
     
     /// <summary>
@@ -20,17 +20,17 @@ namespace ClinicaFrba.Abm_Planes {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("GD2C2016DataSet6")]
+    [global::System.Xml.Serialization.XmlRootAttribute("GD2C2016DataSet")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
-    public partial class GD2C2016DataSet6 : global::System.Data.DataSet {
+    public partial class GD2C2016DataSet : global::System.Data.DataSet {
         
-        private Get_Turnos_TodayDataTable tableGet_Turnos_Today;
+        private Modif_Plan_Get_AllDataTable tableModif_Plan_Get_All;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public GD2C2016DataSet6() {
+        public GD2C2016DataSet() {
             this.BeginInit();
             this.InitClass();
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
@@ -41,7 +41,7 @@ namespace ClinicaFrba.Abm_Planes {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        protected GD2C2016DataSet6(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+        protected GD2C2016DataSet(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
             if ((this.IsBinarySerialized(info, context) == true)) {
                 this.InitVars(false);
@@ -54,8 +54,8 @@ namespace ClinicaFrba.Abm_Planes {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["Get_Turnos_Today"] != null)) {
-                    base.Tables.Add(new Get_Turnos_TodayDataTable(ds.Tables["Get_Turnos_Today"]));
+                if ((ds.Tables["Modif_Plan_Get_All"] != null)) {
+                    base.Tables.Add(new Modif_Plan_Get_AllDataTable(ds.Tables["Modif_Plan_Get_All"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -79,9 +79,9 @@ namespace ClinicaFrba.Abm_Planes {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public Get_Turnos_TodayDataTable Get_Turnos_Today {
+        public Modif_Plan_Get_AllDataTable Modif_Plan_Get_All {
             get {
-                return this.tableGet_Turnos_Today;
+                return this.tableModif_Plan_Get_All;
             }
         }
         
@@ -127,7 +127,7 @@ namespace ClinicaFrba.Abm_Planes {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public override global::System.Data.DataSet Clone() {
-            GD2C2016DataSet6 cln = ((GD2C2016DataSet6)(base.Clone()));
+            GD2C2016DataSet cln = ((GD2C2016DataSet)(base.Clone()));
             cln.InitVars();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
@@ -152,8 +152,8 @@ namespace ClinicaFrba.Abm_Planes {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["Get_Turnos_Today"] != null)) {
-                    base.Tables.Add(new Get_Turnos_TodayDataTable(ds.Tables["Get_Turnos_Today"]));
+                if ((ds.Tables["Modif_Plan_Get_All"] != null)) {
+                    base.Tables.Add(new Modif_Plan_Get_AllDataTable(ds.Tables["Modif_Plan_Get_All"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -188,10 +188,10 @@ namespace ClinicaFrba.Abm_Planes {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         internal void InitVars(bool initTable) {
-            this.tableGet_Turnos_Today = ((Get_Turnos_TodayDataTable)(base.Tables["Get_Turnos_Today"]));
+            this.tableModif_Plan_Get_All = ((Modif_Plan_Get_AllDataTable)(base.Tables["Modif_Plan_Get_All"]));
             if ((initTable == true)) {
-                if ((this.tableGet_Turnos_Today != null)) {
-                    this.tableGet_Turnos_Today.InitVars();
+                if ((this.tableModif_Plan_Get_All != null)) {
+                    this.tableModif_Plan_Get_All.InitVars();
                 }
             }
         }
@@ -199,18 +199,18 @@ namespace ClinicaFrba.Abm_Planes {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "GD2C2016DataSet6";
+            this.DataSetName = "GD2C2016DataSet";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/GD2C2016DataSet6.xsd";
+            this.Namespace = "http://tempuri.org/GD2C2016DataSet.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tableGet_Turnos_Today = new Get_Turnos_TodayDataTable();
-            base.Tables.Add(this.tableGet_Turnos_Today);
+            this.tableModif_Plan_Get_All = new Modif_Plan_Get_AllDataTable();
+            base.Tables.Add(this.tableModif_Plan_Get_All);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerializeGet_Turnos_Today() {
+        private bool ShouldSerializeModif_Plan_Get_All() {
             return false;
         }
         
@@ -225,7 +225,7 @@ namespace ClinicaFrba.Abm_Planes {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedDataSetSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-            GD2C2016DataSet6 ds = new GD2C2016DataSet6();
+            GD2C2016DataSet ds = new GD2C2016DataSet();
             global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
             global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
             global::System.Xml.Schema.XmlSchemaAny any = new global::System.Xml.Schema.XmlSchemaAny();
@@ -270,35 +270,31 @@ namespace ClinicaFrba.Abm_Planes {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void Get_Turnos_TodayRowChangeEventHandler(object sender, Get_Turnos_TodayRowChangeEvent e);
+        public delegate void Modif_Plan_Get_AllRowChangeEventHandler(object sender, Modif_Plan_Get_AllRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class Get_Turnos_TodayDataTable : global::System.Data.TypedTableBase<Get_Turnos_TodayRow> {
+        public partial class Modif_Plan_Get_AllDataTable : global::System.Data.TypedTableBase<Modif_Plan_Get_AllRow> {
             
-            private global::System.Data.DataColumn columnturno_nro;
+            private global::System.Data.DataColumn columnmodif_id;
             
-            private global::System.Data.DataColumn columnafiliado_nro;
+            private global::System.Data.DataColumn columnmodif_afiliado;
             
-            private global::System.Data.DataColumn columnturno_fecha;
+            private global::System.Data.DataColumn columnmodif_plan_viejo;
             
-            private global::System.Data.DataColumn columnturno_estado;
+            private global::System.Data.DataColumn columnmodif_plan_nuevo;
             
-            private global::System.Data.DataColumn columnturno_hora_llegada;
+            private global::System.Data.DataColumn columnmodif_plan_fecha;
             
-            private global::System.Data.DataColumn columnturno_sintomas;
-            
-            private global::System.Data.DataColumn columnturno_enfermedades;
-            
-            private global::System.Data.DataColumn columnturno_medico_especialidad_id;
+            private global::System.Data.DataColumn columnmodif_motivo;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public Get_Turnos_TodayDataTable() {
-                this.TableName = "Get_Turnos_Today";
+            public Modif_Plan_Get_AllDataTable() {
+                this.TableName = "Modif_Plan_Get_All";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -306,7 +302,7 @@ namespace ClinicaFrba.Abm_Planes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal Get_Turnos_TodayDataTable(global::System.Data.DataTable table) {
+            internal Modif_Plan_Get_AllDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -323,72 +319,56 @@ namespace ClinicaFrba.Abm_Planes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected Get_Turnos_TodayDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected Modif_Plan_Get_AllDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn turno_nroColumn {
+            public global::System.Data.DataColumn modif_idColumn {
                 get {
-                    return this.columnturno_nro;
+                    return this.columnmodif_id;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn afiliado_nroColumn {
+            public global::System.Data.DataColumn modif_afiliadoColumn {
                 get {
-                    return this.columnafiliado_nro;
+                    return this.columnmodif_afiliado;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn turno_fechaColumn {
+            public global::System.Data.DataColumn modif_plan_viejoColumn {
                 get {
-                    return this.columnturno_fecha;
+                    return this.columnmodif_plan_viejo;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn turno_estadoColumn {
+            public global::System.Data.DataColumn modif_plan_nuevoColumn {
                 get {
-                    return this.columnturno_estado;
+                    return this.columnmodif_plan_nuevo;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn turno_hora_llegadaColumn {
+            public global::System.Data.DataColumn modif_plan_fechaColumn {
                 get {
-                    return this.columnturno_hora_llegada;
+                    return this.columnmodif_plan_fecha;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn turno_sintomasColumn {
+            public global::System.Data.DataColumn modif_motivoColumn {
                 get {
-                    return this.columnturno_sintomas;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn turno_enfermedadesColumn {
-                get {
-                    return this.columnturno_enfermedades;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn turno_medico_especialidad_idColumn {
-                get {
-                    return this.columnturno_medico_especialidad_id;
+                    return this.columnmodif_motivo;
                 }
             }
             
@@ -403,59 +383,57 @@ namespace ClinicaFrba.Abm_Planes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public Get_Turnos_TodayRow this[int index] {
+            public Modif_Plan_Get_AllRow this[int index] {
                 get {
-                    return ((Get_Turnos_TodayRow)(this.Rows[index]));
+                    return ((Modif_Plan_Get_AllRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event Get_Turnos_TodayRowChangeEventHandler Get_Turnos_TodayRowChanging;
+            public event Modif_Plan_Get_AllRowChangeEventHandler Modif_Plan_Get_AllRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event Get_Turnos_TodayRowChangeEventHandler Get_Turnos_TodayRowChanged;
+            public event Modif_Plan_Get_AllRowChangeEventHandler Modif_Plan_Get_AllRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event Get_Turnos_TodayRowChangeEventHandler Get_Turnos_TodayRowDeleting;
+            public event Modif_Plan_Get_AllRowChangeEventHandler Modif_Plan_Get_AllRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event Get_Turnos_TodayRowChangeEventHandler Get_Turnos_TodayRowDeleted;
+            public event Modif_Plan_Get_AllRowChangeEventHandler Modif_Plan_Get_AllRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AddGet_Turnos_TodayRow(Get_Turnos_TodayRow row) {
+            public void AddModif_Plan_Get_AllRow(Modif_Plan_Get_AllRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public Get_Turnos_TodayRow AddGet_Turnos_TodayRow(decimal turno_nro, decimal afiliado_nro, System.DateTime turno_fecha, string turno_estado, System.DateTime turno_hora_llegada, string turno_sintomas, string turno_enfermedades, int turno_medico_especialidad_id) {
-                Get_Turnos_TodayRow rowGet_Turnos_TodayRow = ((Get_Turnos_TodayRow)(this.NewRow()));
+            public Modif_Plan_Get_AllRow AddModif_Plan_Get_AllRow(decimal modif_afiliado, decimal modif_plan_viejo, decimal modif_plan_nuevo, System.DateTime modif_plan_fecha, string modif_motivo) {
+                Modif_Plan_Get_AllRow rowModif_Plan_Get_AllRow = ((Modif_Plan_Get_AllRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        turno_nro,
-                        afiliado_nro,
-                        turno_fecha,
-                        turno_estado,
-                        turno_hora_llegada,
-                        turno_sintomas,
-                        turno_enfermedades,
-                        turno_medico_especialidad_id};
-                rowGet_Turnos_TodayRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowGet_Turnos_TodayRow);
-                return rowGet_Turnos_TodayRow;
+                        null,
+                        modif_afiliado,
+                        modif_plan_viejo,
+                        modif_plan_nuevo,
+                        modif_plan_fecha,
+                        modif_motivo};
+                rowModif_Plan_Get_AllRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowModif_Plan_Get_AllRow);
+                return rowModif_Plan_Get_AllRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public Get_Turnos_TodayRow FindByturno_nro(decimal turno_nro) {
-                return ((Get_Turnos_TodayRow)(this.Rows.Find(new object[] {
-                            turno_nro})));
+            public Modif_Plan_Get_AllRow FindBymodif_id(decimal modif_id) {
+                return ((Modif_Plan_Get_AllRow)(this.Rows.Find(new object[] {
+                            modif_id})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                Get_Turnos_TodayDataTable cln = ((Get_Turnos_TodayDataTable)(base.Clone()));
+                Modif_Plan_Get_AllDataTable cln = ((Modif_Plan_Get_AllDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -463,75 +441,68 @@ namespace ClinicaFrba.Abm_Planes {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new Get_Turnos_TodayDataTable();
+                return new Modif_Plan_Get_AllDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
-                this.columnturno_nro = base.Columns["turno_nro"];
-                this.columnafiliado_nro = base.Columns["afiliado_nro"];
-                this.columnturno_fecha = base.Columns["turno_fecha"];
-                this.columnturno_estado = base.Columns["turno_estado"];
-                this.columnturno_hora_llegada = base.Columns["turno_hora_llegada"];
-                this.columnturno_sintomas = base.Columns["turno_sintomas"];
-                this.columnturno_enfermedades = base.Columns["turno_enfermedades"];
-                this.columnturno_medico_especialidad_id = base.Columns["turno_medico_especialidad_id"];
+                this.columnmodif_id = base.Columns["modif_id"];
+                this.columnmodif_afiliado = base.Columns["modif_afiliado"];
+                this.columnmodif_plan_viejo = base.Columns["modif_plan_viejo"];
+                this.columnmodif_plan_nuevo = base.Columns["modif_plan_nuevo"];
+                this.columnmodif_plan_fecha = base.Columns["modif_plan_fecha"];
+                this.columnmodif_motivo = base.Columns["modif_motivo"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             private void InitClass() {
-                this.columnturno_nro = new global::System.Data.DataColumn("turno_nro", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnturno_nro);
-                this.columnafiliado_nro = new global::System.Data.DataColumn("afiliado_nro", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnafiliado_nro);
-                this.columnturno_fecha = new global::System.Data.DataColumn("turno_fecha", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnturno_fecha);
-                this.columnturno_estado = new global::System.Data.DataColumn("turno_estado", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnturno_estado);
-                this.columnturno_hora_llegada = new global::System.Data.DataColumn("turno_hora_llegada", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnturno_hora_llegada);
-                this.columnturno_sintomas = new global::System.Data.DataColumn("turno_sintomas", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnturno_sintomas);
-                this.columnturno_enfermedades = new global::System.Data.DataColumn("turno_enfermedades", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnturno_enfermedades);
-                this.columnturno_medico_especialidad_id = new global::System.Data.DataColumn("turno_medico_especialidad_id", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnturno_medico_especialidad_id);
+                this.columnmodif_id = new global::System.Data.DataColumn("modif_id", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmodif_id);
+                this.columnmodif_afiliado = new global::System.Data.DataColumn("modif_afiliado", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmodif_afiliado);
+                this.columnmodif_plan_viejo = new global::System.Data.DataColumn("modif_plan_viejo", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmodif_plan_viejo);
+                this.columnmodif_plan_nuevo = new global::System.Data.DataColumn("modif_plan_nuevo", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmodif_plan_nuevo);
+                this.columnmodif_plan_fecha = new global::System.Data.DataColumn("modif_plan_fecha", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmodif_plan_fecha);
+                this.columnmodif_motivo = new global::System.Data.DataColumn("modif_motivo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmodif_motivo);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnturno_nro}, true));
-                this.columnturno_nro.AllowDBNull = false;
-                this.columnturno_nro.Unique = true;
-                this.columnafiliado_nro.AllowDBNull = false;
-                this.columnturno_estado.MaxLength = 1;
-                this.columnturno_sintomas.MaxLength = 255;
-                this.columnturno_enfermedades.MaxLength = 255;
+                                this.columnmodif_id}, true));
+                this.columnmodif_id.AutoIncrement = true;
+                this.columnmodif_id.AllowDBNull = false;
+                this.columnmodif_id.ReadOnly = true;
+                this.columnmodif_id.Unique = true;
+                this.columnmodif_motivo.MaxLength = 255;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public Get_Turnos_TodayRow NewGet_Turnos_TodayRow() {
-                return ((Get_Turnos_TodayRow)(this.NewRow()));
+            public Modif_Plan_Get_AllRow NewModif_Plan_Get_AllRow() {
+                return ((Modif_Plan_Get_AllRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new Get_Turnos_TodayRow(builder);
+                return new Modif_Plan_Get_AllRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(Get_Turnos_TodayRow);
+                return typeof(Modif_Plan_Get_AllRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.Get_Turnos_TodayRowChanged != null)) {
-                    this.Get_Turnos_TodayRowChanged(this, new Get_Turnos_TodayRowChangeEvent(((Get_Turnos_TodayRow)(e.Row)), e.Action));
+                if ((this.Modif_Plan_Get_AllRowChanged != null)) {
+                    this.Modif_Plan_Get_AllRowChanged(this, new Modif_Plan_Get_AllRowChangeEvent(((Modif_Plan_Get_AllRow)(e.Row)), e.Action));
                 }
             }
             
@@ -539,8 +510,8 @@ namespace ClinicaFrba.Abm_Planes {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.Get_Turnos_TodayRowChanging != null)) {
-                    this.Get_Turnos_TodayRowChanging(this, new Get_Turnos_TodayRowChangeEvent(((Get_Turnos_TodayRow)(e.Row)), e.Action));
+                if ((this.Modif_Plan_Get_AllRowChanging != null)) {
+                    this.Modif_Plan_Get_AllRowChanging(this, new Modif_Plan_Get_AllRowChangeEvent(((Modif_Plan_Get_AllRow)(e.Row)), e.Action));
                 }
             }
             
@@ -548,8 +519,8 @@ namespace ClinicaFrba.Abm_Planes {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.Get_Turnos_TodayRowDeleted != null)) {
-                    this.Get_Turnos_TodayRowDeleted(this, new Get_Turnos_TodayRowChangeEvent(((Get_Turnos_TodayRow)(e.Row)), e.Action));
+                if ((this.Modif_Plan_Get_AllRowDeleted != null)) {
+                    this.Modif_Plan_Get_AllRowDeleted(this, new Modif_Plan_Get_AllRowChangeEvent(((Modif_Plan_Get_AllRow)(e.Row)), e.Action));
                 }
             }
             
@@ -557,14 +528,14 @@ namespace ClinicaFrba.Abm_Planes {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.Get_Turnos_TodayRowDeleting != null)) {
-                    this.Get_Turnos_TodayRowDeleting(this, new Get_Turnos_TodayRowChangeEvent(((Get_Turnos_TodayRow)(e.Row)), e.Action));
+                if ((this.Modif_Plan_Get_AllRowDeleting != null)) {
+                    this.Modif_Plan_Get_AllRowDeleting(this, new Modif_Plan_Get_AllRowChangeEvent(((Modif_Plan_Get_AllRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemoveGet_Turnos_TodayRow(Get_Turnos_TodayRow row) {
+            public void RemoveModif_Plan_Get_AllRow(Modif_Plan_Get_AllRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -573,7 +544,7 @@ namespace ClinicaFrba.Abm_Planes {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                GD2C2016DataSet6 ds = new GD2C2016DataSet6();
+                GD2C2016DataSet ds = new GD2C2016DataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -591,7 +562,7 @@ namespace ClinicaFrba.Abm_Planes {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "Get_Turnos_TodayDataTable";
+                attribute2.FixedValue = "Modif_Plan_Get_AllDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -635,209 +606,171 @@ namespace ClinicaFrba.Abm_Planes {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class Get_Turnos_TodayRow : global::System.Data.DataRow {
+        public partial class Modif_Plan_Get_AllRow : global::System.Data.DataRow {
             
-            private Get_Turnos_TodayDataTable tableGet_Turnos_Today;
+            private Modif_Plan_Get_AllDataTable tableModif_Plan_Get_All;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal Get_Turnos_TodayRow(global::System.Data.DataRowBuilder rb) : 
+            internal Modif_Plan_Get_AllRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableGet_Turnos_Today = ((Get_Turnos_TodayDataTable)(this.Table));
+                this.tableModif_Plan_Get_All = ((Modif_Plan_Get_AllDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal turno_nro {
+            public decimal modif_id {
                 get {
-                    return ((decimal)(this[this.tableGet_Turnos_Today.turno_nroColumn]));
+                    return ((decimal)(this[this.tableModif_Plan_Get_All.modif_idColumn]));
                 }
                 set {
-                    this[this.tableGet_Turnos_Today.turno_nroColumn] = value;
+                    this[this.tableModif_Plan_Get_All.modif_idColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal afiliado_nro {
-                get {
-                    return ((decimal)(this[this.tableGet_Turnos_Today.afiliado_nroColumn]));
-                }
-                set {
-                    this[this.tableGet_Turnos_Today.afiliado_nroColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime turno_fecha {
+            public decimal modif_afiliado {
                 get {
                     try {
-                        return ((global::System.DateTime)(this[this.tableGet_Turnos_Today.turno_fechaColumn]));
+                        return ((decimal)(this[this.tableModif_Plan_Get_All.modif_afiliadoColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'turno_fecha\' de la tabla \'Get_Turnos_Today\' es DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'modif_afiliado\' de la tabla \'Modif_Plan_Get_All\' es DBNul" +
+                                "l.", e);
                     }
                 }
                 set {
-                    this[this.tableGet_Turnos_Today.turno_fechaColumn] = value;
+                    this[this.tableModif_Plan_Get_All.modif_afiliadoColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string turno_estado {
+            public decimal modif_plan_viejo {
                 get {
                     try {
-                        return ((string)(this[this.tableGet_Turnos_Today.turno_estadoColumn]));
+                        return ((decimal)(this[this.tableModif_Plan_Get_All.modif_plan_viejoColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'turno_estado\' de la tabla \'Get_Turnos_Today\' es DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableGet_Turnos_Today.turno_estadoColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime turno_hora_llegada {
-                get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tableGet_Turnos_Today.turno_hora_llegadaColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'turno_hora_llegada\' de la tabla \'Get_Turnos_Today\' es DBN" +
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'modif_plan_viejo\' de la tabla \'Modif_Plan_Get_All\' es DBN" +
                                 "ull.", e);
                     }
                 }
                 set {
-                    this[this.tableGet_Turnos_Today.turno_hora_llegadaColumn] = value;
+                    this[this.tableModif_Plan_Get_All.modif_plan_viejoColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string turno_sintomas {
+            public decimal modif_plan_nuevo {
                 get {
                     try {
-                        return ((string)(this[this.tableGet_Turnos_Today.turno_sintomasColumn]));
+                        return ((decimal)(this[this.tableModif_Plan_Get_All.modif_plan_nuevoColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'turno_sintomas\' de la tabla \'Get_Turnos_Today\' es DBNull." +
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'modif_plan_nuevo\' de la tabla \'Modif_Plan_Get_All\' es DBN" +
+                                "ull.", e);
+                    }
+                }
+                set {
+                    this[this.tableModif_Plan_Get_All.modif_plan_nuevoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime modif_plan_fecha {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tableModif_Plan_Get_All.modif_plan_fechaColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'modif_plan_fecha\' de la tabla \'Modif_Plan_Get_All\' es DBN" +
+                                "ull.", e);
+                    }
+                }
+                set {
+                    this[this.tableModif_Plan_Get_All.modif_plan_fechaColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string modif_motivo {
+                get {
+                    try {
+                        return ((string)(this[this.tableModif_Plan_Get_All.modif_motivoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'modif_motivo\' de la tabla \'Modif_Plan_Get_All\' es DBNull." +
                                 "", e);
                     }
                 }
                 set {
-                    this[this.tableGet_Turnos_Today.turno_sintomasColumn] = value;
+                    this[this.tableModif_Plan_Get_All.modif_motivoColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string turno_enfermedades {
-                get {
-                    try {
-                        return ((string)(this[this.tableGet_Turnos_Today.turno_enfermedadesColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'turno_enfermedades\' de la tabla \'Get_Turnos_Today\' es DBN" +
-                                "ull.", e);
-                    }
-                }
-                set {
-                    this[this.tableGet_Turnos_Today.turno_enfermedadesColumn] = value;
-                }
+            public bool Ismodif_afiliadoNull() {
+                return this.IsNull(this.tableModif_Plan_Get_All.modif_afiliadoColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int turno_medico_especialidad_id {
-                get {
-                    try {
-                        return ((int)(this[this.tableGet_Turnos_Today.turno_medico_especialidad_idColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'turno_medico_especialidad_id\' de la tabla \'Get_Turnos_Tod" +
-                                "ay\' es DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableGet_Turnos_Today.turno_medico_especialidad_idColumn] = value;
-                }
+            public void Setmodif_afiliadoNull() {
+                this[this.tableModif_Plan_Get_All.modif_afiliadoColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Isturno_fechaNull() {
-                return this.IsNull(this.tableGet_Turnos_Today.turno_fechaColumn);
+            public bool Ismodif_plan_viejoNull() {
+                return this.IsNull(this.tableModif_Plan_Get_All.modif_plan_viejoColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setturno_fechaNull() {
-                this[this.tableGet_Turnos_Today.turno_fechaColumn] = global::System.Convert.DBNull;
+            public void Setmodif_plan_viejoNull() {
+                this[this.tableModif_Plan_Get_All.modif_plan_viejoColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Isturno_estadoNull() {
-                return this.IsNull(this.tableGet_Turnos_Today.turno_estadoColumn);
+            public bool Ismodif_plan_nuevoNull() {
+                return this.IsNull(this.tableModif_Plan_Get_All.modif_plan_nuevoColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setturno_estadoNull() {
-                this[this.tableGet_Turnos_Today.turno_estadoColumn] = global::System.Convert.DBNull;
+            public void Setmodif_plan_nuevoNull() {
+                this[this.tableModif_Plan_Get_All.modif_plan_nuevoColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Isturno_hora_llegadaNull() {
-                return this.IsNull(this.tableGet_Turnos_Today.turno_hora_llegadaColumn);
+            public bool Ismodif_plan_fechaNull() {
+                return this.IsNull(this.tableModif_Plan_Get_All.modif_plan_fechaColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setturno_hora_llegadaNull() {
-                this[this.tableGet_Turnos_Today.turno_hora_llegadaColumn] = global::System.Convert.DBNull;
+            public void Setmodif_plan_fechaNull() {
+                this[this.tableModif_Plan_Get_All.modif_plan_fechaColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Isturno_sintomasNull() {
-                return this.IsNull(this.tableGet_Turnos_Today.turno_sintomasColumn);
+            public bool Ismodif_motivoNull() {
+                return this.IsNull(this.tableModif_Plan_Get_All.modif_motivoColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setturno_sintomasNull() {
-                this[this.tableGet_Turnos_Today.turno_sintomasColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Isturno_enfermedadesNull() {
-                return this.IsNull(this.tableGet_Turnos_Today.turno_enfermedadesColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setturno_enfermedadesNull() {
-                this[this.tableGet_Turnos_Today.turno_enfermedadesColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Isturno_medico_especialidad_idNull() {
-                return this.IsNull(this.tableGet_Turnos_Today.turno_medico_especialidad_idColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setturno_medico_especialidad_idNull() {
-                this[this.tableGet_Turnos_Today.turno_medico_especialidad_idColumn] = global::System.Convert.DBNull;
+            public void Setmodif_motivoNull() {
+                this[this.tableModif_Plan_Get_All.modif_motivoColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -845,22 +778,22 @@ namespace ClinicaFrba.Abm_Planes {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class Get_Turnos_TodayRowChangeEvent : global::System.EventArgs {
+        public class Modif_Plan_Get_AllRowChangeEvent : global::System.EventArgs {
             
-            private Get_Turnos_TodayRow eventRow;
+            private Modif_Plan_Get_AllRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public Get_Turnos_TodayRowChangeEvent(Get_Turnos_TodayRow row, global::System.Data.DataRowAction action) {
+            public Modif_Plan_Get_AllRowChangeEvent(Modif_Plan_Get_AllRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public Get_Turnos_TodayRow Row {
+            public Modif_Plan_Get_AllRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -876,7 +809,7 @@ namespace ClinicaFrba.Abm_Planes {
         }
     }
 }
-namespace ClinicaFrba.Abm_Planes.GD2C2016DataSet6TableAdapters {
+namespace ClinicaFrba.GD2C2016DataSetTableAdapters {
     
     
     /// <summary>
@@ -888,7 +821,7 @@ namespace ClinicaFrba.Abm_Planes.GD2C2016DataSet6TableAdapters {
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class Get_Turnos_TodayTableAdapter : global::System.ComponentModel.Component {
+    public partial class Modif_Plan_Get_AllTableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.SqlClient.SqlDataAdapter _adapter;
         
@@ -902,7 +835,7 @@ namespace ClinicaFrba.Abm_Planes.GD2C2016DataSet6TableAdapters {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public Get_Turnos_TodayTableAdapter() {
+        public Modif_Plan_Get_AllTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -999,15 +932,13 @@ namespace ClinicaFrba.Abm_Planes.GD2C2016DataSet6TableAdapters {
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "Get_Turnos_Today";
-            tableMapping.ColumnMappings.Add("turno_nro", "turno_nro");
-            tableMapping.ColumnMappings.Add("afiliado_nro", "afiliado_nro");
-            tableMapping.ColumnMappings.Add("turno_fecha", "turno_fecha");
-            tableMapping.ColumnMappings.Add("turno_estado", "turno_estado");
-            tableMapping.ColumnMappings.Add("turno_hora_llegada", "turno_hora_llegada");
-            tableMapping.ColumnMappings.Add("turno_sintomas", "turno_sintomas");
-            tableMapping.ColumnMappings.Add("turno_enfermedades", "turno_enfermedades");
-            tableMapping.ColumnMappings.Add("turno_medico_especialidad_id", "turno_medico_especialidad_id");
+            tableMapping.DataSetTable = "Modif_Plan_Get_All";
+            tableMapping.ColumnMappings.Add("modif_id", "modif_id");
+            tableMapping.ColumnMappings.Add("modif_afiliado", "modif_afiliado");
+            tableMapping.ColumnMappings.Add("modif_plan_viejo", "modif_plan_viejo");
+            tableMapping.ColumnMappings.Add("modif_plan_nuevo", "modif_plan_nuevo");
+            tableMapping.ColumnMappings.Add("modif_plan_fecha", "modif_plan_fecha");
+            tableMapping.ColumnMappings.Add("modif_motivo", "modif_motivo");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -1024,7 +955,7 @@ namespace ClinicaFrba.Abm_Planes.GD2C2016DataSet6TableAdapters {
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "NOT_NULL.Get_Turnos_Today";
+            this._commandCollection[0].CommandText = "NOT_NULL.Modif_Plan_Get_All";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.StoredProcedure;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
@@ -1033,7 +964,7 @@ namespace ClinicaFrba.Abm_Planes.GD2C2016DataSet6TableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(GD2C2016DataSet6.Get_Turnos_TodayDataTable dataTable) {
+        public virtual int Fill(GD2C2016DataSet.Modif_Plan_Get_AllDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -1046,9 +977,9 @@ namespace ClinicaFrba.Abm_Planes.GD2C2016DataSet6TableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual GD2C2016DataSet6.Get_Turnos_TodayDataTable GetData() {
+        public virtual GD2C2016DataSet.Modif_Plan_Get_AllDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            GD2C2016DataSet6.Get_Turnos_TodayDataTable dataTable = new GD2C2016DataSet6.Get_Turnos_TodayDataTable();
+            GD2C2016DataSet.Modif_Plan_Get_AllDataTable dataTable = new GD2C2016DataSet.Modif_Plan_Get_AllDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -1122,7 +1053,7 @@ namespace ClinicaFrba.Abm_Planes.GD2C2016DataSet6TableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateUpdatedRows(GD2C2016DataSet6 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateUpdatedRows(GD2C2016DataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             return result;
         }
@@ -1132,7 +1063,7 @@ namespace ClinicaFrba.Abm_Planes.GD2C2016DataSet6TableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateInsertedRows(GD2C2016DataSet6 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateInsertedRows(GD2C2016DataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             return result;
         }
@@ -1142,7 +1073,7 @@ namespace ClinicaFrba.Abm_Planes.GD2C2016DataSet6TableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateDeletedRows(GD2C2016DataSet6 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
+        private int UpdateDeletedRows(GD2C2016DataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
             return result;
         }
@@ -1176,7 +1107,7 @@ namespace ClinicaFrba.Abm_Planes.GD2C2016DataSet6TableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public virtual int UpdateAll(GD2C2016DataSet6 dataSet) {
+        public virtual int UpdateAll(GD2C2016DataSet dataSet) {
             if ((dataSet == null)) {
                 throw new global::System.ArgumentNullException("dataSet");
             }

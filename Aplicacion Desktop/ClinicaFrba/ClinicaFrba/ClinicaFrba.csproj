@@ -140,32 +140,32 @@
     <Compile Include="Compra Bono\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Planes\GD2C2016DataSet.Designer.cs">
+    <Compile Include="GD2C2016DataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GD2C2016DataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Abm Planes\GD2C2016DataSet1.Designer.cs">
+    <Compile Include="GD2C2016DataSet1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GD2C2016DataSet1.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Abm Planes\GD2C2016DataSet3.Designer.cs">
+    <Compile Include="GD2C2016DataSet3.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GD2C2016DataSet3.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Abm Planes\GD2C2016DataSet4.Designer.cs">
+    <Compile Include="GD2C2016DataSet4.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GD2C2016DataSet4.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Abm Planes\GD2C2016DataSet5.Designer.cs">
+    <Compile Include="GD2C2016DataSet5.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GD2C2016DataSet5.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Abm Planes\GD2C2016DataSet6.Designer.cs">
+    <Compile Include="GD2C2016DataSet6.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GD2C2016DataSet6.xsd</DependentUpon>
@@ -278,70 +278,70 @@
     <EmbeddedResource Include="Registro Resultado\RegistroResultado.resx">
       <DependentUpon>RegistroResultado.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="Abm Planes\GD2C2016DataSet.xsc">
+    <None Include="GD2C2016DataSet.xsc">
       <DependentUpon>GD2C2016DataSet.xsd</DependentUpon>
     </None>
-    <None Include="Abm Planes\GD2C2016DataSet.xsd">
+    <None Include="GD2C2016DataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>GD2C2016DataSet.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="Abm Planes\GD2C2016DataSet.xss">
+    <None Include="GD2C2016DataSet.xss">
       <DependentUpon>GD2C2016DataSet.xsd</DependentUpon>
     </None>
-    <None Include="Abm Planes\GD2C2016DataSet1.xsc">
+    <None Include="GD2C2016DataSet1.xsc">
       <DependentUpon>GD2C2016DataSet1.xsd</DependentUpon>
     </None>
-    <None Include="Abm Planes\GD2C2016DataSet1.xsd">
+    <None Include="GD2C2016DataSet1.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>GD2C2016DataSet1.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="Abm Planes\GD2C2016DataSet1.xss">
+    <None Include="GD2C2016DataSet1.xss">
       <DependentUpon>GD2C2016DataSet1.xsd</DependentUpon>
     </None>
-    <None Include="Abm Planes\GD2C2016DataSet3.xsc">
+    <None Include="GD2C2016DataSet3.xsc">
       <DependentUpon>GD2C2016DataSet3.xsd</DependentUpon>
     </None>
-    <None Include="Abm Planes\GD2C2016DataSet3.xsd">
+    <None Include="GD2C2016DataSet3.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>GD2C2016DataSet3.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="Abm Planes\GD2C2016DataSet3.xss">
+    <None Include="GD2C2016DataSet3.xss">
       <DependentUpon>GD2C2016DataSet3.xsd</DependentUpon>
     </None>
-    <None Include="Abm Planes\GD2C2016DataSet4.xsc">
+    <None Include="GD2C2016DataSet4.xsc">
       <DependentUpon>GD2C2016DataSet4.xsd</DependentUpon>
     </None>
-    <None Include="Abm Planes\GD2C2016DataSet4.xsd">
+    <None Include="GD2C2016DataSet4.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>GD2C2016DataSet4.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="Abm Planes\GD2C2016DataSet4.xss">
+    <None Include="GD2C2016DataSet4.xss">
       <DependentUpon>GD2C2016DataSet4.xsd</DependentUpon>
     </None>
-    <None Include="Abm Planes\GD2C2016DataSet5.xsc">
+    <None Include="GD2C2016DataSet5.xsc">
       <DependentUpon>GD2C2016DataSet5.xsd</DependentUpon>
     </None>
-    <None Include="Abm Planes\GD2C2016DataSet5.xsd">
+    <None Include="GD2C2016DataSet5.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>GD2C2016DataSet5.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="Abm Planes\GD2C2016DataSet5.xss">
+    <None Include="GD2C2016DataSet5.xss">
       <DependentUpon>GD2C2016DataSet5.xsd</DependentUpon>
     </None>
-    <None Include="Abm Planes\GD2C2016DataSet6.xsc">
+    <None Include="GD2C2016DataSet6.xsc">
       <DependentUpon>GD2C2016DataSet6.xsd</DependentUpon>
     </None>
-    <None Include="Abm Planes\GD2C2016DataSet6.xsd">
+    <None Include="GD2C2016DataSet6.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>GD2C2016DataSet6.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="Abm Planes\GD2C2016DataSet6.xss">
+    <None Include="GD2C2016DataSet6.xss">
       <DependentUpon>GD2C2016DataSet6.xsd</DependentUpon>
     </None>
     <None Include="Properties\Settings.settings">

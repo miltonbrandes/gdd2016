@@ -64,11 +64,5 @@ namespace ClinicaFrba.Registro_Llegada
         {
 
         }
-
-        private void btnMostrar_Click(object sender, EventArgs e)
-        {
-           // this.dgvMedicoXEspecialidad.DataSource = null;
-            frmLlegadaPaciente_Load(sender, e);
-        }
     }
 }
