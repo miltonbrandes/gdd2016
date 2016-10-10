@@ -38,6 +38,10 @@ namespace ClinicaFrba.Registro_Agenda
 			return ((hora1.toMinutes() - hora2.toMinutes() ) % 30) == 0;
 		}
 		
+		public static CustomHour FromMinutes(int minutes){
+			return new CustomHour(minutes / 60, minutes % 60);
+		}
+		
 		public int toMinutes(){
 			return hora*60 + minuto;
 		}
