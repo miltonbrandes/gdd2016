@@ -471,8 +471,8 @@ GO
 /*		AGENDA		*/
 CREATE TABLE NOT_NULL.agenda(
 	agenda_id int IDENTITY(0,1) primary key,
-	id_profesional string, 
-	id_especialidad string,
+	id_profesional varchar(20), 
+	id_especialidad varchar(20),
 	--agenda_medxesp int NOT NULL foreign key references NOT_NULL.medicoXespecialidad(medxesp_id),
 	agenda_fecha_inicio date,
 	agenda_fecha_fin date,
@@ -489,9 +489,9 @@ CREATE TABLE NOT_NULL.franja_horaria(
 	hora_fin int NOT NULL CHECK(hora_fin<24 AND hora_fin>=0),
 	minuto_fin int NOT NULL CHECK(minuto_fin<60 AND minuto_fin>=0),
 	franja_cancelada bit default 0	,
+	id_afiliado varchar(20),
 	agenda_id int foreign key references NOT_NULL.agenda(agenda_id))
 GO
-
 
 ALTER TABLE NOT_NULL.franja_horaria
 	ADD CONSTRAINT hora_fin_mayor_hora_inicio CHECK( (hora_fin * 60 + minuto_fin) > (hora_inicio * 60 + minuto_inicio) )
@@ -1196,28 +1196,6 @@ GO
   update NOT_NULL.plan_medico set plan_cuota_precio = 10000 where plan_id = 555559
   go
 
-    -- Registrar Compra Bono
-  CREATE PROCEDURE NOT_NULL.Comprar_Bono(@cantidad int, @precio int, @afiliado numeric(18,0), @fecha datetime, @plan numeric(18,0))
-  AS
-	BEGIN
-	SET NOCOUNT ON;
-	declare @bono_id numeric(18,0)
-	declare @aux int
-	set @bono_id = (select top 1 bono_id from NOT_NULL.bono_consulta order by bono_id desc)
-	set @aux = 1
-
-	while @aux <= @cantidad
-	Begin
-		INSERT INTO NOT_NULL.bono_consulta(bono_id, bono_afiliado, bono_fecha_compra, bono_plan, bono_utilizado)
-			VALUES (@bono_id + @aux, @afiliado, @fecha, @plan, 'N')
-		set @aux = @aux + 1
-	End
-
-	INSERT INTO NOT_NULL.compra_bono(compra_cantidad, compra_precio, compra_afiliado, compra_fecha)
-		VALUES (@cantidad, @precio, @afiliado, @fecha)
-	END
-  GO
-
   create procedure NOT_NULL.Get_MedicoXEsp_All
   as
 	begin
@@ -1249,48 +1227,61 @@ GO
 	SELECT STR(franja_id) as id,
 	dia = 
 		CASE dia
-		when 2 then 'Lunes'
-		when 3 then 'Martes'
-		when 4 then 'Miércoles'
-		when 5 then 'Jueves'
-		when 6 then 'Viernes'
-		when 7 then 'Sábado'
-		when 1 then 'Domingo'
+		when 1 then 'Lunes'
+		when 2 then 'Martes'
+		when 3 then 'Miércoles'
+		when 4 then 'Jueves'
+		when 5 then 'Viernes'
+		when 6 then 'Sábado'
+		when 7 then 'Domingo'
 		END,
-		   STR(hora_inicio) as hora_inicio,
-		   STR(minuto_inicio) as minuto_inicio, 
-		   STR(hora_fin) as hora_fin,
-		   STR(minuto_fin) as minuto_fin
+		   STR(hora_inicio*100 + minuto_inicio) as hora_inicio,
+		   --STR(minuto_inicio) as minuto_inicio, 
+		   STR(hora_fin*100 + minuto_fin) as hora_fin
+		   --STR(minuto_fin) as minuto_fin
 		   FROM NOT_NULL.franja_horaria WHERE agenda_id IN 
 				(
 				  	 SELECT agenda_id 
 					 FROM NOT_NULL.agenda 
 					 WHERE id_profesional = @profesional 
+					 and id_afiliado is null
 --					 and id_especialidad = @especialidad
 					 and agenda_fecha_inicio >= '09/10/2016'
 				 )
 	END
   GO  
+  
   /*
-  drop procedure NOT_NULL.turnos_GetByFilerProfesional
-  select * From NOT_NULL.profesional
-  select * From NOT_NULL.medicoXespecialidad
-  select * From NOT_NULL.especialidad where especialidad_codigo = '10018'
   -- Agenda
   select * from NOT_NULL.agenda
-  insert into NOT_NULL.agenda values ('10/10/2016', '10/10/2016', '10', '10018' )
-  -- Carga Franja Horaria para la agenda 0
-  select * from NOT_NULL.franja_horaria
-  insert into NOT_NULL.franja_horaria values (1, 10,00, 10,30, 0, 0)
-  insert into NOT_NULL.franja_horaria values (1, 10,30, 11,00, 0, 0);
-  insert into NOT_NULL.franja_horaria values (1, 11,00, 11,30, 0, 0);
-  insert into NOT_NULL.franja_horaria values (1, 11,30, 12,00, 0, 0);
-  insert into NOT_NULL.franja_horaria values (2, 10,00, 10,30, 0, 0);
-  insert into NOT_NULL.franja_horaria values (1, 10,30, 11,00, 0, 0);
+  update not_null.agenda set agenda_fecha_fin = '2016-10-17'
+  insert into NOT_NULL.agenda values ('10', '10018', '10/10/2016', '17/10/2016')
   
-  exec NOT_NULL.turnos_GetByFilerProfesional '10' , '10018'
-				turnos_GetByFilerProfesional
+  -- Carga Franja Horaria para la agenda 0
+  --select * from NOT_NULL.franja_horaria
+  -- Lunes dia 1
+  -- Martes dia 2
+  -- Miercoles dia 3
+  -- Jueves dia 4
+  -- Viernes dia 5
+  -- Sábado dia 6
+  -- Domingo dia 7
+  insert into NOT_NULL.franja_horaria values (1, 10,00, 10,30, 0,null, 4)
+  insert into NOT_NULL.franja_horaria values (1, 10,30, 11,00, 0,null, 4);
+  insert into NOT_NULL.franja_horaria values (1, 11,00, 11,30, 0,null, 4);
+  insert into NOT_NULL.franja_horaria values (1, 11,30, 12,00, 0,null, 4);
+  insert into NOT_NULL.franja_horaria values (2, 10,00, 10,30, 0,null, 4);
+  insert into NOT_NULL.franja_horaria values (2, 10,30, 11,00, 0,null, 4);
+  insert into NOT_NULL.franja_horaria values (3, 10,00, 10,30, 0,null, 4)
+  insert into NOT_NULL.franja_horaria values (3, 10,30, 11,00, 0,null, 4);
+  insert into NOT_NULL.franja_horaria values (4, 11,00, 11,30, 0,null, 4);
+  insert into NOT_NULL.franja_horaria values (4, 11,30, 12,00, 0,null, 4);
+  insert into NOT_NULL.franja_horaria values (5, 10,00, 10,30, 0,null, 4);
+  insert into NOT_NULL.franja_horaria values (5, 10,30, 11,00, 0,null, 4);
+  insert into NOT_NULL.franja_horaria values (6, 10,00, 10,30, 0,null, 4);
+  insert into NOT_NULL.franja_horaria values (6, 10,30, 11,00, 0,null, 4);  
   */
+  
   --FILTRADO DE PROFESIONALES POR ESPECIALIDAD
   CREATE PROCEDURE NOT_NULL.profesional_GetByFilerEspecialidad (@especialidad varchar(20))
   AS
@@ -1311,19 +1302,4 @@ GO
 									 )	
 	END
   GO  
-  
-  exec NOT_NULL.profesional_GetByFilerEspecialidad '120'
-  drop procedure NOT_NULL.profesional_GetByFilerEspecialidad 
-  /*
-  alter table not_null.agenda add id_profesional varchar(20)
-  alter table not_null.agenda add id_especialidad varchar(20)
-  select * from NOT_NULL.agenda
-  
-  insert into 
-  update 
-  
-  select * from NOT_NULL.medicoXespecialidad
-  
-  select * from NOT_NULL.usuario where usuario_id = 'admin'
-  update NOT_NULL.usuario set usuario_password = HASHBYTES('SHA2_256', 'admin') where usuario_id = 'admin'
-  */
+ 
