@@ -27,6 +27,21 @@ namespace ClinicaFrba.Registro_Agenda
 			}
 		}
 		
+		/// <summary>
+		/// Hora1 debe ser anterior a hora2
+		/// </summary>
+		public static bool esMultiplo30(CustomHour hora1, CustomHour hora2){
+			
+			if( hora1.esDespues(hora2) )
+				return false;
+			
+			return ((hora1.toMinutes() - hora2.toMinutes) % 30) == 0;
+		}
+		
+		public int toMinutes(){
+			return hora*60 + minuto;
+		}
+		
 		public bool esDespues(CustomHour hour){
 			
 			if(hora == hour.hora){

@@ -61,16 +61,23 @@ namespace ClinicaFrba.Registro_Agenda
 			listaEspecialidades.DataSource = profesional.Especialidades;
 			listaEspecialidades.DisplayMember = "Descripcion";
 			listaEspecialidades.ValueMember = "Descripcion";
+			
+			monthCalendar1.MaxSelectionCount = 1;
+			monthCalendar2.MaxSelectionCount = 1;
 		}
 		
 		void ButtonOKClick(object sender, EventArgs e)
 		{
+			validarTextBoxes();
+			validarHoras();
 			
+			//Ahora tengo que enviarlo a la bd.
 		}
 		
+		#region validacion textBoxes
 		private void validarTextBoxes(){
 			bool resultado = true;
-			//Recorro todas las boxes
+			
 			int i,j;
 			for(i=0;i<4;i+2){ //Solo checkeo las filas pares
 				for(j=0;j<6;j++){
@@ -87,9 +94,17 @@ namespace ClinicaFrba.Registro_Agenda
 			
 			if(matriz[i,j].Text != null){
 				//Miro a ver si la hora inicio y hora fin son correctas
-				if( horaCorrecta(matriz[i,j], hora1) && horaCorrecta(matriz[i+1,j], hora2) ){
-					//Son correctas las asigno en matrizHoras
-					matrizHoras[i,j];
+				if( horaCorrecta(matriz[i,j], (CustomHour(hora1)) ) && horaCorrecta(matriz[i+1,j], (CustomHour(hora2)) ) ){
+
+					if(hora1.esAntes(hora2) && CustomHour.esMultiplo30(hora1,hora2)){
+						//Son correctas las asigno en matrizHoras
+						matrizHoras[i,j] = hora1;
+						matrizHoras[i+1,j] = hora2;
+						
+						return true;
+					}
+					
+					return false;
 				}
 			}else if(matriz[i+1,j].Text == null)
 				return true;
@@ -116,5 +131,17 @@ namespace ClinicaFrba.Registro_Agenda
 			
 			return resultado;
 		}
+		#endregion
+		
+		private bool validarHoras(){
+			
+			DateTime fecha1;
+			DateTime fecha2;
+			
+			if(fecha1.CompareTo(fecha2) >= 0 )
+				return false;
+			else return true;
+		}
+		
 	}
 }
