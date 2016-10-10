@@ -10,3 +10,7 @@ D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\bin\Debug\normnfkd.nl
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\obj\Debug\Clases.dll
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\obj\Debug\Clases.pdb
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\obj\Debug\Clases.csprojResolveAssemblyReference.cache
+C:\Users\Jamper\Documents\GitHub\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\bin\Debug\Clases.dll
+C:\Users\Jamper\Documents\GitHub\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\bin\Debug\Clases.pdb
+C:\Users\Jamper\Documents\GitHub\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\obj\Debug\Clases.dll
+C:\Users\Jamper\Documents\GitHub\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\obj\Debug\Clases.pdb

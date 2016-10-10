@@ -135,11 +135,13 @@ namespace ClinicaFrba
         	var home = new Registro_Agenda.RegistroAgenda(profesional);
             home.Show();
         }
+
         public static void PedirTurno(object sender, EventArgs e)
         {
-            var home = new Pedir_Turno.Form1();
+            var home = new Pedir_Turno.frmPedidoTurno();
             home.Show();
         }
+         
         public static void RegistrarLlegada(object sender, EventArgs e)
         {
             var home = new Registro_Llegada.frmLlegadaPaciente();

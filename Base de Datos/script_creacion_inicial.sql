@@ -470,6 +470,8 @@ GO
 /*		AGENDA		*/
 CREATE TABLE NOT_NULL.agenda(
 	agenda_id int IDENTITY(0,1) primary key,
+	id_profesional string, 
+	id_especialidad string,
 	--agenda_medxesp int NOT NULL foreign key references NOT_NULL.medicoXespecialidad(medxesp_id),
 	agenda_fecha_inicio date,
 	agenda_fecha_fin date,
@@ -1189,3 +1191,61 @@ GO
 		select * from NOT_NULL.turno where turno_fecha = CONVERT(DATE, GETDATE());
 	end
   go
+  
+  -- FILTRADO DE DIAS DE TURNOS SEGUN CODIGO_PROFESIONAL
+  CREATE PROCEDURE NOT_NULL.turnos_GetByFilerProfesional (@profesional varchar(20), @especialidad varchar(20))
+  AS
+	BEGIN
+	SET NOCOUNT ON;
+	SELECT STR(franja_id) as id,
+		   STR(dia) as dia,
+		   STR(hora_inicio) as hora_inicio,
+		   STR(minuto_inicio) as minuto_inicio, 
+		   STR(hora_fin) as hora_fin,
+		   STR(minuto_fin) as minuto_fin
+		   FROM NOT_NULL.franja_horaria WHERE agenda_id IN 
+				(
+				  	 SELECT agenda_id 
+					 FROM NOT_NULL.agenda 
+					 WHERE id_profesional = @profesional 
+					 and id_especialidad = @especialidad
+					 and agenda_fecha_inicio >= '09/10/2016'
+				 )
+	END
+  GO  
+  
+  --FILTRADO DE PROFESIONALES POR ESPECIALIDAD
+  CREATE PROCEDURE NOT_NULL.profesional_GetByFilerEspecialidad (@especialidad varchar(20))
+  AS
+	BEGIN
+	SET NOCOUNT ON;
+	SELECT profesional_matricula,
+		   profesional_nombre,
+	       profesional_apellido,
+	       profesional_mail,
+	       STR(profesional_telefono) as profesional_telefono,
+	       profesional_direccion
+	       FROM NOT_NULL.profesional 
+	WHERE profesional_matricula IN 
+									(
+									 SELECT medxesp_profesional, medxesp_agenda 
+									 FROM NOT_NULL.medicoXespecialidad 
+									 WHERE medxesp_especialidad = str(@especialidad)
+									 )	
+	END
+  GO  
+  
+  
+  /*
+  alter table not_null.agenda add id_profesional varchar(20)
+  alter table not_null.agenda add id_especialidad varchar(20)
+  select * from NOT_NULL.agenda
+  
+  insert into 
+  update 
+  
+  select * from NOT_NULL.medicoXespecialidad
+  
+  select * from NOT_NULL.usuario where usuario_id = 'admin'
+  update NOT_NULL.usuario set usuario_password = HASHBYTES('SHA2_256', 'admin') where usuario_id = 'admin'
+  */
