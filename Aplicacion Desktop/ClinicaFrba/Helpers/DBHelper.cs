@@ -35,7 +35,7 @@ namespace Helpers
             DB.Close();
         }
         
-        public static void ExecuteNonQueryWithOutput(string SP, Dictionary<string, object> parametros = null, Dictionary<string, object> outputParam)
+        public static SqlParameterCollection ExecuteNonQueryWithOutput(string SP, List<string> outputParam, Dictionary<string, object> parametros = null )
         {
             if (parametros == null) parametros = new Dictionary<string, object>();
             DB.Open();
@@ -45,15 +45,17 @@ namespace Helpers
             {
                 command.Parameters.Add(new SqlParameter(parametro.Key, parametro.Value));
             }
-            foreach(var parametro in outputParam){
-            	SqlParameter sqlParameter = new SqlParameter(parametro.Key, System.Data.SqlDbType.Int);
+            foreach(string parametro in outputParam){
+            	SqlParameter sqlParameter = new SqlParameter(parametro, System.Data.SqlDbType.Int);
             	sqlParameter.Direction = System.Data.ParameterDirection.Output; //Le digo que es output
             	command.Parameters.Add(sqlParameter);
-            	parametro.Value = sqlParameter.Value; //Pongo el valor del parametroSql en el que me llega
+            	//parametro.Value = sqlParameter.Value; //Pongo el valor del parametroSql en el que me llega
             }
 
             command.ExecuteNonQuery();
             DB.Close();
+            
+            return command.Parameters;
         }
 
         public static SqlDataReader ExecuteReader(string SP, Dictionary<string, object> parametros = null)

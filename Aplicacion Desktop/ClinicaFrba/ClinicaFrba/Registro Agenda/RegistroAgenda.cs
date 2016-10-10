@@ -85,10 +85,10 @@ namespace ClinicaFrba.Registro_Agenda
 				{"@fecha_inicio",monthCalendar1.SelectionStart},
 				{"@fecha_fin",monthCalendar2.SelectionStart}
 			};
-			Dictionary<string,object> outputParam = new Dictionary<string,object>(){
-				{"@id_agenda", agenda_id}
-			};
-			DBHelper.ExecuteNonQueryWithOutput("Agenda_Agregar",parametros,outputParam);
+			List<string> outputParam = new List<string>(){"@id_agenda"};
+			SqlParameterCollection sqlParameters = DBHelper.ExecuteNonQueryWithOutput("Agenda_Agregar",outputParam,parametros);
+			agenda_id = (int)sqlParameters[parametros.Count].Value;
+			
 			//Ya agregue la agenda, ahora tengo que enviar todas las franjas
 			int i,j;
 			for(i=0;i<4;i=i+2){
@@ -113,6 +113,10 @@ namespace ClinicaFrba.Registro_Agenda
 		private bool validarTextBoxes(){
 			bool resultado = true;
 			int horasTotales = 0;
+			const int horaAperturaSemana = 7;
+			const int horaCierreSemana = 20;
+			const int horaAperturaSabado = 10;
+			const int horaCierreSabado = 15;
 			
 			int i,j;
 			for(i=0;i<4;i=i+2){ //Solo checkeo las filas pares
@@ -129,7 +133,8 @@ namespace ClinicaFrba.Registro_Agenda
 				for(j=0;j<6;j++){
 					
 					if(matrizHoras[0,j] != null && matrizHoras[2,j] != null){
-						resultado = matrizHoras[1,j].esAntes(matrizHoras[2,j]);
+						if( matrizHoras[1,j].esDespues(matrizHoras[2,j]) )
+							resultado = false;
 					}
 				}
 			}
@@ -145,6 +150,22 @@ namespace ClinicaFrba.Registro_Agenda
 				}
 				if(horasTotales > 48*60)
 					resultado = false;
+			}
+			
+			//Valido que la clinica este abierta
+			if(resultado){
+				
+				for(i=0;i<4;i++){
+					for(j=0;j<6;j++){
+						if(matrizHoras[i,j] != null){ 
+							if( j != 5 ){
+								if(matrizHoras[i,j].hora < horaAperturaSemana || matrizHoras[i,j].hora > horaCierreSemana)
+									resultado = false;
+							}else if(matrizHoras[i,j].hora < horaAperturaSabado || matrizHoras[i,j].hora > horaCierreSabado)
+								resultado = false;
+						}
+					}
+				}
 			}
 			
 			return resultado;
@@ -194,7 +215,7 @@ namespace ClinicaFrba.Registro_Agenda
 					resultado = false;
 					hour = null;
 				}
-			}
+			}else hour = null;
 			
 			return resultado;
 		}
