@@ -21,19 +21,20 @@ namespace ClinicaFrba.Pedir_Turno
             InitializeComponent();
         }
 
-        public frmTurnosxProf(string codigo_profesional)
+        public frmTurnosxProf(string codigo_profesional, string codigo_especialidad)
         {
             // TODO: Complete member initialization
             //this.codigo_profesional = codigo_profesional;
             InitializeComponent();
-            cargarTurnos(codigo_profesional);
+            cargarTurnos(codigo_profesional, codigo_especialidad);
         }
 
-        public void cargarTurnos(string codigo_profesional)
+        public void cargarTurnos(string codigo_profesional, string codigo_especialidad)
         {
             List<Franja> franjasFiltradas = null;
             var parametros = new Dictionary<string, object>() {
-                    { "@profesional", codigo_profesional}
+                    { "@profesional", codigo_profesional},
+                  //  { "@especialidad", codigo_especialidad}
                 };
 
             try
@@ -60,6 +61,7 @@ namespace ClinicaFrba.Pedir_Turno
             dgvTurnos.Columns.Clear();
             dgvTurnos.AutoGenerateColumns = false;
 
+/*
             dgvTurnos.Columns.Add(new DataGridViewTextBoxColumn()
             {
                 DataPropertyName = "Id",
@@ -67,6 +69,7 @@ namespace ClinicaFrba.Pedir_Turno
                 Width = 128,
                 ReadOnly = true
             });
+ */
             dgvTurnos.Columns.Add(new DataGridViewTextBoxColumn()
             {
                 DataPropertyName = "Dia",
@@ -82,6 +85,7 @@ namespace ClinicaFrba.Pedir_Turno
                 Width = 140,
                 ReadOnly = true
             });
+            /*
             dgvTurnos.Columns.Add(new DataGridViewTextBoxColumn()
             {
                 DataPropertyName = "MinutoInicio",
@@ -89,6 +93,7 @@ namespace ClinicaFrba.Pedir_Turno
                 Width = 100,
                 ReadOnly = true
             });
+            */
             dgvTurnos.Columns.Add(new DataGridViewTextBoxColumn()
             {
                 DataPropertyName = "HoraFin",
@@ -96,6 +101,7 @@ namespace ClinicaFrba.Pedir_Turno
                 Width = 230,
                 ReadOnly = true
             });
+            /*
             dgvTurnos.Columns.Add(new DataGridViewTextBoxColumn()
             {
                 DataPropertyName = "MinutoFin",
@@ -103,6 +109,7 @@ namespace ClinicaFrba.Pedir_Turno
                 Width = 230,
                 ReadOnly = true
             });
+            */
         }
     }
 }

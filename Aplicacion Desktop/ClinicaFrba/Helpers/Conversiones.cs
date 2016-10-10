@@ -255,9 +255,9 @@ namespace Helpers
                 {
                     Dia = (string)rdr["dia"],
                     HoraInicio = (string)rdr["hora_inicio"],
-                    MinutoInicio = (string)rdr["minuto_inicio"],
+                    //MinutoInicio = (string)rdr["minuto_inicio"],
                     HoraFin = (string)rdr["hora_fin"],
-                    MinutoFin = (string)rdr["minuto_fin"],
+                    //MinutoFin = (string)rdr["minuto_fin"],
                     Id = (string)rdr["id"]
                 });
             }
