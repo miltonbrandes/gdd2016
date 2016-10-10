@@ -58,11 +58,11 @@ namespace ClinicaFrba
 
         private void cargarProfesional(){
         	Dictionary<string, object> parametros = new Dictionary<string, object>()
-        		{ {"Username", usuario.Username} };
+        		{ {"@Username", usuario.Username} };
         	profesional = DBHelper.ExecuteReader("Profesional_GetProfesionalSegunUsuario", parametros).ToProfesionales();
         	
         	parametros = new Dictionary<string, object>()
-        		{ {"matricula",profesional.Matricula} };
+        		{ {"@matricula",profesional.Matricula} };
         	profesional.Especialidades = DBHelper.ExecuteReader("Especialidad_GetByMatricula",parametros).ToEspecialidad();
         }
         

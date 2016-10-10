@@ -1131,19 +1131,32 @@ GO
 
 
   --AGREGAR AGENDA
-  CREATE PROCEDURE NOT_NULL.Agenda_Agregar(@matricula int, @especialidad varchar(255), @fecha_inicio datetime, @fecha_fin datetime)
+  CREATE PROCEDURE NOT_NULL.Agenda_Agregar(@matricula int, @especialidad varchar(255), @fecha_inicio datetime, @fecha_fin datetime, @id_agenda int OUTPUT)
   AS BEGIN
+  
 	INSERT INTO NOT_NULL.Agenda a
-	values(@fecha_inicio,@fecha_fin)
-	WHERE a.agenda_id = (SELECT mxe.medxesp_agenda TOP 1 FROM NOT_NULL.medicoXespecialidad mxe, NOT_NULL.profesional p, NOT_NULL.especialidad e
-						 WHERE p.profesional_matricula = mxe.medXesp_profesional
-							AND mxe.medxesp_especialidad = e.especialidad_codigo
-							AND e.especialidad_descripcion = @especialidad)
-	END
+	VALUES(@fecha_inicio, @fecha_fin)
 	
-	RETURN @@IDENTITY
+	UPDATE NOT_NULL.medicoXespecialidad mxe
+	SET mxe.medxesp_agenda = @@IDENTITY
+	WHERE mxe.medxesp_profesional = @matricula 
+		AND mxe.medxesp_especialidad = (SELECT e.especialidad_codigo TOP 1
+										FROM NOT_NULL.especialidad e
+										WHERE e.especialidad_descripcion = @especialidad)
+	
+	@id_agenda = @@IDENTITY
+	END
   GO
   
+  --AGREGAR FRANJA
+  CREATE PROCEDURE NOT_NULL.Franja_Agregar(@id_agenda int, @hora_inicio int, @minuto_inicio int, @hora_fin int, @minuto_fin int)
+  AS BEGIN
+	
+	INSERT INTO NOT_NULL.Agenda
+	values(@id_agenda,@hora_inicio,@minuto_inicio,@hora_fin,@minuto_fin)
+	
+	END
+  GO
   
   
   update NOT_NULL.plan_medico set plan_cuota_precio = 500 where plan_id = 555555

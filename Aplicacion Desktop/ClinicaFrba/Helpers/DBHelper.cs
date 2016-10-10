@@ -34,6 +34,27 @@ namespace Helpers
             command.ExecuteNonQuery();
             DB.Close();
         }
+        
+        public static void ExecuteNonQueryWithOutput(string SP, Dictionary<string, object> parametros = null, Dictionary<string, object> outputParam)
+        {
+            if (parametros == null) parametros = new Dictionary<string, object>();
+            DB.Open();
+            SqlCommand command = new SqlCommand("NOT_NULL." + SP, DB);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            foreach (var parametro in parametros)
+            {
+                command.Parameters.Add(new SqlParameter(parametro.Key, parametro.Value));
+            }
+            foreach(var parametro in outputParam){
+            	SqlParameter sqlParameter = new SqlParameter(parametro.Key, System.Data.SqlDbType.Int);
+            	sqlParameter.Direction = System.Data.ParameterDirection.Output; //Le digo que es output
+            	command.Parameters.Add(sqlParameter);
+            	parametro.Value = sqlParameter.Value; //Pongo el valor del parametroSql en el que me llega
+            }
+
+            command.ExecuteNonQuery();
+            DB.Close();
+        }
 
         public static SqlDataReader ExecuteReader(string SP, Dictionary<string, object> parametros = null)
         {
@@ -48,5 +69,6 @@ namespace Helpers
             SqlDataReader result = command.ExecuteReader();
             return result;
         }
+        
     }
 }

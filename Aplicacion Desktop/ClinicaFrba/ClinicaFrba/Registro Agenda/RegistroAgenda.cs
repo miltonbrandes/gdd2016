@@ -69,22 +69,50 @@ namespace ClinicaFrba.Registro_Agenda
 		
 		void ButtonOKClick(object sender, EventArgs e)
 		{
-			validarTextBoxes();
-			validarHoras();
+			if( !validarTextBoxes() ){
+				Array.Clear(matrizHoras,0,matrizHoras.Length);
+				return;
+			}
+			if(!validarHoras())
+				return;
 			
 			//Ahora tengo que enviarlo a la bd.
+			int agenda_id;
+			
 			Dictionary<string,object> parametros = new Dictionary<string,object>(){
-				{"matricula",profesional.Matricula},
-				{"especialidad",listaEspecialidades.SelectedValue.ToString()},
-				{"fecha_inicio",monthCalendar1.SelectionStart},
-				{"fecha_fin",monthCalendar2.SelectionStart}
+				{"@matricula",profesional.Matricula},
+				{"@especialidad",listaEspecialidades.SelectedValue.ToString()},
+				{"@fecha_inicio",monthCalendar1.SelectionStart},
+				{"@fecha_fin",monthCalendar2.SelectionStart}
 			};
-			DBHelper.ExecuteReader("Agenda_Agregar",parametros);
+			Dictionary<string,object> outputParam = new Dictionary<string,object>(){
+				{"@id_agenda", agenda_id}
+			};
+			DBHelper.ExecuteNonQueryWithOutput("Agenda_Agregar",parametros,outputParam);
+			//Ya agregue la agenda, ahora tengo que enviar todas las franjas
+			int i,j;
+			for(i=0;i<4;i=i+2){
+				for(j=0;j<6;j++){
+					if(matrizHoras[i,j] != null){
+						parametros = new Dictionary<string, object>(){
+							{"@agenda_id",agenda_id},
+							{"@hora_inicio",matrizHoras[i,j].hora},
+							{"@minuto_inicio",matrizHoras[i,j].minuto},
+							{"@hora_fin",matrizHoras[i+1,j].hora},
+							{"@minuto_fin",matrizHoras[i+1,j].minuto},
+						};
+						DBHelper.ExecuteNonQuery("Franja_Agregar",parametros);
+					}
+				}
+			}
+			
+			//Listo, cerrar el form
 		}
 		
 		#region validacion textBoxes
-		private void validarTextBoxes(){
+		private bool validarTextBoxes(){
 			bool resultado = true;
+			int horasTotales = 0;
 			
 			int i,j;
 			for(i=0;i<4;i=i+2){ //Solo checkeo las filas pares
@@ -94,6 +122,32 @@ namespace ClinicaFrba.Registro_Agenda
 						resultado = false;
 				}
 			}
+			
+			//Hago la validacion para ver que no se crucen las horas
+			if(resultado){
+				
+				for(j=0;j<6;j++){
+					
+					if(matrizHoras[0,j] != null && matrizHoras[2,j] != null){
+						resultado = matrizHoras[1,j].esAntes(matrizHoras[2,j]);
+					}
+				}
+			}
+			
+			//Valido que el total de horas no supere 48
+			if(resultado){
+				
+				for(i=0;i<4;i=i+2){
+				for(j=0;j<6;j++){
+					if(matrizHoras[i,j] != null)
+						horasTotales += matrizHoras[i+1,j].toMinutes() - matrizHoras[i,j].toMinutes();
+					}
+				}
+				if(horasTotales > 48*60)
+					resultado = false;
+			}
+			
+			return resultado;
 		}
 		
 		private bool textBoxCorrecta(int i, int j){
