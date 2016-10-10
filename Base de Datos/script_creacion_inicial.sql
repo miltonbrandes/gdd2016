@@ -400,8 +400,9 @@ go
 
 /*			TURNOS			*/
 CREATE TABLE NOT_NULL.turno(
-	turno_nro numeric(18, 0) NOT NULL,
-	afiliado_nro numeric(18, 0) NOT NULL,
+	/*turno_nro numeric(18, 0) NOT NULL,*/
+	turno_nro identity(1,1),
+	afiliado_nro numeric(18, 0) NULL,
 	turno_fecha datetime NULL,
 	turno_estado char(1) NULL,
 	turno_hora_llegada datetime NULL,
@@ -1159,6 +1160,10 @@ GO
 	END
   GO
   
+  CREATE PROCEDURE NOT_NULL.Turno_Agregar(@profesional_matricula int, @fecha datetime, @medicoEspecidalidad int)
+  AS BEGIN
+	
+	INSERT INTO NOT_NULL.turno (afiliado_nro)
   
   update NOT_NULL.plan_medico set plan_cuota_precio = 500 where plan_id = 555555
   update NOT_NULL.plan_medico set plan_cuota_precio = 1000 where plan_id = 555556
