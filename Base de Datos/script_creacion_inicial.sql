@@ -1169,6 +1169,28 @@ GO
   update NOT_NULL.plan_medico set plan_cuota_precio = 10000 where plan_id = 555559
   go
 
+    -- Registrar Compra Bono
+  CREATE PROCEDURE NOT_NULL.Comprar_Bono(@cantidad int, @precio int, @afiliado numeric(18,0), @fecha datetime, @plan numeric(18,0))
+  AS
+	BEGIN
+	SET NOCOUNT ON;
+	declare @bono_id numeric(18,0)
+	declare @aux int
+	set @bono_id = (select top 1 bono_id from NOT_NULL.bono_consulta order by bono_id desc)
+	set @aux = 1
+
+	while @aux <= @cantidad
+	Begin
+		INSERT INTO NOT_NULL.bono_consulta(bono_id, bono_afiliado, bono_fecha_compra, bono_plan, bono_utilizado)
+			VALUES (@bono_id + @aux, @afiliado, @fecha, @plan, 'N')
+		set @aux = @aux + 1
+	End
+
+	INSERT INTO NOT_NULL.compra_bono(compra_cantidad, compra_precio, compra_afiliado, compra_fecha)
+		VALUES (@cantidad, @precio, @afiliado, @fecha)
+	END
+  GO
+
   create procedure NOT_NULL.Get_MedicoXEsp_All
   as
 	begin
