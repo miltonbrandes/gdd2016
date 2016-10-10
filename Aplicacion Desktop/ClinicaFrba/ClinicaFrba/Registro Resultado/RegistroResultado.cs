@@ -8,13 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ClinicaFrba.Cancelar_Atencion
+namespace ClinicaFrba.Registro_Resultado
 {
-    public partial class Form1 : Form
+    public partial class frmRegistroResultado : Form
     {
-        public Form1()
+        public frmRegistroResultado()
         {
             InitializeComponent();
+        }
+
+        private void frmRegistroResultado_Load(object sender, EventArgs e)
+        {
+            this.Width = 385;
         }
     }
 }

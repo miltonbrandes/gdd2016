@@ -54,9 +54,11 @@ namespace ClinicaFrba
           this.Size = new Size(this.Width, (tamanio*cantbot)+150);
           //  this.Size= new Size((tamanio*cantbot)+70, this.Height);
           load+= 1;
+          //cargarProfesional();
         }
 
         private void cargarProfesional(){
+            //if(usuario.Username == "admin"
         	Dictionary<string, object> parametros = new Dictionary<string, object>()
         		{ {"Username", usuario.Username} };
         	profesional = DBHelper.ExecuteReader("Profesional_GetProfesionalSegunUsuario", parametros).ToProfesionales();
@@ -140,23 +142,31 @@ namespace ClinicaFrba
         }
         public static void RegistrarLlegada(object sender, EventArgs e)
         {
-            var home = new Registro_Llegada.Form1();
+            var home = new Registro_Llegada.frmLlegadaPaciente();
             home.Show();
         }
         public static void RegistrarResultado(object sender, EventArgs e)
         {
-            var home = new Registro_Resultado.Form1();
+            var home = new Registro_Resultado.frmRegistroResultado();
             home.Show();
         }
 
         public static void CancelarTurno(object sender, EventArgs e)
         {
-            var home = new Cancelar_Atencion.Form1();
-            home.Show();
+            if (rol.Descripcion == "Profesional")
+            {
+                var home = new Cancelar_Atencion.frmCancelarAtencionMedico();
+                home.Show();
+            }
+            else if(rol.Descripcion == "Afiliado")
+            {
+                var home = new Cancelar_Atencion.frmCancelarAtencionAfiliado();
+                home.Show();
+            }
         }
         public static void HistorialUsuario(object sender, EventArgs e)
         {
-            var home = new Listados.Form1();
+            var home = new Listados.frmListadoEstadistico();
             home.Show();
         }
 

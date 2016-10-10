@@ -440,8 +440,9 @@ go
 /*CREAR TABLA CANCELACION TURNOS*/
 CREATE TABLE NOT_NULL.cancelacion_turno(
 	cancelacion_id int NOT NULL,
-	afiliado_nro numeric(18, 0) NOT NULL,
-	profesional_matricula int NOT NULL,
+	afiliado_nro numeric(18, 0) NULL,
+	profesional_matricula int NULL,
+	cancelacion_tipo char NOT NULL, --P si es de motivos personales, E si es enfermedad, L si es por motivos laborales
 	cancelacion_motivo text NULL,
 	cancelacion_fecha date NULL,
  CONSTRAINT [PK_cancelacion_turno] PRIMARY KEY CLUSTERED 
@@ -1134,4 +1135,27 @@ GO
   update NOT_NULL.plan_medico set plan_cuota_precio = 2000 where plan_id = 555557
   update NOT_NULL.plan_medico set plan_cuota_precio = 5000 where plan_id = 555558
   update NOT_NULL.plan_medico set plan_cuota_precio = 10000 where plan_id = 555559
+  go
+
+  create procedure NOT_NULL.Get_MedicoXEsp_All
+  as
+	begin
+		select medicoXespecialidad.medxesp_id,profesional_nombre,profesional_apellido, profesional_direccion, especialidad_descripcion 
+		from NOT_NULL.medicoXespecialidad, NOT_NULL.profesional, NOT_NULL.especialidad 
+		where NOT_NULL.medicoXespecialidad.medxesp_especialidad = especialidad_codigo and medicoXespecialidad.medxesp_profesional = profesional_matricula
+	end
+  go
+
+  create procedure NOT_NULL.Get_Especialidades_All
+  as
+	begin
+		select especialidad.especialidad_descripcion from especialidad
+	end
+  go
+
+  create procedure NOT_NULL.Get_Turnos_Today
+  as
+	begin
+		select * from NOT_NULL.turno where turno_fecha = CONVERT(DATE, GETDATE());
+	end
   go

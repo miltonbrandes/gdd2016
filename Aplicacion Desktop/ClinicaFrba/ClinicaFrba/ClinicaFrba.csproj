@@ -122,11 +122,17 @@
     <Compile Include="AbmRol\frmModificar.Designer.cs">
       <DependentUpon>frmModificar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Cancelar Atencion\Form1.cs">
+    <Compile Include="Cancelar Atencion\CancelarAtencionAfiliado.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cancelar Atencion\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Cancelar Atencion\CancelarAtencionAfiliado.Designer.cs">
+      <DependentUpon>CancelarAtencionAfiliado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cancelar Atencion\CancelarAtencionMedico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cancelar Atencion\CancelarAtencionMedico.Designer.cs">
+      <DependentUpon>CancelarAtencionMedico.cs</DependentUpon>
     </Compile>
     <Compile Include="Compra Bono\Form1.cs">
       <SubType>Form</SubType>
@@ -144,17 +150,37 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GD2C2016DataSet1.xsd</DependentUpon>
     </Compile>
+    <Compile Include="GD2C2016DataSet3.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GD2C2016DataSet3.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="GD2C2016DataSet4.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GD2C2016DataSet4.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="GD2C2016DataSet5.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GD2C2016DataSet5.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="GD2C2016DataSet6.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GD2C2016DataSet6.xsd</DependentUpon>
+    </Compile>
     <Compile Include="LogIn.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="LogIn.Designer.cs">
       <DependentUpon>LogIn.cs</DependentUpon>
     </Compile>
-    <Compile Include="Listados\Form1.cs">
+    <Compile Include="Listados\frmListadoEstadistico.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Listados\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Listados\frmListadoEstadistico.Designer.cs">
+      <DependentUpon>frmListadoEstadistico.cs</DependentUpon>
     </Compile>
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
@@ -177,17 +203,17 @@
     <Compile Include="Registro Agenda\RegistroAgenda.Designer.cs">
       <DependentUpon>RegistroAgenda.cs</DependentUpon>
     </Compile>
-    <Compile Include="Registro Llegada\Form1.cs">
+    <Compile Include="Registro Llegada\frmLlegadaPaciente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Registro Llegada\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Registro Llegada\frmLlegadaPaciente.Designer.cs">
+      <DependentUpon>frmLlegadaPaciente.cs</DependentUpon>
     </Compile>
-    <Compile Include="Registro Resultado\Form1.cs">
+    <Compile Include="Registro Resultado\RegistroResultado.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Registro Resultado\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Registro Resultado\RegistroResultado.Designer.cs">
+      <DependentUpon>RegistroResultado.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Abm Afiliado\contraseña.resx">
       <DependentUpon>contraseña.cs</DependentUpon>
@@ -219,6 +245,15 @@
     <EmbeddedResource Include="AbmRol\frmModificar.resx">
       <DependentUpon>frmModificar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Cancelar Atencion\CancelarAtencionAfiliado.resx">
+      <DependentUpon>CancelarAtencionAfiliado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cancelar Atencion\CancelarAtencionMedico.resx">
+      <DependentUpon>CancelarAtencionMedico.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listados\frmListadoEstadistico.resx">
+      <DependentUpon>frmListadoEstadistico.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LogIn.resx">
       <DependentUpon>LogIn.cs</DependentUpon>
     </EmbeddedResource>
@@ -236,6 +271,12 @@
     </Compile>
     <EmbeddedResource Include="Registro Agenda\RegistroAgenda.resx">
       <DependentUpon>RegistroAgenda.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registro Llegada\frmLlegadaPaciente.resx">
+      <DependentUpon>frmLlegadaPaciente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registro Resultado\RegistroResultado.resx">
+      <DependentUpon>RegistroResultado.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="GD2C2016DataSet.xsc">
       <DependentUpon>GD2C2016DataSet.xsd</DependentUpon>
@@ -258,6 +299,50 @@
     </None>
     <None Include="GD2C2016DataSet1.xss">
       <DependentUpon>GD2C2016DataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="GD2C2016DataSet3.xsc">
+      <DependentUpon>GD2C2016DataSet3.xsd</DependentUpon>
+    </None>
+    <None Include="GD2C2016DataSet3.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GD2C2016DataSet3.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="GD2C2016DataSet3.xss">
+      <DependentUpon>GD2C2016DataSet3.xsd</DependentUpon>
+    </None>
+    <None Include="GD2C2016DataSet4.xsc">
+      <DependentUpon>GD2C2016DataSet4.xsd</DependentUpon>
+    </None>
+    <None Include="GD2C2016DataSet4.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GD2C2016DataSet4.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="GD2C2016DataSet4.xss">
+      <DependentUpon>GD2C2016DataSet4.xsd</DependentUpon>
+    </None>
+    <None Include="GD2C2016DataSet5.xsc">
+      <DependentUpon>GD2C2016DataSet5.xsd</DependentUpon>
+    </None>
+    <None Include="GD2C2016DataSet5.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GD2C2016DataSet5.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="GD2C2016DataSet5.xss">
+      <DependentUpon>GD2C2016DataSet5.xsd</DependentUpon>
+    </None>
+    <None Include="GD2C2016DataSet6.xsc">
+      <DependentUpon>GD2C2016DataSet6.xsd</DependentUpon>
+    </None>
+    <None Include="GD2C2016DataSet6.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GD2C2016DataSet6.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="GD2C2016DataSet6.xss">
+      <DependentUpon>GD2C2016DataSet6.xsd</DependentUpon>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
