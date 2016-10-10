@@ -111,5 +111,11 @@ namespace ClinicaFrba.Pedir_Turno
             });
             */
         }
+
+        private void dgvTurnos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Acá tendría que llenar la tabla de franja horaria con el número de afiliado que reservó el turno
+            // Y tendría que crear el registro de la tabla turno
+        }
     }
 }

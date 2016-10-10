@@ -87,3 +87,4 @@ C:\Users\Jamper\Documents\GitHub\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaF
 C:\Users\Jamper\Documents\GitHub\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.pdb
 C:\Users\Jamper\Documents\GitHub\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Pedir_Turno.frmPedidoTurno.resources
 C:\Users\Jamper\Documents\GitHub\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Pedir_Turno.frmTurnosxProf.resources
+C:\Users\Jamper\Documents\GitHub\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Compra_Bono.frmCompra.resources
