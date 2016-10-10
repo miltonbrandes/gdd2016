@@ -73,7 +73,9 @@ namespace ClinicaFrba.Registro_Agenda
 				Array.Clear(matrizHoras,0,matrizHoras.Length);
 				return;
 			}
-			if(!validarHoras())
+			if(!validarFechas())
+				return;
+			if(!validarComboBox())
 				return;
 			
 			//Ahora tengo que enviarlo a la bd.
@@ -118,28 +120,35 @@ namespace ClinicaFrba.Registro_Agenda
 			const int horaAperturaSabado = 10;
 			const int horaCierreSabado = 15;
 			
+			bool errorTextBox = false;
 			int i,j;
 			for(i=0;i<4;i=i+2){ //Solo checkeo las filas pares
 				for(j=0;j<6;j++){
 					
-					if( !textBoxCorrecta(i,j) )
+					if( !textBoxCorrecta(i,j) ){
 						resultado = false;
+						errorTextBox = true;
+					}
 				}
 			}
 			
 			//Hago la validacion para ver que no se crucen las horas
+			bool horaCruzada = false;
 			if(resultado){
 				
 				for(j=0;j<6;j++){
 					
 					if(matrizHoras[0,j] != null && matrizHoras[2,j] != null){
-						if( matrizHoras[1,j].esDespues(matrizHoras[2,j]) )
+						if( matrizHoras[1,j].esDespues(matrizHoras[2,j]) ){
 							resultado = false;
+							horaCruzada = true;
+						}
 					}
 				}
 			}
 			
 			//Valido que el total de horas no supere 48
+			bool totalHorasMayorA48 = false;
 			if(resultado){
 				
 				for(i=0;i<4;i=i+2){
@@ -148,25 +157,60 @@ namespace ClinicaFrba.Registro_Agenda
 						horasTotales += matrizHoras[i+1,j].toMinutes() - matrizHoras[i,j].toMinutes();
 					}
 				}
-				if(horasTotales > 48*60)
+				if(horasTotales > 48*60){
 					resultado = false;
+					totalHorasMayorA48 = true;
+				}
 			}
 			
 			//Valido que la clinica este abierta
+			bool clinicaAbierta = false;
 			if(resultado){
 				
 				for(i=0;i<4;i++){
 					for(j=0;j<6;j++){
 						if(matrizHoras[i,j] != null){ 
 							if( j != 5 ){
-								if(matrizHoras[i,j].hora < horaAperturaSemana || matrizHoras[i,j].hora > horaCierreSemana)
+								if(matrizHoras[i,j].hora < horaAperturaSemana || matrizHoras[i,j].hora > horaCierreSemana){
 									resultado = false;
-							}else if(matrizHoras[i,j].hora < horaAperturaSabado || matrizHoras[i,j].hora > horaCierreSabado)
+									clinicaAbierta = true;
+								}
+							}else if(matrizHoras[i,j].hora < horaAperturaSabado || matrizHoras[i,j].hora > horaCierreSabado){
 								resultado = false;
+								clinicaAbierta = true;
+							}
 						}
 					}
 				}
 			}
+			
+			//Muestro los mensajes de error
+			if(clinicaAbierta)
+				MessageBox.Show("Los horarios introducidos no se corresponden con los horarios de apertura de la clinica. " +
+				                "Por favor introduzca de 7:00 a 20:00 (dia de semana) o de 10:00 a 15:00 (dias sábados).",
+				                "Horarios fuera de rango",
+				                MessageBoxButtons.OK,
+				                MessageBoxIcon.Error);
+			if(totalHorasMayorA48)
+				MessageBox.Show("El total de horas ingresadas supera las 48. Por una política interna de la organizacion " +
+				                "esto es imposible. Revise los horarios ingresados",
+				                "Total de Horas incorrecto",
+				                MessageBoxButtons.OK,
+				                MessageBoxIcon.Error);
+			if(horaCruzada)
+				MessageBox.Show("La Hora Fin 1 no puede ser anterior a la Hora de Inicio 2.",
+				                "Horario Incorrecto",
+				                MessageBoxButtons.OK,
+				                MessageBoxIcon.Error);
+			if(errorTextBox)
+				MessageBox.Show("Tenga en cuenta que:" + Environment.NewLine +
+				                "si introdujo una Hora Inicio, tambien debe introducir una Hora Fin." + Environment.NewLine +
+				                "El formato correcto de hora es: 15:30." + Environment.NewLine +
+				                "La Hora Inicio debe ser anterior a la Hora Fin." + Environment.NewLine +
+				                "El intervalo introducido debe ser multiplo de 30 minutos.",
+				                "Horario incorrecto",
+				                MessageBoxButtons.OK,
+				                MessageBoxIcon.Error);
 			
 			return resultado;
 		}
@@ -221,7 +265,7 @@ namespace ClinicaFrba.Registro_Agenda
 		}
 		#endregion
 		
-		private bool validarHoras(){
+		private bool validarFechas(){
 			
 			DateTime fecha1 = monthCalendar1.SelectionStart;
 			DateTime fecha2 = monthCalendar2.SelectionStart;
@@ -231,5 +275,8 @@ namespace ClinicaFrba.Registro_Agenda
 			else return true;
 		}
 		
+		private bool validarComboBox(){
+			return listaEspecialidades.SelectedValue != null;
+		}
 	}
 }
