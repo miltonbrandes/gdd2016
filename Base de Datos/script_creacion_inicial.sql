@@ -489,7 +489,7 @@ CREATE TABLE NOT_NULL.franja_horaria(
 	hora_fin int NOT NULL CHECK(hora_fin<24 AND hora_fin>=0),
 	minuto_fin int NOT NULL CHECK(minuto_fin<60 AND minuto_fin>=0),
 	franja_cancelada bit default 0	,
-	id_afiliado varchar(20),
+	id_afiliado varchar(20) NULL,
 	agenda_id int foreign key references NOT_NULL.agenda(agenda_id))
 GO
 
@@ -1154,11 +1154,11 @@ GO
   
   --AGREGAR FRANJA
   CREATE PROCEDURE NOT_NULL.Franja_Agregar(@id_agenda int, @dia int, @hora_inicio int, @minuto_inicio int, @hora_fin int, @minuto_fin int)
-  AS BEGIN
-	
-	INSERT INTO NOT_NULL.Agenda
-	values(@id_agenda,@dia,@hora_inicio,@minuto_inicio,@hora_fin,@minuto_fin)
-	
+  AS BEGIN;
+	--SET IDENTITY_INSERT NOT_NULL.Agenda ON;
+	INSERT INTO NOT_NULL.franja_horaria(agenda_id, dia, hora_inicio, minuto_inicio, hora_fin, minuto_fin) 
+	values(@id_agenda,@dia,@hora_inicio,@minuto_inicio,@hora_fin,@minuto_fin);
+	--SET IDENTITY_INSERT NOT_NULL.Agenda OFF;
 	END
   GO
   

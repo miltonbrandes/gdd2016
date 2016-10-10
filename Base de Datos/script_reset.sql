@@ -93,9 +93,6 @@ GO
 DROP TABLE NOT_NULL.compra_bono
 GO
 
-DROP TABLE NOT_NULL.bono_consulta
-GO
-
 DROP TABLE NOT_NULL.afiliado
 GO
 
@@ -166,7 +163,6 @@ drop procedure NOT_NULL.Afiliado_Agregar_Familiar
 drop procedure NOT_NULL.Hijos_En_Cero
 drop procedure NOT_NULL.Especialidad_GetByMatricula
 drop procedure NOT_NULL.Afiliado_MismoDni
-drop procedure NOT_NULL.Comprar_Bono
 drop procedure NOT_NULL.Get_MedicoXEsp_All
 drop procedure NOT_NULL.Get_Especialidades_All
 drop procedure NOT_NULL.Get_Turnos_Today
@@ -175,6 +171,6 @@ drop procedure NOT_NULL.Turno_Agregar
 drop procedure NOT_NULL.Get_medxesp_id
 drop procedure NOT_NULL.Franja_Agregar
 drop procedure NOT_NULL.turnos_GetByFilerProfesional
-
+drop procedure NOT_NULL.profesional_GetByFilerEspecialidad
 DROP SCHEMA NOT_NULL
 GO
