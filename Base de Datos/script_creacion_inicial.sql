@@ -440,32 +440,37 @@ go
 
 /*CREAR TABLA CANCELACION TURNOS*/
 CREATE TABLE NOT_NULL.cancelacion_turno(
-	cancelacion_id int NOT NULL,
-	afiliado_nro numeric(18, 0) NULL,
-	profesional_matricula int NULL,
-	cancelacion_tipo char NOT NULL, --P si es de motivos personales, E si es enfermedad, L si es por motivos laborales
-	cancelacion_motivo text NULL,
-	cancelacion_fecha date NULL,
+	cancel_id int NOT NULL,
+	cancel_afiliado numeric(18, 0) NULL,
+	cancel_profesional int NULL,
+	cancel_tipo char NOT NULL, --P si es de motivos personales, E si es enfermedad, L si es por motivos laborales
+	cancel_motivo text NULL,
+	cancel_fecha date NULL,
+	cancel_turno numeric(18,0) NULL,
  CONSTRAINT [PK_cancelacion_turno] PRIMARY KEY CLUSTERED 
 (
-	[cancelacion_id] ASC
+	cancel_id ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
 
-ALTER TABLE NOT_NULL.cancelacion_turno  WITH CHECK ADD  CONSTRAINT [FK_cancelacion_turno_afiliado] FOREIGN KEY([afiliado_nro])
+ALTER TABLE NOT_NULL.cancelacion_turno  WITH CHECK ADD  CONSTRAINT [FK_cancelacion_turno_afiliado] FOREIGN KEY([cancel_afiliado])
 REFERENCES [NOT_NULL].[afiliado] ([afiliado_nro])
 GO
 
 ALTER TABLE NOT_NULL.cancelacion_turno CHECK CONSTRAINT [FK_cancelacion_turno_afiliado]
 GO
 
-ALTER TABLE NOT_NULL.cancelacion_turno  WITH CHECK ADD  CONSTRAINT [FK_cancelacion_turno_profesional] FOREIGN KEY([profesional_matricula])
+ALTER TABLE NOT_NULL.cancelacion_turno  WITH CHECK ADD  CONSTRAINT [FK_cancelacion_turno_profesional] FOREIGN KEY([cancel_profesional])
 REFERENCES [NOT_NULL].[profesional] ([profesional_matricula])
 GO
 
 ALTER TABLE NOT_NULL.cancelacion_turno CHECK CONSTRAINT [FK_cancelacion_turno_profesional]
+GO
+
+ALTER TABLE NOT_NULL.cancelacion_turno  WITH CHECK ADD  CONSTRAINT [FK_cancelacion_turno_turno] FOREIGN KEY([cancel_turno])
+REFERENCES [NOT_NULL].[turno] ([turno_nro])
 GO
 
 /*		AGENDA		*/
@@ -1301,5 +1306,26 @@ GO
 									 WHERE medxesp_especialidad = str(@especialidad)
 									 )	
 	END
-  GO  
- 
+  GO
+
+   -- Registrar Compra Bono
+  CREATE PROCEDURE NOT_NULL.Comprar_Bono(@cantidad int, @precio int, @afiliado numeric(18,0), @fecha datetime, @plan numeric(18,0))
+  AS
+	BEGIN
+	SET NOCOUNT ON;
+	declare @bono_id numeric(18,0)
+	declare @aux int
+	set @bono_id = (select top 1 bono_id from NOT_NULL.bono_consulta order by bono_id desc)
+	set @aux = 1
+
+	while @aux <= @cantidad
+	Begin
+		INSERT INTO NOT_NULL.bono_consulta(bono_id, bono_afiliado, bono_fecha_compra, bono_plan, bono_utilizado)
+			VALUES (@bono_id + @aux, @afiliado, @fecha, @plan, 'N')
+		set @aux = @aux + 1
+	End
+
+	INSERT INTO NOT_NULL.compra_bono(compra_cantidad, compra_precio, compra_afiliado, compra_fecha)
+		VALUES (@cantidad, @precio, @afiliado, @fecha)
+	END
+  GO
