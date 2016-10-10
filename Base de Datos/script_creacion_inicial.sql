@@ -400,8 +400,9 @@ go
 
 /*			TURNOS			*/
 CREATE TABLE NOT_NULL.turno(
-	turno_nro numeric(18, 0) NOT NULL,
-	afiliado_nro numeric(18, 0) NOT NULL,
+	/*turno_nro numeric(18, 0) NOT NULL,*/
+	turno_nro identity(1,1),
+	afiliado_nro numeric(18, 0) NULL,
 	turno_fecha datetime NULL,
 	turno_estado char(1) NULL,
 	turno_hora_llegada datetime NULL,
@@ -1152,13 +1153,38 @@ GO
   GO
   
   --AGREGAR FRANJA
-  CREATE PROCEDURE NOT_NULL.Franja_Agregar(@id_agenda int, @hora_inicio int, @minuto_inicio int, @hora_fin int, @minuto_fin int)
+  CREATE PROCEDURE NOT_NULL.Franja_Agregar(@id_agenda int, @dia int, @hora_inicio int, @minuto_inicio int, @hora_fin int, @minuto_fin int)
   AS BEGIN
 	
 	INSERT INTO NOT_NULL.Agenda
-	values(@id_agenda,@hora_inicio,@minuto_inicio,@hora_fin,@minuto_fin)
+	values(@id_agenda,@dia,@hora_inicio,@minuto_inicio,@hora_fin,@minuto_fin)
 	
 	END
+  GO
+  
+  CREATE PROCEDURE NOT_NULL.Get_medxesp_id(@matricula, @especialidad)
+  AS BEGIN
+	
+	SELECT mxe.medxesp_id TOP 1 FROM NOT_NULL.profesional p, NOT_NULL.medicoXespecialidad mxe
+	WHERE p.profesional_matricula = @matricula
+		AND mxe.medxesp_especialidad = @especialidad
+	
+  END
+  GO
+  
+  CREATE PROCEDURE NOT_NULL.Turno_Agregar(@matricula int, @especialidad int, @fecha datetime)
+  AS BEGIN
+	DECLARE @medxesp_id
+	
+	@medxesp_id = (SELECT mxe.medxesp_id TOP 1 
+				   FROM NOT_NULL.profesional p, NOT_NULL.medicoXespecialidad mxe
+				   WHERE p.profesional_matricula = @matricula
+						AND mxe.medxesp_especialidad = @especialidad)
+						
+	INSERT INTO NOT_NULL.turno(turno_fecha,turno_medico_especialidad_id)
+	values(@fecha,@medxesp_id)
+	
+  END
   GO
   
   

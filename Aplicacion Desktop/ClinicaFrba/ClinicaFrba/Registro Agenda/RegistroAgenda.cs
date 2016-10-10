@@ -98,6 +98,7 @@ namespace ClinicaFrba.Registro_Agenda
 					if(matrizHoras[i,j] != null){
 						parametros = new Dictionary<string, object>(){
 							{"@agenda_id",agenda_id},
+							{"@dia",j},
 							{"@hora_inicio",matrizHoras[i,j].hora},
 							{"@minuto_inicio",matrizHoras[i,j].minuto},
 							{"@hora_fin",matrizHoras[i+1,j].hora},
@@ -108,7 +109,42 @@ namespace ClinicaFrba.Registro_Agenda
 				}
 			}
 			
+			//for(DateTime date = StartDate; date.Date <= EndDate.Date; date = date.AddDays(1))
+			for(DateTime fecha = monthCalendar1.SelectionStart;
+			    fecha.Date <= monthCalendar2.SelectionStart;
+			    fecha = fecha.AddDays(1) )
+			{
+				int indice = (int)fecha.DayOfWeek -1;
+				if(fecha.DayOfWeek != DayOfWeek.Sunday){
+					if(matrizHoras[0,indice] != null){
+						generarTurnos(matrizHoras[0,indice],matrizHoras[1,indice],fecha);
+					}
+					if(matrizHoras[2,indice] != null){
+						generarTurnos(matrizHoras[2,indice],matrizHoras[3,indice],fecha);
+					}
+				}
+			}
+			
 			//Listo, cerrar el form
+		}
+		
+		private void generarTurnos(CustomHour horaInicio, CustomHour horaFin, DateTime fecha){
+			
+			int cantTurnos = ( horaInicio.toMinutes() - horaFin.toMinutes() ) / 30;
+			int i;
+			for(i=0;i<cantTurnos;i++){
+				CustomHour aux = CustomHour.FromMinutes(horaInicio.toMinutes() + 30 * i);
+				fecha.AddHours(aux.hora);
+				fecha.AddMinutes(aux.minuto);
+				
+				//Genero el turno
+				Dictionary<string,object> parametros = new Dictionary<string, object>(){
+					{"@matricula",profesional.Matricula},
+					{"@especialidad",profesional.Especialidades[listaEspecialidades.SelectionStart].Id},
+					{"@fecha",fecha}
+				};
+				DBHelper.ExecuteNonQuery("Turno_Agregar",parametros);
+			}
 		}
 		
 		#region validacion textBoxes
