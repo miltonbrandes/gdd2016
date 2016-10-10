@@ -109,12 +109,11 @@ namespace ClinicaFrba.Registro_Agenda
 				}
 			}
 			
-			//Genero los turnos
-			SelectionRange rangoFechas = new SelectionRange(monthCalendar1.SelectionStart,
-			                                                monthCalendar2.SelectionStart);
-			
-			foreach(DateTime fecha in rangoFechas){
-				
+			//for(DateTime date = StartDate; date.Date <= EndDate.Date; date = date.AddDays(1))
+			for(DateTime fecha = monthCalendar1.SelectionStart;
+			    fecha.Date <= monthCalendar2.SelectionStart;
+			    fecha = fecha.AddDays(1) )
+			{
 				int indice = (int)fecha.DayOfWeek -1;
 				if(fecha.DayOfWeek != DayOfWeek.Sunday){
 					if(matrizHoras[0,indice] != null){
@@ -135,8 +134,8 @@ namespace ClinicaFrba.Registro_Agenda
 			int i;
 			for(i=0;i<cantTurnos;i++){
 				CustomHour aux = CustomHour.FromMinutes(horaInicio.toMinutes() + 30 * i);
-				fecha.Hour = aux.hora;
-				fecha.Minute = aux.minuto;
+				fecha.AddHours(aux.hora);
+				fecha.AddMinutes(aux.minuto);
 				
 				//Genero el turno
 				Dictionary<string,object> parametros = new Dictionary<string, object>(){
