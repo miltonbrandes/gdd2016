@@ -93,6 +93,9 @@ GO
 DROP TABLE NOT_NULL.compra_bono
 GO
 
+DROP TABLE NOT_NULL.bono_consulta
+GO
+
 DROP TABLE NOT_NULL.afiliado
 GO
 

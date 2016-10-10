@@ -401,7 +401,7 @@ go
 /*			TURNOS			*/
 CREATE TABLE NOT_NULL.turno(
 	/*turno_nro numeric(18, 0) NOT NULL,*/
-	turno_nro int /*identity(1,1)*/,
+	turno_nro numeric(18,0) /*identity(1,1)*/,
 	afiliado_nro numeric(18, 0) NULL,
 	turno_fecha datetime NULL,
 	turno_estado char(1) NULL,
