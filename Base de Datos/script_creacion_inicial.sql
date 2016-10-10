@@ -1004,7 +1004,7 @@ GO
   AS BEGIN
 	SET NOCOUNT ON;
 		SELECT e.especialidad_codigo, e.especialidad_descripcion, et.tipo_especialidad_descripcion
-		FROM NOT_NULL.especialidad e, NOT_NULL.especialidad_tipo et, NOT_NULL.medicoXespecialidad mxe
+		FROM NOT_NULL.especialidad e, NOT_NULL.tipo_especialidad et, NOT_NULL.medicoXespecialidad mxe
 		WHERE mxe.medxesp_profesional = @matricula AND e.especialidad_codigo = mxe.medxesp_especialidad
 			AND et.tipo_especialidad_codigo = e.especialidad_tipo
 	END

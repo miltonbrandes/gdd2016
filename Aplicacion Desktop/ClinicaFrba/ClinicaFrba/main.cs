@@ -54,13 +54,12 @@ namespace ClinicaFrba
           this.Size = new Size(this.Width, (tamanio*cantbot)+150);
           //  this.Size= new Size((tamanio*cantbot)+70, this.Height);
           load+= 1;
-          //cargarProfesional();
         }
 
-        private void cargarProfesional(){
+        public static void cargarProfesional(){
             //if(usuario.Username == "admin"
         	Dictionary<string, object> parametros = new Dictionary<string, object>()
-        		{ {"@Username", usuario.Username} };
+        		{ {"@username", usuario.Username} };
         	profesional = DBHelper.ExecuteReader("Profesional_GetProfesionalSegunUsuario", parametros).ToProfesionales();
         	
         	parametros = new Dictionary<string, object>()
@@ -132,6 +131,7 @@ namespace ClinicaFrba
         public static void RegistrarAgenda(object sender, EventArgs e)
         {
             //PASARLE EL PROFESIONAL QUE ESTA REGISTRANDO LA AGENDA
+            cargarProfesional();
         	var home = new Registro_Agenda.RegistroAgenda(profesional);
             home.Show();
         }

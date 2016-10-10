@@ -314,5 +314,10 @@ namespace ClinicaFrba.Registro_Agenda
 		private bool validarComboBox(){
 			return listaEspecialidades.SelectedValue != null;
 		}
+
+        private void RegistroAgenda_Load(object sender, EventArgs e)
+        {
+
+        }
 	}
 }

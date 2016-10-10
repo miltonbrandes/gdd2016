@@ -8,7 +8,7 @@ namespace Clases
 {
     public class Especialidad
     {
-        public string Id { get; set; }
+        public decimal Id { get; set; }
         public string Descripcion { get; set; }
         public string Tipo { get; set; }
     }
