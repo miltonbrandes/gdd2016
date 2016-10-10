@@ -1148,7 +1148,7 @@ GO
 										FROM NOT_NULL.especialidad e
 										WHERE e.especialidad_descripcion = @especialidad)
 	
-	@id_agenda = @@IDENTITY
+	SET @id_agenda = @@IDENTITY
 	END
   GO
   
@@ -1177,7 +1177,7 @@ GO
 
 	DECLARE @medxesp_id int
 	
-	@medxesp_id = (SELECT TOP 1 mxe.medxesp_id
+	SET @medxesp_id = (SELECT TOP 1 mxe.medxesp_id
 				   FROM NOT_NULL.profesional p, NOT_NULL.medicoXespecialidad mxe
 				   WHERE p.profesional_matricula = @matricula
 						AND mxe.medxesp_especialidad = @especialidad)
