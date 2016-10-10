@@ -167,5 +167,11 @@ drop procedure NOT_NULL.Comprar_Bono
 drop procedure NOT_NULL.Get_MedicoXEsp_All
 drop procedure NOT_NULL.Get_Especialidades_All
 drop procedure NOT_NULL.Get_Turnos_Today
+drop procedure NOT_NULL.Agenda_Agregar
+drop procedure NOT_NULL.Turno_Agregar
+drop procedure NOT_NULL.Get_medxesp_id
+drop procedure NOT_NULL.Franja_Agregar
+drop procedure NOT_NULL.turnos_GetByFilerProfesional
+
 DROP SCHEMA NOT_NULL
 GO

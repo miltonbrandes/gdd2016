@@ -1138,13 +1138,13 @@ GO
   CREATE PROCEDURE NOT_NULL.Agenda_Agregar(@matricula int, @especialidad varchar(255), @fecha_inicio datetime, @fecha_fin datetime, @id_agenda int OUTPUT)
   AS BEGIN
   
-	INSERT INTO NOT_NULL.Agenda a
+	INSERT INTO NOT_NULL.Agenda(agenda_fecha_inicio,agenda_fecha_fin)
 	VALUES(@fecha_inicio, @fecha_fin)
 	
-	UPDATE NOT_NULL.medicoXespecialidad mxe
-	SET mxe.medxesp_agenda = @@IDENTITY
-	WHERE mxe.medxesp_profesional = @matricula 
-		AND mxe.medxesp_especialidad = (SELECT e.especialidad_codigo TOP 1
+	UPDATE NOT_NULL.medicoXespecialidad
+	SET medxesp_agenda = @@IDENTITY
+	WHERE medxesp_profesional = @matricula 
+		AND medxesp_especialidad = (SELECT TOP 1 e.especialidad_codigo 
 										FROM NOT_NULL.especialidad e
 										WHERE e.especialidad_descripcion = @especialidad)
 	
@@ -1162,10 +1162,10 @@ GO
 	END
   GO
   
-  CREATE PROCEDURE NOT_NULL.Get_medxesp_id(@matricula, @especialidad)
+  CREATE PROCEDURE NOT_NULL.Get_medxesp_id(@matricula int, @especialidad int)
   AS BEGIN
 	
-	SELECT mxe.medxesp_id TOP 1 FROM NOT_NULL.profesional p, NOT_NULL.medicoXespecialidad mxe
+	SELECT TOP 1 mxe.medxesp_id  FROM NOT_NULL.profesional p, NOT_NULL.medicoXespecialidad mxe
 	WHERE p.profesional_matricula = @matricula
 		AND mxe.medxesp_especialidad = @especialidad
 	
@@ -1174,9 +1174,10 @@ GO
   
   CREATE PROCEDURE NOT_NULL.Turno_Agregar(@matricula int, @especialidad int, @fecha datetime)
   AS BEGIN
-	DECLARE @medxesp_id
+
+	DECLARE @medxesp_id int
 	
-	@medxesp_id = (SELECT mxe.medxesp_id TOP 1 
+	@medxesp_id = (SELECT TOP 1 mxe.medxesp_id
 				   FROM NOT_NULL.profesional p, NOT_NULL.medicoXespecialidad mxe
 				   WHERE p.profesional_matricula = @matricula
 						AND mxe.medxesp_especialidad = @especialidad)
