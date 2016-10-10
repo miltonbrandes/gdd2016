@@ -163,6 +163,7 @@ drop procedure NOT_NULL.Afiliado_Agregar_Familiar
 drop procedure NOT_NULL.Hijos_En_Cero
 drop procedure NOT_NULL.Especialidad_GetByMatricula
 drop procedure NOT_NULL.Afiliado_MismoDni
+drop procedure NOT_NULL.Comprar_Bono
 drop procedure NOT_NULL.Get_MedicoXEsp_All
 drop procedure NOT_NULL.Get_Especialidades_All
 drop procedure NOT_NULL.Get_Turnos_Today
