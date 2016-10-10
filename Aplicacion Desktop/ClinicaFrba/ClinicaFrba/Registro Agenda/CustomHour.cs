@@ -35,7 +35,7 @@ namespace ClinicaFrba.Registro_Agenda
 			if( hora1.esDespues(hora2) )
 				return false;
 			
-			return ((hora1.toMinutes() - hora2.toMinutes) % 30) == 0;
+			return ((hora1.toMinutes() - hora2.toMinutes() ) % 30) == 0;
 		}
 		
 		public int toMinutes(){

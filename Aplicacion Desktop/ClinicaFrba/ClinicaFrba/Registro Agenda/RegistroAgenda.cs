@@ -9,6 +9,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Collections.Generic;
 using Clases;
 using Helpers;
 using System.Data.SqlClient;
@@ -72,6 +73,13 @@ namespace ClinicaFrba.Registro_Agenda
 			validarHoras();
 			
 			//Ahora tengo que enviarlo a la bd.
+			Dictionary<string,object> parametros = new Dictionary<string,object>(){
+				{"matricula",profesional.Matricula},
+				{"especialidad",listaEspecialidades.SelectedValue.ToString()},
+				{"fecha_inicio",monthCalendar1.SelectionStart},
+				{"fecha_fin",monthCalendar2.SelectionStart}
+			};
+			DBHelper.ExecuteReader("Agenda_Agregar",parametros);
 		}
 		
 		#region validacion textBoxes
@@ -79,7 +87,7 @@ namespace ClinicaFrba.Registro_Agenda
 			bool resultado = true;
 			
 			int i,j;
-			for(i=0;i<4;i+2){ //Solo checkeo las filas pares
+			for(i=0;i<4;i=i+2){ //Solo checkeo las filas pares
 				for(j=0;j<6;j++){
 					
 					if( !textBoxCorrecta(i,j) )
@@ -94,10 +102,11 @@ namespace ClinicaFrba.Registro_Agenda
 			
 			if(matriz[i,j].Text != null){
 				//Miro a ver si la hora inicio y hora fin son correctas
-				if( horaCorrecta(matriz[i,j], (CustomHour(hora1)) ) && horaCorrecta(matriz[i+1,j], (CustomHour(hora2)) ) ){
+				if( horaCorrecta(matriz[i,j], out hora1) && horaCorrecta(matriz[i+1,j], out hora2) ){
 
 					if(hora1.esAntes(hora2) && CustomHour.esMultiplo30(hora1,hora2)){
 						//Son correctas las asigno en matrizHoras
+						
 						matrizHoras[i,j] = hora1;
 						matrizHoras[i+1,j] = hora2;
 						
@@ -108,15 +117,18 @@ namespace ClinicaFrba.Registro_Agenda
 				}
 			}else if(matriz[i+1,j].Text == null)
 				return true;
+			
+			return false;
 		}
 		
 		private bool horaCorrecta(TextBox box, out CustomHour hour){
 			
 			bool resultado = true;
 			string[] split = box.Text.Split(':');
+			int horaParseada;
 			
 			foreach(string hora in split ){
-				if( !int.TryParse(hora) ){
+				if( !int.TryParse(hora,out horaParseada) ){
 					resultado = false;
 				}
 			}
@@ -126,6 +138,7 @@ namespace ClinicaFrba.Registro_Agenda
 					hour = new CustomHour( int.Parse(split[0]),int.Parse(split[1]) );
 				}catch(ArgumentOutOfRangeException ex){
 					resultado = false;
+					hour = null;
 				}
 			}
 			
@@ -135,8 +148,8 @@ namespace ClinicaFrba.Registro_Agenda
 		
 		private bool validarHoras(){
 			
-			DateTime fecha1;
-			DateTime fecha2;
+			DateTime fecha1 = monthCalendar1.SelectionStart;
+			DateTime fecha2 = monthCalendar2.SelectionStart;
 			
 			if(fecha1.CompareTo(fecha2) >= 0 )
 				return false;

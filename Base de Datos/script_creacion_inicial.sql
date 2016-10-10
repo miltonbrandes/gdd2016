@@ -1129,6 +1129,23 @@ GO
 	end 
   go
 
+
+  --AGREGAR AGENDA
+  CREATE PROCEDURE NOT_NULL.Agenda_Agregar(@matricula int, @especialidad varchar(255), @fecha_inicio datetime, @fecha_fin datetime)
+  AS BEGIN
+	INSERT INTO NOT_NULL.Agenda a
+	values(@fecha_inicio,@fecha_fin)
+	WHERE a.agenda_id = (SELECT mxe.medxesp_agenda TOP 1 FROM NOT_NULL.medicoXespecialidad mxe, NOT_NULL.profesional p, NOT_NULL.especialidad e
+						 WHERE p.profesional_matricula = mxe.medXesp_profesional
+							AND mxe.medxesp_especialidad = e.especialidad_codigo
+							AND e.especialidad_descripcion = @especialidad)
+	END
+	
+	RETURN @@IDENTITY
+  GO
+  
+  
+  
   update NOT_NULL.plan_medico set plan_cuota_precio = 500 where plan_id = 555555
   update NOT_NULL.plan_medico set plan_cuota_precio = 1000 where plan_id = 555556
   update NOT_NULL.plan_medico set plan_cuota_precio = 2000 where plan_id = 555557
