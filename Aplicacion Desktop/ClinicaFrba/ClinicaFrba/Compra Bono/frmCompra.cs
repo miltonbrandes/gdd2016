@@ -20,26 +20,18 @@ namespace ClinicaFrba.Compra_Bono
         public decimal precio;
         Afiliado afiliado;
         Plan plan;
-        List<Rol> roles;
+        Rol rol;
 
-        public frmCompra(Usuario us)
+        public frmCompra(Usuario us, Rol rol)
         {
             InitializeComponent();
             usuario = us;
-            try
+            if (!rol.Descripcion.Equals("Administrador"))
             {
-                roles = DBHelper.ExecuteReader("UsuarioXRol_GetRolesByUser", new Dictionary<string, object> { { "@username", usuario.Username } }).ToRoles();
-                if (roles.Count(rol => rol.Descripcion.Contains("Administrador")) == 0)
-                {
-                    label_afiliado.Visible = false;
-                    textBox_afiliado.Visible = false;
-                }
+                label_afiliado.Visible = false;
+                textBox_afiliado.Visible = false;
             }
-            catch
-            {
-                MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            
+
         }
 
         private void confirmar_Click(object sender, EventArgs e)

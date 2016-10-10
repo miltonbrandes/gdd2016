@@ -126,7 +126,7 @@ namespace ClinicaFrba
         }
         public static void ComprarBono(object sender, EventArgs e)
         {
-            var home = new Compra_Bono.Form1(); //aca habria que pasarle el usuario
+            var home = new Compra_Bono.frmCompra(usuario, rol);
             home.Show();
         }
         public static void RegistrarAgenda(object sender, EventArgs e)
