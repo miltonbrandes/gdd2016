@@ -12,3 +12,10 @@ D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Helpers\bin\Debug\normnfkd.n
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Helpers\obj\Debug\BaseDatos.csprojResolveAssemblyReference.cache
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Helpers\obj\Debug\Helpers.dll
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\Helpers\obj\Debug\Helpers.pdb
+C:\Users\Jamper\Documents\GitHub\gdd2016\Aplicacion Desktop\ClinicaFrba\Helpers\bin\Debug\Helpers.dll
+C:\Users\Jamper\Documents\GitHub\gdd2016\Aplicacion Desktop\ClinicaFrba\Helpers\bin\Debug\Helpers.pdb
+C:\Users\Jamper\Documents\GitHub\gdd2016\Aplicacion Desktop\ClinicaFrba\Helpers\bin\Debug\Clases.dll
+C:\Users\Jamper\Documents\GitHub\gdd2016\Aplicacion Desktop\ClinicaFrba\Helpers\bin\Debug\Clases.pdb
+C:\Users\Jamper\Documents\GitHub\gdd2016\Aplicacion Desktop\ClinicaFrba\Helpers\obj\Debug\BaseDatos.csprojResolveAssemblyReference.cache
+C:\Users\Jamper\Documents\GitHub\gdd2016\Aplicacion Desktop\ClinicaFrba\Helpers\obj\Debug\Helpers.dll
+C:\Users\Jamper\Documents\GitHub\gdd2016\Aplicacion Desktop\ClinicaFrba\Helpers\obj\Debug\Helpers.pdb

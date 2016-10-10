@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Clases
 {
-    class Franja
+    public class Franja
     {
-        public int Id { get; set; }
-        public int Dia { get; set; }
-        public int HoraInicio { get; set; }
-        public int MinutoInicio { get;set; }
-        public int HoraFin { get; set; }
-        public int MinutoFin { get;set; }
+        public string Id { get; set; }
+        public string Dia { get; set; }
+        public string HoraInicio { get; set; }
+        public string MinutoInicio { get;set; }
+        public string HoraFin { get; set; }
+        public string MinutoFin { get;set; }
     }
 }

@@ -154,21 +154,27 @@ namespace Helpers
             DBHelper.DB.Close();
             return list;
         }
-        
-        public static Especialidad ToEspecialidades(this SqlDataReader rdr){
-        	return rdr.ToEspecialidad().FirstOrDefault();
-        }
-        public static List<Especialidad> ToEspecialidad(this SqlDataReader rdr){
-        	List<Especialidad> list = new List<Especialidad>();
-        	while(rdr.Read()){
-        		list.Add(new Especialidad(){
-        		         	Id = (int)rdr["especialidad_codigo"],
-        		         	Descripcion = (string)rdr["especialidad_descripcion"],
-        		         	Tipo = (string)rdr["tipo_especialidad_descripcion"]
-        		         });
-        	}
-        	DBHelper.DB.Close();
-        	return list;
+        #endregion
+
+        #region PROFESIONAL2
+
+        public static List<Profesional> ToProfesional2(this SqlDataReader rdr)
+        {
+            List<Profesional> list = new List<Profesional>();
+            while (rdr.Read())
+            {
+                list.Add(new Profesional()
+                {
+                    Matricula = (int)rdr["profesional_matricula"],
+                    Nombre = (string)rdr["profesional_nombre"],
+                    Apellido = (string)rdr["profesional_apellido"],
+                    Mail = (string)rdr["profesional_mail"],
+                    Telefono = (string)rdr["profesional_telefono"],
+                    Direccion = (string)rdr["profesional_direccion"]
+                });
+            }
+            DBHelper.DB.Close();
+            return list;
         }
         #endregion
 
@@ -216,6 +222,49 @@ namespace Helpers
         }
         #endregion
 
+        #region ESPECIALIDAD
+        public static Especialidad ToEspecialidades(this SqlDataReader rdr)
+        {
+            return rdr.ToEspecialidad().FirstOrDefault();
+        }
+
+        public static List<Especialidad> ToEspecialidad(this SqlDataReader rdr)
+        {
+            List<Especialidad> list = new List<Especialidad>();
+            while (rdr.Read())
+            {
+                list.Add(new Especialidad()
+                {
+                    Descripcion = (string)rdr["especialidad_descripcion"],
+                    Id = (string)rdr["especialidad_codigo"],
+                    //Tipo = (string)rdr["especialidad_tipo"]
+                });
+            }
+            DBHelper.DB.Close();
+            return list;
+        }
+        #endregion
+
+        #region FRANJA
+        public static List<Franja> ToFranja(this SqlDataReader rdr)
+        {
+            List<Franja> list = new List<Franja>();
+            while (rdr.Read())
+            {
+                list.Add(new Franja()
+                {
+                    Dia = (string)rdr["dia"],
+                    HoraInicio = (string)rdr["hora_inicio"],
+                    MinutoInicio = (string)rdr["minuto_inicio"],
+                    HoraFin = (string)rdr["hora_fin"],
+                    MinutoFin = (string)rdr["minuto_fin"],
+                    Id = (string)rdr["id"]
+                });
+            }
+            DBHelper.DB.Close();
+            return list;
+        }
+        #endregion
 
     }
 }

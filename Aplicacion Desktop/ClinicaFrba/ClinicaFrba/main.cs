@@ -126,7 +126,7 @@ namespace ClinicaFrba
         }
         public static void ComprarBono(object sender, EventArgs e)
         {
-            var home = new Compra_Bono.Form1(); //aca habria que pasarle el usuario
+            var home = new Compra_Bono.frmCompra(usuario, rol);
             home.Show();
         }
         public static void RegistrarAgenda(object sender, EventArgs e)
@@ -135,11 +135,13 @@ namespace ClinicaFrba
         	var home = new Registro_Agenda.RegistroAgenda(profesional);
             home.Show();
         }
+
         public static void PedirTurno(object sender, EventArgs e)
         {
-            var home = new Pedir_Turno.Form1();
+            var home = new Pedir_Turno.frmPedidoTurno();
             home.Show();
         }
+         
         public static void RegistrarLlegada(object sender, EventArgs e)
         {
             var home = new Registro_Llegada.frmLlegadaPaciente();
