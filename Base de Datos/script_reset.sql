@@ -168,6 +168,7 @@ drop procedure NOT_NULL.Especialidad_GetByMatricula
 drop procedure NOT_NULL.Afiliado_MismoDni
 drop procedure NOT_NULL.Get_MedicoXEsp_All
 drop procedure NOT_NULL.Get_Especialidades_All
+drop procedure NOT_NULL.Get_Especialidades_All_2
 drop procedure NOT_NULL.Get_Turnos_Today
 drop procedure NOT_NULL.Agenda_Agregar
 drop procedure NOT_NULL.Turno_Agregar
@@ -176,7 +177,6 @@ drop procedure NOT_NULL.Franja_Agregar
 drop procedure NOT_NULL.turnos_GetByFilerProfesional
 drop procedure NOT_NULL.profesional_GetByFilerEspecialidad
 drop procedure NOT_NULL.Comprar_Bono
---	LISTADO
 drop PROCEDURE NOT_NULL.listado_Mas_Cancelaciones_Especialidad 
 --drop PROCEDURE NOT_NULL.listado_Profesionales_Consultados
 drop PROCEDURE NOT_NULL.listado_Profesionales_Menos_Horas 

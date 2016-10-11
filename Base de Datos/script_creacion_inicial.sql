@@ -1218,6 +1218,15 @@ GO
 	end
   go
 
+  create procedure NOT_NULL.Get_Especialidades_All_2
+  as
+	begin
+		select especialidad_codigo, especialidad_descripcion, tipo_especialidad_descripcion
+			from NOT_NULL.especialidad, NOT_NULL.tipo_especialidad
+			where tipo_especialidad_codigo = especialidad_tipo
+	end
+  go
+
   create procedure NOT_NULL.Get_Turnos_Today
   as
 	begin

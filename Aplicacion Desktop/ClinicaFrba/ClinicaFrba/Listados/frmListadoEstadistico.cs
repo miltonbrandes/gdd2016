@@ -15,6 +15,10 @@ namespace ClinicaFrba.Listados
 {
     public partial class frmListadoEstadistico : Form
     {
+        DateTime fecha1;
+        DateTime fecha2;
+
+
         public frmListadoEstadistico()
         {
             InitializeComponent();
@@ -171,8 +175,7 @@ namespace ClinicaFrba.Listados
 
         private void btnCalcular_Click(object sender, EventArgs e)
         {
-            DateTime fecha1 = new DateTime();
-            DateTime fecha2 = new DateTime();
+            label_plan.Visible = label_especialidad.Visible = cmbPlan.Visible = cmbEspecialidad.Visible = btnFiltros.Visible = false;
             if (cmbSemestre.SelectedItem == null) MessageBox.Show("Selecciona un semestre", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else if (cmbSemestre.SelectedIndex.Equals(0))
             {
@@ -198,8 +201,7 @@ namespace ClinicaFrba.Listados
                         Load_Listado_2(lista_2);
                         break;
                     case 2:
-                        List<Listado_3> lista_3 = DBHelper.ExecuteReader("listado_Profesionales_Menos_Horas", (new Dictionary<string, object> { { "@fecha1", fecha1 }, { "@fecha2", fecha2 }, { "@plan", fecha1 }, { "@especialidad ", fecha1 } })).ToListado_3();
-                        Load_Listado_3(lista_3);
+                        funcion_para_listado_3();
                         break;
                     case 3:
                         List<Listado_4> lista_4 = DBHelper.ExecuteReader("listado_Afiliado_Mas_Bonos", (new Dictionary<string, object> { { "@fecha1", fecha1 }, { "@fecha2", fecha2 } })).ToListado_4();
@@ -210,6 +212,41 @@ namespace ClinicaFrba.Listados
                         Load_Listado_5(lista_5);
                         break;
                 }
+            }
+            catch
+            {
+                MessageBox.Show("Error al obtener datos de db", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+
+        public void funcion_para_listado_3()
+        {
+            label_plan.Visible = label_especialidad.Visible = cmbPlan.Visible = cmbEspecialidad.Visible = btnFiltros.Visible = true;
+
+            List<Plan> planes = DBHelper.ExecuteReader("Planes_GetAll").ToPlanes();
+            cmbPlan.DataSource = planes;
+            cmbPlan.DisplayMember = "Descripcion";
+
+            List<Especialidad> especialidad = DBHelper.ExecuteReader("Get_Especialidades_All_2").ToEspecialidad();
+            cmbEspecialidad.DataSource = especialidad;
+            cmbEspecialidad.DisplayMember = "Descripcion";
+
+        }
+
+        private void btnFiltros_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var parametros = new Dictionary<string, object> { 
+                    { "@fecha1", fecha1 }, 
+                    { "@fecha2", fecha2 }, 
+                    { "@plan", ((Plan)cmbPlan.SelectedItem).Descripcion }, 
+                    { "@especialidad ", ((Especialidad)cmbEspecialidad.SelectedItem).Descripcion } 
+                };
+                List<Listado_3> lista_3 = DBHelper.ExecuteReader("listado_Profesionales_Menos_Horas", parametros).ToListado_3();
+                Load_Listado_3(lista_3);
             }
             catch
             {
