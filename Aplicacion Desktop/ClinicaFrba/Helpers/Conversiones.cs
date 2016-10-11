@@ -141,13 +141,13 @@ namespace Helpers
                     Matricula = (int)rdr["profesional_matricula"],
                     Nombre = (string)rdr["profesional_nombre"],
                     Apellido = (string)rdr["profesional_apellido"],
-                    Dni = (int)rdr["profesional_dni"],
-                    TipoDocumento = (char)rdr["profesional_tipo_documento"],// tipo documento
+                    Dni = (decimal)rdr["profesional_dni"],
+                    TipoDocumento = (string)rdr["profesional_tipo_doc"],// tipo documento
                     Mail = (string)rdr["profesional_mail"],
                     Telefono = (string)rdr["profesional_telefono"],
                     Direccion = (string)rdr["profesional_direccion"],
-                    //fecha = (DateTime)rdr["clie_fecha_nacimiento"], fecha nacimiento
-                    sexo = (char)rdr["profesional_sexo"],
+                    FechaNacimiento = (DateTime)rdr["profesional_fecha_nacimiento"], //fecha nacimiento
+                    sexo = (string)rdr["profesional_sexo"],
                   
                 });
             }
@@ -236,8 +236,8 @@ namespace Helpers
                 list.Add(new Especialidad()
                 {
                     Descripcion = (string)rdr["especialidad_descripcion"],
-                    Id = (string)rdr["especialidad_codigo"],
-                    //Tipo = (string)rdr["especialidad_tipo"]
+                    Id = (decimal)rdr["especialidad_codigo"],
+                    Tipo = (string)rdr["tipo_especialidad_descripcion"]
                 });
             }
             DBHelper.DB.Close();

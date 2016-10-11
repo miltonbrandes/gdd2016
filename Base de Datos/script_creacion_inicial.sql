@@ -404,7 +404,7 @@ CREATE TABLE NOT_NULL.turno(
 	turno_nro numeric(18,0) /*identity(1,1)*/,
 	afiliado_nro numeric(18, 0) NULL,
 	turno_fecha datetime NULL,
-	turno_estado char(1) NULL,
+	turno_estado char(1) default 'D' NULL ,
 	turno_hora_llegada datetime NULL,
 	turno_sintomas varchar(255) NULL,
 	turno_enfermedades varchar(255) NULL,
@@ -1009,7 +1009,7 @@ GO
   AS BEGIN
 	SET NOCOUNT ON;
 		SELECT e.especialidad_codigo, e.especialidad_descripcion, et.tipo_especialidad_descripcion
-		FROM NOT_NULL.especialidad e, NOT_NULL.especialidad_tipo et, NOT_NULL.medicoXespecialidad mxe
+		FROM NOT_NULL.especialidad e, NOT_NULL.tipo_especialidad et, NOT_NULL.medicoXespecialidad mxe
 		WHERE mxe.medxesp_profesional = @matricula AND e.especialidad_codigo = mxe.medxesp_especialidad
 			AND et.tipo_especialidad_codigo = e.especialidad_tipo
 	END

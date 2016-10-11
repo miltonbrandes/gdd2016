@@ -40,10 +40,21 @@ ALTER TABLE NOT_NULL.plan_medico NOCHECK CONSTRAINT ALL
 GO
 ALTER TABLE NOT_NULL.modificacion_plan NOCHECK CONSTRAINT ALL
 GO
+ALTER TABLE NOT_NULL.turno NOCHECK CONSTRAINT ALL
+GO
 
 /*Lo hago aca xq turno referencia a medXesp */
+
+DROP TABLE NOT_NULL.franja_horaria
+GO
+
+DROP TABLE NOT_NULL.agenda
+GO
 DROP TABLE NOT_NULL.bono_consulta
 GO
+DROP TABLE NOT_NULL.cancelacion_turno
+GO
+
 DROP TABLE NOT_NULL.turno
 GO
 
@@ -65,15 +76,9 @@ GO
 DROP TABLE NOT_NULL.rol
 GO
 
-DROP TABLE NOT_NULL.franja_horaria
-GO
-
-DROP TABLE NOT_NULL.agenda
-
-GO
-
 DROP TABLE NOT_NULL.medicoXespecialidad
 GO
+
 DROP TABLE NOT_NULL.especialidad
 GO
 
@@ -84,8 +89,6 @@ GO
 DROP TABLE NOT_NULL.modificacion_plan
 GO
 
-DROP TABLE NOT_NULL.cancelacion_turno
-GO
 
 DROP TABLE NOT_NULL.profesional
 GO
@@ -172,6 +175,7 @@ drop procedure NOT_NULL.Get_medxesp_id
 drop procedure NOT_NULL.Franja_Agregar
 drop procedure NOT_NULL.turnos_GetByFilerProfesional
 drop procedure NOT_NULL.profesional_GetByFilerEspecialidad
+drop procedure NOT_NULL.Comprar_Bono
 --	LISTADO
 drop PROCEDURE NOT_NULL.listado_Mas_Cancelaciones_Especialidad 
 --drop PROCEDURE NOT_NULL.listado_Profesionales_Consultados
