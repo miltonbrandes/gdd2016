@@ -21,7 +21,7 @@ namespace ClinicaFrba.Registro_Agenda
 		Profesional profesional;
 		TextBox[,] matriz = new TextBox[4,6];
 		CustomHour[,] matrizHoras = new CustomHour[4,6];
-		
+        public bool conIntervalo = false;
 		public RegistroAgenda(Profesional profesional)
 		{
 			InitializeComponent();
@@ -325,6 +325,198 @@ namespace ClinicaFrba.Registro_Agenda
         private void horaFin1Lunes_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                if (conIntervalo)
+                {
+                    horaInicio2Lunes.Visible = true;
+                    horaFin2Lunes.Visible = true;
+                }
+                label7.Visible = true;
+                label8.Visible = true;
+                horaInicio1Lunes.Visible = true;
+                horaFin1Lunes.Visible = true;
+
+            }
+            else
+            {
+                horaInicio2Lunes.Visible = false;
+                horaFin2Lunes.Visible = false;
+                horaInicio1Lunes.Visible = false;
+                horaFin1Lunes.Visible = false;
+
+            }
+        }
+
+        private void btnHorarios_Click(object sender, EventArgs e)
+        {
+            checkBox1.Enabled = false;
+            checkBox2.Enabled = false;
+            checkBox3.Enabled = false;
+            checkBox4.Enabled = false;
+            checkBox5.Enabled = false;
+            checkBox6.Enabled = false;
+            label11.Visible = true;
+            label12.Visible = true;
+            monthCalendar1.Visible = true;
+            monthCalendar2.Visible = true;
+        }
+
+        private void monthCalendar2_DateChanged(object sender, DateRangeEventArgs e)
+        {
+            if (monthCalendar2.BoldedDates != null)
+            {
+                buttonOK.Visible = true;
+            }
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+
+            if (checkBox2.Checked)
+            {
+                if (conIntervalo)
+                {
+                    horaInicio2Martes.Visible = true;
+                    horaFin2Martes.Visible = true;
+                }
+                label7.Visible = true;
+                label8.Visible = true;
+                horaInicio1Martes.Visible = true;
+                horaFin1Martes.Visible = true;
+
+            }
+            else
+            {
+
+                horaInicio2Martes.Visible = false;
+                horaFin2Martes.Visible = false;
+                horaInicio1Martes.Visible = false;
+                horaFin1Martes.Visible = false;
+
+            }
+        }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+
+            if (checkBox3.Checked)
+            {
+                if (conIntervalo)
+                {
+                    horaInicio2Miercoles.Visible = true;
+                    horaFin2Miercoles.Visible = true;
+                }
+                label7.Visible = true;
+                label8.Visible = true;
+                horaInicio1Miercoles.Visible = true;
+                horaFin1Miercoles.Visible = true;
+
+            }
+            else
+            {
+
+                horaInicio2Miercoles.Visible = false;
+                horaFin2Miercoles.Visible = false;
+                horaInicio1Miercoles.Visible = false;
+                horaFin1Miercoles.Visible = false;
+
+            }
+        }
+
+        private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        {
+
+            if (checkBox4.Checked)
+            {
+                if (conIntervalo)
+                {
+                    horaInicio2Jueves.Visible = true;
+                    horaFin2Jueves.Visible = true;
+                }
+                label7.Visible = true;
+                label8.Visible = true;
+                horaInicio1Jueves.Visible = true;
+                horaFin1Jueves.Visible = true;
+
+            }
+            else
+            {
+                horaInicio2Jueves.Visible = false;
+                horaFin2Jueves.Visible = false;
+                horaInicio1Jueves.Visible = false;
+                horaFin1Jueves.Visible = false;
+
+            }
+        }
+
+        private void checkBox5_CheckedChanged(object sender, EventArgs e)
+        {
+
+            if (checkBox5.Checked)
+            {
+                if(conIntervalo){
+                horaInicio2Viernes.Visible = true;
+                    horaFin2Viernes.Visible = true;
+                }
+                label7.Visible = true;
+                label8.Visible = true;
+                horaInicio1Viernes.Visible = true;
+                horaFin1Viernes.Visible = true;
+
+            }
+            else
+            {
+                horaInicio2Viernes.Visible = false;
+                horaFin2Viernes.Visible = false;
+                horaInicio1Viernes.Visible = false;
+                horaFin1Viernes.Visible = false;
+
+            }
+        }
+
+        private void checkBox6_CheckedChanged(object sender, EventArgs e)
+        {
+
+            if (checkBox6.Checked)
+            {
+                if (conIntervalo)
+                {
+                    horaInicio2Sabado.Visible = true;
+                    horaFin2Sabado.Visible = true;
+                }
+                label7.Visible = true;
+                label8.Visible = true;
+                horaInicio1Sabado.Visible = true;
+                horaFin1Sabado.Visible = true;
+
+            }
+            else
+            {
+                horaInicio2Sabado.Visible = false;
+                horaFin2Sabado.Visible = false;
+                horaInicio1Sabado.Visible = false;
+                horaFin1Sabado.Visible = false;
+
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            conIntervalo = true;
+            checkBox1_CheckedChanged(sender, e);
+            checkBox2_CheckedChanged(sender, e);
+            checkBox3_CheckedChanged(sender, e);
+            checkBox4_CheckedChanged(sender, e);
+            checkBox5_CheckedChanged(sender, e);
+            checkBox6_CheckedChanged(sender, e);
+            label13.Visible = true;
+            //label9.Visible = true;
+            label10.Visible = true;
         }
 	}
 }
