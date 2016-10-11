@@ -1187,10 +1187,11 @@ GO
 				   FROM NOT_NULL.profesional p, NOT_NULL.medicoXespecialidad mxe
 				   WHERE p.profesional_matricula = @matricula
 						AND mxe.medxesp_especialidad = @especialidad)
-						
-	INSERT INTO NOT_NULL.turno(turno_nro,turno_fecha,turno_medico_especialidad_id)
-	values(@turnonro,@fecha,@medxesp_id)
-	
+	if((select count(*) from turno where turno.turno_fecha = @fecha and turno.turno_medico_especialidad_id = @medxesp_id) = 0)
+	begin  
+		INSERT INTO NOT_NULL.turno(turno_nro,turno_fecha,turno_medico_especialidad_id)
+		values(@turnonro,@fecha,@medxesp_id)
+	end
   END
   GO
   
