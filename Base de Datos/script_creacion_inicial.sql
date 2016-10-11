@@ -488,7 +488,7 @@ GO
 /*TABLA FRANJA HORARIA*/
 CREATE TABLE NOT_NULL.franja_horaria(
 	franja_id int PRIMARY KEY IDENTITY(0,1),
-	dia int NOT NULL CHECK(dia >=1 AND dia <=7),
+	dia int NOT NULL CHECK(dia >=0 AND dia <=6),
 	hora_inicio int NOT NULL CHECK(hora_inicio<24 AND hora_inicio>=0),
 	minuto_inicio int NOT NULL CHECK(minuto_inicio<60 AND minuto_inicio>=0),
 	hora_fin int NOT NULL CHECK(hora_fin<24 AND hora_fin>=0),
@@ -1142,9 +1142,10 @@ GO
   --AGREGAR AGENDA
   CREATE PROCEDURE NOT_NULL.Agenda_Agregar(@matricula int, @especialidad varchar(255), @fecha_inicio datetime, @fecha_fin datetime, @id_agenda int OUTPUT)
   AS BEGIN
-  
-	INSERT INTO NOT_NULL.Agenda(agenda_fecha_inicio,agenda_fecha_fin)
-	VALUES(@fecha_inicio, @fecha_fin)
+	Declare @especialidad_id numeric(18,0);
+	set @especialidad_id = (Select top 1 especialidad.especialidad_codigo from especialidad where especialidad.especialidad_descripcion = @especialidad);
+	INSERT INTO NOT_NULL.Agenda(agenda_fecha_inicio,agenda_fecha_fin, id_profesional, id_especialidad)
+	VALUES(@fecha_inicio, @fecha_fin, @matricula, @especialidad_id)
 	
 	UPDATE NOT_NULL.medicoXespecialidad
 	SET medxesp_agenda = @@IDENTITY
@@ -1176,19 +1177,19 @@ GO
 	
   END
   GO
-  
+
   CREATE PROCEDURE NOT_NULL.Turno_Agregar(@matricula int, @especialidad int, @fecha datetime)
   AS BEGIN
-
 	DECLARE @medxesp_id int
-	
+	DECLARE @turnonro numeric(18,0)
+	SET @turnonro = (SELECT TOP 1 turno.turno_nro from turno order by turno.turno_nro desc) +1
 	SET @medxesp_id = (SELECT TOP 1 mxe.medxesp_id
 				   FROM NOT_NULL.profesional p, NOT_NULL.medicoXespecialidad mxe
 				   WHERE p.profesional_matricula = @matricula
 						AND mxe.medxesp_especialidad = @especialidad)
 						
-	INSERT INTO NOT_NULL.turno(turno_fecha,turno_medico_especialidad_id)
-	values(@fecha,@medxesp_id)
+	INSERT INTO NOT_NULL.turno(turno_nro,turno_fecha,turno_medico_especialidad_id)
+	values(@turnonro,@fecha,@medxesp_id)
 	
   END
   GO

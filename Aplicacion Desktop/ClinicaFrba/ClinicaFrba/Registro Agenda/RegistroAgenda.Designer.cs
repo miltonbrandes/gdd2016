@@ -118,28 +118,37 @@ namespace ClinicaFrba.Registro_Agenda
             this.label10 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.buttonOK = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkBox5 = new System.Windows.Forms.CheckBox();
+            this.checkBox6 = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // horaInicio1Lunes
             // 
             this.horaInicio1Lunes.Location = new System.Drawing.Point(124, 144);
-            this.horaInicio1Lunes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horaInicio1Lunes.Margin = new System.Windows.Forms.Padding(4);
             this.horaInicio1Lunes.Name = "horaInicio1Lunes";
             this.horaInicio1Lunes.Size = new System.Drawing.Size(95, 22);
             this.horaInicio1Lunes.TabIndex = 0;
+            this.horaInicio1Lunes.Text = "08:00";
             // 
             // horaFin1Lunes
             // 
             this.horaFin1Lunes.Location = new System.Drawing.Point(124, 176);
-            this.horaFin1Lunes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horaFin1Lunes.Margin = new System.Windows.Forms.Padding(4);
             this.horaFin1Lunes.Name = "horaFin1Lunes";
             this.horaFin1Lunes.Size = new System.Drawing.Size(95, 22);
             this.horaFin1Lunes.TabIndex = 1;
+            this.horaFin1Lunes.Text = "12:00";
+            this.horaFin1Lunes.TextChanged += new System.EventHandler(this.horaFin1Lunes_TextChanged);
             // 
             // horaInicio2Lunes
             // 
             this.horaInicio2Lunes.Location = new System.Drawing.Point(124, 208);
-            this.horaInicio2Lunes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horaInicio2Lunes.Margin = new System.Windows.Forms.Padding(4);
             this.horaInicio2Lunes.Name = "horaInicio2Lunes";
             this.horaInicio2Lunes.Size = new System.Drawing.Size(95, 22);
             this.horaInicio2Lunes.TabIndex = 2;
@@ -147,7 +156,7 @@ namespace ClinicaFrba.Registro_Agenda
             // horaFin2Lunes
             // 
             this.horaFin2Lunes.Location = new System.Drawing.Point(124, 240);
-            this.horaFin2Lunes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horaFin2Lunes.Margin = new System.Windows.Forms.Padding(4);
             this.horaFin2Lunes.Name = "horaFin2Lunes";
             this.horaFin2Lunes.Size = new System.Drawing.Size(95, 22);
             this.horaFin2Lunes.TabIndex = 3;
@@ -155,23 +164,25 @@ namespace ClinicaFrba.Registro_Agenda
             // horaInicio1Martes
             // 
             this.horaInicio1Martes.Location = new System.Drawing.Point(228, 144);
-            this.horaInicio1Martes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horaInicio1Martes.Margin = new System.Windows.Forms.Padding(4);
             this.horaInicio1Martes.Name = "horaInicio1Martes";
             this.horaInicio1Martes.Size = new System.Drawing.Size(95, 22);
             this.horaInicio1Martes.TabIndex = 4;
+            this.horaInicio1Martes.Text = "08:00";
             // 
             // horaFin1Martes
             // 
             this.horaFin1Martes.Location = new System.Drawing.Point(228, 176);
-            this.horaFin1Martes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horaFin1Martes.Margin = new System.Windows.Forms.Padding(4);
             this.horaFin1Martes.Name = "horaFin1Martes";
             this.horaFin1Martes.Size = new System.Drawing.Size(95, 22);
             this.horaFin1Martes.TabIndex = 5;
+            this.horaFin1Martes.Text = "12:00";
             // 
             // horaInicio2Martes
             // 
             this.horaInicio2Martes.Location = new System.Drawing.Point(228, 208);
-            this.horaInicio2Martes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horaInicio2Martes.Margin = new System.Windows.Forms.Padding(4);
             this.horaInicio2Martes.Name = "horaInicio2Martes";
             this.horaInicio2Martes.Size = new System.Drawing.Size(95, 22);
             this.horaInicio2Martes.TabIndex = 6;
@@ -179,7 +190,7 @@ namespace ClinicaFrba.Registro_Agenda
             // horaFin2Martes
             // 
             this.horaFin2Martes.Location = new System.Drawing.Point(228, 240);
-            this.horaFin2Martes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horaFin2Martes.Margin = new System.Windows.Forms.Padding(4);
             this.horaFin2Martes.Name = "horaFin2Martes";
             this.horaFin2Martes.Size = new System.Drawing.Size(95, 22);
             this.horaFin2Martes.TabIndex = 7;
@@ -187,23 +198,25 @@ namespace ClinicaFrba.Registro_Agenda
             // horaInicio1Miercoles
             // 
             this.horaInicio1Miercoles.Location = new System.Drawing.Point(332, 144);
-            this.horaInicio1Miercoles.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horaInicio1Miercoles.Margin = new System.Windows.Forms.Padding(4);
             this.horaInicio1Miercoles.Name = "horaInicio1Miercoles";
             this.horaInicio1Miercoles.Size = new System.Drawing.Size(95, 22);
             this.horaInicio1Miercoles.TabIndex = 8;
+            this.horaInicio1Miercoles.Text = "08:00";
             // 
             // horaFin1Miercoles
             // 
             this.horaFin1Miercoles.Location = new System.Drawing.Point(332, 176);
-            this.horaFin1Miercoles.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horaFin1Miercoles.Margin = new System.Windows.Forms.Padding(4);
             this.horaFin1Miercoles.Name = "horaFin1Miercoles";
             this.horaFin1Miercoles.Size = new System.Drawing.Size(95, 22);
             this.horaFin1Miercoles.TabIndex = 9;
+            this.horaFin1Miercoles.Text = "12:00";
             // 
             // horaInicio2Miercoles
             // 
             this.horaInicio2Miercoles.Location = new System.Drawing.Point(332, 208);
-            this.horaInicio2Miercoles.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horaInicio2Miercoles.Margin = new System.Windows.Forms.Padding(4);
             this.horaInicio2Miercoles.Name = "horaInicio2Miercoles";
             this.horaInicio2Miercoles.Size = new System.Drawing.Size(95, 22);
             this.horaInicio2Miercoles.TabIndex = 10;
@@ -211,7 +224,7 @@ namespace ClinicaFrba.Registro_Agenda
             // horaFin2Miercoles
             // 
             this.horaFin2Miercoles.Location = new System.Drawing.Point(332, 240);
-            this.horaFin2Miercoles.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horaFin2Miercoles.Margin = new System.Windows.Forms.Padding(4);
             this.horaFin2Miercoles.Name = "horaFin2Miercoles";
             this.horaFin2Miercoles.Size = new System.Drawing.Size(95, 22);
             this.horaFin2Miercoles.TabIndex = 11;
@@ -219,23 +232,25 @@ namespace ClinicaFrba.Registro_Agenda
             // horaInicio1Jueves
             // 
             this.horaInicio1Jueves.Location = new System.Drawing.Point(436, 144);
-            this.horaInicio1Jueves.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horaInicio1Jueves.Margin = new System.Windows.Forms.Padding(4);
             this.horaInicio1Jueves.Name = "horaInicio1Jueves";
             this.horaInicio1Jueves.Size = new System.Drawing.Size(95, 22);
             this.horaInicio1Jueves.TabIndex = 12;
+            this.horaInicio1Jueves.Text = "08:00";
             // 
             // horaFin1Jueves
             // 
             this.horaFin1Jueves.Location = new System.Drawing.Point(436, 176);
-            this.horaFin1Jueves.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horaFin1Jueves.Margin = new System.Windows.Forms.Padding(4);
             this.horaFin1Jueves.Name = "horaFin1Jueves";
             this.horaFin1Jueves.Size = new System.Drawing.Size(95, 22);
             this.horaFin1Jueves.TabIndex = 13;
+            this.horaFin1Jueves.Text = "12:00";
             // 
             // horaInicio2Jueves
             // 
             this.horaInicio2Jueves.Location = new System.Drawing.Point(436, 208);
-            this.horaInicio2Jueves.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horaInicio2Jueves.Margin = new System.Windows.Forms.Padding(4);
             this.horaInicio2Jueves.Name = "horaInicio2Jueves";
             this.horaInicio2Jueves.Size = new System.Drawing.Size(95, 22);
             this.horaInicio2Jueves.TabIndex = 14;
@@ -243,7 +258,7 @@ namespace ClinicaFrba.Registro_Agenda
             // horaFin2Jueves
             // 
             this.horaFin2Jueves.Location = new System.Drawing.Point(436, 240);
-            this.horaFin2Jueves.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horaFin2Jueves.Margin = new System.Windows.Forms.Padding(4);
             this.horaFin2Jueves.Name = "horaFin2Jueves";
             this.horaFin2Jueves.Size = new System.Drawing.Size(95, 22);
             this.horaFin2Jueves.TabIndex = 15;
@@ -251,23 +266,25 @@ namespace ClinicaFrba.Registro_Agenda
             // horaInicio1Viernes
             // 
             this.horaInicio1Viernes.Location = new System.Drawing.Point(540, 144);
-            this.horaInicio1Viernes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horaInicio1Viernes.Margin = new System.Windows.Forms.Padding(4);
             this.horaInicio1Viernes.Name = "horaInicio1Viernes";
             this.horaInicio1Viernes.Size = new System.Drawing.Size(95, 22);
             this.horaInicio1Viernes.TabIndex = 16;
+            this.horaInicio1Viernes.Text = "08:00";
             // 
             // horaFin1Viernes
             // 
             this.horaFin1Viernes.Location = new System.Drawing.Point(540, 176);
-            this.horaFin1Viernes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horaFin1Viernes.Margin = new System.Windows.Forms.Padding(4);
             this.horaFin1Viernes.Name = "horaFin1Viernes";
             this.horaFin1Viernes.Size = new System.Drawing.Size(95, 22);
             this.horaFin1Viernes.TabIndex = 17;
+            this.horaFin1Viernes.Text = "12:00";
             // 
             // horaInicio2Viernes
             // 
             this.horaInicio2Viernes.Location = new System.Drawing.Point(540, 208);
-            this.horaInicio2Viernes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horaInicio2Viernes.Margin = new System.Windows.Forms.Padding(4);
             this.horaInicio2Viernes.Name = "horaInicio2Viernes";
             this.horaInicio2Viernes.Size = new System.Drawing.Size(95, 22);
             this.horaInicio2Viernes.TabIndex = 18;
@@ -275,7 +292,7 @@ namespace ClinicaFrba.Registro_Agenda
             // horaFin2Viernes
             // 
             this.horaFin2Viernes.Location = new System.Drawing.Point(540, 240);
-            this.horaFin2Viernes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horaFin2Viernes.Margin = new System.Windows.Forms.Padding(4);
             this.horaFin2Viernes.Name = "horaFin2Viernes";
             this.horaFin2Viernes.Size = new System.Drawing.Size(95, 22);
             this.horaFin2Viernes.TabIndex = 19;
@@ -283,23 +300,25 @@ namespace ClinicaFrba.Registro_Agenda
             // horaInicio1Sabado
             // 
             this.horaInicio1Sabado.Location = new System.Drawing.Point(644, 144);
-            this.horaInicio1Sabado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horaInicio1Sabado.Margin = new System.Windows.Forms.Padding(4);
             this.horaInicio1Sabado.Name = "horaInicio1Sabado";
             this.horaInicio1Sabado.Size = new System.Drawing.Size(95, 22);
             this.horaInicio1Sabado.TabIndex = 20;
+            this.horaInicio1Sabado.Text = "08:00";
             // 
             // horaFin1Sabado
             // 
             this.horaFin1Sabado.Location = new System.Drawing.Point(644, 176);
-            this.horaFin1Sabado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horaFin1Sabado.Margin = new System.Windows.Forms.Padding(4);
             this.horaFin1Sabado.Name = "horaFin1Sabado";
             this.horaFin1Sabado.Size = new System.Drawing.Size(95, 22);
             this.horaFin1Sabado.TabIndex = 21;
+            this.horaFin1Sabado.Text = "12:00";
             // 
             // horaInicio2Sabado
             // 
             this.horaInicio2Sabado.Location = new System.Drawing.Point(644, 208);
-            this.horaInicio2Sabado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horaInicio2Sabado.Margin = new System.Windows.Forms.Padding(4);
             this.horaInicio2Sabado.Name = "horaInicio2Sabado";
             this.horaInicio2Sabado.Size = new System.Drawing.Size(95, 22);
             this.horaInicio2Sabado.TabIndex = 22;
@@ -307,7 +326,7 @@ namespace ClinicaFrba.Registro_Agenda
             // horaFin2Sabado
             // 
             this.horaFin2Sabado.Location = new System.Drawing.Point(644, 240);
-            this.horaFin2Sabado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horaFin2Sabado.Margin = new System.Windows.Forms.Padding(4);
             this.horaFin2Sabado.Name = "horaFin2Sabado";
             this.horaFin2Sabado.Size = new System.Drawing.Size(95, 22);
             this.horaFin2Sabado.TabIndex = 23;
@@ -420,7 +439,7 @@ namespace ClinicaFrba.Registro_Agenda
             // 
             this.listaEspecialidades.FormattingEnabled = true;
             this.listaEspecialidades.Location = new System.Drawing.Point(20, 60);
-            this.listaEspecialidades.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.listaEspecialidades.Margin = new System.Windows.Forms.Padding(4);
             this.listaEspecialidades.Name = "listaEspecialidades";
             this.listaEspecialidades.Size = new System.Drawing.Size(124, 24);
             this.listaEspecialidades.TabIndex = 38;
@@ -455,7 +474,7 @@ namespace ClinicaFrba.Registro_Agenda
             // buttonOK
             // 
             this.buttonOK.Location = new System.Drawing.Point(659, 532);
-            this.buttonOK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonOK.Margin = new System.Windows.Forms.Padding(4);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(100, 28);
             this.buttonOK.TabIndex = 42;
@@ -463,11 +482,77 @@ namespace ClinicaFrba.Registro_Agenda
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.ButtonOKClick);
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(121, 88);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(69, 21);
+            this.checkBox1.TabIndex = 43;
+            this.checkBox1.Text = "Lunes";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(225, 88);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(73, 21);
+            this.checkBox2.TabIndex = 44;
+            this.checkBox2.Text = "Martes";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(330, 88);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(90, 21);
+            this.checkBox3.TabIndex = 45;
+            this.checkBox3.Text = "Miercoles";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(434, 88);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(75, 21);
+            this.checkBox4.TabIndex = 46;
+            this.checkBox4.Text = "Jueves";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // checkBox5
+            // 
+            this.checkBox5.AutoSize = true;
+            this.checkBox5.Location = new System.Drawing.Point(538, 88);
+            this.checkBox5.Name = "checkBox5";
+            this.checkBox5.Size = new System.Drawing.Size(78, 21);
+            this.checkBox5.TabIndex = 47;
+            this.checkBox5.Text = "Viernes";
+            this.checkBox5.UseVisualStyleBackColor = true;
+            // 
+            // checkBox6
+            // 
+            this.checkBox6.AutoSize = true;
+            this.checkBox6.Location = new System.Drawing.Point(641, 88);
+            this.checkBox6.Name = "checkBox6";
+            this.checkBox6.Size = new System.Drawing.Size(79, 21);
+            this.checkBox6.TabIndex = 48;
+            this.checkBox6.Text = "Sabado";
+            this.checkBox6.UseVisualStyleBackColor = true;
+            // 
             // RegistroAgenda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(775, 575);
+            this.Controls.Add(this.checkBox6);
+            this.Controls.Add(this.checkBox5);
+            this.Controls.Add(this.checkBox4);
+            this.Controls.Add(this.checkBox3);
+            this.Controls.Add(this.checkBox2);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label13);
@@ -509,7 +594,7 @@ namespace ClinicaFrba.Registro_Agenda
             this.Controls.Add(this.horaInicio2Lunes);
             this.Controls.Add(this.horaFin1Lunes);
             this.Controls.Add(this.horaInicio1Lunes);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "RegistroAgenda";
             this.Text = "RegistroAgenda";
             this.Load += new System.EventHandler(this.RegistroAgenda_Load);
@@ -517,5 +602,12 @@ namespace ClinicaFrba.Registro_Agenda
             this.PerformLayout();
 
 		}
+
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox checkBox5;
+        private System.Windows.Forms.CheckBox checkBox6;
 	}
 }

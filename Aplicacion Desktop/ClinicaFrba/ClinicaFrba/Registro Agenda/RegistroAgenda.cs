@@ -97,7 +97,7 @@ namespace ClinicaFrba.Registro_Agenda
 				for(j=0;j<6;j++){
 					if(matrizHoras[i,j] != null){
 						parametros = new Dictionary<string, object>(){
-							{"@agenda_id",agenda_id},
+							{"@id_agenda",agenda_id},
 							{"@dia",j},
 							{"@hora_inicio",matrizHoras[i,j].hora},
 							{"@minuto_inicio",matrizHoras[i,j].minuto},
@@ -130,12 +130,12 @@ namespace ClinicaFrba.Registro_Agenda
 		
 		private void generarTurnos(CustomHour horaInicio, CustomHour horaFin, DateTime fecha){
 			
-			int cantTurnos = ( horaInicio.toMinutes() - horaFin.toMinutes() ) / 30;
+			int cantTurnos = (( horaInicio.toMinutes() - horaFin.toMinutes() ) / 30)*-1;
 			int i;
 			for(i=0;i<cantTurnos;i++){
 				CustomHour aux = CustomHour.FromMinutes(horaInicio.toMinutes() + 30 * i);
-				fecha.AddHours(aux.hora);
-				fecha.AddMinutes(aux.minuto);
+				fecha = fecha.AddHours(aux.hora);
+				fecha = fecha.AddMinutes(aux.minuto);
 				
 				//Genero el turno
 				Dictionary<string,object> parametros = new Dictionary<string, object>(){
@@ -144,6 +144,8 @@ namespace ClinicaFrba.Registro_Agenda
 					{"@fecha",fecha}
 				};
 				DBHelper.ExecuteNonQuery("Turno_Agregar",parametros);
+                fecha = fecha.AddHours(-aux.hora);
+                fecha = fecha.AddMinutes(-aux.minuto);
 			}
 		}
 		
@@ -203,7 +205,7 @@ namespace ClinicaFrba.Registro_Agenda
 			bool clinicaAbierta = false;
 			if(resultado){
 				
-				for(i=0;i<4;i++){
+				for(i=0;i<4;i=i+2){
 					for(j=0;j<6;j++){
 						if(matrizHoras[i,j] != null){ 
 							if( j != 5 ){
@@ -255,7 +257,7 @@ namespace ClinicaFrba.Registro_Agenda
 			CustomHour hora1;
 			CustomHour hora2;
 			
-			if(matriz[i,j].Text != null){
+			if(matriz[i,j].Text != null && matriz[i, j].Text != string.Empty){
 				//Miro a ver si la hora inicio y hora fin son correctas
 				if( horaCorrecta(matriz[i,j], out hora1) && horaCorrecta(matriz[i+1,j], out hora2) ){
 
@@ -270,7 +272,7 @@ namespace ClinicaFrba.Registro_Agenda
 					
 					return false;
 				}
-			}else if(matriz[i+1,j].Text == null)
+			}else if(matriz[i+1,j].Text == null || matriz[i+1,j].Text == string.Empty)
 				return true;
 			
 			return false;
@@ -316,6 +318,11 @@ namespace ClinicaFrba.Registro_Agenda
 		}
 
         private void RegistroAgenda_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void horaFin1Lunes_TextChanged(object sender, EventArgs e)
         {
 
         }
