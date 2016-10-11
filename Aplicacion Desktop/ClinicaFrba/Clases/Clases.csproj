@@ -42,6 +42,11 @@
     <Compile Include="Afiliados\Afiliado.cs" />
     <Compile Include="Afiliados\ModifPlan.cs" />
     <Compile Include="Afiliados\Plan.cs" />
+    <Compile Include="Listados\Listado_1.cs" />
+    <Compile Include="Listados\Listado_2.cs" />
+    <Compile Include="Listados\Listado_3.cs" />
+    <Compile Include="Listados\Listado_4.cs" />
+    <Compile Include="Listados\Listado_5.cs" />
     <Compile Include="Profesionales\Agenda.cs" />
     <Compile Include="Profesionales\Especialidad.cs" />
     <Compile Include="Profesionales\Franja.cs" />

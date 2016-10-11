@@ -52,16 +52,16 @@ namespace Helpers
                 {
                     preciocuot = (decimal)rdr["plan_cuota_precio"];
                 }
-                    list.Add(new Plan()
-                    {
+                list.Add(new Plan()
+                {
 
-                        Id = (decimal)rdr["plan_id"],
-                        PrecioBonoConsulta = (decimal)rdr["plan_precio_bono_consulta"],
-                        Descripcion = (string)rdr["plan_descripcion"],
-                        CuotaPrecio = preciocuot
+                    Id = (decimal)rdr["plan_id"],
+                    PrecioBonoConsulta = (decimal)rdr["plan_precio_bono_consulta"],
+                    Descripcion = (string)rdr["plan_descripcion"],
+                    CuotaPrecio = preciocuot
 
-                    });
-                
+                });
+
             }
             DBHelper.DB.Close();
             return list;
@@ -103,22 +103,23 @@ namespace Helpers
             SqlDataReader milector = rdr;
             List<Afiliado> list = new List<Afiliado>();
             while (milector.Read())
-            {list.Add(new Afiliado()
-                {
-                    Username = (string)rdr["usuario_id"], //definir si usuario va a tener id usuario
-                    NroAfiliado = (decimal)rdr["afiliado_nro"],
-                    Nombre = (string)rdr["afiliado_nombre"],
-                    Apellido = (string)rdr["afiliado_apellido"],
-                    Dni = (decimal)rdr["afiliado_dni"],
-                    Mail = (string)rdr["afiliado_mail"],
-                    Telefono = (decimal)rdr["afiliado_telefono"],
-                    Direccion = (string)rdr["afiliado_direccion"],
-                    EstadoCivil = (string)rdr["afiliado_estado_civil"],
-                    FechaNacimiento = (DateTime)rdr["afiliado_fecha_nac"], //fecha nacimiento
-                    Sexo = (string)rdr["afiliado_sexo"],
-                    PlanUsuario = (decimal)rdr["afiliado_plan"],
-                    CantidadHijos = (decimal)rdr["afiliado_cant_hijos"],
-                });
+            {
+                list.Add(new Afiliado()
+                   {
+                       Username = (string)rdr["usuario_id"], //definir si usuario va a tener id usuario
+                       NroAfiliado = (decimal)rdr["afiliado_nro"],
+                       Nombre = (string)rdr["afiliado_nombre"],
+                       Apellido = (string)rdr["afiliado_apellido"],
+                       Dni = (decimal)rdr["afiliado_dni"],
+                       Mail = (string)rdr["afiliado_mail"],
+                       Telefono = (decimal)rdr["afiliado_telefono"],
+                       Direccion = (string)rdr["afiliado_direccion"],
+                       EstadoCivil = (string)rdr["afiliado_estado_civil"],
+                       FechaNacimiento = (DateTime)rdr["afiliado_fecha_nac"], //fecha nacimiento
+                       Sexo = (string)rdr["afiliado_sexo"],
+                       PlanUsuario = (decimal)rdr["afiliado_plan"],
+                       CantidadHijos = (decimal)rdr["afiliado_cant_hijos"],
+                   });
             }
             DBHelper.DB.Close();
             return list;
@@ -148,7 +149,7 @@ namespace Helpers
                     Direccion = (string)rdr["profesional_direccion"],
                     FechaNacimiento = (DateTime)rdr["profesional_fecha_nacimiento"], //fecha nacimiento
                     sexo = (string)rdr["profesional_sexo"],
-                  
+
                 });
             }
             DBHelper.DB.Close();
@@ -266,5 +267,84 @@ namespace Helpers
         }
         #endregion
 
+        #region LISTADOS
+        public static List<Listado_1> ToListado_1(this SqlDataReader rdr)
+        {
+            SqlDataReader milector = rdr;
+            List<Listado_1> list = new List<Listado_1>();
+            while (milector.Read())
+            {
+                list.Add(new Listado_1()
+                {
+                    Especialidad_descripcion = (string)rdr["especialidad_descripcion"],
+                });
+            }
+            DBHelper.DB.Close();
+            return list;
+        }
+        public static List<Listado_2> ToListado_2(this SqlDataReader rdr)
+        {
+            SqlDataReader milector = rdr;
+            List<Listado_2> list = new List<Listado_2>();
+            while (milector.Read())
+            {
+                list.Add(new Listado_2()
+                {
+                    Matricula = (decimal)rdr["profesional_matricula"],
+                    Nombre = (string)rdr["profesional_nombre"],
+                    Apellido = (string)rdr["profesional_apellido"],
+                });
+            }
+            DBHelper.DB.Close();
+            return list;
+        }
+        public static List<Listado_3> ToListado_3(this SqlDataReader rdr)
+        {
+            SqlDataReader milector = rdr;
+            List<Listado_3> list = new List<Listado_3>();
+            while (milector.Read())
+            {
+                list.Add(new Listado_3()
+                {
+                    Matricula = (decimal)rdr["profesional_matricula"],
+                    Nombre = (string)rdr["profesional_nombre"],
+                    Apellido = (string)rdr["profesional_apellido"],
+                });
+            }
+            DBHelper.DB.Close();
+            return list;
+        }
+        public static List<Listado_4> ToListado_4(this SqlDataReader rdr)
+        {
+            SqlDataReader milector = rdr;
+            List<Listado_4> list = new List<Listado_4>();
+            while (milector.Read())
+            {
+                list.Add(new Listado_4()
+                {
+                    NroAfiliado = (decimal)rdr["afiliado_nro"],
+                    Nombre = (string)rdr["afiliado_nombre"],
+                    Apellido = (string)rdr["afiliado_apellido"],
+                    Grupo_Familiar = (string)rdr["pertenece_grupo_familiar"],
+                });
+            }
+            DBHelper.DB.Close();
+            return list;
+        }
+        public static List<Listado_5> ToListado_5(this SqlDataReader rdr)
+        {
+            SqlDataReader milector = rdr;
+            List<Listado_5> list = new List<Listado_5>();
+            while (milector.Read())
+            {
+                list.Add(new Listado_5()
+                {
+                    Especialidad_descripcion = (string)rdr["especialidad_descripcion"],
+                });
+            }
+            DBHelper.DB.Close();
+            return list;
+        }
+        #endregion
     }
 }
