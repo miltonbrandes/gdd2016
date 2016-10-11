@@ -40,20 +40,47 @@ namespace ClinicaFrba.Compra_Bono
             {
                 if (textBox_afiliado.Visible)
                 {
-                    afiliado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", new Dictionary<string, object> { { "@username", textBox_afiliado.Text } }).ToAfiliados();
+                    int nro;
+                    int.TryParse(textBox_afiliado.Text, out nro);
+                    if (nro > 0)
+                    {
+                        afiliado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunNro", new Dictionary<string, object> { { "@nroAfil", nro } }).ToAfiliados();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ingrese el nro correcto de afiliado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
                 else
                 {
-                    afiliado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", new Dictionary<string, object> { { "@username", usuario.Username } }).ToAfiliados();
+                    if (usuario.Username == "admin")
+                    {
+
+                        afiliado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", new Dictionary<string, object> { { "@username", "administrador32405354" } }).ToAfiliados();
+                    }
+                    else
+                    {
+                        afiliado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", new Dictionary<string, object> { { "@username", usuario.Username } }).ToAfiliados();
+
+                    }
                 }
-                plan = DBHelper.ExecuteReader("Planes_GetPlanAfiliado", new Dictionary<string, object> { { "@Afiliado_nro", afiliado.NroAfiliado } }).ToPlan();
-                cantidad = Int32.Parse(textBox_cantidad.Text);
-                label_cantidad.Text = "Cantidad: " + cantidad;
+                if (afiliado != null)
+                {
+                    plan = DBHelper.ExecuteReader("Planes_GetPlanAfiliado", new Dictionary<string, object> { { "@Afiliado_nro", afiliado.NroAfiliado } }).ToPlan();
+                    cantidad = Int32.Parse(textBox_cantidad.Text);
+                    label_cantidad.Text = "Cantidad: " + cantidad;
 
-                precio = (cantidad * plan.PrecioBonoConsulta);
-                label_precio.Text = "Precio Final: " + precio;
+                    precio = (cantidad * plan.PrecioBonoConsulta);
+                    label_precio.Text = "Precio Final: " + precio;
 
-                boton_comprar.Enabled = true;
+                    boton_comprar.Enabled = true;
+                }
+                else
+                {
+                    MessageBox.Show("No se encontro ningun afiliado con ese numero o el afiliado no estaba habilitado", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
             catch
             {

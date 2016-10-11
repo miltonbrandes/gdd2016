@@ -852,9 +852,17 @@ GO
   AS
 	BEGIN
 	SET NOCOUNT ON;
+	/*ACA HABRIA QUE TERMINAR ESTO PARA QUE SE SAQUEN LOS BONOS O SE PASEN AL GRUPO FAMILIAR*/
+		DECLARE @PlanViejo numeric(18,0);
+		set @PlanViejo = (select top 1 plan_medico.plan_id from plan_medico, afiliado where usuario_id = @Username and afiliado_plan = plan_id) 
 		UPDATE NOT_NULL.afiliado
 		SET usuario_id = @Username,afiliado_nombre=@Nombre,afiliado_apellido=@Apellido,afiliado_dni=@Dni,afiliado_mail=@Mail,afiliado_telefono=@Telefono,afiliado_direccion=@Direccion,afiliado_cant_hijos = (select afiliado_cant_hijos from afiliado where usuario_id = @Username), afiliado_estado_civil=@EstadoCivil, afiliado_fecha_nac=@Fecha,  afiliado_plan=@Plan, afiliado_sexo=@Sexo
 		WHERE usuario_id = @Username
+		/*IF(@PlanViejo <> @Plan)
+		BEGIN
+			--UPDATE DE LA TABLA TURNOS, VER BIEN COMO CARAJO SETEARLE EL VALOR DEL PROXIMO AFILIADO FAMILIAR SI ES QUE TAMPOCO SE CAMBIO DE PLAN
+			UPDATE NOT_NULL.turno
+		END*/
 	END
   GO
 
@@ -1023,6 +1031,14 @@ GO
 	END
   GO
 
+--OBTENER AFILIADO SEGUN NRO DE AFILIADO QUE ESTEN ACTIVOS
+  create procedure NOT_NULL.Afiliado_GetAfiliadoSegunNro (@nroAfil int)
+  as
+	begin 
+		select afiliado_nombre, afiliado_apellido, afiliado_cant_hijos, afiliado_direccion, afiliado_dni, afiliado_estado_civil, afiliado_fecha_nac,afiliado_mail, afiliado_nro, afiliado_plan, afiliado_sexo, afiliado_telefono, afiliado.usuario_id
+		 from NOT_NULL.afiliado,rolXusuario where afiliado_nro = @nroAfil and afiliado.usuario_id = rolXusuario.usuario_id and rolXusuario.rol_id = 2 and rolXusuario_habilitado = 1
+	end
+  go
 
   --OBTENER BONOS POR AFILIADO
   CREATE PROCEDURE NOT_NULL.Bonos_GetBonosSegunAfiliado (@ID numeric(18,0))
@@ -1102,8 +1118,23 @@ GO
   update NOT_NULL.afiliado set afiliado_plan = (select top 1 NOT_NULL.plan_medico.plan_id from NOT_NULL.plan_medico) where usuario_id = 'administrador32405354'
   go
 
-  
+/*TRAER ESPECIALIDADES POR MEDICO QUE NO TENGAN AGENDA ASIGNADA*/
+  create procedure NOT_NULL.Get_Especialidades_Sin_Agenda(@matricula int)
+  as
+	begin
+		SELECT e.especialidad_codigo, e.especialidad_descripcion, et.tipo_especialidad_descripcion
+		FROM NOT_NULL.especialidad e, NOT_NULL.tipo_especialidad et, NOT_NULL.medicoXespecialidad mxe
+		WHERE mxe.medxesp_profesional = @matricula AND e.especialidad_codigo = mxe.medxesp_especialidad
+			AND et.tipo_especialidad_codigo = e.especialidad_tipo AND mxe.medxesp_agenda is null
+	end
+  go
 
+  /*LE AGREGO UNA ESPECIALIDAD AL ADMINISTRADOR*/
+  insert into NOT_NULL.medicoXespecialidad(medxesp_especialidad, medxesp_profesional)
+  values (10018, 290)
+  go
+
+  
   /*DAR DE BAJA LOGICA UN AFILIADO (ACORDARSE QUE CUANDO SE HACE ESTO TAMBIEN TENGO QUE PONER TODOS LOS TURNOS DEL AFILIADO COMO DISPONIBLES)*/
   create procedure NOT_NULL.Afiliado_Baja_Logica(@UsuarioId varchar(50))
   as
@@ -1111,6 +1142,8 @@ GO
 	set nocount on;
 		update NOT_NULL.rolXusuario set rolXusuario_habilitado = 0 where usuario_id = @UsuarioId and rol_id = 2
 		--set @ret = (select count(*) from NOT_NULL.rolXusuario where usuario_id = @UsuarioId and rol_id = 2 and rolXusuario_habilitado = 0) 
+		--LE DOY DE BAJA A SUS TURNOS Y LOS PONGO COMO DISPONIBLES
+		update NOT_NULL.turno set turno_estado = 'D' where (select top 1 usuario_id from afiliado where afiliado_nro = turno.afiliado_nro) = @UsuarioId
 	end
   go
 
@@ -1178,6 +1211,7 @@ GO
   END
   GO
 
+  --drop procedure NOT_NULL.Turno_Agregar
   CREATE PROCEDURE NOT_NULL.Turno_Agregar(@matricula int, @especialidad int, @fecha datetime)
   AS BEGIN
 	DECLARE @medxesp_id int
@@ -1188,9 +1222,13 @@ GO
 				   WHERE p.profesional_matricula = @matricula
 						AND mxe.medxesp_especialidad = @especialidad)
 	if((select count(*) from turno where turno.turno_fecha = @fecha and turno.turno_medico_especialidad_id = @medxesp_id) = 0)
-	begin  
-		INSERT INTO NOT_NULL.turno(turno_nro,turno_fecha,turno_medico_especialidad_id)
-		values(@turnonro,@fecha,@medxesp_id)
+	begin
+		if((select count(*) from turno where turno_fecha =  @fecha and turno.turno_medico_especialidad_id = 
+		(select medicoXespecialidad.medxesp_id from medicoXespecialidad where medxesp_profesional = @matricula and medxesp_id <> @medxesp_id))=0)
+		begin
+			INSERT INTO NOT_NULL.turno(turno_nro,turno_fecha,turno_medico_especialidad_id)
+			values(@turnonro,@fecha,@medxesp_id)
+		end
 	end
   END
   GO

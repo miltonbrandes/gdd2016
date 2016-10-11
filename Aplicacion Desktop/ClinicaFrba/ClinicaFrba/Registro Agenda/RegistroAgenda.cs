@@ -22,7 +22,8 @@ namespace ClinicaFrba.Registro_Agenda
 		TextBox[,] matriz = new TextBox[4,6];
 		CustomHour[,] matrizHoras = new CustomHour[4,6];
         public bool conIntervalo = false;
-		public RegistroAgenda(Profesional profesional)
+        public bool sinEspecialidades = false;
+        public RegistroAgenda(Profesional profesional)
 		{
 			InitializeComponent();
 			
@@ -58,13 +59,25 @@ namespace ClinicaFrba.Registro_Agenda
 			matriz[3,4] = horaFin2Viernes;
 			matriz[3,5] = horaFin2Sabado;
 			#endregion matriz
-			
-			listaEspecialidades.DataSource = profesional.Especialidades;
-			listaEspecialidades.DisplayMember = "Descripcion";
-			listaEspecialidades.ValueMember = "Descripcion";
-			
-			monthCalendar1.MaxSelectionCount = 1;
-			monthCalendar2.MaxSelectionCount = 1;
+            
+			Dictionary<string,object> parametros = new Dictionary<string,object>(){
+				{"@matricula",profesional.Matricula},
+			};
+			profesional.Especialidades = DBHelper.ExecuteReader("Get_Especialidades_Sin_Agenda",parametros).ToEspecialidad();
+            if (profesional.Especialidades.Count != 0)
+            {
+                listaEspecialidades.DataSource = profesional.Especialidades;
+                listaEspecialidades.DisplayMember = "Descripcion";
+                listaEspecialidades.ValueMember = "Descripcion";
+
+                monthCalendar1.MaxSelectionCount = 1;
+                monthCalendar2.MaxSelectionCount = 1;
+            }
+            else
+            {
+                MessageBox.Show("El profesional ya tiene agenda para todas las especialidades asignadas", "No disponible", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                sinEspecialidades = true;
+            }
 		}
 		
 		void ButtonOKClick(object sender, EventArgs e)
@@ -124,7 +137,8 @@ namespace ClinicaFrba.Registro_Agenda
 					}
 				}
 			}
-			
+            MessageBox.Show("Se realizaron los turnos", "Turnos Realizados", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Hide();
 			//Listo, cerrar el form
 		}
 		
@@ -140,7 +154,7 @@ namespace ClinicaFrba.Registro_Agenda
 				//Genero el turno
 				Dictionary<string,object> parametros = new Dictionary<string, object>(){
 					{"@matricula",profesional.Matricula},
-					{"@especialidad",profesional.Especialidades[listaEspecialidades.SelectionStart].Id},
+					{"@especialidad",profesional.Especialidades[listaEspecialidades.SelectedIndex].Id},
 					{"@fecha",fecha}
 				};
 				DBHelper.ExecuteNonQuery("Turno_Agregar",parametros);
@@ -310,7 +324,9 @@ namespace ClinicaFrba.Registro_Agenda
 			
 			if(fecha1.CompareTo(fecha2) >= 0 )
 				return false;
-			else return true;
+            if (fecha1.CompareTo(DateTime.Today) < 0)
+                return false;
+            else return true;
 		}
 		
 		private bool validarComboBox(){
@@ -319,7 +335,11 @@ namespace ClinicaFrba.Registro_Agenda
 
         private void RegistroAgenda_Load(object sender, EventArgs e)
         {
-
+            if (sinEspecialidades)
+            {
+                this.Close();
+                
+            }
         }
 
         private void horaFin1Lunes_TextChanged(object sender, EventArgs e)
@@ -354,16 +374,25 @@ namespace ClinicaFrba.Registro_Agenda
 
         private void btnHorarios_Click(object sender, EventArgs e)
         {
-            checkBox1.Enabled = false;
-            checkBox2.Enabled = false;
-            checkBox3.Enabled = false;
-            checkBox4.Enabled = false;
-            checkBox5.Enabled = false;
-            checkBox6.Enabled = false;
-            label11.Visible = true;
-            label12.Visible = true;
-            monthCalendar1.Visible = true;
-            monthCalendar2.Visible = true;
+            if (listaEspecialidades.SelectedText != string.Empty)
+            {
+                checkBox1.Enabled = false;
+                checkBox2.Enabled = false;
+                checkBox3.Enabled = false;
+                checkBox4.Enabled = false;
+                checkBox5.Enabled = false;
+                checkBox6.Enabled = false;
+                label11.Visible = true;
+                label12.Visible = true;
+                monthCalendar1.Visible = true;
+                monthCalendar2.Visible = true;
+                listaEspecialidades.Enabled = false;
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar una especialidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
 
         private void monthCalendar2_DateChanged(object sender, DateRangeEventArgs e)

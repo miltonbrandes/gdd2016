@@ -182,5 +182,7 @@ drop PROCEDURE NOT_NULL.listado_Mas_Cancelaciones_Especialidad
 drop PROCEDURE NOT_NULL.listado_Profesionales_Menos_Horas 
 drop PROCEDURE NOT_NULL.listado_Afiliado_Mas_Bonos
 drop PROCEDURE NOT_NULL.listado_Especialidad_Mas_Bonos
+drop procedure NOT_NULL.Afiliado_GetAfiliadoSegunNro
+drop procedure NOT_NULL.Get_Especialidades_Sin_Agenda
 DROP SCHEMA NOT_NULL
 GO

@@ -223,8 +223,6 @@ namespace ClinicaFrba.Listados
 
         public void funcion_para_listado_3()
         {
-            label_plan.Visible = label_especialidad.Visible = cmbPlan.Visible = cmbEspecialidad.Visible = btnFiltros.Visible = true;
-
             List<Plan> planes = DBHelper.ExecuteReader("Planes_GetAll").ToPlanes();
             cmbPlan.DataSource = planes;
             cmbPlan.DisplayMember = "Descripcion";
@@ -253,6 +251,16 @@ namespace ClinicaFrba.Listados
                 MessageBox.Show("Error al obtener datos de db", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+        }
+
+        private void cmbTipo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbTipo.SelectedIndex == 2)
+            {
+
+                label_plan.Visible = label_especialidad.Visible = cmbPlan.Visible = cmbEspecialidad.Visible = btnFiltros.Visible = true;
+                funcion_para_listado_3();
+            }
         }
 
     }
