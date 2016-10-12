@@ -1,4 +1,5 @@
 ﻿using Clases;
+using Clases.Profesionales;
 using Helpers;
 using System;
 using System.Collections.Generic;
@@ -31,22 +32,22 @@ namespace ClinicaFrba.Pedir_Turno
 
         public void cargarTurnos(string codigo_profesional, string codigo_especialidad)
         {
-            List<Franja> franjasFiltradas = null;
+            List<turnosProcedure> turnosFiltrados = null;
             var parametros = new Dictionary<string, object>() {
                     { "@profesional", codigo_profesional},
-                  //  { "@especialidad", codigo_especialidad}
+                    { "@especialidad", codigo_especialidad}
                 };
 
             try
             {
-                franjasFiltradas = DBHelper.ExecuteReader("turnos_GetByFilerProfesional", parametros).ToFranja();
+                turnosFiltrados = DBHelper.ExecuteReader("turnos_GetByFilerProfesional", parametros).ToTurnosProc();
             }
             catch
             {
                 MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
-            loadTurnos(franjasFiltradas);
+            loadTurnos(turnosFiltrados);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -54,10 +55,10 @@ namespace ClinicaFrba.Pedir_Turno
 
         }
 
-        private void loadTurnos(List<Franja> franjas)
+        private void loadTurnos(List<turnosProcedure> turnos)
         {
             dgvTurnos.Focus();
-            dgvTurnos.DataSource = franjas;
+            dgvTurnos.DataSource = turnos;
             dgvTurnos.Columns.Clear();
             dgvTurnos.AutoGenerateColumns = false;
 

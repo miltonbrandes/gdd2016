@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data.SqlClient;
 using Clases;
-
+using Clases.Profesionales;
 
 namespace Helpers
 {
@@ -238,7 +238,7 @@ namespace Helpers
                 {
                     Descripcion = (string)rdr["especialidad_descripcion"],
                     Id = (decimal)rdr["especialidad_codigo"],
-                    Tipo = (string)rdr["tipo_especialidad_descripcion"]
+                    Tipo = (string)rdr["especialidad_tipo"]
                 });
             }
             DBHelper.DB.Close();
@@ -427,5 +427,23 @@ namespace Helpers
         }
         #endregion
 
+        #region TURNOS_PROCEDURE
+
+        public static List<turnosProcedure> ToTurnosProc(this SqlDataReader rdr)
+        {
+            List<turnosProcedure> list = new List<turnosProcedure>();
+            while (rdr.Read())
+            {
+                list.Add(new turnosProcedure()
+                {
+                    dia = (string)rdr["dia"],
+                    mes = (string)rdr["mes"],
+                    horario = (string)rdr["hora"]
+                });
+            }
+            DBHelper.DB.Close();
+            return list;
+        }
+        #endregion
     }
 }

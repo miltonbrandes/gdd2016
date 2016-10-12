@@ -1273,39 +1273,33 @@ GO
 	end
   go
   
+  /* --------------------------------------------------------------------------------------------------------------------- */
   -- FILTRADO DE DIAS DE TURNOS SEGUN CODIGO_PROFESIONAL
-  CREATE PROCEDURE NOT_NULL.turnos_GetByFilerProfesional (@profesional varchar(20) /*,@especialidad varchar(20)*/)
+  CREATE PROCEDURE NOT_NULL.turnos_GetByFilerProfesional (@profesional varchar(20), @especialidad varchar(20))
   AS
 	BEGIN
 	SET NOCOUNT ON;
-	SELECT STR(franja_id) as id,
-	dia = 
-		CASE dia
-		when 1 then 'Lunes'
-		when 2 then 'Martes'
-		when 3 then 'Miércoles'
-		when 4 then 'Jueves'
-		when 5 then 'Viernes'
-		when 6 then 'Sábado'
-		when 7 then 'Domingo'
-		END,
-		   STR(hora_inicio*100 + minuto_inicio) as hora_inicio,
-		   --STR(minuto_inicio) as minuto_inicio, 
-		   STR(hora_fin*100 + minuto_fin) as hora_fin
-		   --STR(minuto_fin) as minuto_fin
-		   FROM NOT_NULL.franja_horaria WHERE agenda_id IN 
-				(
-				  	 SELECT agenda_id 
-					 FROM NOT_NULL.agenda 
-					 WHERE id_profesional = @profesional 
-					 and id_afiliado is null
---					 and id_especialidad = @especialidad
-					 and agenda_fecha_inicio >= '09/10/2016'
-				 )
+	SELECT day(turno_hora_llegada) as dia, month(turno_hora_llegada) as mes, CONVERT(varchar(20), turno_hora_llegada, 114) as hora
+	FROM not_null.turno
+	 WHERE turno_fecha > '2015/01/01'
+	  and afiliado_nro is null 
+	  and turno_estado = 'U' 
+	  and turno_medico_especialidad_id = (select top 1 medxesp_id from NOT_NULL.medicoXespecialidad where medxesp_profesional = @profesional and medxesp_especialidad = @especialidad)
 	END
-  GO  
+  GO 
+ 
+ 
+ /* 
+  select * From NOT_NULL.turno
+  (select medxesp_id from NOT_NULL.medicoXespecialidad where medxesp_profesional = @profesional and medxesp_especialidad = @especialidad)
+  select * from NOT_NULL.agenda where id_profesional = @profesional and id_especialidad = 
+  select * from NOT_NULL.franja_horaria
+ 
+  select CONVERT(varchar(20), turno_hora_llegada, 114) from NOT_NULL.turno
   
-  /*
+  exec NOT_NULL.turnos_GetByFilerProfesional 1
+  drop procedure NOT_NULL.turnos_GetByFilerProfesional
+  
   -- Agenda
   select * from NOT_NULL.agenda
   update not_null.agenda set agenda_fecha_fin = '2016-10-17'
@@ -1357,6 +1351,17 @@ GO
 	END
   GO
 
+-- FILTRADO DE ESPECIALIDADES POR LIKE NOMBRE_ESPECIALIDAD
+CREATE PROCEDURE NOT_NULL.especialidades_GetByFilerEspecialidad (@especialidad varchar(20))
+  AS
+	BEGIN
+	SET NOCOUNT ON;
+		SELECT especialidad_codigo, especialidad_descripcion, str(especialidad_tipo) as especialidad_tipo FROM NOT_NULL.especialidad 
+		WHERE especialidad_descripcion LIKE ('%' + @especialidad + '%')
+	END
+  GO  
+ 
+  /* ------------------------------------------------------------------------------------------------------------------------------*/
    -- Registrar Compra Bono
   CREATE PROCEDURE NOT_NULL.Comprar_Bono(@cantidad int, @precio int, @afiliado numeric(18,0), @fecha datetime, @plan numeric(18,0))
   AS
