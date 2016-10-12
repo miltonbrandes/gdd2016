@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Afiliados\Afiliado.cs" />
+    <Compile Include="Afiliados\Bono.cs" />
     <Compile Include="Afiliados\ModifPlan.cs" />
     <Compile Include="Afiliados\Plan.cs" />
     <Compile Include="Listados\Listado_1.cs" />

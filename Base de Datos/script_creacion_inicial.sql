@@ -430,8 +430,8 @@ GO
 ALTER TABLE NOT_NULL.turno CHECK CONSTRAINT [FK_NOT_NULL.turno_medicoXespecialidad]
 GO
 
-insert into NOT_NULL.turno(turno_nro, afiliado_nro, turno_fecha, turno_estado, turno_hora_llegada, turno_sintomas , turno_enfermedades, turno_medico_especialidad_id)
-select Turno_Numero, afiliado_nro, Turno_Fecha, 'U', Bono_Consulta_Fecha_Impresion, Consulta_Sintomas, Consulta_Enfermedades, medxesp_id
+insert into NOT_NULL.turno(turno_nro, afiliado_nro, turno_fecha, turno_estado, turno_hora_llegada, turno_sintomas , turno_enfermedades, turno_medico_especialidad_id, turno_tiempo)
+select Turno_Numero, afiliado_nro, Turno_Fecha, 'U', Bono_Consulta_Fecha_Impresion, Consulta_Sintomas, Consulta_Enfermedades, medxesp_id, 1
 	from gd_esquema.Maestra, NOT_NULL.afiliado, NOT_NULL.medicoXespecialidad, NOT_NULL.profesional
 	where afiliado_dni = Paciente_Dni and medxesp_especialidad = Especialidad_Codigo and medXesp_profesional = profesional_matricula
 		and profesional_dni = Medico_Dni
@@ -1484,5 +1484,39 @@ go
 	begin
 		update NOT_NULL.turno set turno_sintomas = @sintomas, turno_enfermedades = @enfermedades, turno_tiempo = @tiempo, turno_estado = 'U'
 		where turno_nro = @turnoid
+	end
+ go
+
+ /*TRAIGO LOS TURNOS DE UN PROFESIONAL QUE ESTAN RESERVADOS*/
+ create procedure NOT_NULL.Get_Turnos_Prof_Reservados(@medxespid int, @fecha datetime, @nroafiliado int)
+ as
+	begin
+		select * from turno where turno_medico_especialidad_id = @medxespid and YEAR(turno_fecha) = YEAR(@fecha)
+		and MONTH(turno_fecha) = MONTH(@fecha) and DAY(turno_fecha) = DAY(@fecha) and LEFT(afiliado_nro, len(@nroafiliado)) = @nroafiliado and turno_estado = 'R'
+	end
+ go
+
+ /*ME FIJO SI EL AFILIADO TENIA BONOS*/
+ create procedure NOT_NULL.Get_Bonos_Afiliado(@nroafiliado int)
+ as
+	begin
+		select * from NOT_NULL.bono_consulta where (CONVERT(int ,bono_afiliado))/100 = @nroafiliado/100 and bono_utilizado = 'N' and bono_plan = (select afiliado_plan from afiliado where afiliado_nro = @nroafiliado)
+	end
+ go
+
+
+ /*REGISTRO LA LLEGADA DE UN AFILIADO A UN TURNO*/
+ create procedure NOT_NULL.Registrar_Llegada(@nroafiliado int, @nroturno numeric(18,0), @fecha datetime) 
+ as
+	begin
+		declare @nrobonoconsulta int
+		set @nrobonoconsulta = isnull((select top 1 (bono_nro_bono_afiliado+1) from NOT_NULL.bono_consulta where
+		NOT_NULL.bono_consulta.bono_afiliado = @nroafiliado order by bono_nro_bono_afiliado desc),1)
+		update NOT_NULL.turno set turno_hora_llegada = @fecha, turno_estado = 'L' where turno_nro = @nroturno
+		declare @primerBono int
+		set @primerBono = (select top 1 bono_consulta.bono_id from bono_consulta where bono_utilizado = 'N' and
+		(CONVERT(int ,bono_afiliado))/100 = @nroafiliado/100 and bono_fecha_compra is not null)
+		update  NOT_NULL.bono_consulta set bono_utilizado = 'S', bono_turno = @nroturno, bono_nro_bono_afiliado = @nrobonoconsulta
+		where bono_id = @primerBono 
 	end
  go

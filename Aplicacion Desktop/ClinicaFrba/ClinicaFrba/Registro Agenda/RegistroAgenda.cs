@@ -139,6 +139,20 @@ namespace ClinicaFrba.Registro_Agenda
 			}
             MessageBox.Show("Se realizaron los turnos", "Turnos Realizados", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Hide();
+            Main acerrar = null;
+            FormCollection fc = Application.OpenForms;
+            foreach (Form frm in fc)
+            {
+                if (frm.Name == "Main")
+                {
+                    acerrar = (Main)frm;
+
+                }
+            }
+            if (acerrar != null)
+            {
+                acerrar.Show();
+            }
 			//Listo, cerrar el form
 		}
 		
@@ -353,6 +367,7 @@ namespace ClinicaFrba.Registro_Agenda
             {
                 button1.Visible = true;
                 btnHorarios.Visible = true;
+                label1.Visible = true;
                 if (conIntervalo)
                 {
                     horaInicio2Lunes.Visible = true;
@@ -412,6 +427,7 @@ namespace ClinicaFrba.Registro_Agenda
             {
                 button1.Visible = true;
                 btnHorarios.Visible = true;
+//                label11.Visible = true;
                 if (conIntervalo)
                 {
                     horaInicio2Martes.Visible = true;
@@ -441,6 +457,7 @@ namespace ClinicaFrba.Registro_Agenda
             {
                 button1.Visible = true;
                 btnHorarios.Visible = true;
+  //              label11.Visible = true;
                 if (conIntervalo)
                 {
                     horaInicio2Miercoles.Visible = true;
@@ -468,6 +485,7 @@ namespace ClinicaFrba.Registro_Agenda
 
             if (checkBox4.Checked)
             {
+    //            label11.Visible = true;
                 button1.Visible = true;
                 btnHorarios.Visible = true;
                 if (conIntervalo)
@@ -496,6 +514,7 @@ namespace ClinicaFrba.Registro_Agenda
 
             if (checkBox5.Checked)
             {
+      //          label11.Visible = true;
                 button1.Visible = true;
                 btnHorarios.Visible = true;
                 if(conIntervalo){
@@ -523,9 +542,11 @@ namespace ClinicaFrba.Registro_Agenda
 
             if (checkBox6.Checked)
             {
+        //        label11.Visible = true;
                 btnHorarios.Visible = true;
                 if (conIntervalo)
                 {
+
                     horaInicio2Sabado.Visible = true;
                     horaFin2Sabado.Visible = true;
                 }

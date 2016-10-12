@@ -234,11 +234,12 @@ namespace Helpers
             List<Especialidad> list = new List<Especialidad>();
             while (rdr.Read())
             {
+               // if(rdr.
                 list.Add(new Especialidad()
                 {
                     Descripcion = (string)rdr["especialidad_descripcion"],
                     Id = (decimal)rdr["especialidad_codigo"],
-                    Tipo = (string)rdr["especialidad_tipo"]
+                    Tipo = (string)rdr["tipo_especialidad_descripcion"],
                 });
             }
             DBHelper.DB.Close();
@@ -439,6 +440,53 @@ namespace Helpers
                     dia = (string)rdr["dia"],
                     mes = (string)rdr["mes"],
                     horario = (string)rdr["hora"]
+                });
+            }
+            DBHelper.DB.Close();
+            return list;
+        }
+        #endregion
+
+        #region BONOS
+        public static Bono ToBonos(this SqlDataReader rdr)
+        {
+            return rdr.ToBono().FirstOrDefault();
+        }
+        public static List<Bono> ToBono(this SqlDataReader rdr)
+        {
+            SqlDataReader milector = rdr;
+            List<Bono> list = new List<Bono>();
+            while (milector.Read())
+            {
+                decimal id = (decimal)rdr["bono_id"];
+                decimal afil = (decimal)rdr["bono_afiliado"];
+                decimal plan = (decimal)rdr["bono_plan"];
+                decimal turno;
+                if (rdr["bono_turno"].ToString() != string.Empty)
+                {
+                    turno = (decimal)rdr["bono_turno"];
+                }
+                else { 
+                  turno = 0;
+                }
+                decimal nrobono;
+                DateTime fecha = (DateTime)rdr["bono_fecha_compra"];
+                string utilizado = (string)rdr["bono_utilizado"];
+                if (rdr["bono_nro_bono_afiliado"].ToString() != string.Empty)
+                {
+                    nrobono = (decimal)rdr["bono_nro_bono_afiliado"];
+                }
+                else { nrobono = 0; }
+
+                list.Add(new Bono()
+                {
+                    Id = id,
+                    Afiliado = afil,
+                    Plan = plan,
+                    Turno = turno,
+                    FechaCompra = fecha,
+                    Utilizado = utilizado,
+                    NroBonoAfiliado = nrobono,
                 });
             }
             DBHelper.DB.Close();

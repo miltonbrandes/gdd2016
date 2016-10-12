@@ -114,6 +114,7 @@ namespace ClinicaFrba.Registro_Agenda
             this.checkBox6 = new System.Windows.Forms.CheckBox();
             this.btnHorarios = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // horaInicio1Lunes
@@ -543,11 +544,23 @@ namespace ClinicaFrba.Registro_Agenda
             this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(199, 301);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(362, 20);
+            this.label1.TabIndex = 51;
+            this.label1.Text = "Ingresar los horarios con el formato de HH:mm";
+            this.label1.Visible = false;
+            // 
             // RegistroAgenda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(775, 575);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnHorarios);
             this.Controls.Add(this.checkBox6);
@@ -608,5 +621,6 @@ namespace ClinicaFrba.Registro_Agenda
         private System.Windows.Forms.CheckBox checkBox6;
         private System.Windows.Forms.Button btnHorarios;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label1;
 	}
 }

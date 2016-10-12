@@ -19,6 +19,7 @@ namespace ClinicaFrba.Registro_Resultado
         {
             //this.Width = 
             InitializeComponent();
+            dtpFechaTurno.Value = DateTime.Today;
             profesional = pro;
         }
 
@@ -39,21 +40,56 @@ namespace ClinicaFrba.Registro_Resultado
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            
             Dictionary<string, object> parametros2 = new Dictionary<string, object>()
         		{ {"@fecha", dtpFechaTurno.Value}, {"@matricula", profesional.Matricula},{"@especialidad", ((Especialidad)cmbEspecialidad.SelectedItem).Id} };
             List<Turno> lista = new List<Turno>();
             lista = DBHelper.ExecuteReader("GetTurnosDiaLlegaron", parametros2).ToTurno();
+
             dataGridView1.DataSource = lista;
+            //FALTA MOSTRAR ACA SOLO LAS COLUMNAS QUE ME INTERESAN
+            /*dataGridView1.Columns.Clear();
+            dataGridView1.AutoGenerateColumns = false;
+
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                DataPropertyName = "Id",
+                HeaderText = "Codigo",
+                Width = 128,
+                ReadOnly = true
+            });
+
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                DataPropertyName = "Descripcion",
+                HeaderText = "Especialidad",
+                Width = 128,
+                ReadOnly = true
+            });
+
+            dataGridView1.Columns.Add(new DataGridViewColumn(){
+                DataPropertyName = "Nombre",
+                HeaderText = "Nombre",
+                Width = 128,
+                ReadOnly = true
+            });*/
             }
 
         private void dataGridView1_DoubleClick(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count == 1)
             {
-                button1.Enabled = false;
-                dataGridView1.Enabled = false;
-                this.Width = 980;
+                if (dtpFechaTurno.Value >= DateTime.Today)
+                {
+                    button1.Enabled = false;
+                    dataGridView1.Enabled = false;
+                    this.Width = 980;
+                }
+                else
+                {
+                    MessageBox.Show("Debe ingresar una fecha igual o posterior al dia de hoy", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
         }
 
@@ -70,8 +106,15 @@ namespace ClinicaFrba.Registro_Resultado
                 int.TryParse(dataGridView1.SelectedCells[0].Value.ToString(),out turnonro);
                 Dictionary<string, object> parametros2 = new Dictionary<string, object>() { { "@turnoid", turnonro }
                     , { "@sintomas", txtSintomas.Text }, { "@enfermedades", txtDiagnostico.Text }, {"@tiempo",ckbHorario.Checked } };
-                DBHelper.ExecuteNonQuery("Registrar_Resultado",parametros2);
-                MessageBox.Show("Se registro el resultado con exito", "Registrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                try
+                {
+                    DBHelper.ExecuteNonQuery("Registrar_Resultado", parametros2);
+                    
+                }
+                catch { MessageBox.Show("Se registro el resultado con exito", "Registrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+                }
+
             }
             Hide();
             Main aabrir = null;

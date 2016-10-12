@@ -186,5 +186,9 @@ drop procedure NOT_NULL.Afiliado_GetAfiliadoSegunNro
 drop procedure NOT_NULL.Get_Especialidades_Sin_Agenda
 drop procedure NOT_NULL.GetTurnosDiaLlegaron
 drop procedure NOT_NULL.Registrar_Resultado
+drop procedure NOT_NULL.Get_Turnos_Prof_Reservados
+drop procedure NOT_NULL.especialidades_GetByFilerEspecialidad
+drop procedure NOT_NULL.Get_Bonos_Afiliado
+drop procedure NOT_NULL.Registrar_Llegada
 DROP SCHEMA NOT_NULL
 GO

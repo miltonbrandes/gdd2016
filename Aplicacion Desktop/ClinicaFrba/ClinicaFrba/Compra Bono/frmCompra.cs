@@ -44,10 +44,27 @@ namespace ClinicaFrba.Compra_Bono
                     int.TryParse(textBox_afiliado.Text, out nro);
                     if (nro > 0)
                     {
-                        afiliado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunNro", new Dictionary<string, object> { { "@nroAfil", nro } }).ToAfiliados();
+                        int cant;
+                        int.TryParse(textBox_cantidad.Text, out cant);
+                        if (cant > 0)
+                        {
+                            afiliado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunNro", new Dictionary<string, object> { { "@nroAfil", nro } }).ToAfiliados();
+                        }
+                        else {
+                            label_cantidad.Text = "Cantidad:";
+                            label_precio.Text = "Precio Final:";
+                            boton_comprar.Enabled = false;
+
+                            MessageBox.Show("Ingrese una cantidad numerica mayor que 0", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
                     }
                     else
                     {
+                        label_cantidad.Text = "Cantidad:";
+                        label_precio.Text = "Precio Final:";
+                        boton_comprar.Enabled = false;
                         MessageBox.Show("Ingrese el nro correcto de afiliado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
@@ -56,13 +73,34 @@ namespace ClinicaFrba.Compra_Bono
                 {
                     if (usuario.Username == "admin")
                     {
-
-                        afiliado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", new Dictionary<string, object> { { "@username", "administrador32405354" } }).ToAfiliados();
+                        int cant;
+                        int.TryParse(textBox_cantidad.Text, out cant);
+                        if (cant > 0)
+                        {
+                            afiliado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", new Dictionary<string, object> { { "@username", "administrador32405354" } }).ToAfiliados();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Ingrese una cantidad numerica mayor que 0", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
                     }
                     else
                     {
-                        afiliado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", new Dictionary<string, object> { { "@username", usuario.Username } }).ToAfiliados();
-
+                        int cant;
+                        int.TryParse(textBox_cantidad.Text, out cant);
+                        if (cant > 0)
+                        {
+                            afiliado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", new Dictionary<string, object> { { "@username", usuario.Username } }).ToAfiliados();
+                        }
+                        else
+                        {
+                            label_cantidad.Text = "Cantidad:";
+                            label_precio.Text = "Precio Final:";
+                            boton_comprar.Enabled = false;
+                            MessageBox.Show("Ingrese una cantidad numerica mayor que 0", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
                     }
                 }
                 if (afiliado != null)
@@ -101,10 +139,27 @@ namespace ClinicaFrba.Compra_Bono
                     { "@plan", afiliado.PlanUsuario }
                     });
                 MessageBox.Show("Compra Registrada", "Ok", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Hide();
+                Main acerrar = null;
+                FormCollection fc = Application.OpenForms;
+                foreach (Form frm in fc)
+                {
+                    if (frm.Name == "Main")
+                    {
+                        acerrar = (Main)frm;
+
+                    }
+                }
+                if (acerrar != null)
+                {
+                    acerrar.Show();
+                }
+
             }
             catch
             {
                 MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
             
         }
