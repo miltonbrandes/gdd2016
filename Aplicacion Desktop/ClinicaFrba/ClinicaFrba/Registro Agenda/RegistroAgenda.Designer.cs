@@ -529,6 +529,7 @@ namespace ClinicaFrba.Registro_Agenda
             this.btnHorarios.TabIndex = 49;
             this.btnHorarios.Text = "Confirmar Horarios";
             this.btnHorarios.UseVisualStyleBackColor = true;
+            this.btnHorarios.Visible = false;
             this.btnHorarios.Click += new System.EventHandler(this.btnHorarios_Click);
             // 
             // button1
@@ -539,6 +540,7 @@ namespace ClinicaFrba.Registro_Agenda
             this.button1.TabIndex = 50;
             this.button1.Text = "Horarios Con Intervalo";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // RegistroAgenda
