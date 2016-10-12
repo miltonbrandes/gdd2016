@@ -374,7 +374,7 @@ namespace ClinicaFrba.Registro_Agenda
 
         private void btnHorarios_Click(object sender, EventArgs e)
         {
-            if (listaEspecialidades.SelectedText != string.Empty)
+            if (listaEspecialidades.SelectedText != string.Empty || listaEspecialidades.Items.Count == 1)
             {
                 checkBox1.Enabled = false;
                 checkBox2.Enabled = false;

@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace Clases
 {
-    class Turno
+    public class Turno
     {
-        public int Id { get; set; }
-        public int Afiliado { get; set; }
+        public decimal Id { get; set; }
+        public decimal Afiliado { get; set; }
         public DateTime Fecha { get; set; }
-        public int Estado { get; set; }
+        public string Estado { get; set; }
         public DateTime Llegada { get; set; }
         public string Sintomas { get; set; }
         public string Enfermedades { get; set; }
         public int IdMedicoEspecialidad { get; set; }
+        public bool Tiempo { get; set; }
     }
 }

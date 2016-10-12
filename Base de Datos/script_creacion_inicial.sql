@@ -404,11 +404,12 @@ CREATE TABLE NOT_NULL.turno(
 	turno_nro numeric(18,0) /*identity(1,1)*/,
 	afiliado_nro numeric(18, 0) NULL,
 	turno_fecha datetime NULL,
-	turno_estado char(1) default 'D' NULL ,
+	turno_estado char(1) default 'D' NULL , --ESTADO D disponible R reservado U usado L llego
 	turno_hora_llegada datetime NULL,
 	turno_sintomas varchar(255) NULL,
 	turno_enfermedades varchar(255) NULL,
 	turno_medico_especialidad_id int NULL,
+	turno_tiempo bit NULL,
 	CONSTRAINT [PK_NOT_NULL.turno] PRIMARY KEY CLUSTERED 
 	(turno_nro ASC)
 		WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -1218,9 +1219,8 @@ GO
 	DECLARE @turnonro numeric(18,0)
 	SET @turnonro = (SELECT TOP 1 turno.turno_nro from turno order by turno.turno_nro desc) +1
 	SET @medxesp_id = (SELECT TOP 1 mxe.medxesp_id
-				   FROM NOT_NULL.profesional p, NOT_NULL.medicoXespecialidad mxe
-				   WHERE p.profesional_matricula = @matricula
-						AND mxe.medxesp_especialidad = @especialidad)
+				   FROM NOT_NULL.medicoXespecialidad mxe
+				   WHERE mxe.medxesp_especialidad = @especialidad and mxe.medxesp_profesional = @matricula)
 	if((select count(*) from turno where turno.turno_fecha = @fecha and turno.turno_medico_especialidad_id = @medxesp_id) = 0)
 	begin
 		if((select count(*) from turno where turno_fecha =  @fecha and turno.turno_medico_especialidad_id = 
@@ -1459,4 +1459,25 @@ go
 		group by especialidad_descripcion
 		order by count(bono_id) desc
 	End
+ go
+
+
+ /*TRAIGO TODOS LOS TURNOS DEL DIA QUE YA LLEGARON*/
+ create procedure NOT_NULL.GetTurnosDiaLlegaron(@fecha datetime, @matricula int, @especialidad int)
+ as
+	begin
+		declare @medespid int
+		set @medespid = (select top 1 medicoXespecialidad.medxesp_id from medicoXespecialidad where medicoXespecialidad.medxesp_especialidad = @especialidad and medicoXespecialidad.medxesp_profesional = @matricula)
+		select * from turno where YEAR(turno_fecha) = year(@fecha) and MONTH(turno_fecha) = MONTH(@fecha) and DAY(turno_fecha) = DAY(@fecha)
+		 and turno.turno_estado = 'L' and turno_medico_especialidad_id = @medespid
+	end
+ go
+
+ /*REGISTRO UN RESULTADO*/
+ create procedure NOT_NULL.Registrar_Resultado(@sintomas varchar(255), @enfermedades varchar(255), @turnoid numeric(18,0), @tiempo bit)
+ as 
+	begin
+		update NOT_NULL.turno set turno_sintomas = @sintomas, turno_enfermedades = @enfermedades, turno_tiempo = @tiempo, turno_estado = 'U'
+		where turno_nro = @turnoid
+	end
  go

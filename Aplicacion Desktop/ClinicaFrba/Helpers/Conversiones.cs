@@ -346,5 +346,86 @@ namespace Helpers
             return list;
         }
         #endregion
+
+        #region TURNOS
+        public static Turno ToTurnos(this SqlDataReader rdr)
+        {
+            return rdr.ToTurno().FirstOrDefault();
+        }
+        public static List<Turno> ToTurno(this SqlDataReader rdr)
+        {
+            SqlDataReader milector = rdr;
+            List<Turno> list = new List<Turno>();
+            while (milector.Read())
+            {
+
+                string enfermedades;
+                decimal afiliado;
+                DateTime llegada;
+                string sintomas;
+                bool tiempo = false; ;
+                decimal id = (decimal)rdr["turno_nro"];
+                if (rdr["afiliado_nro"].ToString() != "")
+                {
+                    afiliado = (decimal)rdr["afiliado_nro"];
+                }
+                else
+                {
+                    afiliado = 0;
+                }
+                if (rdr["turno_tiempo"].ToString() == "0")
+                {
+                    tiempo = false;
+                }
+                else
+                {
+                    tiempo = true;
+                }
+                DateTime fecha = (DateTime)rdr["turno_fecha"];
+                string estado = (string)rdr["turno_estado"];
+                if (rdr["turno_hora_llegada"].ToString() != "")
+                {
+                    llegada = (DateTime)rdr["turno_hora_llegada"];
+                }
+                else
+                {
+                    llegada = DateTime.Today;
+                }
+                if (rdr["turno_sintomas"].ToString() != "")
+                {
+                    sintomas = (string)rdr["turno_sintomas"];
+                }
+                else
+                {
+                    sintomas = "";
+                }
+                if (rdr["turno_enfermedades"].ToString() != "")
+                {
+                    enfermedades = (string)rdr["turno_enfermedades"];
+                }
+                else
+                {
+                    enfermedades = "";
+                }
+                int idmedicoespecialidad = (int)rdr["turno_medico_especialidad_id"];
+                list.Add(new Turno()
+                   {
+
+                       Id = id, 
+                       Afiliado = afiliado,
+                       Fecha = fecha,
+                       Estado = estado,
+                       Llegada = llegada,
+                       Sintomas = sintomas,
+                       Enfermedades = enfermedades,
+                       IdMedicoEspecialidad = idmedicoespecialidad,
+                       Tiempo = tiempo,
+                   });
+            }
+            DBHelper.DB.Close();
+            return list;
+        }
+        #endregion
+
     }
 }
