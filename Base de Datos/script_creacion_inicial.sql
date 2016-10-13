@@ -1318,7 +1318,6 @@ CREATE PROCEDURE NOT_NULL.especialidades_GetByFilerEspecialidad (@especialidad v
 		WHERE especialidad_descripcion LIKE ('%' + @especialidad + '%')
 	END
   GO  
- 
   /* ------------------------------------------------------------------------------------------------------------------------------*/
    -- Registrar Compra Bono
   CREATE PROCEDURE NOT_NULL.Comprar_Bono(@cantidad int, @precio int, @afiliado numeric(18,0), @fecha datetime, @plan numeric(18,0))

@@ -239,7 +239,7 @@ namespace Helpers
                 {
                     Descripcion = (string)rdr["especialidad_descripcion"],
                     Id = (decimal)rdr["especialidad_codigo"],
-                    Tipo = (string)rdr["tipo_especialidad_descripcion"],
+                    Tipo = (string)rdr["especialidad_tipo"]
                 });
             }
             DBHelper.DB.Close();

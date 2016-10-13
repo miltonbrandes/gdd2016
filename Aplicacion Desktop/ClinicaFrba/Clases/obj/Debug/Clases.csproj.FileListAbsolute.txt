@@ -14,3 +14,4 @@ C:\Users\Jamper\Documents\GitHub\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\b
 C:\Users\Jamper\Documents\GitHub\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\bin\Debug\Clases.pdb
 C:\Users\Jamper\Documents\GitHub\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\obj\Debug\Clases.dll
 C:\Users\Jamper\Documents\GitHub\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\obj\Debug\Clases.pdb
+C:\Users\Jamper\Documents\GitHub\gdd2016\Aplicacion Desktop\ClinicaFrba\Clases\obj\Debug\Clases.csprojResolveAssemblyReference.cache
