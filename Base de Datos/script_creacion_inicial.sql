@@ -1275,7 +1275,7 @@ GO
   
   /* --------------------------------------------------------------------------------------------------------------------- */
   -- FILTRADO DE DIAS DE TURNOS SEGUN CODIGO_PROFESIONAL
-  CREATE PROCEDURE NOT_NULL.turnos_GetByFilerProfesional (@profesional varchar(20), @especialidad varchar(20))
+  CREATE PROCEDURE NOT_NULL.turnos_GetByFilerProfesional @profesional varchar(20), @especialidad varchar(20)
   AS
 	BEGIN
 	SET NOCOUNT ON;
@@ -1287,8 +1287,8 @@ GO
 	  and turno_medico_especialidad_id = (select top 1 medxesp_id from NOT_NULL.medicoXespecialidad where medxesp_profesional = @profesional and medxesp_especialidad = @especialidad)
 	END
   GO 
-   
-  --FILTRADO DE PROFESIONALES POR ESPECIALIDAD
+  
+  --FILTRADO DE PROFESIONALES POR ESPECIALIDAD - OK
   CREATE PROCEDURE NOT_NULL.profesional_GetByFilerEspecialidad (@especialidad varchar(20))
   AS
 	BEGIN
@@ -1309,7 +1309,7 @@ GO
 	END
   GO
 
--- FILTRADO DE ESPECIALIDADES POR LIKE NOMBRE_ESPECIALIDAD
+-- FILTRADO DE ESPECIALIDADES POR LIKE NOMBRE_ESPECIALIDAD - OK
 CREATE PROCEDURE NOT_NULL.especialidades_GetByFilerEspecialidad (@especialidad varchar(20))
   AS
 	BEGIN
