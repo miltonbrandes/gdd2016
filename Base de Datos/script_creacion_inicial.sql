@@ -1287,49 +1287,7 @@ GO
 	  and turno_medico_especialidad_id = (select top 1 medxesp_id from NOT_NULL.medicoXespecialidad where medxesp_profesional = @profesional and medxesp_especialidad = @especialidad)
 	END
   GO 
- 
- 
- /* 
-  select * From NOT_NULL.turno
-  (select medxesp_id from NOT_NULL.medicoXespecialidad where medxesp_profesional = @profesional and medxesp_especialidad = @especialidad)
-  select * from NOT_NULL.agenda where id_profesional = @profesional and id_especialidad = 
-  select * from NOT_NULL.franja_horaria
- 
-  select CONVERT(varchar(20), turno_hora_llegada, 114) from NOT_NULL.turno
-  
-  exec NOT_NULL.turnos_GetByFilerProfesional 1
-  drop procedure NOT_NULL.turnos_GetByFilerProfesional
-  
-  -- Agenda
-  select * from NOT_NULL.agenda
-  update not_null.agenda set agenda_fecha_fin = '2016-10-17'
-  insert into NOT_NULL.agenda values ('10', '10018', '10/10/2016', '17/10/2016')
-  
-  -- Carga Franja Horaria para la agenda 0
-  --select * from NOT_NULL.franja_horaria
-  -- Lunes dia 1
-  -- Martes dia 2
-  -- Miercoles dia 3
-  -- Jueves dia 4
-  -- Viernes dia 5
-  -- Sábado dia 6
-  -- Domingo dia 7
-  insert into NOT_NULL.franja_horaria values (1, 10,00, 10,30, 0,null, 4)
-  insert into NOT_NULL.franja_horaria values (1, 10,30, 11,00, 0,null, 4);
-  insert into NOT_NULL.franja_horaria values (1, 11,00, 11,30, 0,null, 4);
-  insert into NOT_NULL.franja_horaria values (1, 11,30, 12,00, 0,null, 4);
-  insert into NOT_NULL.franja_horaria values (2, 10,00, 10,30, 0,null, 4);
-  insert into NOT_NULL.franja_horaria values (2, 10,30, 11,00, 0,null, 4);
-  insert into NOT_NULL.franja_horaria values (3, 10,00, 10,30, 0,null, 4)
-  insert into NOT_NULL.franja_horaria values (3, 10,30, 11,00, 0,null, 4);
-  insert into NOT_NULL.franja_horaria values (4, 11,00, 11,30, 0,null, 4);
-  insert into NOT_NULL.franja_horaria values (4, 11,30, 12,00, 0,null, 4);
-  insert into NOT_NULL.franja_horaria values (5, 10,00, 10,30, 0,null, 4);
-  insert into NOT_NULL.franja_horaria values (5, 10,30, 11,00, 0,null, 4);
-  insert into NOT_NULL.franja_horaria values (6, 10,00, 10,30, 0,null, 4);
-  insert into NOT_NULL.franja_horaria values (6, 10,30, 11,00, 0,null, 4);  
-  */
-  
+   
   --FILTRADO DE PROFESIONALES POR ESPECIALIDAD
   CREATE PROCEDURE NOT_NULL.profesional_GetByFilerEspecialidad (@especialidad varchar(20))
   AS
@@ -1383,12 +1341,6 @@ CREATE PROCEDURE NOT_NULL.especialidades_GetByFilerEspecialidad (@especialidad v
 		VALUES (@cantidad, @precio, @afiliado, @fecha)
 	END
   GO
-
-
-
-
-
-  
 
 
   --	Top 5 de las especialidades que más se registraron cancelaciones, tanto de afiliados como de profesionales.
@@ -1520,3 +1472,23 @@ go
 		where bono_id = @primerBono 
 	end
  go
+
+ /*CANCELO EL TURNO DEL AFILIADO*/
+ create procedure NOT_NULL.Cancelar_Turno_Afiliado(@nroturno numeric(18,0), @nroafiliado numeric(18,0), @fecha datetime, @motivo varchar(255), @tipo char(1))
+ as
+	begin
+		update NOT_NULL.turno set turno_estado = 'D' where turno_nro = @nroturno and afiliado_nro = @nroafiliado
+		insert into NOT_NULL.cancelacion_turno (cancel_afiliado, cancel_fecha, cancel_motivo, cancel_tipo, cancel_turno)
+		values(@nroafiliado, @fecha, @motivo, LEFT(@motivo, 1), @nroturno)
+	end
+ go
+
+ /*TRAIGO TODOS LOS TURNOS DE UN AFILIADO*/
+ create procedure NOT_NULL.Turnos_Afiliado(@nroafiliado numeric(18,0), @fecha datetime)
+ as
+	begin
+		select * from turno where afiliado_nro = @nroafiliado and turno_fecha > @fecha
+	end
+ go
+
+ /*CANCELO EL TURNO DEL PROFESIONAL*/

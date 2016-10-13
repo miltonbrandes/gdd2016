@@ -18,7 +18,7 @@ namespace ClinicaFrba
         public static Usuario usuario { get; private set; }
         public static Rol rol;
         public static Profesional profesional;
-
+        public static Afiliado afiliado;
         public static int load = 0;
         public Main(Usuario us, Rol ro)
         {
@@ -65,6 +65,19 @@ namespace ClinicaFrba
         	parametros = new Dictionary<string, object>()
         		{ {"@matricula",profesional.Matricula} };
         	profesional.Especialidades = DBHelper.ExecuteReader("Especialidad_GetByMatricula",parametros).ToEspecialidad();
+        }
+        public static void cargarAfiliado()
+        {
+            if (usuario.Username == "admin")
+            {   
+                Dictionary<string, object> parametros = new Dictionary<string, object>() { { "@username",  "administrador32405354"} };
+                afiliado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", parametros).ToAfiliados();
+            }
+            else
+            {
+                Dictionary<string, object> parametros = new Dictionary<string, object>() { { "@username", usuario.Username } };
+                afiliado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", parametros).ToAfiliados();
+            }
         }
         
         //Esto es mucho mas facil con un enum.
@@ -163,7 +176,8 @@ namespace ClinicaFrba
             }
             else if(rol.Descripcion == "Afiliado")
             {
-                var home = new Cancelar_Atencion.frmCancelarAtencionAfiliado();
+                cargarAfiliado();
+                var home = new Cancelar_Atencion.frmCancelarAtencionAfiliado(afiliado, usuario, rol);
                 home.Show();
             }
         }
