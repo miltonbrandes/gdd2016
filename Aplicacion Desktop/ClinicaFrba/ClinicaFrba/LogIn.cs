@@ -42,6 +42,7 @@ namespace ClinicaFrba
                     catch
                     {
                         MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
                     } 
                     if (usuario != null && !usuario.Activo)
                     {
