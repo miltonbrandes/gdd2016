@@ -477,8 +477,6 @@ GO
 /*		AGENDA		*/
 CREATE TABLE NOT_NULL.agenda(
 	agenda_id int IDENTITY(0,1) primary key,
-	id_profesional varchar(20), 
-	id_especialidad varchar(20),
 	--agenda_medxesp int NOT NULL foreign key references NOT_NULL.medicoXespecialidad(medxesp_id),
 	agenda_fecha_inicio date,
 	agenda_fecha_fin date,
@@ -1178,8 +1176,8 @@ GO
   AS BEGIN
 	Declare @especialidad_id numeric(18,0);
 	set @especialidad_id = (Select top 1 especialidad.especialidad_codigo from especialidad where especialidad.especialidad_descripcion = @especialidad);
-	INSERT INTO NOT_NULL.Agenda(agenda_fecha_inicio,agenda_fecha_fin, id_profesional, id_especialidad)
-	VALUES(@fecha_inicio, @fecha_fin, @matricula, @especialidad_id)
+	INSERT INTO NOT_NULL.Agenda(agenda_fecha_inicio,agenda_fecha_fin)
+	VALUES(@fecha_inicio, @fecha_fin)
 	
 	UPDATE NOT_NULL.medicoXespecialidad
 	SET medxesp_agenda = @@IDENTITY
