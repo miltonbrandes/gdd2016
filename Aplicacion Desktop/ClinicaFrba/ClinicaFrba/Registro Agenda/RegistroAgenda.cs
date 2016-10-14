@@ -88,8 +88,11 @@ namespace ClinicaFrba.Registro_Agenda
 			}
 			if(!validarFechas())
 				return;
-			if(!validarComboBox())
-				return;
+            if (!validarComboBox())
+            {
+                MessageBox.Show("Debe seleccionar una especialidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 			
 			//Ahora tengo que enviarlo a la bd.
 			int agenda_id;
@@ -335,11 +338,17 @@ namespace ClinicaFrba.Registro_Agenda
 			
 			DateTime fecha1 = monthCalendar1.SelectionStart;
 			DateTime fecha2 = monthCalendar2.SelectionStart;
-			
-			if(fecha1.CompareTo(fecha2) >= 0 )
-				return false;
-            if (fecha1.CompareTo(DateTime.Today) < 0)
+
+            if (fecha1.CompareTo(fecha2) >= 0)
+            {
+                MessageBox.Show("Fechas Incorrectas. Verifique que la fecha 1 es mayor a la fecha 2", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
+            }
+            if (fecha1.CompareTo(DateTime.Today) < 0)
+            {
+                MessageBox.Show("Fechas Incorrectas. Verifique que la fecha 1 es mayor al dia de hoy", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
             else return true;
 		}
 		
