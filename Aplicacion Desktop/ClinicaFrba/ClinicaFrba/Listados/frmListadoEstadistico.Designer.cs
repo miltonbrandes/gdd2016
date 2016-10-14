@@ -185,7 +185,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cmbSemestre);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "frmListadoEstadistico";
             this.Text = "Listado Estadistico";
             this.Load += new System.EventHandler(this.frmListadoEstadistico_Load);

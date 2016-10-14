@@ -79,7 +79,7 @@ namespace ClinicaFrba.Listados
             {
                 DataPropertyName = "Matricula",
                 HeaderText = "Matricula",
-                Width = 200,
+                Width = 70,
                 ReadOnly = true
             });
             dgvResultado.Columns.Add(new DataGridViewTextBoxColumn()
@@ -98,8 +98,15 @@ namespace ClinicaFrba.Listados
             });
             dgvResultado.Columns.Add(new DataGridViewTextBoxColumn()
             {
+                DataPropertyName = "Especialidad",
+                HeaderText = "Especialidad",
+                Width = 170,
+                ReadOnly = true
+            });
+            dgvResultado.Columns.Add(new DataGridViewTextBoxColumn()
+            {
                 DataPropertyName = "Cantidad",
-                HeaderText = "Cantidad",
+                HeaderText = "Cantidad Consultas",
                 Width = 128,
                 ReadOnly = true
             });
@@ -234,11 +241,16 @@ namespace ClinicaFrba.Listados
                         Load_Listado_1(lista_1);
                         break;
                     case 1:
-                        List<Listado_2> lista_2 = DBHelper.ExecuteReader("listado_Profesionales_Consultados", (new Dictionary<string, object> { { "@fecha1", fecha1 }, { "@fecha2", fecha2 } })).ToListado_2();
+                        var parametros = new Dictionary<string, object> { 
+                            { "@fecha1", fecha1 }, 
+                            { "@fecha2", fecha2 }, 
+                            { "@plan", ((Plan)cmbPlan.SelectedItem).Descripcion },
+                            };
+                        List<Listado_2> lista_2 = DBHelper.ExecuteReader("listado_Profesionales_Consultados", parametros).ToListado_2();
                         Load_Listado_2(lista_2);
                         break;
                     case 2:
-                        var parametros = new Dictionary<string, object> { 
+                        parametros = new Dictionary<string, object> { 
                             { "@fecha1", fecha1 }, 
                             { "@fecha2", fecha2 }, 
                             { "@plan", ((Plan)cmbPlan.SelectedItem).Descripcion }, 
@@ -265,6 +277,13 @@ namespace ClinicaFrba.Listados
         }
 
 
+        public void funcion_para_listado_2()
+        {
+            List<Plan> planes = DBHelper.ExecuteReader("Planes_GetAll").ToPlanes();
+            cmbPlan.DataSource = planes;
+            cmbPlan.DisplayMember = "Descripcion";
+        }
+
         public void funcion_para_listado_3()
         {
             List<Plan> planes = DBHelper.ExecuteReader("Planes_GetAll").ToPlanes();
@@ -279,15 +298,20 @@ namespace ClinicaFrba.Listados
 
         private void cmbTipo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cmbTipo.SelectedIndex == 2)
+            switch(cmbTipo.SelectedIndex)
             {
-
-                label_plan.Visible = label_especialidad.Visible = cmbPlan.Visible = cmbEspecialidad.Visible = true;
-                funcion_para_listado_3();
-            }
-            else
-            {
-                label_plan.Visible = label_especialidad.Visible = cmbPlan.Visible = cmbEspecialidad.Visible = false;
+                case 1:
+                    label_plan.Visible = cmbPlan.Visible = true;
+                    label_especialidad.Visible = cmbEspecialidad.Visible = false;
+                    funcion_para_listado_2();
+                    break;
+                case 2:
+                    label_plan.Visible = label_especialidad.Visible = cmbPlan.Visible = cmbEspecialidad.Visible = true;
+                    funcion_para_listado_3();
+                    break;
+                default:
+                    label_plan.Visible = label_especialidad.Visible = cmbPlan.Visible = cmbEspecialidad.Visible = false;
+                    break;
             }
         }
 
