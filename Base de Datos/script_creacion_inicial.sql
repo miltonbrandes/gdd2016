@@ -1512,7 +1512,7 @@ go
  go
 
  /*CANCELO EL TURNO DEL PROFESIONAL*/
- create procedure NOT_NULL.Cancelar_Turnos_Profesional(@tipo char(1),@motivo varchar(255),@matricula int, @fecha datetime, @horainicio int, @minutosinicio int, @horafin int, @minutosfin int, @franjaid int)
+ create procedure NOT_NULL.Cancelar_Turnos_Profesional(@matricula int, @fecha datetime, @horainicio int, @minutosinicio int, @horafin int, @minutosfin int, @franjaid int)
  as
 	begin
 	--ESTO ES SI QUIERE CANCELAR UN DIA ENTERO
