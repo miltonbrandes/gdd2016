@@ -25,7 +25,6 @@ namespace ClinicaFrba.Listados
             dtpAnio.Format = DateTimePickerFormat.Custom;
             dtpAnio.CustomFormat = "yyyy";
             dtpAnio.ShowUpDown = true;
-           // dtpAnio.Enabled = false;
         }
 
         private void frmListadoEstadistico_Load(object sender, EventArgs e)
@@ -61,6 +60,13 @@ namespace ClinicaFrba.Listados
                 Width = 200,
                 ReadOnly = true
             });
+            dgvResultado.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                DataPropertyName = "Cantidad",
+                HeaderText = "Cantidad Cancelaciones",
+                Width = 150,
+                ReadOnly = true
+            });
         }
         private void Load_Listado_2(List<Listado_2> listado)
         {
@@ -90,6 +96,13 @@ namespace ClinicaFrba.Listados
                 Width = 128,
                 ReadOnly = true
             });
+            dgvResultado.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                DataPropertyName = "Cantidad",
+                HeaderText = "Cantidad",
+                Width = 128,
+                ReadOnly = true
+            });
         }
         private void Load_Listado_3(List<Listado_3> listado)
         {
@@ -102,7 +115,7 @@ namespace ClinicaFrba.Listados
             {
                 DataPropertyName = "Matricula",
                 HeaderText = "Matricula",
-                Width = 200,
+                Width = 70,
                 ReadOnly = true
             });
             dgvResultado.Columns.Add(new DataGridViewTextBoxColumn()
@@ -118,6 +131,13 @@ namespace ClinicaFrba.Listados
                 HeaderText = "Apellido",
                 Width = 128,
                 ReadOnly = true
+            });             
+           dgvResultado.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                DataPropertyName = "Cantidad",
+                HeaderText = "Cantidad Horas",
+                Width = 128,
+                ReadOnly = true
             });
         }
         private void Load_Listado_4(List<Listado_4> listado)
@@ -131,7 +151,7 @@ namespace ClinicaFrba.Listados
             {
                 DataPropertyName = "NroAfiliado",
                 HeaderText = "NroAfiliado",
-                Width = 128,
+                Width = 70,
                 ReadOnly = true
             });
             dgvResultado.Columns.Add(new DataGridViewTextBoxColumn()
@@ -152,7 +172,14 @@ namespace ClinicaFrba.Listados
             {
                 DataPropertyName = "Grupo_Familiar",
                 HeaderText = "Pertenece a un grupo familiar",
-                Width = 200,
+                Width = 170,
+                ReadOnly = true
+            });
+            dgvResultado.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                DataPropertyName = "Cantidad",
+                HeaderText = "Cantidad Bonos",
+                Width = 128,
                 ReadOnly = true
             });
         }
@@ -170,17 +197,27 @@ namespace ClinicaFrba.Listados
                 Width = 200,
                 ReadOnly = true
             });
+            dgvResultado.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                DataPropertyName = "Cantidad",
+                HeaderText = "Cantidad Bonos",
+                Width = 128,
+                ReadOnly = true
+            });
         }
         #endregion
 
         private void btnCalcular_Click(object sender, EventArgs e)
         {
-            label_plan.Visible = label_especialidad.Visible = cmbPlan.Visible = cmbEspecialidad.Visible = btnFiltros.Visible = false;
-            if (cmbSemestre.SelectedItem == null) MessageBox.Show("Selecciona un semestre", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (cmbSemestre.SelectedItem == null)
+            {
+                MessageBox.Show("Selecciona un semestre", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             else if (cmbSemestre.SelectedIndex.Equals(0))
             {
                 fecha1 = new DateTime(Int32.Parse(dtpAnio.Text), 1, 1);     //  formato año/mes/dia - no se porque
-                fecha2 = new DateTime(Int32.Parse(dtpAnio.Text), 7, 1 );
+                fecha2 = new DateTime(Int32.Parse(dtpAnio.Text), 7, 1);
             }
             else if (cmbSemestre.SelectedIndex.Equals(1))
             {
@@ -201,7 +238,14 @@ namespace ClinicaFrba.Listados
                         Load_Listado_2(lista_2);
                         break;
                     case 2:
-                        funcion_para_listado_3();
+                        var parametros = new Dictionary<string, object> { 
+                            { "@fecha1", fecha1 }, 
+                            { "@fecha2", fecha2 }, 
+                            { "@plan", ((Plan)cmbPlan.SelectedItem).Descripcion }, 
+                            { "@especialidad ", ((Especialidad)cmbEspecialidad.SelectedItem).Descripcion } 
+                            };
+                        List<Listado_3> lista_3 = DBHelper.ExecuteReader("listado_Profesionales_Menos_Horas", parametros).ToListado_3();
+                        Load_Listado_3(lista_3);
                         break;
                     case 3:
                         List<Listado_4> lista_4 = DBHelper.ExecuteReader("listado_Afiliado_Mas_Bonos", (new Dictionary<string, object> { { "@fecha1", fecha1 }, { "@fecha2", fecha2 } })).ToListado_4();
@@ -233,33 +277,17 @@ namespace ClinicaFrba.Listados
 
         }
 
-        private void btnFiltros_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var parametros = new Dictionary<string, object> { 
-                    { "@fecha1", fecha1 }, 
-                    { "@fecha2", fecha2 }, 
-                    { "@plan", ((Plan)cmbPlan.SelectedItem).Descripcion }, 
-                    { "@especialidad ", ((Especialidad)cmbEspecialidad.SelectedItem).Descripcion } 
-                };
-                List<Listado_3> lista_3 = DBHelper.ExecuteReader("listado_Profesionales_Menos_Horas", parametros).ToListado_3();
-                Load_Listado_3(lista_3);
-            }
-            catch
-            {
-                MessageBox.Show("Error al obtener datos de db", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-        }
-
         private void cmbTipo_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbTipo.SelectedIndex == 2)
             {
 
-                label_plan.Visible = label_especialidad.Visible = cmbPlan.Visible = cmbEspecialidad.Visible = btnFiltros.Visible = true;
+                label_plan.Visible = label_especialidad.Visible = cmbPlan.Visible = cmbEspecialidad.Visible = true;
                 funcion_para_listado_3();
+            }
+            else
+            {
+                label_plan.Visible = label_especialidad.Visible = cmbPlan.Visible = cmbEspecialidad.Visible = false;
             }
         }
 

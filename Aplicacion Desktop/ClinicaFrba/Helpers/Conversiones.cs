@@ -239,7 +239,7 @@ namespace Helpers
                 {
                     Descripcion = (string)rdr["especialidad_descripcion"],
                     Id = (decimal)rdr["especialidad_codigo"],
-                    Tipo = (string)rdr["especialidad_tipo"]
+                    Tipo = (string)rdr["tipo_especialidad_descripcion"]
                 });
             }
             DBHelper.DB.Close();
@@ -278,6 +278,7 @@ namespace Helpers
                 list.Add(new Listado_1()
                 {
                     Especialidad_descripcion = (string)rdr["especialidad_descripcion"],
+                    Cantidad = (int)rdr["cantidad_cancelaciones"],
                 });
             }
             DBHelper.DB.Close();
@@ -294,6 +295,7 @@ namespace Helpers
                     Matricula = (decimal)rdr["profesional_matricula"],
                     Nombre = (string)rdr["profesional_nombre"],
                     Apellido = (string)rdr["profesional_apellido"],
+                    Cantidad = (int)rdr["cantidad"],
                 });
             }
             DBHelper.DB.Close();
@@ -307,9 +309,10 @@ namespace Helpers
             {
                 list.Add(new Listado_3()
                 {
-                    Matricula = (decimal)rdr["profesional_matricula"],
+                    Matricula = (int)rdr["profesional_matricula"],
                     Nombre = (string)rdr["profesional_nombre"],
                     Apellido = (string)rdr["profesional_apellido"],
+                    Cantidad = (decimal)rdr["cantidad_horas"],
                 });
             }
             DBHelper.DB.Close();
@@ -326,6 +329,7 @@ namespace Helpers
                     NroAfiliado = (decimal)rdr["afiliado_nro"],
                     Nombre = (string)rdr["afiliado_nombre"],
                     Apellido = (string)rdr["afiliado_apellido"],
+                    Cantidad = (int)rdr["cantidad_bonos"],
                     Grupo_Familiar = (string)rdr["pertenece_grupo_familiar"],
                 });
             }
@@ -341,6 +345,7 @@ namespace Helpers
                 list.Add(new Listado_5()
                 {
                     Especialidad_descripcion = (string)rdr["especialidad_descripcion"],
+                    Cantidad = (int)rdr["cantidad_bonos"],
                 });
             }
             DBHelper.DB.Close();

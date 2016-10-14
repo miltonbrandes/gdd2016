@@ -11,5 +11,6 @@ namespace Clases
 		public decimal Matricula { get; set; }
         public string Nombre { get; set; }
 		public string Apellido { get; set; }
+        public int Cantidad { get; set; }
     }
 }

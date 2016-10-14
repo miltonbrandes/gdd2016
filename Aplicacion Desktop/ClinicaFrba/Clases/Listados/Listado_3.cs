@@ -8,8 +8,9 @@ namespace Clases
 {
     public class Listado_3 
     {
-		public decimal Matricula { get; set; }
+		public int Matricula { get; set; }
         public string Nombre { get; set; }
 		public string Apellido { get; set; }
+        public decimal Cantidad { get; set; }
     }
 }
