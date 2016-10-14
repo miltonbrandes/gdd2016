@@ -1531,30 +1531,22 @@ go
  go
 
  /*CANCELO EL TURNO DEL PROFESIONAL*/
- create procedure NOT_NULL.Cancelar_Turnos_Profesional(@motivo varchar(255), @tipo char(1),@matricula int, @fecha datetime, @horainicio int, @minutosinicio int, @horafin int, @minutosfin int, @franjaid int)
+ create procedure NOT_NULL.Cancelar_Turnos_Profesional(@motivo varchar(255), @tipo char(1),@matricula int, @fecha datetime, @franjaid int)
  as
 	begin
-	--ESTO ES SI QUIERE CANCELAR UN DIA ENTERO
-		if(@horainicio = 0 and @horafin = 0 and @minutosinicio = 0 and @minutosfin = 0 and @franjaid = -1)
-		begin
-			update NOT_NULL.turno set turno_estado = 'C', afiliado_nro = null 
-			where YEAR(turno_fecha) = YEAR(@fecha) and MONTH(turno_fecha)=MONTH(@fecha) and DAY(turno_fecha)=DAY(@fecha)
+	update NOT_NULL.turno set turno_estado = 'C', afiliado_nro = null 
+		where YEAR(turno_fecha) = YEAR(@fecha) and MONTH(turno_fecha)=MONTH(@fecha) and DAY(turno_fecha)=DAY(@fecha)
 			and turno_medico_especialidad_id = (select medicoXespecialidad.medxesp_id from medicoXespecialidad where medxesp_profesional = @matricula)
-			insert into NOT_NULL.cancelacion_turno (cancel_fecha, cancel_motivo, cancel_profesional, cancel_tipo, cancel_turno)
-			values(GETDATE(), @motivo +' : Fue una cancelacion por dia', @matricula, @tipo, null)
-		end
+	insert into NOT_NULL.cancelacion_turno (cancel_fecha, cancel_motivo, cancel_profesional, cancel_tipo, cancel_turno)
+		values(GETDATE(), @motivo +' : Fue una cancelacion por dia', @matricula, @tipo, null)
+
 	end
  go
 
 
- --ESTO ES SI QUIERE CANCELAR UNA FRANJA ME FALTA VERIFICAR LOS MINUTOS
-create procedure NOT_NULL.Cancelar_Turnos_ProfxFranja(@motivo varchar(255), @tipo char(1), @matricula int, @fecha datetime, @horain time, @horafin time, @franjaid int)
+create procedure NOT_NULL.Cancelar_Turnos_ProfxFranja(@motivo varchar(255), @tipo char(1), @matricula int, @fecha datetime, @horain time, @horafin time)
  as
 	begin
-		declare @dia int
-		set @dia = (select top 1 dia from franja_horaria where franja_id = @franjaid)
-		update NOT_NULL.franja_horaria set franja_cancelada = 1 where franja_id = @franjaid
-
 		declare @turno numeric(18,0)
 		declare @hora int
 		declare @minuto int
@@ -1564,7 +1556,8 @@ create procedure NOT_NULL.Cancelar_Turnos_ProfxFranja(@motivo varchar(255), @tip
 		Begin
 			select @turno = ( select top 1 turno_nro from turno, medicoXespecialidad
 				where turno_medico_especialidad_id = medxesp_id and medxesp_profesional = @matricula
-					and DATEPART(dw, turno_fecha) = (@dia+1) and Convert(date, turno_fecha) > Convert(date, GETDATE())
+					and day(turno_fecha) = day(@fecha) and month(turno_fecha) = month(@fecha) and year(turno_fecha) = year(@fecha)
+					and Convert(date, turno_fecha) > Convert(date, GETDATE())
 					and	DATEPART( hour, Convert(time, turno_fecha)) = @hora and	DATEPART( minute, Convert(time, turno_fecha)) = @minuto)
 
 			update NOT_NULL.turno set turno_estado = 'C', afiliado_nro = null where turno_nro = @turno
@@ -1581,6 +1574,29 @@ create procedure NOT_NULL.Cancelar_Turnos_ProfxFranja(@motivo varchar(255), @tip
 				set @hora = @hora + 1
 			End
 
+		End
+	end
+ go
+
+
+ 
+create procedure NOT_NULL.Cancelar_Turnos_Varios_Dias(@motivo varchar(255), @tipo char(1), @matricula int, @fecha_desde datetime, @fecha_hasta datetime)
+ as
+	begin
+		declare @turno numeric(18,0)
+		declare @fecha_aux datetime
+		set @fecha_aux = @fecha_desde
+		while (@fecha_aux <= @fecha_hasta)
+		Begin
+			select @turno = ( select top 1 turno_nro from turno, medicoXespecialidad
+				where turno_medico_especialidad_id = medxesp_id and medxesp_profesional = @matricula
+					and day(turno_fecha) = day(@fecha_aux) and month(turno_fecha) = month(@fecha_aux) and year(turno_fecha) = year(@fecha_aux)
+					and Convert(date, turno_fecha) > Convert(date, GETDATE())
+					and	DATEPART( hour, Convert(time, turno_fecha)) = @hora and	DATEPART( minute, Convert(time, turno_fecha)) = @minuto)
+
+			update NOT_NULL.turno set turno_estado = 'C', afiliado_nro = null where turno_nro = @turno
+			insert into NOT_NULL.cancelacion_turno (cancel_fecha, cancel_motivo, cancel_profesional, cancel_tipo, cancel_turno)
+				values(GETDATE(), @motivo+' :Fue una cancelacion por franja', @matricula, @tipo, @turno)
 		End
 	end
  go

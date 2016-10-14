@@ -35,8 +35,8 @@ namespace ClinicaFrba.Cancelar_Atencion
             {
                 List<Fecha> f = new List<Fecha>();
                 f = DBHelper.ExecuteReader("Get_Dias_Turno_Prof", parametros).ToFecha();
-                comboBox1.DataSource = f;
-                comboBox1.DisplayMember = "DiaMesAnio";
+                drop_fecha.DataSource = f;
+                drop_fecha.DisplayMember = "DiaMesAnio";
                 //comboBox1.
             }
             catch
@@ -44,82 +44,67 @@ namespace ClinicaFrba.Cancelar_Atencion
                 MessageBox.Show("Error al cargar los dias con turnos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            try
-            {
-                List<Franja> fr = new List<Franja>();
-                fr = DBHelper.ExecuteReader("Get_Franjas_Profesional", parametros).ToFranja();
-                dataGridView1.DataSource = fr;
-            }
-            catch
-            {
-                MessageBox.Show("Error al cargar las franjas del profesional", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            dataGridView1.ClearSelection();
+
+
+            monthCalendar1.Visible = monthCalendar2.Visible = true;
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text != string.Empty && cmbTipoCancelacion.Text != string.Empty && hora1.Text != string.Empty && hora2.Text != string.Empty && minuto1.Text != string.Empty && minuto2.Text != string.Empty)
+            if (textBox1.Text != string.Empty && cmbTipoCancelacion.Text != string.Empty)
             {
-                    if (dataGridView1.SelectedRows.Count == 0)
+                    if (chk_fecha.Checked == true)
                     {
-                        /*QUIERE DECIR QUE QUIERE CANCELAR TODO EL DIA*/
-                        //Dia a cancelar
-                        DateTime d = ((Fecha)comboBox1.SelectedItem).DiaMesAnio;
-                        Dictionary<string, object> parametros = new Dictionary<string, object>() {
-                                {"@motivo", textBox1.Text},
-                                {"@tipo", cmbTipoCancelacion.Text.Substring(0,1)},    
-                                {"@matricula", profesional.Matricula},
-                                {"@fecha", d },
-                                {"@horainicio", 0 },
-                                {"@minutosinicio", 0},
-                                {"@horafin", 0},
-                                {"@minutosfin", 0},
-                                {"@franjaid", -1}
-                        };
+                        if (chk_horario.Checked == true)
+                        {
+                            if (hora1.Text != string.Empty && hora2.Text != string.Empty && minuto1.Text != string.Empty && minuto2.Text != string.Empty)
+                            {
+                                /*QUIERE CANCELAR UNA FRANJA*/
 
-                        try
-                        {
-                            DBHelper.ExecuteNonQuery("Cancelar_Turnos_Profesional", parametros);
-                            //dataGridView1.DataSource = t;
-                        }
-                        catch
-                        {
-                            MessageBox.Show("Error al cancelar el turno, intente nuevamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
-                        }
-            
-                    }
-                    else
-                    {
-                        if(dataGridView1.SelectedRows.Count == 1)
-                        {
-                            /*QUIERE CANCELAR UNA FRANJA*/
-                            
-                            DataGridViewRow r = dataGridView1.SelectedRows[0];
-                            Franja f = (Franja)r.DataBoundItem;
-                            DateTime dInicio = new DateTime(DateTime.Today.Year, 1, 1, Int32.Parse(hora1.Text), Int32.Parse(minuto1.Text), 0);
-                           /* dInicio = dInicio.AddHours(f.HoraInicio);
-                            dInicio = dInicio.AddMinutes(f.MinutoInicio);*/
-                            TimeSpan tInicio = dInicio.TimeOfDay;
-                            DateTime dFin = new DateTime(DateTime.Today.Year, 1, 1, Int32.Parse(hora2.Text), Int32.Parse(minuto2.Text), 0);
-                            /*dFin = dFin.AddHours(f.HoraFin);
-                            dFin = dFin.AddMinutes(f.MinutoFin);*/
-                            TimeSpan tFin = dFin.TimeOfDay;
-                            Dictionary<string, object> parametros = new Dictionary<string, object>() {
+                                DateTime dInicio = new DateTime(DateTime.Today.Year, 1, 1, Int32.Parse(hora1.Text), Int32.Parse(minuto1.Text), 0);
+                                TimeSpan tInicio = dInicio.TimeOfDay;
+                                DateTime dFin = new DateTime(DateTime.Today.Year, 1, 1, Int32.Parse(hora2.Text), Int32.Parse(minuto2.Text), 0);
+                                TimeSpan tFin = dFin.TimeOfDay;
+                                Dictionary<string, object> parametros = new Dictionary<string, object>() {
                                     {"@motivo", textBox1.Text},
                                     {"@tipo", cmbTipoCancelacion.Text.Substring(0,1)},    
                                     {"@matricula", profesional.Matricula},
                                     {"@fecha", 0 },
                                     {"@horain", tInicio},
-                                    {"@horafin", tFin},
-                                    {"@franjaid", f.Id}
-                            };
+                                    {"@horafin", tFin}
+                                    };
+                                try
+                                {
+                                    DBHelper.ExecuteNonQuery("Cancelar_Turnos_ProfxFranja", parametros);
+                                }
+                                catch
+                                {
+                                    MessageBox.Show("Error al cancelar el turno, intente nuevamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Debe completar todos los campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                        }
+                        else
+                        {
+
+                            /*QUIERE DECIR QUE QUIERE CANCELAR TODO EL DIA*/
+                            //Dia a cancelar
+                            DateTime d = ((Fecha)drop_fecha.SelectedItem).DiaMesAnio;
+                            Dictionary<string, object> parametros = new Dictionary<string, object>() {
+                                        {"@motivo", textBox1.Text},
+                                        {"@tipo", cmbTipoCancelacion.Text.Substring(0,1)},    
+                                        {"@matricula", profesional.Matricula},
+                                        {"@fecha", d }
+                                };
+
                             try
                             {
-                                DBHelper.ExecuteNonQuery("Cancelar_Turnos_ProfxFranja", parametros);
-                                //dataGridView1.DataSource = t;
+                                DBHelper.ExecuteNonQuery("Cancelar_Turnos_Profesional", parametros);
                             }
                             catch
                             {
@@ -127,6 +112,40 @@ namespace ClinicaFrba.Cancelar_Atencion
                                 return;
                             }
                         }
+            
+                    }
+                    else
+                    {
+                        //  CANCELA RANGO DE FECHAS
+                        if (chk_dias.Checked == true)
+                        {
+                            DateTime dia_desde = monthCalendar1.SelectionStart;
+                            DateTime dia_hasta = monthCalendar2.SelectionStart;
+
+                            Dictionary<string, object> parametros = new Dictionary<string, object>() {
+                                        {"@motivo", textBox1.Text},
+                                        {"@tipo", cmbTipoCancelacion.Text.Substring(0,1)},    
+                                        {"@matricula", profesional.Matricula},
+                                        {"@fecha_desde", dia_desde },
+                                        {"@fecha_hasta", dia_hasta }
+                                };
+                            try
+                            {
+                                DBHelper.ExecuteNonQuery("Cancelar_Turnos_Varios_Dias", parametros);
+                            }
+                            catch
+                            {
+                                MessageBox.Show("Error al cancelar el turno, intente nuevamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Debe elegir una opcion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
+
                     }
                 
             }
@@ -153,9 +172,46 @@ namespace ClinicaFrba.Cancelar_Atencion
             }
         }
 
-        private void btnDesmarcar_Click(object sender, EventArgs e)
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            dataGridView1.ClearSelection();
+            if (chk_fecha.Checked == true)
+            {
+                chk_dias.Checked = false;
+                drop_fecha.Enabled = true;
+            }
+            else
+            {
+                chk_horario.Checked = false;
+                drop_fecha.Enabled = false;
+            }
+                
+        }
+
+        private void chk_horario_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chk_horario.Checked == true)
+            {
+                chk_fecha.Checked = true;
+                hora1.Enabled = minuto1.Enabled = hora2.Enabled = minuto2.Enabled = true;
+            }
+            else
+            {
+                hora1.Enabled = minuto1.Enabled = hora2.Enabled = minuto2.Enabled = false;
+            }
+        }
+
+        private void chk_dias_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chk_dias.Checked == true)
+            {
+                chk_fecha.Checked = false;
+                monthCalendar1.Enabled = monthCalendar2.Enabled = true;
+            }
+            else
+            {
+                monthCalendar1.Enabled = monthCalendar2.Enabled = false;
+            }
+            
         }
     }
 }
