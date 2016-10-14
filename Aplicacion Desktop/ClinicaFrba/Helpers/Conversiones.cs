@@ -308,10 +308,11 @@ namespace Helpers
             {
                 list.Add(new Listado_2()
                 {
-                    Matricula = (decimal)rdr["profesional_matricula"],
+                    Matricula = (int)rdr["profesional_matricula"],
                     Nombre = (string)rdr["profesional_nombre"],
                     Apellido = (string)rdr["profesional_apellido"],
-                    Cantidad = (int)rdr["cantidad"],
+                    Cantidad = (int)rdr["cantidad_consultas"],
+                    Especialidad = (string)rdr["especialidad_descripcion"],
                 });
             }
             DBHelper.DB.Close();

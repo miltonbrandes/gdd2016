@@ -1345,26 +1345,30 @@ CREATE PROCEDURE NOT_NULL.especialidades_GetByFilerEspecialidad (@especialidad v
 CREATE PROCEDURE NOT_NULL.listado_Mas_Cancelaciones_Especialidad (@fecha1 datetime, @fecha2 datetime)
 as
 	begin
-		 select top 5 especialidad_descripcion, count(turno_medico_especialidad_id) as cantidad_cancelaciones
+		 select top 5 especialidad_descripcion, count(cancel_turno) as cantidad_cancelaciones
 			from NOT_NULL.especialidad, NOT_NULL.medicoXespecialidad, NOT_NULL.cancelacion_turno, NOT_NULL.turno
 			where turno_nro = cancel_turno and turno_medico_especialidad_id = medxesp_id and especialidad_codigo = medxesp_especialidad 
 				and cancel_fecha >= @fecha1 and cancel_fecha < @fecha2
 			group by especialidad_descripcion
-			order by count(turno_medico_especialidad_id) desc
+			order by count(cancel_turno) desc
 	end
 go
 
 
-  --           Top 5 de los profesionales más consultados por Plan, detallando también bajo que Especialidad	????????????
-/*CREATE PROCEDURE NOT_NULL.listado_Profesionales_Consultados (@fecha1 datetime, @fecha2 datetime)
+  --           Top 5 de los profesionales más consultados por Plan, detallando también bajo que Especialidad
+CREATE PROCEDURE NOT_NULL.listado_Profesionales_Consultados (@fecha1 datetime, @fecha2 datetime, @plan varchar(255))
 as
 	begin
-		 select top 5 plan_descripcion, profesional_matricula, profesional_nombre, profesional_apellido, especialidad_descripcion
-		 	from NOT_NULL.profesional, NOT_NULL.plan_medico, NOT_NULL.especialidad
-			where algo_fecha >= @fecha1 and algo_fecha < @fecha2
-			group by 
+		 select top 5 profesional_matricula, profesional_nombre, profesional_apellido, especialidad_descripcion, count(turno_nro) as cantidad_consultas
+		 	from NOT_NULL.profesional, NOT_NULL.plan_medico, NOT_NULL.especialidad, NOT_NULL.medicoXespecialidad, NOT_NULL.turno, NOT_NULL.bono_consulta
+			where plan_descripcion = @plan
+				and medxesp_especialidad = especialidad_codigo and medxesp_profesional = profesional_matricula
+				and turno_medico_especialidad_id = medxesp_id and turno_fecha >= @fecha1 and turno_fecha < @fecha2
+				and turno_estado = 'U' and bono_turno = turno_nro and bono_plan = plan_id
+			group by profesional_matricula, profesional_nombre, profesional_apellido, especialidad_descripcion
+			order by count(turno_nro) desc
 	end
-go*/
+go
 
 	--	Top 5 de los profesionales con menos horas trabajadas filtrando por Plan y Especialidad
 CREATE PROCEDURE NOT_NULL.listado_Profesionales_Menos_Horas (@fecha1 datetime, @fecha2 datetime, @plan varchar(255), @especialidad varchar(255))
@@ -1374,7 +1378,7 @@ as
 		 	from NOT_NULL.profesional, NOT_NULL.plan_medico, NOT_NULL.especialidad, NOT_NULL.medicoXespecialidad, NOT_NULL.turno, NOT_NULL.bono_consulta
 			where especialidad_descripcion = @especialidad and plan_descripcion = @plan
 				and medxesp_especialidad = especialidad_codigo and medxesp_profesional = profesional_matricula
-				and turno_medico_especialidad_id = medxesp_id --and turno_fecha >= @fecha1 and turno_fecha < @fecha2
+				and turno_medico_especialidad_id = medxesp_id and turno_fecha >= @fecha1 and turno_fecha < @fecha2
 				and turno_estado = 'U' and bono_turno = turno_nro and bono_plan = plan_id
 			group by profesional_matricula, profesional_nombre, profesional_apellido
 			order by count(turno_nro) asc
@@ -1383,7 +1387,6 @@ go
 
 
 --		Top 5 de los afiliados con mayor cantidad de bonos comprados, detallando si pertenece a un grupo familiar
---		Funca  -> verificar grupo familiar
  CREATE PROCEDURE NOT_NULL.listado_Afiliado_Mas_Bonos (@fecha1 datetime, @fecha2 datetime)			
  as
 	Begin
