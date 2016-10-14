@@ -419,6 +419,9 @@ namespace ClinicaFrba.Abm_Afiliado
             
 
             afiliado.Add("@Username", txtNombre.Text+txtApellido.Text+txtDni.Text.ToString());
+            if(ckbCambioPlan.Visible){
+                afiliado.Add("@cambiarFamilia", ckbCambioPlan.Checked);
+            }
             try
             {
                 DBHelper.ExecuteNonQuery("Afiliado_Modify", afiliado);
@@ -823,11 +826,15 @@ namespace ClinicaFrba.Abm_Afiliado
             {
                 txtCambioPlan.Visible = true;
                 label11.Visible = true;
+                lblCambioPlan.Visible = true;
+                ckbCambioPlan.Visible = true;
             }
             if (opcionelegida == 2 && planactual.Id == ((Plan)cmbPlan.SelectedItem).Id)
             {
                 txtCambioPlan.Visible = false;
                 label11.Visible = false;
+                lblCambioPlan.Visible = false;
+                ckbCambioPlan.Visible = false;
             }
         }
 

@@ -847,21 +847,39 @@ GO
 
 
   --MODIFICAR AFILIADO
-  CREATE PROCEDURE NOT_NULL.Afiliado_Modify(@Username varchar(50), @Nombre varchar(50),@Apellido varchar(50), @Dni numeric(8,0), @Mail varchar(50),@Telefono varchar(20), @Direccion varchar(50), @CantHijos numeric(2,0), @EstadoCivil char(1), @Fecha datetime,@Plan numeric(18,0), @Sexo char(1))
+  CREATE PROCEDURE NOT_NULL.Afiliado_Modify(@Username varchar(50), @Nombre varchar(50),@Apellido varchar(50), @Dni numeric(8,0), @Mail varchar(50),@Telefono varchar(20), @Direccion varchar(50), @CantHijos numeric(2,0), @EstadoCivil char(1), @Fecha datetime,@Plan numeric(18,0), @Sexo char(1),@cambiarFamilia bit)
   AS
 	BEGIN
 	SET NOCOUNT ON;
 	/*ACA HABRIA QUE TERMINAR ESTO PARA QUE SE SAQUEN LOS BONOS O SE PASEN AL GRUPO FAMILIAR*/
 		DECLARE @PlanViejo numeric(18,0);
+		declare @nroAfiliadoPrincipal numeric(18,0);
+		set @nroAfiliadoPrincipal = (select top 1 afiliado_nro from afiliado where usuario_id = @Username)
 		set @PlanViejo = (select top 1 plan_medico.plan_id from plan_medico, afiliado where usuario_id = @Username and afiliado_plan = plan_id) 
 		UPDATE NOT_NULL.afiliado
 		SET usuario_id = @Username,afiliado_nombre=@Nombre,afiliado_apellido=@Apellido,afiliado_dni=@Dni,afiliado_mail=@Mail,afiliado_telefono=@Telefono,afiliado_direccion=@Direccion,afiliado_cant_hijos = (select afiliado_cant_hijos from afiliado where usuario_id = @Username), afiliado_estado_civil=@EstadoCivil, afiliado_fecha_nac=@Fecha,  afiliado_plan=@Plan, afiliado_sexo=@Sexo
 		WHERE usuario_id = @Username
-		/*IF(@PlanViejo <> @Plan)
+		IF(@PlanViejo <> @Plan)
 		BEGIN
-			--UPDATE DE LA TABLA TURNOS, VER BIEN COMO CARAJO SETEARLE EL VALOR DEL PROXIMO AFILIADO FAMILIAR SI ES QUE TAMPOCO SE CAMBIO DE PLAN
-			UPDATE NOT_NULL.turno
-		END*/
+			--UPDATE DE LA TABLA BONOS, VER BIEN COMO CARAJO SETEARLE EL VALOR DEL PROXIMO AFILIADO FAMILIAR SI ES QUE TAMPOCO SE CAMBIO DE PLAN
+			if(@cambiarFamilia = 1)/*Quiere decir que los bonos quedan inutilizables y tengo que cambiar a la familia de plan tambien*/
+			begin
+				UPDATE NOT_NULL.afiliado 
+				set afiliado_plan = @plan 
+				where CAST(afiliado_nro/100 as int) = CAST(@nroAfiliadoPrincipal/100 as int) and afiliado_nro <> @nroAfiliadoPrincipal
+				UPDATE NOT_NULL.bono_consulta 
+				set bono_utilizado = 'S', bono_afiliado = null
+				where CAST(bono_afiliado/100 as int) = CAST(@nroAfiliadoPrincipal/100 as int)  
+			end
+			else/*QUIERE DECIR QUE LOS BONOS SE LE PASAN AL GRUPO FAMILIAR*/
+			begin
+				Declare @primerfamiliar numeric(18,0)
+				set @primerfamiliar = (select top 1 afiliado_nro from NOT_NULL.afiliado where CAST(afiliado_nro/100 as INT) = CAST(@nroAfiliadoPrincipal/100 as int) and afiliado_nro <> @nroAfiliadoPrincipal)
+				UPDATE NOT_NULL.bono_consulta
+				set bono_afiliado = @primerfamiliar
+				where bono_afiliado = @nroAfiliadoPrincipal
+			end
+		END
 	END
   GO
 
@@ -1142,7 +1160,7 @@ GO
 		update NOT_NULL.rolXusuario set rolXusuario_habilitado = 0 where usuario_id = @UsuarioId and rol_id = 2
 		--set @ret = (select count(*) from NOT_NULL.rolXusuario where usuario_id = @UsuarioId and rol_id = 2 and rolXusuario_habilitado = 0) 
 		--LE DOY DE BAJA A SUS TURNOS Y LOS PONGO COMO DISPONIBLES
-		update NOT_NULL.turno set turno_estado = 'D' where (select top 1 usuario_id from afiliado where afiliado_nro = turno.afiliado_nro) = @UsuarioId
+		update NOT_NULL.turno set turno_estado = 'D', afiliado_nro = null where (select top 1 usuario_id from afiliado where afiliado_nro = turno.afiliado_nro) = @UsuarioId
 	end
   go
 

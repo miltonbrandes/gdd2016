@@ -57,11 +57,13 @@
             this.txtCambioPlan = new System.Windows.Forms.TextBox();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.ckbCambioPlan = new System.Windows.Forms.CheckBox();
+            this.lblCambioPlan = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnHabilitar
             // 
-            this.btnHabilitar.Location = new System.Drawing.Point(10, 567);
+            this.btnHabilitar.Location = new System.Drawing.Point(9, 592);
             this.btnHabilitar.Margin = new System.Windows.Forms.Padding(4);
             this.btnHabilitar.Name = "btnHabilitar";
             this.btnHabilitar.Size = new System.Drawing.Size(320, 33);
@@ -73,7 +75,7 @@
             // 
             // btnContraseña
             // 
-            this.btnContraseña.Location = new System.Drawing.Point(10, 535);
+            this.btnContraseña.Location = new System.Drawing.Point(9, 560);
             this.btnContraseña.Margin = new System.Windows.Forms.Padding(4);
             this.btnContraseña.Name = "btnContraseña";
             this.btnContraseña.Size = new System.Drawing.Size(320, 33);
@@ -212,7 +214,7 @@
             // 
             // btnGuardar
             // 
-            this.btnGuardar.Location = new System.Drawing.Point(10, 471);
+            this.btnGuardar.Location = new System.Drawing.Point(9, 496);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(320, 33);
             this.btnGuardar.TabIndex = 49;
@@ -327,7 +329,7 @@
             // 
             // btnLimpiar
             // 
-            this.btnLimpiar.Location = new System.Drawing.Point(10, 439);
+            this.btnLimpiar.Location = new System.Drawing.Point(9, 464);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(320, 33);
             this.btnLimpiar.TabIndex = 58;
@@ -337,7 +339,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(10, 503);
+            this.button1.Location = new System.Drawing.Point(9, 528);
             this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(320, 33);
@@ -347,11 +349,37 @@
             this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // ckbCambioPlan
+            // 
+            this.ckbCambioPlan.AutoSize = true;
+            this.ckbCambioPlan.Location = new System.Drawing.Point(287, 430);
+            this.ckbCambioPlan.Margin = new System.Windows.Forms.Padding(4);
+            this.ckbCambioPlan.Name = "ckbCambioPlan";
+            this.ckbCambioPlan.Size = new System.Drawing.Size(42, 21);
+            this.ckbCambioPlan.TabIndex = 60;
+            this.ckbCambioPlan.Text = "Si";
+            this.ckbCambioPlan.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ckbCambioPlan.UseVisualStyleBackColor = true;
+            this.ckbCambioPlan.Visible = false;
+            // 
+            // lblCambioPlan
+            // 
+            this.lblCambioPlan.AutoSize = true;
+            this.lblCambioPlan.Location = new System.Drawing.Point(9, 430);
+            this.lblCambioPlan.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCambioPlan.Name = "lblCambioPlan";
+            this.lblCambioPlan.Size = new System.Drawing.Size(234, 17);
+            this.lblCambioPlan.TabIndex = 61;
+            this.lblCambioPlan.Text = "Desea cambiar a su famila de plan?";
+            this.lblCambioPlan.Visible = false;
+            // 
             // frmAfiliado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(342, 602);
+            this.ClientSize = new System.Drawing.Size(342, 627);
+            this.Controls.Add(this.lblCambioPlan);
+            this.Controls.Add(this.ckbCambioPlan);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.txtCambioPlan);
@@ -421,5 +449,7 @@
         private System.Windows.Forms.TextBox txtCambioPlan;
         private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.CheckBox ckbCambioPlan;
+        private System.Windows.Forms.Label lblCambioPlan;
     }
 }

@@ -139,28 +139,29 @@ namespace ClinicaFrba.Compra_Bono
                     { "@plan", afiliado.PlanUsuario }
                     });
                 MessageBox.Show("Compra Registrada", "Ok", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Hide();
-                Main acerrar = null;
-                FormCollection fc = Application.OpenForms;
-                foreach (Form frm in fc)
-                {
-                    if (frm.Name == "Main")
-                    {
-                        acerrar = (Main)frm;
-
-                    }
-                }
-                if (acerrar != null)
-                {
-                    acerrar.Show();
-                }
-
+            
             }
             catch
             {
                 MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+            Hide();
+            Main acerrar = null;
+            FormCollection fc = Application.OpenForms;
+            foreach (Form frm in fc)
+            {
+                if (frm.Name == "Main")
+                {
+                    acerrar = (Main)frm;
+
+                }
+            }
+            if (acerrar != null)
+            {
+                acerrar.Show();
+            }
+
             
         }
     }

@@ -3,6 +3,7 @@ using System.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace Helpers
 {
@@ -60,6 +61,10 @@ namespace Helpers
 
         public static SqlDataReader ExecuteReader(string SP, Dictionary<string, object> parametros = null)
         {
+            if (DB != null && DB.State == ConnectionState.Open)
+            {
+                DB.Close();
+            }
             if (parametros == null) parametros = new Dictionary<string, object>();
             DB.Open();
             SqlCommand command = new SqlCommand("NOT_NULL." + SP, DB);
