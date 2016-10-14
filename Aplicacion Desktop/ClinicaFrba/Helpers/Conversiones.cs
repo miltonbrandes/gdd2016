@@ -248,19 +248,35 @@ namespace Helpers
         #endregion
 
         #region FRANJA
+        public static Franja ToFranjas(this SqlDataReader rdr)
+        {
+            return rdr.ToFranja().FirstOrDefault();
+        }
         public static List<Franja> ToFranja(this SqlDataReader rdr)
         {
             List<Franja> list = new List<Franja>();
             while (rdr.Read())
             {
+                string afil;
+                if (rdr["id_afiliado"].ToString() != string.Empty)
+                {
+                    afil = "";
+                }
+                else
+                {
+                    afil = (string)rdr["id_afiliado"].ToString();
+                }
                 list.Add(new Franja()
                 {
-                    Dia = (string)rdr["dia"],
-                    HoraInicio = (string)rdr["hora_inicio"],
-                    //MinutoInicio = (string)rdr["minuto_inicio"],
-                    HoraFin = (string)rdr["hora_fin"],
-                    //MinutoFin = (string)rdr["minuto_fin"],
-                    Id = (string)rdr["id"]
+                    Dia = (int)rdr["dia"],
+                    HoraInicio = (int)rdr["hora_inicio"],
+                    MinutoInicio = (int)rdr["minuto_inicio"],
+                    HoraFin = (int)rdr["hora_fin"],
+                    MinutoFin = (int)rdr["minuto_fin"],
+                    Id = (int)rdr["franja_id"],
+                    Cancelada = (bool)rdr["franja_cancelada"],
+                    Agenda = (int)rdr["agenda_id"],
+                    Afiliado = afil,
                 });
             }
             DBHelper.DB.Close();
@@ -492,6 +508,26 @@ namespace Helpers
                     FechaCompra = fecha,
                     Utilizado = utilizado,
                     NroBonoAfiliado = nrobono,
+                });
+            }
+            DBHelper.DB.Close();
+            return list;
+        }
+        #endregion
+
+        #region FECHA
+        public static Fecha ToFechas(this SqlDataReader rdr)
+        {
+            return rdr.ToFecha().FirstOrDefault();
+        }
+        public static List<Fecha> ToFecha(this SqlDataReader rdr)
+        {
+            List<Fecha> list = new List<Fecha>();
+            while (rdr.Read())
+            {
+                list.Add(new Fecha()
+                {
+                    DiaMesAnio = (DateTime)rdr["turno_fecha"],
                 });
             }
             DBHelper.DB.Close();

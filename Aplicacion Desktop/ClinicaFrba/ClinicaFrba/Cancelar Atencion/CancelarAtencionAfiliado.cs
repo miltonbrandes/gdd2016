@@ -51,7 +51,7 @@ namespace ClinicaFrba.Cancelar_Atencion
                         try
                         {
                             t = DBHelper.ExecuteReader("Cancelar_Turno_Afiliado", parametros).ToTurno();
-                            dataGridView1.DataSource = t;
+                            //dataGridView1.DataSource = t;
                         }
                         catch {
                             MessageBox.Show("Error al cancelar el turno, intente nuevamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

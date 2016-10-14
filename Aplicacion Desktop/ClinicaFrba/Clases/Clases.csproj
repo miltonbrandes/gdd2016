@@ -50,6 +50,7 @@
     <Compile Include="Listados\Listado_5.cs" />
     <Compile Include="Profesionales\Agenda.cs" />
     <Compile Include="Profesionales\Especialidad.cs" />
+    <Compile Include="Profesionales\Fecha.cs" />
     <Compile Include="Profesionales\Franja.cs" />
     <Compile Include="Profesionales\Profesional.cs" />
     <Compile Include="Profesionales\turnosProcedure.cs" />

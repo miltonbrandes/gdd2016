@@ -192,5 +192,8 @@ drop procedure NOT_NULL.Get_Bonos_Afiliado
 drop procedure NOT_NULL.Registrar_Llegada
 drop procedure NOT_NULL.Cancelar_Turno_Afiliado
 drop procedure NOT_NULL.Turnos_Afiliado
+drop procedure NOT_NULL.Get_Dias_Turno_Prof
+drop procedure NOT_NULL.Get_Franjas_Profesional
+drop procedure NOT_NULL.Cancelar_Turnos_Profesional
 DROP SCHEMA NOT_NULL
 GO

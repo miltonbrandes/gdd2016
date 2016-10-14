@@ -8,11 +8,14 @@ namespace Clases
 {
     public class Franja
     {
-        public string Id { get; set; }
-        public string Dia { get; set; }
-        public string HoraInicio { get; set; }
-        public string MinutoInicio { get;set; }
-        public string HoraFin { get; set; }
-        public string MinutoFin { get;set; }
+        public int Id { get; set; }
+        public int Dia { get; set; }
+        public int HoraInicio { get; set; }
+        public int MinutoInicio { get;set; }
+        public int HoraFin { get; set; }
+        public int MinutoFin { get;set; }
+        public int Agenda { get; set; }
+        public bool Cancelada { get; set; }
+        public string Afiliado { get; set; }
     }
 }

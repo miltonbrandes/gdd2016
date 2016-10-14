@@ -171,7 +171,8 @@ namespace ClinicaFrba
         {
             if (rol.Descripcion == "Profesional")
             {
-                var home = new Cancelar_Atencion.frmCancelarAtencionMedico();
+                cargarProfesional();
+                var home = new Cancelar_Atencion.frmCancelarAtencionMedico(profesional, usuario, rol);
                 home.Show();
             }
             else if(rol.Descripcion == "Afiliado")

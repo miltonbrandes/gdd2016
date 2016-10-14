@@ -441,10 +441,10 @@ go
 
 /*CREAR TABLA CANCELACION TURNOS*/
 CREATE TABLE NOT_NULL.cancelacion_turno(
-	cancel_id int NOT NULL,
+	cancel_id int identity(1,1) NOT NULL,
 	cancel_afiliado numeric(18, 0) NULL,
 	cancel_profesional int NULL,
-	cancel_tipo char NOT NULL, --P si es de motivos personales, E si es enfermedad, L si es por motivos laborales
+	cancel_tipo char NOT NULL, --M si es de motivos personales, E si es enfermedad, L si es por motivos laborales
 	cancel_motivo text NULL,
 	cancel_fecha date NULL,
 	cancel_turno numeric(18,0) NULL,
@@ -1474,18 +1474,71 @@ go
  create procedure NOT_NULL.Cancelar_Turno_Afiliado(@nroturno numeric(18,0), @nroafiliado numeric(18,0), @fecha datetime, @motivo varchar(255), @tipo char(1))
  as
 	begin
-		update NOT_NULL.turno set turno_estado = 'D' where turno_nro = @nroturno and afiliado_nro = @nroafiliado
+		update NOT_NULL.turno set turno_estado = 'D' , afiliado_nro = null where turno_nro = @nroturno and afiliado_nro = @nroafiliado
 		insert into NOT_NULL.cancelacion_turno (cancel_afiliado, cancel_fecha, cancel_motivo, cancel_tipo, cancel_turno)
-		values(@nroafiliado, @fecha, @motivo, LEFT(@motivo, 1), @nroturno)
+		values(@nroafiliado, @fecha, @motivo, LEFT(@tipo, 1), @nroturno)
 	end
  go
+
 
  /*TRAIGO TODOS LOS TURNOS DE UN AFILIADO*/
  create procedure NOT_NULL.Turnos_Afiliado(@nroafiliado numeric(18,0), @fecha datetime)
  as
 	begin
-		select * from turno where afiliado_nro = @nroafiliado and turno_fecha > @fecha
+		select * from turno where afiliado_nro = @nroafiliado and turno_fecha > @fecha and turno_estado = 'R'
+	end
+ go
+
+
+ /*OBTENGO TODOS LOS DIAS QUE TIENEN TURNO*/
+ create procedure NOT_NULL.Get_Dias_Turno_Prof(@matricula int)
+ as
+	begin 
+		select Convert(date, turno_fecha) as turno_fecha from NOT_NULL.turno where turno_medico_especialidad_id = (select medicoXespecialidad.medxesp_id from NOT_NULL.medicoXespecialidad where medicoXespecialidad.medxesp_profesional = @matricula)
+		and (turno_estado = 'D' or turno_estado = 'R') and turno_fecha >= Convert(date, GETDATE()+1)
+		group by Convert(date, turno_fecha)
+		order by Convert(date, turno_fecha)
+	end
+ go
+
+ /*OBTENGO TODAS LAS FRANJAS DEL PROFESIONAL*/
+ create procedure NOT_NULL.Get_Franjas_Profesional(@matricula int)
+ as
+	begin
+		select * from NOT_NULL.franja_horaria
+		where franja_horaria.agenda_id = (select agenda_id from NOT_NULL.agenda where agenda_id = (select medxesp_agenda from NOT_NULL.medicoXespecialidad where medxesp_profesional = @matricula))
+		and franja_cancelada = 0 
 	end
  go
 
  /*CANCELO EL TURNO DEL PROFESIONAL*/
+ create procedure NOT_NULL.Cancelar_Turnos_Profesional(@tipo char(1),@motivo varchar(255),@matricula int, @fecha datetime, @horainicio int, @minutosinicio int, @horafin int, @minutosfin int, @franjaid int)
+ as
+	begin
+	--ESTO ES SI QUIERE CANCELAR UN DIA ENTERO
+		if(@horainicio = 0 and @horafin = 0 and @minutosinicio = 0 and @minutosfin = 0 and @franjaid = -1)
+		begin
+			update NOT_NULL.turno set turno_estado = 'C', afiliado_nro = null 
+			where YEAR(turno_fecha) = YEAR(@fecha) and MONTH(turno_fecha)=MONTH(@fecha) and DAY(turno_fecha)=DAY(@fecha)
+			and turno_medico_especialidad_id = (select medicoXespecialidad.medxesp_id from medicoXespecialidad where medxesp_profesional = @matricula)
+			/*insert into NOT_NULL.cancelacion_turno (cancel_fecha, cancel_motivo, cancel_profesional, cancel_tipo, cancel_turno)
+			values(GETDATE(), @motivo, @matricula, @tipo, (select turno_nro from NOT_NULL.turno
+			where YEAR(turno_fecha) = YEAR(@fecha) and MONTH(turno_fecha)=MONTH(@fecha) and DAY(turno_fecha)=DAY(@fecha)
+			and turno_medico_especialidad_id = (select medicoXespecialidad.medxesp_id from medicoXespecialidad where medxesp_profesional = @matricula) and turno_estado = 'C'*/
+		end
+	--ESTO ES SI QUIERE CANCELAR UNA FRANJA ME FALTA VERIFICAR LOS MINUTOS
+		else
+		begin
+			declare @dia int
+			set @dia = (select top 1 dia from franja_horaria where franja_id = @franjaid)
+			declare @nrodia int
+			update NOT_NULL.turno set turno_estado = 'C', afiliado_nro = null
+			where turno_medico_especialidad_id = (select medicoXespecialidad.medxesp_id from medicoXespecialidad where medxesp_profesional = @matricula)
+			and DATEPART(dw, turno_fecha) = (@dia+1) and Convert(date, turno_fecha) > Convert(date, GETDATE())
+			and (((DATEPART(HOUR, turno_fecha) >= @horainicio) and
+			(DATEPART(HOUR, turno_fecha) <= @horafin )) or ((DATEPART(HOUR, turno_fecha) >= @horainicio and DATEPART(MINUTE, turno_fecha) >= @minutosinicio) and
+			(DATEPART(HOUR, turno_fecha) <= @horafin  and DATEPART(HOUR, turno_fecha) <= @minutosfin))) 
+			update NOT_NULL.franja_horaria set franja_cancelada = 1 where franja_id = @franjaid
+		end
+	end
+ go
