@@ -60,7 +60,7 @@ namespace ClinicaFrba.Cancelar_Atencion
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text != string.Empty && cmbTipoCancelacion.Text != string.Empty)
+            if (textBox1.Text != string.Empty && cmbTipoCancelacion.Text != string.Empty && hora1.Text != string.Empty && hora2.Text != string.Empty && minuto1.Text != string.Empty && minuto2.Text != string.Empty)
             {
                     if (dataGridView1.SelectedRows.Count == 0)
                     {
@@ -68,16 +68,17 @@ namespace ClinicaFrba.Cancelar_Atencion
                         //Dia a cancelar
                         DateTime d = ((Fecha)comboBox1.SelectedItem).DiaMesAnio;
                         Dictionary<string, object> parametros = new Dictionary<string, object>() {
-                        {"@motivo", textBox1.Text},
-                         {"@tipo", cmbTipoCancelacion.Text.Substring(0,1)},    
-                         {"@matricula", profesional.Matricula},
-                    { "@fecha", d },
-                    { "@horainicio", 0 },
-                    {"@minutosinicio", 0},
-                    {"@horafin", 0},
-                    {"@minutosfin", 0},
-                    {"@franjaid", -1}
-                    };
+                                {"@motivo", textBox1.Text},
+                                {"@tipo", cmbTipoCancelacion.Text.Substring(0,1)},    
+                                {"@matricula", profesional.Matricula},
+                                {"@fecha", d },
+                                {"@horainicio", 0 },
+                                {"@minutosinicio", 0},
+                                {"@horafin", 0},
+                                {"@minutosfin", 0},
+                                {"@franjaid", -1}
+                        };
+
                         try
                         {
                             DBHelper.ExecuteNonQuery("Cancelar_Turnos_Profesional", parametros);
@@ -98,23 +99,23 @@ namespace ClinicaFrba.Cancelar_Atencion
                             
                             DataGridViewRow r = dataGridView1.SelectedRows[0];
                             Franja f = (Franja)r.DataBoundItem;
-                            DateTime dInicio = DateTime.Today;
-                            dInicio = dInicio.AddHours(f.HoraInicio);
-                            dInicio = dInicio.AddMinutes(f.MinutoInicio);
+                            DateTime dInicio = new DateTime(DateTime.Today.Year, 1, 1, Int32.Parse(hora1.Text), Int32.Parse(minuto1.Text), 0);
+                           /* dInicio = dInicio.AddHours(f.HoraInicio);
+                            dInicio = dInicio.AddMinutes(f.MinutoInicio);*/
                             TimeSpan tInicio = dInicio.TimeOfDay;
-                            DateTime dFin = DateTime.Today;
-                            dFin = dFin.AddHours(f.HoraFin);
-                            dFin = dFin.AddMinutes(f.MinutoFin);
+                            DateTime dFin = new DateTime(DateTime.Today.Year, 1, 1, Int32.Parse(hora2.Text), Int32.Parse(minuto2.Text), 0);
+                            /*dFin = dFin.AddHours(f.HoraFin);
+                            dFin = dFin.AddMinutes(f.MinutoFin);*/
                             TimeSpan tFin = dFin.TimeOfDay;
                             Dictionary<string, object> parametros = new Dictionary<string, object>() {
-                            {"@motivo", textBox1.Text},
-                            {"@tipo", cmbTipoCancelacion.Text.Substring(0,1)},    
-                            {"@matricula", profesional.Matricula},
-                        { "@fecha", 0 },
-                        { "@horain", tInicio},
-                        {"@horafin", tFin},
-                        {"@franjaid", f.Id}
-                        };
+                                    {"@motivo", textBox1.Text},
+                                    {"@tipo", cmbTipoCancelacion.Text.Substring(0,1)},    
+                                    {"@matricula", profesional.Matricula},
+                                    {"@fecha", 0 },
+                                    {"@horain", tInicio},
+                                    {"@horafin", tFin},
+                                    {"@franjaid", f.Id}
+                            };
                             try
                             {
                                 DBHelper.ExecuteNonQuery("Cancelar_Turnos_ProfxFranja", parametros);

@@ -1530,17 +1530,39 @@ go
 
 
  --ESTO ES SI QUIERE CANCELAR UNA FRANJA ME FALTA VERIFICAR LOS MINUTOS
- create procedure NOT_NULL.Cancelar_Turnos_ProfxFranja(@motivo varchar(255), @tipo char(1), @matricula int, @fecha datetime, @horain time, @horafin time, @franjaid int)
+create procedure NOT_NULL.Cancelar_Turnos_ProfxFranja(@motivo varchar(255), @tipo char(1), @matricula int, @fecha datetime, @horain time, @horafin time, @franjaid int)
  as
 	begin
 		declare @dia int
 		set @dia = (select top 1 dia from franja_horaria where franja_id = @franjaid)
-		update NOT_NULL.turno set turno_estado = 'C', afiliado_nro = null
-		where turno_medico_especialidad_id = (select medicoXespecialidad.medxesp_id from medicoXespecialidad where medxesp_profesional = @matricula)
-		and DATEPART(dw, turno_fecha) = (@dia+1) and Convert(date, turno_fecha) > Convert(date, GETDATE())
-		and Convert(time, turno_fecha) between @horain and @horafin
 		update NOT_NULL.franja_horaria set franja_cancelada = 1 where franja_id = @franjaid
-		insert into NOT_NULL.cancelacion_turno (cancel_fecha, cancel_motivo, cancel_profesional, cancel_tipo, cancel_turno)
-		values(GETDATE(), @motivo+' :Fue una cancelacion por franja', @matricula, @tipo, null)
+
+		declare @turno numeric(18,0)
+		declare @hora int
+		declare @minuto int
+		set @hora = DATEPART( hour, @horain )
+		set @minuto = DATEPART( minute, @horain )
+		while (@hora <= DATEPART( hour, @horafin ) and @minuto <= DATEPART( minute, @horafin ) )
+		Begin
+			select @turno = ( select top 1 turno_nro from turno, medicoXespecialidad
+				where turno_medico_especialidad_id = medxesp_id and medxesp_profesional = @matricula
+					and DATEPART(dw, turno_fecha) = (@dia+1) and Convert(date, turno_fecha) > Convert(date, GETDATE())
+					and	DATEPART( hour, Convert(time, turno_fecha)) = @hora and	DATEPART( minute, Convert(time, turno_fecha)) = @minuto)
+
+			update NOT_NULL.turno set turno_estado = 'C', afiliado_nro = null where turno_nro = @turno
+			insert into NOT_NULL.cancelacion_turno (cancel_fecha, cancel_motivo, cancel_profesional, cancel_tipo, cancel_turno)
+				values(GETDATE(), @motivo+' :Fue una cancelacion por franja', @matricula, @tipo, @turno)
+
+			if @minuto = 0
+			Begin
+				set @minuto = 30
+			End
+			else
+			Begin
+				set @minuto = 0
+				set @hora = @hora + 1
+			End
+
+		End
 	end
  go
