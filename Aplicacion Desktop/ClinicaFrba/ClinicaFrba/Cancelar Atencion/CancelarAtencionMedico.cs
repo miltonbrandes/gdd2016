@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Clases;
 using Helpers;
+using ClinicaFrba.Registro_Agenda;
 
 namespace ClinicaFrba.Cancelar_Atencion
 {
@@ -67,7 +68,9 @@ namespace ClinicaFrba.Cancelar_Atencion
                         //Dia a cancelar
                         DateTime d = ((Fecha)comboBox1.SelectedItem).DiaMesAnio;
                         Dictionary<string, object> parametros = new Dictionary<string, object>() {
-                            {"@matricula", profesional.Matricula},
+                        {"@motivo", textBox1.Text},
+                         {"@tipo", cmbTipoCancelacion.Text.Substring(0,1)},    
+                         {"@matricula", profesional.Matricula},
                     { "@fecha", d },
                     { "@horainicio", 0 },
                     {"@minutosinicio", 0},
@@ -92,20 +95,29 @@ namespace ClinicaFrba.Cancelar_Atencion
                         if(dataGridView1.SelectedRows.Count == 1)
                         {
                             /*QUIERE CANCELAR UNA FRANJA*/
+                            
                             DataGridViewRow r = dataGridView1.SelectedRows[0];
                             Franja f = (Franja)r.DataBoundItem;
+                            DateTime dInicio = DateTime.Today;
+                            dInicio = dInicio.AddHours(f.HoraInicio);
+                            dInicio = dInicio.AddMinutes(f.MinutoInicio);
+                            TimeSpan tInicio = dInicio.TimeOfDay;
+                            DateTime dFin = DateTime.Today;
+                            dFin = dFin.AddHours(f.HoraFin);
+                            dFin = dFin.AddMinutes(f.MinutoFin);
+                            TimeSpan tFin = dFin.TimeOfDay;
                             Dictionary<string, object> parametros = new Dictionary<string, object>() {
-                                {"@matricula", profesional.Matricula},
+                            {"@motivo", textBox1.Text},
+                            {"@tipo", cmbTipoCancelacion.Text.Substring(0,1)},    
+                            {"@matricula", profesional.Matricula},
                         { "@fecha", 0 },
-                        { "@horainicio", f.HoraInicio },
-                        {"@minutosinicio", f.MinutoInicio},
-                        {"@horafin", f.HoraFin},
-                        {"@minutosfin", f.MinutoFin},
+                        { "@horain", tInicio},
+                        {"@horafin", tFin},
                         {"@franjaid", f.Id}
                         };
                             try
                             {
-                                DBHelper.ExecuteNonQuery("Cancelar_Turnos_Profesional", parametros);
+                                DBHelper.ExecuteNonQuery("Cancelar_Turnos_ProfxFranja", parametros);
                                 //dataGridView1.DataSource = t;
                             }
                             catch
@@ -138,6 +150,11 @@ namespace ClinicaFrba.Cancelar_Atencion
             {
                 amostrar.Show();
             }
+        }
+
+        private void btnDesmarcar_Click(object sender, EventArgs e)
+        {
+            dataGridView1.ClearSelection();
         }
     }
 }

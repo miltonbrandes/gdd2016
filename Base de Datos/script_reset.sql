@@ -195,5 +195,6 @@ drop procedure NOT_NULL.Turnos_Afiliado
 drop procedure NOT_NULL.Get_Dias_Turno_Prof
 drop procedure NOT_NULL.Get_Franjas_Profesional
 drop procedure NOT_NULL.Cancelar_Turnos_Profesional
+drop procedure NOT_NULL.Cancelar_Turnos_ProfxFranja
 DROP SCHEMA NOT_NULL
 GO
