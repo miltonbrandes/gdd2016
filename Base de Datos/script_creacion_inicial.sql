@@ -1061,11 +1061,12 @@ GO
 	END
   GO
 
+
 --OBTENER AFILIADO SEGUN NRO DE AFILIADO QUE ESTEN ACTIVOS
   create procedure NOT_NULL.Afiliado_GetAfiliadoSegunNro (@nroAfil int)
   as
 	begin 
-		select afiliado_nombre, afiliado_apellido, afiliado_cant_hijos, afiliado_direccion, afiliado_dni, afiliado_estado_civil, afiliado_fecha_nac,afiliado_mail, afiliado_nro, afiliado_plan, afiliado_sexo, afiliado_telefono, afiliado.usuario_id
+		select afiliado_nombre, afiliado_apellido, afiliado_cant_hijos, afiliado_direccion,afiliado_tipo_dni,  afiliado_dni, afiliado_estado_civil, afiliado_fecha_nac,afiliado_mail, afiliado_nro, afiliado_plan, afiliado_sexo, afiliado_telefono, afiliado.usuario_id
 		 from NOT_NULL.afiliado,rolXusuario where afiliado_nro = @nroAfil and afiliado.usuario_id = rolXusuario.usuario_id and rolXusuario.rol_id = 2 and rolXusuario_habilitado = 1
 	end
   go
