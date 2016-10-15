@@ -4,6 +4,7 @@ using System.Linq;
 using System.Data.SqlClient;
 using Clases;
 using Clases.Profesionales;
+using System.Configuration;
 
 namespace Helpers
 {
@@ -432,7 +433,7 @@ namespace Helpers
                 }
                 else
                 {
-                    llegada = DateTime.Today;
+                    llegada = DateTime.Parse(ConfigurationManager.AppSettings["fecha"]);
                 }
                 if (rdr["turno_sintomas"].ToString() != "")
                 {

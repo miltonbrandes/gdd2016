@@ -34,6 +34,11 @@ namespace ClinicaFrba.Pedir_Turno
 
         public void cargarTurnos(string codigo_profesional, string codigo_especialidad)
         {
+            int prof;
+            decimal esp;
+            decimal.TryParse(codigo_especialidad, out esp);
+            int.TryParse(codigo_profesional, out prof);
+
             List<turnosProcedure> turnosFiltrados = null;
             var parametros = new Dictionary<string, object>() {
                     { "@profesional", codigo_profesional},

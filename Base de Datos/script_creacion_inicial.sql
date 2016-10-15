@@ -1300,18 +1300,19 @@ GO
 	 WHERE turno_nro = @nro_turno
 	END
    GO   
-   
+
+
   -- FILTRADO DE DIAS DE TURNOS SEGUN CODIGO_PROFESIONAL
-  CREATE PROCEDURE NOT_NULL.turnos_GetByFilerProfesional @profesional varchar(20), @especialidad varchar(20) /* fecha_archivo */
+  CREATE PROCEDURE NOT_NULL.turnos_GetByFilerProfesional @profesional int, @especialidad numeric(18,0) /* fecha_archivo */
   AS
 	BEGIN
 	SET NOCOUNT ON;
 	SELECT str(turno_nro) as turno,
-		   str(day(turno_hora_llegada)) as dia,
+		   str(day(turno_fecha)) as dia,
 		   str(month(turno_fecha)) as mes,
 		   CONVERT(nvarchar(MAX), turno_fecha, 8) as hora
 	FROM not_null.turno
-	 WHERE turno_fecha > '2015/01/01' /* fecha_archivo */
+	 WHERE turno_fecha >= CONVERT(date,GETDATE()) /* fecha_archivo */
 	  and afiliado_nro is null 
 	  and turno_estado = 'D' 
 	  and turno_medico_especialidad_id = (select top 1 medxesp_id from NOT_NULL.medicoXespecialidad where medxesp_profesional = @profesional and medxesp_especialidad = @especialidad)

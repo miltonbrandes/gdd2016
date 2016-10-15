@@ -197,5 +197,6 @@ drop procedure NOT_NULL.Get_Franjas_Profesional
 drop procedure NOT_NULL.Cancelar_Turnos_Profesional
 drop procedure NOT_NULL.Cancelar_Turnos_ProfxFranja 
 drop procedure NOT_NULL.Cancelar_Turnos_Varios_Dias 
+drop procedure NOT_NULL.reservarTurno_GetByFilerProfesional
 DROP SCHEMA NOT_NULL
 GO

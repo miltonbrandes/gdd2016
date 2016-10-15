@@ -8,7 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Clases;
-using Helpers; 
+using Helpers;
+using System.Configuration;
 namespace ClinicaFrba.Abm_Afiliado
 {
     public partial class frmAfiliado : Form
@@ -851,7 +852,7 @@ namespace ClinicaFrba.Abm_Afiliado
                 cmbEstadoCivil.SelectedItem = cmbEstadoCivil.Items[0];
                 cmbPlan.SelectedItem = cmbPlan.Items[0];
                 cmbSexo.SelectedItem = cmbSexo.Items[0];
-                dtpFecha.Value = DateTime.Today;
+                dtpFecha.Value = DateTime.Parse(ConfigurationManager.AppSettings["fecha"]);
             }
             else if (opcionelegida == 3 || opcionelegida == 4)
             {
@@ -864,7 +865,7 @@ namespace ClinicaFrba.Abm_Afiliado
                 txtTelefono.Text = "";
                 cmbEstadoCivil.SelectedItem = cmbEstadoCivil.Items[0];
                 cmbSexo.SelectedItem = cmbSexo.Items[0];
-                dtpFecha.Value = DateTime.Today;
+                dtpFecha.Value = DateTime.Parse(ConfigurationManager.AppSettings["fecha"]);
             }
         }
 

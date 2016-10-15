@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Clases;
 using Helpers;
 using ClinicaFrba.Registro_Agenda;
+using System.Configuration;
 
 namespace ClinicaFrba.Cancelar_Atencion
 {
@@ -61,9 +62,9 @@ namespace ClinicaFrba.Cancelar_Atencion
                                 /*QUIERE CANCELAR UN RANGO*/
 
                                 DateTime d = ((Fecha)drop_fecha.SelectedItem).DiaMesAnio;
-                                DateTime dInicio = new DateTime(DateTime.Today.Year, 1, 1, Int32.Parse(hora1.Text), Int32.Parse(minuto1.Text), 0);
+                                DateTime dInicio = new DateTime(DateTime.Parse(ConfigurationManager.AppSettings["fecha"]).Year, 1, 1, Int32.Parse(hora1.Text), Int32.Parse(minuto1.Text), 0);
                                 TimeSpan tInicio = dInicio.TimeOfDay;
-                                DateTime dFin = new DateTime(DateTime.Today.Year, 1, 1, Int32.Parse(hora2.Text), Int32.Parse(minuto2.Text), 0);
+                                DateTime dFin = new DateTime(DateTime.Parse(ConfigurationManager.AppSettings["fecha"]).Year, 1, 1, Int32.Parse(hora2.Text), Int32.Parse(minuto2.Text), 0);
                                 TimeSpan tFin = dFin.TimeOfDay;
                                 
                                 Dictionary<string, object> parametros = new Dictionary<string, object>() {
@@ -95,9 +96,9 @@ namespace ClinicaFrba.Cancelar_Atencion
                             /*QUIERE CANCELAR TODO EL DIA*/
 
                             DateTime d = ((Fecha)drop_fecha.SelectedItem).DiaMesAnio;
-                            DateTime dInicio = new DateTime(DateTime.Today.Year, 1, 1, 0, 0, 0);
+                            DateTime dInicio = new DateTime(DateTime.Parse(ConfigurationManager.AppSettings["fecha"]).Year, 1, 1, 0, 0, 0);
                             TimeSpan tInicio = dInicio.TimeOfDay;
-                            DateTime dFin = new DateTime(DateTime.Today.Year, 1, 1, 23, 59, 0);
+                            DateTime dFin = new DateTime(DateTime.Parse(ConfigurationManager.AppSettings["fecha"]).Year, 1, 1, 23, 59, 0);
                             TimeSpan tFin = dFin.TimeOfDay;
 
                             Dictionary<string, object> parametros = new Dictionary<string, object>() {
