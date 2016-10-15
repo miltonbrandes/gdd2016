@@ -28,7 +28,9 @@ namespace ClinicaFrba.Cancelar_Atencion
 
         private void frmCancelarAtencionMedico_Load(object sender, EventArgs e)
         {
-            
+            monthCalendar1.Visible = monthCalendar2.Visible = true;
+            hora1.Enabled = minuto1.Enabled = hora2.Enabled = minuto2.Enabled = monthCalendar1.Enabled = monthCalendar2.Enabled = drop_fecha.Enabled = false;
+
             Dictionary<string, object> parametros = new Dictionary<string, object>() {
                             {"@matricula", profesional.Matricula}};
             try
@@ -37,7 +39,6 @@ namespace ClinicaFrba.Cancelar_Atencion
                 f = DBHelper.ExecuteReader("Get_Dias_Turno_Prof", parametros).ToFecha();
                 drop_fecha.DataSource = f;
                 drop_fecha.DisplayMember = "DiaMesAnio";
-                //comboBox1.
             }
             catch
             {
@@ -45,8 +46,6 @@ namespace ClinicaFrba.Cancelar_Atencion
                 return;
             }
 
-
-            monthCalendar1.Visible = monthCalendar2.Visible = true;
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -59,17 +58,19 @@ namespace ClinicaFrba.Cancelar_Atencion
                         {
                             if (hora1.Text != string.Empty && hora2.Text != string.Empty && minuto1.Text != string.Empty && minuto2.Text != string.Empty)
                             {
-                                /*QUIERE CANCELAR UNA FRANJA*/
+                                /*QUIERE CANCELAR UN RANGO*/
 
+                                DateTime d = ((Fecha)drop_fecha.SelectedItem).DiaMesAnio;
                                 DateTime dInicio = new DateTime(DateTime.Today.Year, 1, 1, Int32.Parse(hora1.Text), Int32.Parse(minuto1.Text), 0);
                                 TimeSpan tInicio = dInicio.TimeOfDay;
                                 DateTime dFin = new DateTime(DateTime.Today.Year, 1, 1, Int32.Parse(hora2.Text), Int32.Parse(minuto2.Text), 0);
                                 TimeSpan tFin = dFin.TimeOfDay;
+                                
                                 Dictionary<string, object> parametros = new Dictionary<string, object>() {
                                     {"@motivo", textBox1.Text},
                                     {"@tipo", cmbTipoCancelacion.Text.Substring(0,1)},    
                                     {"@matricula", profesional.Matricula},
-                                    {"@fecha", 0 },
+                                    {"@fecha", d },
                                     {"@horain", tInicio},
                                     {"@horafin", tFin}
                                     };
@@ -91,20 +92,26 @@ namespace ClinicaFrba.Cancelar_Atencion
                         }
                         else
                         {
+                            /*QUIERE CANCELAR TODO EL DIA*/
 
-                            /*QUIERE DECIR QUE QUIERE CANCELAR TODO EL DIA*/
-                            //Dia a cancelar
                             DateTime d = ((Fecha)drop_fecha.SelectedItem).DiaMesAnio;
+                            DateTime dInicio = new DateTime(DateTime.Today.Year, 1, 1, 0, 0, 0);
+                            TimeSpan tInicio = dInicio.TimeOfDay;
+                            DateTime dFin = new DateTime(DateTime.Today.Year, 1, 1, 23, 59, 0);
+                            TimeSpan tFin = dFin.TimeOfDay;
+
                             Dictionary<string, object> parametros = new Dictionary<string, object>() {
                                         {"@motivo", textBox1.Text},
                                         {"@tipo", cmbTipoCancelacion.Text.Substring(0,1)},    
                                         {"@matricula", profesional.Matricula},
-                                        {"@fecha", d }
+                                        {"@fecha", d },
+                                        {"@horain", tInicio},
+                                        {"@horafin", tFin}
                                 };
 
                             try
                             {
-                                DBHelper.ExecuteNonQuery("Cancelar_Turnos_Profesional", parametros);
+                                DBHelper.ExecuteNonQuery("Cancelar_Turnos_ProfxFranja", parametros);
                             }
                             catch
                             {
@@ -116,7 +123,7 @@ namespace ClinicaFrba.Cancelar_Atencion
                     }
                     else
                     {
-                        //  CANCELA RANGO DE FECHAS
+                        //*QUIERE CANCELAR RANGO DIAS*/
                         if (chk_dias.Checked == true)
                         {
                             DateTime dia_desde = monthCalendar1.SelectionStart;
