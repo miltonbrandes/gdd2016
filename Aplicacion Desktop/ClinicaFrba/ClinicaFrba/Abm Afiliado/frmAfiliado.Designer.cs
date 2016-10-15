@@ -59,6 +59,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.ckbCambioPlan = new System.Windows.Forms.CheckBox();
             this.lblCambioPlan = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // btnHabilitar
@@ -161,8 +162,9 @@
             // 
             this.txtDni.Location = new System.Drawing.Point(140, 86);
             this.txtDni.Margin = new System.Windows.Forms.Padding(4);
+            this.txtDni.Multiline = true;
             this.txtDni.Name = "txtDni";
-            this.txtDni.Size = new System.Drawing.Size(190, 22);
+            this.txtDni.Size = new System.Drawing.Size(103, 24);
             this.txtDni.TabIndex = 31;
             // 
             // label4
@@ -171,9 +173,9 @@
             this.label4.Location = new System.Drawing.Point(7, 86);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(31, 17);
+            this.label4.Size = new System.Drawing.Size(80, 17);
             this.label4.TabIndex = 30;
-            this.label4.Text = "DNI";
+            this.label4.Text = "Documento";
             // 
             // txtApellido
             // 
@@ -373,11 +375,26 @@
             this.lblCambioPlan.Text = "Desea cambiar a su famila de plan?";
             this.lblCambioPlan.Visible = false;
             // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "DNI",
+            "CI",
+            "LC",
+            "LE"});
+            this.comboBox1.Location = new System.Drawing.Point(250, 86);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(80, 24);
+            this.comboBox1.TabIndex = 62;
+            // 
             // frmAfiliado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(342, 627);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.lblCambioPlan);
             this.Controls.Add(this.ckbCambioPlan);
             this.Controls.Add(this.button1);
@@ -451,5 +468,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.CheckBox ckbCambioPlan;
         private System.Windows.Forms.Label lblCambioPlan;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }

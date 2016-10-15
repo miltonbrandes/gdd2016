@@ -44,6 +44,8 @@ ALTER TABLE NOT_NULL.turno NOCHECK CONSTRAINT ALL
 GO
 
 /*Lo hago aca xq turno referencia a medXesp */
+DROP TABLE NOT_NULL.baja_afiliado
+GO
 
 DROP TABLE NOT_NULL.franja_horaria
 GO

@@ -120,6 +120,7 @@ namespace Helpers
                        Sexo = (string)rdr["afiliado_sexo"],
                        PlanUsuario = (decimal)rdr["afiliado_plan"],
                        CantidadHijos = (decimal)rdr["afiliado_cant_hijos"],
+                       TipoDocumento = (string)rdr["afiliado_tipo_dni"],
                    });
             }
             DBHelper.DB.Close();
