@@ -25,6 +25,7 @@ namespace ClinicaFrba
             InitializeComponent();
             usuario = us;
             rol = ro;
+            DateTime f = ConfigTime.getFecha();
         }
         private void Main_Load(object sender, EventArgs e)
         {

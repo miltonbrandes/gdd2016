@@ -108,6 +108,7 @@ namespace ClinicaFrba.Pedir_Turno
         private void dgvTurnos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             string nro_turno = dgvTurnos.CurrentCell.Value.ToString();
+            //string nro_turno = dgvTurnos.SelectedCells[0].Value.ToString();
             var parametros = new Dictionary<string, object>() {
                     { "@afiliado", nro_afiliado},
                     { "@nro_turno", nro_turno}
