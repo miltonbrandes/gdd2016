@@ -262,6 +262,7 @@ create table NOT_NULL.afiliado (
 	 usuario_id varchar(50) NULL foreign key references NOT_NULL.usuario(usuario_id),
 	 afiliado_nombre varchar(255),
 	 afiliado_apellido varchar(255),
+	 afiliado_tipo_dni char(1) default 'D',				--D: dni, L: libreta civica, C: cedula identidad, E: libreta enrolamiento
 	 afiliado_dni numeric(18,0),
 	 afiliado_estado_civil character(1),	-- C, S, V, D, O:concubinato, N:no especificado
 	 afiliado_sexo character(1),			-- M, F, N:no especificado
@@ -313,8 +314,8 @@ as
 		begin
 			insert into NOT_NULL.usuario (usuario_id, usuario_cant_intentos, usuario_descripcion, usuario_password, usuario_habilitado)
 			select afiliado_nombre + afiliado_apellido + CAST(afiliado_dni as varchar(8)), 0, 'Afiliado',HASHBYTES('SHA2_256', 'afiliado'), 1 from inserted where inserted.afiliado_nombre is not null and inserted.afiliado_apellido is not null and inserted.afiliado_dni is not null;
-			insert into NOT_NULL.afiliado (usuario_id, afiliado_nombre, afiliado_apellido, afiliado_dni, afiliado_cant_hijos, afiliado_direccion, afiliado_estado_civil, afiliado_fecha_nac, afiliado_mail, afiliado_plan, afiliado_sexo, afiliado_telefono)
-			(select afiliado_nombre + afiliado_apellido + CAST(afiliado_dni as varchar(8)), afiliado_nombre, afiliado_apellido, afiliado_dni, 0, afiliado_direccion, afiliado_estado_civil, afiliado_fecha_nac, afiliado_mail, afiliado_plan, afiliado_sexo, afiliado_telefono from inserted  
+			insert into NOT_NULL.afiliado (usuario_id, afiliado_nombre, afiliado_apellido, afiliado_tipo_dni,afiliado_dni, afiliado_cant_hijos, afiliado_direccion, afiliado_estado_civil, afiliado_fecha_nac, afiliado_mail, afiliado_plan, afiliado_sexo, afiliado_telefono)
+			(select afiliado_nombre + afiliado_apellido + CAST(afiliado_dni as varchar(8)), afiliado_nombre, afiliado_apellido,afiliado_tipo_dni, afiliado_dni, 0, afiliado_direccion, afiliado_estado_civil, afiliado_fecha_nac, afiliado_mail, afiliado_plan, afiliado_sexo, afiliado_telefono from inserted  
 			where inserted.afiliado_nombre is not null and inserted.afiliado_apellido is not null and inserted.afiliado_dni is not null);
 			insert into NOT_NULL.rolXusuario (rolXusuario_habilitado, rol_id, usuario_id) 
 			(select 1, 2, afiliado_nombre + afiliado_apellido + CAST(afiliado_dni as varchar(8)) from inserted
@@ -337,9 +338,9 @@ as
 go
 
 insert into NOT_NULL.afiliado
-(afiliado_nombre, afiliado_apellido,  afiliado_dni, afiliado_estado_civil, 
+(afiliado_nombre, afiliado_apellido,  afiliado_tipo_dni,afiliado_dni, afiliado_estado_civil, 
 afiliado_sexo, afiliado_fecha_nac, afiliado_telefono, afiliado_mail, afiliado_direccion, afiliado_cant_hijos, afiliado_plan)
-select Paciente_Nombre, Paciente_Apellido,Paciente_Dni, 'N', 'N', Paciente_Fecha_Nac, Paciente_Telefono, Paciente_Mail, Paciente_Direccion, 0, Plan_Med_Codigo 
+select Paciente_Nombre, Paciente_Apellido,'D',Paciente_Dni, 'N', 'N', Paciente_Fecha_Nac, Paciente_Telefono, Paciente_Mail, Paciente_Direccion, 0, Plan_Med_Codigo 
 	from gd_esquema.Maestra
 	group by Paciente_Nombre, Paciente_Apellido, Paciente_Dni, Paciente_Fecha_Nac, Paciente_Telefono, Paciente_Mail, Paciente_Direccion, Plan_Med_Codigo
 go
@@ -567,6 +568,17 @@ create table NOT_NULL.compra_bono(
 	compra_fecha datetime
 )
 go
+
+/*TABLA BAJA AFILIADO*/
+create table NOT_NULL.baja_afiliado
+(
+	baja_afiliado_id numeric(18,0) identity (1,1) primary key,
+	baja_afiliado_nro numeric(18,0) foreign key references NOT_NULL.afiliado(afiliado_nro),
+	baja_afiliado_fecha datetime
+)
+go
+
+
 
 insert into NOT_NULL.compra_bono (compra_cantidad, compra_afiliado, compra_fecha)
 	select count(Compra_Bono_Fecha), afiliado_nro, Compra_Bono_Fecha
@@ -823,12 +835,13 @@ GO
   go
 
   --CREAR AFILIADO
-  CREATE PROCEDURE NOT_NULL.Afiliado_Add(@Username varchar(50), @Nombre varchar(50),@Apellido varchar(50), @Dni numeric(8,0), @Mail varchar(50),@Telefono varchar(20), @Direccion varchar(50), @CantHijos numeric(2,0), @EstadoCivil char(1), @Fecha datetime, @Plan numeric(18,0), @Sexo char(1))
+  CREATE PROCEDURE NOT_NULL.Afiliado_Add(@Username varchar(50), @Nombre varchar(50),@Apellido varchar(50), @TipoDocumento char(1), @Dni numeric(8,0), @Mail varchar(50),@Telefono varchar(20), @Direccion varchar(50), @CantHijos numeric(2,0), @EstadoCivil char(1), @Fecha datetime, @Plan numeric(18,0), @Sexo char(1))
   AS
 	BEGIN
 	SET NOCOUNT ON;
-		INSERT INTO NOT_NULL.afiliado(usuario_id,afiliado_nombre,afiliado_apellido,afiliado_dni,afiliado_mail,afiliado_telefono,afiliado_direccion,afiliado_cant_hijos,afiliado_estado_civil, afiliado_fecha_nac, afiliado_plan, afiliado_sexo)
-		VALUES (@Username, @Nombre, @Apellido, @Dni, @Mail, @Telefono,@Direccion, 0, @EstadoCivil, @Fecha, @Plan, @Sexo)
+		
+		INSERT INTO NOT_NULL.afiliado(usuario_id,afiliado_nombre,afiliado_apellido,afiliado_tipo_dni,afiliado_dni,afiliado_mail,afiliado_telefono,afiliado_direccion,afiliado_cant_hijos,afiliado_estado_civil, afiliado_fecha_nac, afiliado_plan, afiliado_sexo)
+		VALUES (@Username, @Nombre, @Apellido,@TipoDocumento, @Dni, @Mail, @Telefono,@Direccion, 0, @EstadoCivil, @Fecha, @Plan, @Sexo)
 		--INSERT INTO NOT_NULL.rolXusuario(usuario_id, rol_id)
 		--VALUES (@Username, 2)
 	END
@@ -1161,6 +1174,7 @@ GO
 		--set @ret = (select count(*) from NOT_NULL.rolXusuario where usuario_id = @UsuarioId and rol_id = 2 and rolXusuario_habilitado = 0) 
 		--LE DOY DE BAJA A SUS TURNOS Y LOS PONGO COMO DISPONIBLES
 		update NOT_NULL.turno set turno_estado = 'D', afiliado_nro = null where (select top 1 usuario_id from afiliado where afiliado_nro = turno.afiliado_nro) = @UsuarioId
+		insert into NOT_NULL.baja_afiliado (baja_afiliado_nro, baja_afiliado_fecha) (select top 1 afiliado_nro, GETDATE() from afiliado where usuario_id = @UsuarioId)
 	end
   go
 
@@ -1169,7 +1183,7 @@ GO
 
 
   /*AGREGAR UN FAMILIAR AL AFIIADO*/
-  create procedure NOT_NULL.Afiliado_Agregar_Familiar (@Afiliado_nro_familiar int, @Username varchar(50), @Nombre varchar(50),@Apellido varchar(50), @Dni numeric(8,0), @Mail varchar(50),@Telefono varchar(20), @Direccion varchar(50), @CantHijos numeric(2,0), @EstadoCivil char(1), @Fecha datetime, @Plan numeric(18,0), @Sexo char(1))
+  create procedure NOT_NULL.Afiliado_Agregar_Familiar (@Afiliado_nro_familiar int, @Username varchar(50), @Nombre varchar(50),@Apellido varchar(50),@TipoDocumento char(1), @Dni numeric(8,0), @Mail varchar(50),@Telefono varchar(20), @Direccion varchar(50), @CantHijos numeric(2,0), @EstadoCivil char(1), @Fecha datetime, @Plan numeric(18,0), @Sexo char(1))
   as
 	begin;
 		DISABLE TRIGGER NOT_NULL.crear_usuario ON NOT_NULL.afiliado
@@ -1179,8 +1193,8 @@ GO
 			--set @nroafil = @Afiliado_nro_familiar + 1
 			insert into NOT_NULL.usuario (usuario_id, usuario_cant_intentos, usuario_descripcion, usuario_password, usuario_habilitado)
 			values (@Nombre + @Apellido + CAST(@Dni as varchar(8)), 0, 'Afiliado',HASHBYTES('SHA2_256', 'afiliado'), 1)
-			insert into NOT_NULL.afiliado (afiliado_nro, usuario_id, afiliado_nombre, afiliado_apellido, afiliado_dni, afiliado_cant_hijos, afiliado_direccion, afiliado_estado_civil, afiliado_fecha_nac, afiliado_mail, afiliado_plan, afiliado_sexo, afiliado_telefono)
-		     values(@nroafil, @Nombre + @Apellido + CAST(@Dni as varchar(8)), @Nombre, @Apellido, @Dni, @CantHijos, @Direccion, @EstadoCivil, @Fecha, @Mail, @Plan, @Sexo, @Telefono) 
+			insert into NOT_NULL.afiliado (afiliado_nro, usuario_id, afiliado_nombre, afiliado_apellido, afiliado_tipo_dni,afiliado_dni, afiliado_cant_hijos, afiliado_direccion, afiliado_estado_civil, afiliado_fecha_nac, afiliado_mail, afiliado_plan, afiliado_sexo, afiliado_telefono)
+		     values(@nroafil, @Nombre + @Apellido + CAST(@Dni as varchar(8)), @Nombre, @Apellido, @TipoDocumento ,@Dni, @CantHijos, @Direccion, @EstadoCivil, @Fecha, @Mail, @Plan, @Sexo, @Telefono) 
 			insert into NOT_NULL.rolXusuario (rolXusuario_habilitado, rol_id, usuario_id) 
 			values (1, 2, @Nombre + @Apellido + CAST(@Dni as varchar(8)))
 			SET IDENTITY_INSERT NOT_NULL.afiliado OFF;

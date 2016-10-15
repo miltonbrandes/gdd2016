@@ -84,7 +84,7 @@ namespace ClinicaFrba
                         }
                         else if (roles.Count == 0)
                         {
-                            MessageBox.Show("Este usuario no tiene roles asignados", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Este usuario no tiene roles asignados o estan dados de baja. Contactese con el administrador", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         
                         }
                         else
