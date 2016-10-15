@@ -1631,3 +1631,42 @@ create procedure NOT_NULL.Cancelar_Turnos_Varios_Dias(@motivo varchar(255), @tip
 		End
 	end
  go
+ 
+ 
+ /*Fechas config*/
+ CREATE TABLE NOT_NULL.Fecha_Config(
+	id int primary key,
+	fecha datetime,
+	now_viejo datetime
+ )
+ GO
+ 
+ CREATE PROCEDURE NOT_NULL.Reestablecer_Fecha (@fecha datetime, @now_viejo datetime)
+ AS BEGIN
+ 
+	--Borro el valor anterior
+	DELETE FROM NOT_NULL.Fecha_Config
+	
+	INSERT INTO NOT_NULL.Fecha_Config (id,fecha,now_viejo)
+	VALUES(1,@fecha,@now_viejo)
+	
+ END
+ GO
+ 
+ CREATE FUNCTION NOT_NULL.Obtener_Fecha()
+ RETURNS datetime
+ AS BEGIN
+	
+	DECLARE @fecha_tabla datetime
+	DECLARE @now_viejo datetime
+	
+	SET @fecha_tabla = (SELECT f.fecha FROM NOT_NULL.Fecha_Config f
+						WHERE f.id=1)
+	SET @now_viejo = (SELECT f.now_viejo FROM NOT_NULL.Fecha_Config f
+					  WHERE f.id=1)
+	
+	--retorno la fecha tabla + dif entre now y el now_viejo
+	RETURN DATEADD(minute, DATEDIFF(minute,@now_viejo,GETDATE()), @fecha_tabla )
+	
+END
+GO

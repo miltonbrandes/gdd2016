@@ -107,6 +107,9 @@ GO
 DROP TABLE NOT_NULL.plan_medico
 GO
 
+DROP TABLE NOT_NULL.Fecha_Config
+GO
+
 DROP procedure NOT_NULL.asignar_nro_bonos_afiliado
 GO
 
@@ -200,5 +203,9 @@ drop procedure NOT_NULL.Cancelar_Turnos_Profesional
 drop procedure NOT_NULL.Cancelar_Turnos_ProfxFranja 
 drop procedure NOT_NULL.Cancelar_Turnos_Varios_Dias 
 drop procedure NOT_NULL.reservarTurno_GetByFilerProfesional
+
+DROP PROCEDURE NOT_NULL.Reestablecer_Fecha
+DROP FUNCTION NOT_NULL.Obtener_Fecha
+
 DROP SCHEMA NOT_NULL
 GO
