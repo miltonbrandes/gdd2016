@@ -151,7 +151,8 @@ namespace ClinicaFrba
 
         public static void PedirTurno(object sender, EventArgs e)
         {
-            var home = new Pedir_Turno.frmPedidoTurno();
+            cargarAfiliado();
+            var home = new Pedir_Turno.frmPedidoTurno(afiliado);
             home.Show();
         }
          

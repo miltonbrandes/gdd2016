@@ -1288,22 +1288,36 @@ GO
 		select * from NOT_NULL.turno where turno_fecha = CONVERT(DATE, GETDATE());
 	end
   go
-  
+    
   /* --------------------------------------------------------------------------------------------------------------------- */
-  -- FILTRADO DE DIAS DE TURNOS SEGUN CODIGO_PROFESIONAL
-  CREATE PROCEDURE NOT_NULL.turnos_GetByFilerProfesional @profesional varchar(20), @especialidad varchar(20)
+  CREATE PROCEDURE NOT_NULL.reservarTurno_GetByFilerProfesional @afiliado varchar(20), @nro_turno varchar(20)
   AS
 	BEGIN
 	SET NOCOUNT ON;
-	SELECT day(turno_hora_llegada) as dia, month(turno_hora_llegada) as mes, CONVERT(varchar(20), turno_hora_llegada, 114) as hora
+	UPDATE NOT_NULL.turno
+	SET afiliado_nro = @afiliado,
+		turno_estado = 'R'
+	 WHERE turno_nro = @nro_turno
+	END
+   GO   
+   
+  -- FILTRADO DE DIAS DE TURNOS SEGUN CODIGO_PROFESIONAL
+  CREATE PROCEDURE NOT_NULL.turnos_GetByFilerProfesional @profesional varchar(20), @especialidad varchar(20) /* fecha_archivo */
+  AS
+	BEGIN
+	SET NOCOUNT ON;
+	SELECT str(turno_nro) as turno,
+		   str(day(turno_hora_llegada)) as dia,
+		   str(month(turno_fecha)) as mes,
+		   CONVERT(nvarchar(MAX), turno_fecha, 8) as hora
 	FROM not_null.turno
-	 WHERE turno_fecha > '2015/01/01'
+	 WHERE turno_fecha > '2015/01/01' /* fecha_archivo */
 	  and afiliado_nro is null 
-	  and turno_estado = 'U' 
+	  and turno_estado = 'D' 
 	  and turno_medico_especialidad_id = (select top 1 medxesp_id from NOT_NULL.medicoXespecialidad where medxesp_profesional = @profesional and medxesp_especialidad = @especialidad)
 	END
-  GO 
-  
+  GO   
+
   --FILTRADO DE PROFESIONALES POR ESPECIALIDAD - OK
   CREATE PROCEDURE NOT_NULL.profesional_GetByFilerEspecialidad (@especialidad varchar(20))
   AS
@@ -1334,6 +1348,7 @@ CREATE PROCEDURE NOT_NULL.especialidades_GetByFilerEspecialidad (@especialidad v
 		WHERE especialidad_descripcion LIKE ('%' + @especialidad + '%')
 	END
   GO  
+  
   /* ------------------------------------------------------------------------------------------------------------------------------*/
    -- Registrar Compra Bono
   CREATE PROCEDURE NOT_NULL.Comprar_Bono(@cantidad int, @precio int, @afiliado numeric(18,0), @fecha datetime, @plan numeric(18,0))

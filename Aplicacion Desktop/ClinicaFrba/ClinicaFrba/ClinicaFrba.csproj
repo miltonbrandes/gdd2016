@@ -92,10 +92,10 @@
     <Compile Include="Abm Profesional\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Usuario\homeAbmUsuario.cs">
+    <Compile Include="AbmRol\Abm Usuario\homeAbmUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Usuario\homeAbmUsuario.Designer.cs">
+    <Compile Include="AbmRol\Abm Usuario\homeAbmUsuario.Designer.cs">
       <DependentUpon>homeAbmUsuario.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmRol\frmAlta.cs">
@@ -236,7 +236,7 @@
     <EmbeddedResource Include="Abm Afiliado\frmHomeAfiliado.resx">
       <DependentUpon>frmHomeAfiliado.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Abm Usuario\homeAbmUsuario.resx">
+    <EmbeddedResource Include="AbmRol\Abm Usuario\homeAbmUsuario.resx">
       <DependentUpon>homeAbmUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmRol\frmAlta.resx">

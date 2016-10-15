@@ -16,18 +16,20 @@ namespace ClinicaFrba.Pedir_Turno
     public partial class frmTurnosxProf : Form
     {
         public static string codigo_profesional;
+        public static decimal nro_afiliado = 0;
 
         public frmTurnosxProf()
         {
             InitializeComponent();
         }
 
-        public frmTurnosxProf(string codigo_profesional, string codigo_especialidad)
+        public frmTurnosxProf(string codigo_profesional, string codigo_especialidad, decimal afiliado)
         {
             // TODO: Complete member initialization
             //this.codigo_profesional = codigo_profesional;
             InitializeComponent();
             cargarTurnos(codigo_profesional, codigo_especialidad);
+            nro_afiliado = afiliado;
         }
 
         public void cargarTurnos(string codigo_profesional, string codigo_especialidad)
@@ -62,61 +64,58 @@ namespace ClinicaFrba.Pedir_Turno
             dgvTurnos.Columns.Clear();
             dgvTurnos.AutoGenerateColumns = false;
 
-/*
+
             dgvTurnos.Columns.Add(new DataGridViewTextBoxColumn()
             {
-                DataPropertyName = "Id",
-                HeaderText = "Id",
-                Width = 128,
+                DataPropertyName = "turno",
+                HeaderText = "Turno",
+                Width = 75,
                 ReadOnly = true
             });
- */
+
             dgvTurnos.Columns.Add(new DataGridViewTextBoxColumn()
             {
-                DataPropertyName = "Dia",
+                DataPropertyName = "dia",
                 HeaderText = "Dia",
-                Width = 128,
+                Width = 50,
                 ReadOnly = true
             });
+
             dgvTurnos.Columns.Add(new DataGridViewTextBoxColumn()
             {
 
-                DataPropertyName = "HoraInicio",
-                HeaderText = "Hora Inicio",
-                Width = 140,
+                DataPropertyName = "mes",
+                HeaderText = "Mes",
+                Width = 50,
                 ReadOnly = true
             });
-            /*
+
             dgvTurnos.Columns.Add(new DataGridViewTextBoxColumn()
             {
-                DataPropertyName = "MinutoInicio",
-                HeaderText = "Minuto Inicio",
-                Width = 100,
+                DataPropertyName = "horario",
+                HeaderText = "Hora",
+                Width = 75,
                 ReadOnly = true
             });
-            */
-            dgvTurnos.Columns.Add(new DataGridViewTextBoxColumn()
-            {
-                DataPropertyName = "HoraFin",
-                HeaderText = "Hora Fin",
-                Width = 230,
-                ReadOnly = true
-            });
-            /*
-            dgvTurnos.Columns.Add(new DataGridViewTextBoxColumn()
-            {
-                DataPropertyName = "MinutoFin",
-                HeaderText = "Minuto Fin",
-                Width = 230,
-                ReadOnly = true
-            });
-            */
+
         }
 
         private void dgvTurnos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Acá tendría que llenar la tabla de franja horaria con el número de afiliado que reservó el turno
-            // Y tendría que crear el registro de la tabla turno
+            string nro_turno = dgvTurnos.CurrentCell.Value.ToString();
+            var parametros = new Dictionary<string, object>() {
+                    { "@afiliado", nro_afiliado},
+                    { "@nro_turno", nro_turno}
+                };
+            try
+            {
+                DBHelper.ExecuteReader("reservarTurno_GetByFilerProfesional", parametros);
+            }
+            catch
+            {
+                MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            MessageBox.Show("Reservado con exito", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

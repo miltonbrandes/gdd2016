@@ -247,6 +247,26 @@ namespace Helpers
         }
         #endregion
 
+        #region ESPECIALIDAD2
+
+        public static List<Especialidad> ToEspecialidad2(this SqlDataReader rdr)
+        {
+            List<Especialidad> list = new List<Especialidad>();
+            while (rdr.Read())
+            {
+                // if(rdr.
+                list.Add(new Especialidad()
+                {
+                    Descripcion = (string)rdr["especialidad_descripcion"],
+                    Id = (decimal)rdr["especialidad_codigo"],
+                    Tipo = (string)rdr["especialidad_tipo"]
+                });
+            }
+            DBHelper.DB.Close();
+            return list;
+        }
+        #endregion
+
         #region FRANJA
         public static Franja ToFranjas(this SqlDataReader rdr)
         {
@@ -451,7 +471,6 @@ namespace Helpers
         #endregion
 
         #region TURNOS_PROCEDURE
-
         public static List<turnosProcedure> ToTurnosProc(this SqlDataReader rdr)
         {
             List<turnosProcedure> list = new List<turnosProcedure>();
@@ -459,6 +478,27 @@ namespace Helpers
             {
                 list.Add(new turnosProcedure()
                 {
+                    turno = (string)rdr["turno"],
+                    dia = (string)rdr["dia"],
+                    mes = (string)rdr["mes"],
+                    horario = (string)rdr["hora"]
+                    
+                });
+            }
+            DBHelper.DB.Close();
+            return list;
+        }
+        #endregion
+
+        #region TURNO_RESERVADO
+        public static List<turnosProcedure> ToTurnoReservado(this SqlDataReader rdr)
+        {
+            List<turnosProcedure> list = new List<turnosProcedure>();
+            while (rdr.Read())
+            {
+                list.Add(new turnosProcedure()
+                {
+                    turno = (string)rdr["turno"],
                     dia = (string)rdr["dia"],
                     mes = (string)rdr["mes"],
                     horario = (string)rdr["hora"]
