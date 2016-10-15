@@ -60,14 +60,21 @@ namespace ClinicaFrba.Cancelar_Atencion
                             if (hora1.Text != string.Empty && hora2.Text != string.Empty && minuto1.Text != string.Empty && minuto2.Text != string.Empty)
                             {
                                 /*QUIERE CANCELAR UN RANGO*/
+                                int horain, horafi, minin, minfi;
+                                if (int.TryParse(hora1.Text, out horain) &&
+                                int.TryParse(hora2.Text, out horafi) &&
+                                int.TryParse(minuto1.Text, out minin) &&
+                                int.TryParse(minuto2.Text, out minfi))
+                                {
+                                    if (drop_fecha.SelectedText != string.Empty && horain < 24 && horain >= 0 && horafi < 24 && horain >= 0 && minin < 60 && minin >= 00 && minfi < 60 && minfi >= 0)
+                                    {
+                                        DateTime d = ((Fecha)drop_fecha.SelectedItem).DiaMesAnio;
+                                        DateTime dInicio = new DateTime(DateTime.Parse(ConfigurationManager.AppSettings["fecha"]).Year, 1, 1, Int32.Parse(hora1.Text), Int32.Parse(minuto1.Text), 0);
+                                        TimeSpan tInicio = dInicio.TimeOfDay;
+                                        DateTime dFin = new DateTime(DateTime.Parse(ConfigurationManager.AppSettings["fecha"]).Year, 1, 1, Int32.Parse(hora2.Text), Int32.Parse(minuto2.Text), 0);
+                                        TimeSpan tFin = dFin.TimeOfDay;
 
-                                DateTime d = ((Fecha)drop_fecha.SelectedItem).DiaMesAnio;
-                                DateTime dInicio = new DateTime(DateTime.Parse(ConfigurationManager.AppSettings["fecha"]).Year, 1, 1, Int32.Parse(hora1.Text), Int32.Parse(minuto1.Text), 0);
-                                TimeSpan tInicio = dInicio.TimeOfDay;
-                                DateTime dFin = new DateTime(DateTime.Parse(ConfigurationManager.AppSettings["fecha"]).Year, 1, 1, Int32.Parse(hora2.Text), Int32.Parse(minuto2.Text), 0);
-                                TimeSpan tFin = dFin.TimeOfDay;
-                                
-                                Dictionary<string, object> parametros = new Dictionary<string, object>() {
+                                        Dictionary<string, object> parametros = new Dictionary<string, object>() {
                                     {"@motivo", textBox1.Text},
                                     {"@tipo", cmbTipoCancelacion.Text.Substring(0,1)},    
                                     {"@matricula", profesional.Matricula},
@@ -75,13 +82,25 @@ namespace ClinicaFrba.Cancelar_Atencion
                                     {"@horain", tInicio},
                                     {"@horafin", tFin}
                                     };
-                                try
-                                {
-                                    DBHelper.ExecuteNonQuery("Cancelar_Turnos_ProfxFranja", parametros);
+                                        try
+                                        {
+                                            DBHelper.ExecuteNonQuery("Cancelar_Turnos_ProfxFranja", parametros);
+                                        }
+                                        catch
+                                        {
+                                            MessageBox.Show("Error al cancelar el turno, intente nuevamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                            return;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Error en los horarios ingresadas", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        return;
+                                    }
                                 }
-                                catch
+                                else
                                 {
-                                    MessageBox.Show("Error al cancelar el turno, intente nuevamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show("Debe ingresar horarios validos numericos. Intente nuevamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     return;
                                 }
                             }
@@ -129,21 +148,28 @@ namespace ClinicaFrba.Cancelar_Atencion
                         {
                             DateTime dia_desde = monthCalendar1.SelectionStart;
                             DateTime dia_hasta = monthCalendar2.SelectionStart;
-
-                            Dictionary<string, object> parametros = new Dictionary<string, object>() {
+                            if (dia_desde >= DateTime.Today && dia_desde < dia_hasta)
+                            {
+                                Dictionary<string, object> parametros = new Dictionary<string, object>() {
                                         {"@motivo", textBox1.Text},
                                         {"@tipo", cmbTipoCancelacion.Text.Substring(0,1)},    
                                         {"@matricula", profesional.Matricula},
                                         {"@fecha_desde", dia_desde },
                                         {"@fecha_hasta", dia_hasta }
                                 };
-                            try
-                            {
-                                DBHelper.ExecuteNonQuery("Cancelar_Turnos_Varios_Dias", parametros);
+                                try
+                                {
+                                    DBHelper.ExecuteNonQuery("Cancelar_Turnos_Varios_Dias", parametros);
+                                }
+                                catch
+                                {
+                                    MessageBox.Show("Error al cancelar el turno, intente nuevamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
                             }
-                            catch
+                            else
                             {
-                                MessageBox.Show("Error al cancelar el turno, intente nuevamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("La fecha inicial tiene que ser mayor a la fecha final y posterior al dia de hoy", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 return;
                             }
                         }
