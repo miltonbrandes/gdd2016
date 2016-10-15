@@ -433,7 +433,7 @@ namespace Helpers
                 }
                 else
                 {
-                    llegada = DateTime.Parse(ConfigurationManager.AppSettings["fecha"]);
+                    llegada = ConfigTime.getFechaSinHora();
                 }
                 if (rdr["turno_sintomas"].ToString() != "")
                 {

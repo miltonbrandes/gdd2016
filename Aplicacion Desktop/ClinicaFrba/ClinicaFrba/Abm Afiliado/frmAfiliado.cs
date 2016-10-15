@@ -852,7 +852,7 @@ namespace ClinicaFrba.Abm_Afiliado
                 cmbEstadoCivil.SelectedItem = cmbEstadoCivil.Items[0];
                 cmbPlan.SelectedItem = cmbPlan.Items[0];
                 cmbSexo.SelectedItem = cmbSexo.Items[0];
-                dtpFecha.Value = DateTime.Parse(ConfigurationManager.AppSettings["fecha"]);
+                dtpFecha.Value = ConfigTime.getFechaSinHora();
             }
             else if (opcionelegida == 3 || opcionelegida == 4)
             {
@@ -865,7 +865,7 @@ namespace ClinicaFrba.Abm_Afiliado
                 txtTelefono.Text = "";
                 cmbEstadoCivil.SelectedItem = cmbEstadoCivil.Items[0];
                 cmbSexo.SelectedItem = cmbSexo.Items[0];
-                dtpFecha.Value = DateTime.Parse(ConfigurationManager.AppSettings["fecha"]);
+                dtpFecha.Value = ConfigTime.getFechaSinHora();
             }
         }
 

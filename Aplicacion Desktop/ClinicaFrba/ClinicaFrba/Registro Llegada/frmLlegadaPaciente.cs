@@ -22,7 +22,7 @@ namespace ClinicaFrba.Registro_Llegada
         {
 
             InitializeComponent();
-            dateTimePicker1.Value = DateTime.Parse(ConfigurationManager.AppSettings["fecha"]);
+            dateTimePicker1.Value = ConfigTime.getFechaSinHora();
         }
 
         private void frmLlegadaPaciente_Load(object sender, EventArgs e)
@@ -51,7 +51,7 @@ namespace ClinicaFrba.Registro_Llegada
             //CON ESTE MEDICO X ESP ID HAY QUE TRAER LOS TURNOS QUE TIENE EL AFILIADO QUE VOY A SELECCIONAR DESPUES
             if (dgvMedicoXEspecialidad.SelectedRows.Count == 1)
             {
-                if (dateTimePicker1.Value >= DateTime.Parse(ConfigurationManager.AppSettings["fecha"]))
+                if (dateTimePicker1.Value >= ConfigTime.getFechaSinHora())
                 {
                     DataGridViewRow row = dgvMedicoXEspecialidad.SelectedRows[0];
                     medxespid = row.Cells[0].Value.ToString();
@@ -99,12 +99,12 @@ namespace ClinicaFrba.Registro_Llegada
             {
                 txtNroAfiliado.Enabled = false;
                 DataGridViewRow row = dgvTurnos.SelectedRows[0];
-                DateTime fecha = DateTime.Parse(ConfigurationManager.AppSettings["fecha"]);
+                DateTime fecha = ConfigTime.getFechaSinHora();
                 Turno t = (Turno)row.DataBoundItem;
-                int horas = DateTime.Now.Hour;
-                int minutos = DateTime.Now.Minute;
-                int segundos = DateTime.Now.Second;
-                DateTime fechaactual = DateTime.Parse(ConfigurationManager.AppSettings["fecha"]).AddHours(horas).AddMinutes(minutos).AddSeconds(segundos);
+                int horas = ConfigTime.getFecha().Hour;
+                int minutos = ConfigTime.getFecha().Minute;
+                int segundos = ConfigTime.getFecha().Second;
+                DateTime fechaactual = ConfigTime.getFechaSinHora().AddHours(horas).AddMinutes(minutos).AddSeconds(segundos);
                 Dictionary<string, object> parametros = new Dictionary<string, object>(){
 					{"@nroafiliado", t.Afiliado}
 				};

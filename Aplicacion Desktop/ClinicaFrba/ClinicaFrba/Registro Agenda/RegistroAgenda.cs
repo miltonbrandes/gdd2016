@@ -345,7 +345,7 @@ namespace ClinicaFrba.Registro_Agenda
                 MessageBox.Show("Fechas Incorrectas. Verifique que la fecha 1 es mayor a la fecha 2", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-            if (fecha1.CompareTo(DateTime.Parse(ConfigurationManager.AppSettings["fecha"])) < 0)
+            if (fecha1.CompareTo(ConfigTime.getFechaSinHora()) < 0)
             {
                 MessageBox.Show("Fechas Incorrectas. Verifique que la fecha 1 es mayor al dia de hoy", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;

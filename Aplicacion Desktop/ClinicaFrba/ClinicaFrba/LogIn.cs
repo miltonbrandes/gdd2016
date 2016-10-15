@@ -39,10 +39,15 @@ namespace ClinicaFrba
                     {
                         usuario = DBHelper.ExecuteReader("Usuario_Get", new Dictionary<string, object>() { { "@usuario", username } }).ToUsuario();
                     }
-                    catch
+                    catch(Exception excepcion)
                     {
-                        MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return;
+                    	MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        
+                    	System.IO.StreamWriter file = new System.IO.StreamWriter(Application.StartupPath + "/debug.txt");
+                    	file.WriteLine(excepcion.ToString());
+						file.Close();
+		
+                    	return;
                     } 
                     if (usuario != null && !usuario.Activo)
                     {
