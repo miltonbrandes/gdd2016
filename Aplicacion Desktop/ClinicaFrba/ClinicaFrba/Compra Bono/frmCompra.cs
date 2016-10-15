@@ -131,10 +131,10 @@ namespace ClinicaFrba.Compra_Bono
         {
             try
             {
-                int horas = DateTime.Now.Hour;
-                int minutos = DateTime.Now.Minute;
-                int segundos = DateTime.Now.Second;
-                DateTime fechaactual = DateTime.Parse(ConfigurationManager.AppSettings["fecha"]).AddHours(horas).AddMinutes(minutos).AddSeconds(segundos);
+            	int horas = ConfigTime.getFecha().Hour;
+                int minutos = ConfigTime.getFecha().Minute;
+                int segundos = ConfigTime.getFecha().Second;
+                DateTime fechaactual = ConfigTime.getFechaSinHora().AddHours(horas).AddMinutes(minutos).AddSeconds(segundos);
                 DBHelper.ExecuteReader("Comprar_Bono",
                         new Dictionary<string, object> { 
                     { "@cantidad", cantidad },

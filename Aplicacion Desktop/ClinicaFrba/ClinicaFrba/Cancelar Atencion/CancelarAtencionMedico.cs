@@ -60,7 +60,7 @@ namespace ClinicaFrba.Cancelar_Atencion
                             if (hora1.Text != string.Empty && hora2.Text != string.Empty && minuto1.Text != string.Empty && minuto2.Text != string.Empty)
                             {
                                 /*QUIERE CANCELAR UN RANGO*/
-                                int horain, horafi, minin, minfi;
+                                 int horain, horafi, minin, minfi;
                                 if (int.TryParse(hora1.Text, out horain) &&
                                 int.TryParse(hora2.Text, out horafi) &&
                                 int.TryParse(minuto1.Text, out minin) &&
@@ -115,9 +115,9 @@ namespace ClinicaFrba.Cancelar_Atencion
                             /*QUIERE CANCELAR TODO EL DIA*/
 
                             DateTime d = ((Fecha)drop_fecha.SelectedItem).DiaMesAnio;
-                            DateTime dInicio = new DateTime(DateTime.Parse(ConfigurationManager.AppSettings["fecha"]).Year, 1, 1, 0, 0, 0);
+                            DateTime dInicio = new DateTime(ConfigTime.getFechaSinHora().Year, 1, 1, 0, 0, 0);
                             TimeSpan tInicio = dInicio.TimeOfDay;
-                            DateTime dFin = new DateTime(DateTime.Parse(ConfigurationManager.AppSettings["fecha"]).Year, 1, 1, 23, 59, 0);
+                            DateTime dFin = new DateTime(ConfigTime.getFechaSinHora().Year, 1, 1, 23, 59, 0);
                             TimeSpan tFin = dFin.TimeOfDay;
 
                             Dictionary<string, object> parametros = new Dictionary<string, object>() {

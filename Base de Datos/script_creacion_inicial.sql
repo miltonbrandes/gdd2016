@@ -948,7 +948,7 @@ GO
 	set nocount on;
 	insert into modificacion_plan (modif_afiliado, modif_plan_viejo, modif_motivo, modif_plan_fecha, modif_plan_nuevo)
 	values((select afiliado_nro from afiliado where usuario_id = @Username),
-	(select afiliado_plan from afiliado where usuario_id = @Username), @Motivo, GETDATE(), @PlanNuevoId)
+	(select afiliado_plan from afiliado where usuario_id = @Username), @Motivo, NOT_NULL.Obtener_Fecha(), @PlanNuevoId)
 	end
   go
 
@@ -1299,7 +1299,7 @@ GO
   create procedure NOT_NULL.Get_Turnos_Today
   as
 	begin
-		select * from NOT_NULL.turno where turno_fecha = CONVERT(DATE, GETDATE());
+		select * from NOT_NULL.turno where turno_fecha = CONVERT(DATE, NOT_NULL.Obtener_Fecha());
 	end
   go
     
@@ -1326,7 +1326,7 @@ GO
 		   str(month(turno_fecha)) as mes,
 		   CONVERT(nvarchar(MAX), turno_fecha, 8) as hora
 	FROM not_null.turno
-	 WHERE turno_fecha >= CONVERT(date,GETDATE()) /* fecha_archivo */
+	 WHERE turno_fecha >= CONVERT(date,NOT_NULL.Obtener_Fecha()) /* fecha_archivo */
 	  and afiliado_nro is null 
 	  and turno_estado = 'D' 
 	  and turno_medico_especialidad_id = (select top 1 medxesp_id from NOT_NULL.medicoXespecialidad where medxesp_profesional = @profesional and medxesp_especialidad = @especialidad)
@@ -1545,7 +1545,7 @@ go
 	begin 
 		select Convert(date, turno_fecha) as turno_fecha from NOT_NULL.turno, NOT_NULL.medicoXespecialidad
 		where turno_medico_especialidad_id = medxesp_id and medxesp_profesional = @matricula
-			and (turno_estado = 'D' or turno_estado = 'R') and turno_fecha >= Convert(date, GETDATE()+1)
+			and (turno_estado = 'D' or turno_estado = 'R') and turno_fecha >= Convert(date, NOT_NULL.Obtener_Fecha()+1)
 		group by Convert(date, turno_fecha)
 		order by Convert(date, turno_fecha)
 	end
@@ -1569,7 +1569,7 @@ go
 		where YEAR(turno_fecha) = YEAR(@fecha) and MONTH(turno_fecha)=MONTH(@fecha) and DAY(turno_fecha)=DAY(@fecha)
 			and turno_medico_especialidad_id = (select medicoXespecialidad.medxesp_id from NOT_NULL.medicoXespecialidad where medxesp_profesional = @matricula)
 	insert into NOT_NULL.cancelacion_turno (cancel_fecha, cancel_motivo, cancel_profesional, cancel_tipo, cancel_turno)
-		values(GETDATE(), @motivo +' : Fue una cancelacion por dia', @matricula, @tipo, null)
+		values(NOT_NULL.Obtener_Fecha(), @motivo +' : Fue una cancelacion por dia', @matricula, @tipo, null)
 
 	end
  go
@@ -1588,14 +1588,14 @@ create procedure NOT_NULL.Cancelar_Turnos_ProfxFranja(@motivo varchar(255), @tip
 			set @turno = isnull(( select top 1 turno_nro from NOT_NULL.turno, NOT_NULL.medicoXespecialidad
 				where turno_medico_especialidad_id = medxesp_id and medxesp_profesional = @matricula
 					and day(turno_fecha) = day(@fecha) and month(turno_fecha) = month(@fecha) and year(turno_fecha) = year(@fecha)
-					and Convert(date, turno_fecha) > Convert(date, GETDATE())
+					and Convert(date, turno_fecha) > Convert(date, NOT_NULL.Obtener_Fecha())
 					and	DATEPART( hour, Convert(time, turno_fecha)) = @hora and	DATEPART( minute, Convert(time, turno_fecha)) = @minuto), -1)
 			
 			if(@turno <> -1)
 			Begin
 				update NOT_NULL.turno set turno_estado = 'C', afiliado_nro = null where turno_nro = @turno
 				insert into NOT_NULL.cancelacion_turno (cancel_fecha, cancel_motivo, cancel_profesional, cancel_tipo, cancel_turno)
-					values(GETDATE(), @motivo+' :Fue una cancelacion por franja', @matricula, @tipo, @turno)
+					values(NOT_NULL.Obtener_Fecha(), @motivo+' :Fue una cancelacion por franja', @matricula, @tipo, @turno)
 			End
 
 			if @minuto = 0

@@ -28,14 +28,14 @@ namespace ClinicaFrba.Cancelar_Atencion
 
         private void frmCancelarAtencionAfiliado_Load(object sender, EventArgs e)
         {
-            dtpFecha.Value = DateTime.Parse(ConfigurationManager.AppSettings["fecha"]).AddDays(1);
+            dtpFecha.Value = ConfigTime.getFechaSinHora().AddDays(1);
         }
 
         private void btnCancelarTurno_Click(object sender, EventArgs e)
         {
             if (comboBox1.Text != string.Empty && textBox1.Text != string.Empty)
             {
-                if (dtpFecha.Value > DateTime.Parse(ConfigurationManager.AppSettings["fecha"]))
+                if (dtpFecha.Value > ConfigTime.getFechaSinHora())
                 {
                     if (dataGridView1.SelectedRows.Count == 1)
                     {
@@ -96,7 +96,7 @@ namespace ClinicaFrba.Cancelar_Atencion
 
         private void btnFiltrar_Click(object sender, EventArgs e)
         {
-            if (dtpFecha.Value > DateTime.Parse(ConfigurationManager.AppSettings["fecha"]))
+            if (dtpFecha.Value > ConfigTime.getFechaSinHora())
             {
 
                 Dictionary<string, object> parametros = new Dictionary<string, object>() { { "@nroafiliado",  afiliado.NroAfiliado},{"@fecha", dtpFecha.Value.Date} };

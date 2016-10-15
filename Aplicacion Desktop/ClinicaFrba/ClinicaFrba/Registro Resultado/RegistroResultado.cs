@@ -20,7 +20,7 @@ namespace ClinicaFrba.Registro_Resultado
         {
             //this.Width = 
             InitializeComponent();
-            dtpFechaTurno.Value = DateTime.Parse(ConfigurationManager.AppSettings["fecha"]);
+            dtpFechaTurno.Value = ConfigTime.getFechaSinHora();
             profesional = pro;
         }
 
@@ -80,7 +80,7 @@ namespace ClinicaFrba.Registro_Resultado
         {
             if (dataGridView1.SelectedRows.Count == 1)
             {
-                if (dtpFechaTurno.Value >= DateTime.Parse(ConfigurationManager.AppSettings["fecha"]))
+                if (dtpFechaTurno.Value >= ConfigTime.getFechaSinHora())
                 {
                     button1.Enabled = false;
                     dataGridView1.Enabled = false;
