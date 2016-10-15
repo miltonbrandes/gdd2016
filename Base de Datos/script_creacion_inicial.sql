@@ -1389,15 +1389,15 @@ as
 go
 
 	--	Top 5 de los profesionales con menos horas trabajadas filtrando por Plan y Especialidad
-CREATE PROCEDURE NOT_NULL.listado_Profesionales_Menos_Horas (@fecha1 datetime, @fecha2 datetime, @plan varchar(255), @especialidad varchar(255))
+CREATE PROCEDURE NOT_NULL.listado_Profesionales_Menos_Horas (@fecha1 datetime, @fecha2 datetime, @especialidad varchar(255))
 as
 	begin
 	 select top 5 profesional_matricula, profesional_nombre, profesional_apellido, (count(turno_nro)*0.5) as cantidad_horas
-		 	from NOT_NULL.profesional, NOT_NULL.plan_medico, NOT_NULL.especialidad, NOT_NULL.medicoXespecialidad, NOT_NULL.turno, NOT_NULL.bono_consulta
-			where especialidad_descripcion = @especialidad and plan_descripcion = @plan
+		 	from NOT_NULL.profesional, NOT_NULL.especialidad, NOT_NULL.medicoXespecialidad, NOT_NULL.turno, NOT_NULL.bono_consulta
+			where especialidad_descripcion = @especialidad
 				and medxesp_especialidad = especialidad_codigo and medxesp_profesional = profesional_matricula
 				and turno_medico_especialidad_id = medxesp_id and turno_fecha >= @fecha1 and turno_fecha < @fecha2
-				and turno_estado = 'U' and bono_turno = turno_nro and bono_plan = plan_id
+				and turno_estado = 'U' and bono_turno = turno_nro
 			group by profesional_matricula, profesional_nombre, profesional_apellido
 			order by count(turno_nro) asc
 	end

@@ -252,8 +252,7 @@ namespace ClinicaFrba.Listados
                     case 2:
                         parametros = new Dictionary<string, object> { 
                             { "@fecha1", fecha1 }, 
-                            { "@fecha2", fecha2 }, 
-                            { "@plan", ((Plan)cmbPlan.SelectedItem).Descripcion }, 
+                            { "@fecha2", fecha2 },
                             { "@especialidad ", ((Especialidad)cmbEspecialidad.SelectedItem).Descripcion } 
                             };
                         List<Listado_3> lista_3 = DBHelper.ExecuteReader("listado_Profesionales_Menos_Horas", parametros).ToListado_3();
@@ -306,7 +305,7 @@ namespace ClinicaFrba.Listados
                     funcion_para_listado_2();
                     break;
                 case 2:
-                    label_plan.Visible = label_especialidad.Visible = cmbPlan.Visible = cmbEspecialidad.Visible = true;
+                    label_especialidad.Visible = cmbEspecialidad.Visible = true;
                     funcion_para_listado_3();
                     break;
                 default:
