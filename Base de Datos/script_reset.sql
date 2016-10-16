@@ -44,6 +44,8 @@ ALTER TABLE NOT_NULL.turno NOCHECK CONSTRAINT ALL
 GO
 
 /*Lo hago aca xq turno referencia a medXesp */
+DROP TABLE NOT_NULL.baja_afiliado
+GO
 
 DROP TABLE NOT_NULL.franja_horaria
 GO
@@ -103,6 +105,9 @@ DROP TABLE NOT_NULL.usuario
 GO
 
 DROP TABLE NOT_NULL.plan_medico
+GO
+
+DROP TABLE NOT_NULL.Fecha_Config
 GO
 
 DROP procedure NOT_NULL.asignar_nro_bonos_afiliado
@@ -197,5 +202,10 @@ drop procedure NOT_NULL.Get_Franjas_Profesional
 drop procedure NOT_NULL.Cancelar_Turnos_Profesional
 drop procedure NOT_NULL.Cancelar_Turnos_ProfxFranja 
 drop procedure NOT_NULL.Cancelar_Turnos_Varios_Dias 
+drop procedure NOT_NULL.reservarTurno_GetByFilerProfesional
+
+DROP PROCEDURE NOT_NULL.Reestablecer_Fecha
+DROP FUNCTION NOT_NULL.Obtener_Fecha
+
 DROP SCHEMA NOT_NULL
 GO

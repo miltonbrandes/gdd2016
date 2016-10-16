@@ -25,6 +25,7 @@ namespace ClinicaFrba
             InitializeComponent();
             usuario = us;
             rol = ro;
+            DateTime f = ConfigTime.getFecha();
         }
         private void Main_Load(object sender, EventArgs e)
         {
@@ -151,7 +152,8 @@ namespace ClinicaFrba
 
         public static void PedirTurno(object sender, EventArgs e)
         {
-            var home = new Pedir_Turno.frmPedidoTurno();
+            cargarAfiliado();
+            var home = new Pedir_Turno.frmPedidoTurno(afiliado);
             home.Show();
         }
          

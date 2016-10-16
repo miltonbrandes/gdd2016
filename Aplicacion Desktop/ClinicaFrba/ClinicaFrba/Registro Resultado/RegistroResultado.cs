@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Clases;
 using Helpers;
+using System.Configuration;
 
 namespace ClinicaFrba.Registro_Resultado
 {
@@ -19,7 +20,7 @@ namespace ClinicaFrba.Registro_Resultado
         {
             //this.Width = 
             InitializeComponent();
-            dtpFechaTurno.Value = DateTime.Today;
+            dtpFechaTurno.Value = ConfigTime.getFechaSinHora();
             profesional = pro;
         }
 
@@ -79,7 +80,7 @@ namespace ClinicaFrba.Registro_Resultado
         {
             if (dataGridView1.SelectedRows.Count == 1)
             {
-                if (dtpFechaTurno.Value >= DateTime.Today)
+                if (dtpFechaTurno.Value >= ConfigTime.getFechaSinHora())
                 {
                     button1.Enabled = false;
                     dataGridView1.Enabled = false;

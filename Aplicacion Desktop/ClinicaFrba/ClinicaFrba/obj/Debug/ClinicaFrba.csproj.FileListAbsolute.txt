@@ -96,3 +96,6 @@ D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\Clinic
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Pedir_Turno.frmTurnosxProf.resources
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Registro_Llegada.frmLlegadaPaciente.resources
 D:\Descargas\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Registro_Resultado.frmRegistroResultado.resources
+D:\UTN\Gestion de Datos\repo\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\ClinicaFrba.exe
+D:\UTN\Gestion de Datos\repo\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\Clases.dll
+D:\UTN\Gestion de Datos\repo\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\bin\Debug\Helpers.dll

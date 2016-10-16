@@ -8,6 +8,7 @@ namespace Clases.Profesionales
 {
    public class turnosProcedure
     {
+       public string turno { get; set; }
         public string dia { get; set; }
         public string mes { get; set; }
         public string horario { get; set; }

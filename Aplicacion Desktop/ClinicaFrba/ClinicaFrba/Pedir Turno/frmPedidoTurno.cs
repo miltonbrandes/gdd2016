@@ -16,13 +16,15 @@ namespace ClinicaFrba.Pedir_Turno
     {
         public static Profesional profesional;
         public static string esp = "";
+        public static decimal nro_afiliado = 0;
 
-        public frmPedidoTurno()
+        public frmPedidoTurno(Afiliado afiliado)
         {
             InitializeComponent();
             dgvProfesionales.Visible = false;
             labelProfesional.Visible = false;
             this.Width = 400;
+            cargarAfiliadoGlobal(afiliado);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -30,6 +32,10 @@ namespace ClinicaFrba.Pedir_Turno
             
         }
 
+        private void cargarAfiliadoGlobal(Afiliado afiliado)
+        {
+            nro_afiliado = afiliado.NroAfiliado;
+        }
 
         private void filtrarEspecialidades_Click(object sender, EventArgs e)
         {
@@ -48,7 +54,7 @@ namespace ClinicaFrba.Pedir_Turno
 
                 try
                 {
-                    especialidadesFiltradas = DBHelper.ExecuteReader("especialidades_GetByFilerEspecialidad", parametros).ToEspecialidad();
+                    especialidadesFiltradas = DBHelper.ExecuteReader("especialidades_GetByFilerEspecialidad", parametros).ToEspecialidad2();
                 }
                 catch
                 {
@@ -62,7 +68,7 @@ namespace ClinicaFrba.Pedir_Turno
         private void dgvProfesionales_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
             string codigo_profesional = dgvProfesionales.CurrentCell.Value.ToString();
-            frmTurnosxProf turnosDisponibles = new frmTurnosxProf(codigo_profesional, esp);
+            frmTurnosxProf turnosDisponibles = new frmTurnosxProf(codigo_profesional, esp, nro_afiliado);
             turnosDisponibles.Show();
             this.Hide();
         }

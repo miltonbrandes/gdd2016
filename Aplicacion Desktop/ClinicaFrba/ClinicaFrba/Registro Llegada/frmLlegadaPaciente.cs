@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Clases;
 using Helpers;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace ClinicaFrba.Registro_Llegada
 {
@@ -21,7 +22,7 @@ namespace ClinicaFrba.Registro_Llegada
         {
 
             InitializeComponent();
-            dateTimePicker1.Value = DateTime.Today;
+            dateTimePicker1.Value = ConfigTime.getFechaSinHora();
         }
 
         private void frmLlegadaPaciente_Load(object sender, EventArgs e)
@@ -50,7 +51,7 @@ namespace ClinicaFrba.Registro_Llegada
             //CON ESTE MEDICO X ESP ID HAY QUE TRAER LOS TURNOS QUE TIENE EL AFILIADO QUE VOY A SELECCIONAR DESPUES
             if (dgvMedicoXEspecialidad.SelectedRows.Count == 1)
             {
-                if (dateTimePicker1.Value >= DateTime.Today)
+                if (dateTimePicker1.Value >= ConfigTime.getFechaSinHora())
                 {
                     DataGridViewRow row = dgvMedicoXEspecialidad.SelectedRows[0];
                     medxespid = row.Cells[0].Value.ToString();
@@ -98,8 +99,12 @@ namespace ClinicaFrba.Registro_Llegada
             {
                 txtNroAfiliado.Enabled = false;
                 DataGridViewRow row = dgvTurnos.SelectedRows[0];
-                DateTime fecha = DateTime.Now;
+                DateTime fecha = ConfigTime.getFechaSinHora();
                 Turno t = (Turno)row.DataBoundItem;
+                int horas = ConfigTime.getFecha().Hour;
+                int minutos = ConfigTime.getFecha().Minute;
+                int segundos = ConfigTime.getFecha().Second;
+                DateTime fechaactual = ConfigTime.getFechaSinHora().AddHours(horas).AddMinutes(minutos).AddSeconds(segundos);
                 Dictionary<string, object> parametros = new Dictionary<string, object>(){
 					{"@nroafiliado", t.Afiliado}
 				};
@@ -108,7 +113,7 @@ namespace ClinicaFrba.Registro_Llegada
                 //dgvTurnos.DataSource = listaTurnos;
                 if (lista.Count != 0) {
                     Dictionary<string, object> parametros2 = new Dictionary<string, object>(){
-					{"@nroafiliado", t.Afiliado},{"@nroturno", t.Id},{"@fecha", DateTime.Now}
+					{"@nroafiliado", t.Afiliado},{"@nroturno", t.Id},{"@fecha", fechaactual}
 				};
                     try
                     {

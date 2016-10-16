@@ -8,7 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Clases;
-using Helpers; 
+using Helpers;
+using System.Configuration;
 namespace ClinicaFrba.Abm_Afiliado
 {
     public partial class frmAfiliado : Form
@@ -42,7 +43,9 @@ namespace ClinicaFrba.Abm_Afiliado
             }
             else if (opcion == 2) /*MODIFICANDO USUARIO*/
             {
-            
+                
+                comboBox1.Enabled = false;
+                comboBox1.Text = reconocerTipoDni(afiliadoModificar);
                 txtNombre.Text = afiliadoModificar.Nombre;
                 txtNombre.Enabled = false;
                 txtApellido.Enabled = false;
@@ -183,7 +186,26 @@ namespace ClinicaFrba.Abm_Afiliado
             cmbPlan.SelectedItem = cmbPlan.Items[0];
             return;
         }
-
+        public string reconocerTipoDni(Afiliado afiliadoModifcar)
+        {
+            if (afiliadoModificar.TipoDocumento == "D")
+            {
+                return "DNI";
+            }
+            else if(afiliadoModificar.TipoDocumento == "E")
+            {
+                return "LE";
+            }
+            else if(afiliadoModificar.TipoDocumento == "L")
+            {
+                return "LC";
+            }
+            else if(afiliadoModificar.TipoDocumento == "C")
+            {
+                return "CI";
+            }
+            return "NO ESPECIFICA";
+        }
         public string reconocerEstadoCivil(Afiliado afiliadoModificar)
         {
             if (afiliadoModificar.EstadoCivil == "N")
@@ -279,10 +301,17 @@ namespace ClinicaFrba.Abm_Afiliado
         {
             if (DatosCompletados())
             {
-                //if (txtCambioPlan.Text != string.Empty)
-                //{
-                    /*ACA AGREGAR LA PARTE DE QUE SI CAMBIO PLAN, DESHABILITAR A TODOS LOS BONOS QUE TENIA ASOCIADOS, SI EL GRUPO FAM, SIGUE CON EL MISMO PLAN, el bono queda para ellos*/
-                //}
+                string tipodni = "";
+                if (comboBox1.Text == "DNI")
+                    tipodni = "D";
+                else if (comboBox1.Text == "CI")
+                    tipodni = "C";
+                else if (comboBox1.Text == "LC")
+                    tipodni = "L";
+                else if (comboBox1.Text == "LE")
+                    tipodni = "E";
+                else
+                    tipodni = "N";
                 if (opcionelegida == 1)
                 {
                     Plan planElegido = (Plan)cmbPlan.SelectedValue;
@@ -291,6 +320,7 @@ namespace ClinicaFrba.Abm_Afiliado
                    
                         { "@Username", txtNombre.Text+txtApellido.Text+txtDni.Text.ToString()},
                         { "@Nombre", txtNombre.Text },
+                        {"@TipoDocumento", tipodni},
                         { "@Apellido", txtApellido.Text },
                         { "@Dni", Convert.ToInt32(txtDni.Text)  },
                         { "@Mail",  txtMail.Text  },
@@ -340,6 +370,7 @@ namespace ClinicaFrba.Abm_Afiliado
                         { "@Username", txtNombre.Text+txtApellido.Text+txtDni.Text.ToString()},
                         { "@Nombre", txtNombre.Text },
                         { "@Apellido", txtApellido.Text },
+                        {"@TipoDocumento", tipodni},
                         { "@Dni", Convert.ToInt32(txtDni.Text)  },
                         { "@Mail",  txtMail.Text  },
                         { "@Telefono", txtTelefono.Text  },
@@ -354,9 +385,7 @@ namespace ClinicaFrba.Abm_Afiliado
                     if (Alta(afiliado))
                     {
                         Close();
-                    }
-
-                    
+                    }                    
                 }
                 else if (opcionelegida == 4) //alta familiar
                 {
@@ -367,6 +396,7 @@ namespace ClinicaFrba.Abm_Afiliado
                         { "@Username", txtNombre.Text+txtApellido.Text+txtDni.Text.ToString()},
                         { "@Nombre", txtNombre.Text },
                         { "@Apellido", txtApellido.Text },
+                        {"@TipoDocumento", tipodni},
                         { "@Dni", Convert.ToInt32(txtDni.Text)  },
                         { "@Mail",  txtMail.Text  },
                         { "@Telefono", txtTelefono.Text  },
@@ -807,6 +837,10 @@ namespace ClinicaFrba.Abm_Afiliado
             {
                 sb.AppendLine("El campo Telefono debe ser numerico");
             }
+            if (comboBox1.Text == string.Empty)
+            {
+                sb.AppendLine("Debe seleccionar un tipo de dni");
+            }
             if (!string.IsNullOrEmpty(sb.ToString()))
             {
                 MessageBox.Show(sb.ToString(), "Complete los siguientes campos", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -851,7 +885,7 @@ namespace ClinicaFrba.Abm_Afiliado
                 cmbEstadoCivil.SelectedItem = cmbEstadoCivil.Items[0];
                 cmbPlan.SelectedItem = cmbPlan.Items[0];
                 cmbSexo.SelectedItem = cmbSexo.Items[0];
-                dtpFecha.Value = DateTime.Today;
+                dtpFecha.Value = ConfigTime.getFechaSinHora();
             }
             else if (opcionelegida == 3 || opcionelegida == 4)
             {
@@ -864,7 +898,7 @@ namespace ClinicaFrba.Abm_Afiliado
                 txtTelefono.Text = "";
                 cmbEstadoCivil.SelectedItem = cmbEstadoCivil.Items[0];
                 cmbSexo.SelectedItem = cmbSexo.Items[0];
-                dtpFecha.Value = DateTime.Today;
+                dtpFecha.Value = ConfigTime.getFechaSinHora();
             }
         }
 

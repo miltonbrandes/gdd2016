@@ -13,7 +13,7 @@ namespace Helpers
         //DB: DataBase
         public static SqlConnection DB;
         static string conn = ConfigurationManager.AppSettings["connection-string"];
-        static DateTime fecha = DateTime.Parse(ConfigurationManager.AppSettings["fecha"]);
+        //public static DateTime fecha = ConfigTime.getFecha();
 
         static DBHelper()
         {

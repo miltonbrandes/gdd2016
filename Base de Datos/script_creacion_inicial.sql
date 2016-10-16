@@ -262,6 +262,7 @@ create table NOT_NULL.afiliado (
 	 usuario_id varchar(50) NULL foreign key references NOT_NULL.usuario(usuario_id),
 	 afiliado_nombre varchar(255),
 	 afiliado_apellido varchar(255),
+	 afiliado_tipo_dni char(1) default 'D',				--D: dni, L: libreta civica, C: cedula identidad, E: libreta enrolamiento
 	 afiliado_dni numeric(18,0),
 	 afiliado_estado_civil character(1),	-- C, S, V, D, O:concubinato, N:no especificado
 	 afiliado_sexo character(1),			-- M, F, N:no especificado
@@ -313,8 +314,8 @@ as
 		begin
 			insert into NOT_NULL.usuario (usuario_id, usuario_cant_intentos, usuario_descripcion, usuario_password, usuario_habilitado)
 			select afiliado_nombre + afiliado_apellido + CAST(afiliado_dni as varchar(8)), 0, 'Afiliado',HASHBYTES('SHA2_256', 'afiliado'), 1 from inserted where inserted.afiliado_nombre is not null and inserted.afiliado_apellido is not null and inserted.afiliado_dni is not null;
-			insert into NOT_NULL.afiliado (usuario_id, afiliado_nombre, afiliado_apellido, afiliado_dni, afiliado_cant_hijos, afiliado_direccion, afiliado_estado_civil, afiliado_fecha_nac, afiliado_mail, afiliado_plan, afiliado_sexo, afiliado_telefono)
-			(select afiliado_nombre + afiliado_apellido + CAST(afiliado_dni as varchar(8)), afiliado_nombre, afiliado_apellido, afiliado_dni, 0, afiliado_direccion, afiliado_estado_civil, afiliado_fecha_nac, afiliado_mail, afiliado_plan, afiliado_sexo, afiliado_telefono from inserted  
+			insert into NOT_NULL.afiliado (usuario_id, afiliado_nombre, afiliado_apellido, afiliado_tipo_dni,afiliado_dni, afiliado_cant_hijos, afiliado_direccion, afiliado_estado_civil, afiliado_fecha_nac, afiliado_mail, afiliado_plan, afiliado_sexo, afiliado_telefono)
+			(select afiliado_nombre + afiliado_apellido + CAST(afiliado_dni as varchar(8)), afiliado_nombre, afiliado_apellido,afiliado_tipo_dni, afiliado_dni, 0, afiliado_direccion, afiliado_estado_civil, afiliado_fecha_nac, afiliado_mail, afiliado_plan, afiliado_sexo, afiliado_telefono from inserted  
 			where inserted.afiliado_nombre is not null and inserted.afiliado_apellido is not null and inserted.afiliado_dni is not null);
 			insert into NOT_NULL.rolXusuario (rolXusuario_habilitado, rol_id, usuario_id) 
 			(select 1, 2, afiliado_nombre + afiliado_apellido + CAST(afiliado_dni as varchar(8)) from inserted
@@ -337,9 +338,9 @@ as
 go
 
 insert into NOT_NULL.afiliado
-(afiliado_nombre, afiliado_apellido,  afiliado_dni, afiliado_estado_civil, 
+(afiliado_nombre, afiliado_apellido,  afiliado_tipo_dni,afiliado_dni, afiliado_estado_civil, 
 afiliado_sexo, afiliado_fecha_nac, afiliado_telefono, afiliado_mail, afiliado_direccion, afiliado_cant_hijos, afiliado_plan)
-select Paciente_Nombre, Paciente_Apellido,Paciente_Dni, 'N', 'N', Paciente_Fecha_Nac, Paciente_Telefono, Paciente_Mail, Paciente_Direccion, 0, Plan_Med_Codigo 
+select Paciente_Nombre, Paciente_Apellido,'D',Paciente_Dni, 'N', 'N', Paciente_Fecha_Nac, Paciente_Telefono, Paciente_Mail, Paciente_Direccion, 0, Plan_Med_Codigo 
 	from gd_esquema.Maestra
 	group by Paciente_Nombre, Paciente_Apellido, Paciente_Dni, Paciente_Fecha_Nac, Paciente_Telefono, Paciente_Mail, Paciente_Direccion, Plan_Med_Codigo
 go
@@ -567,6 +568,17 @@ create table NOT_NULL.compra_bono(
 	compra_fecha datetime
 )
 go
+
+/*TABLA BAJA AFILIADO*/
+create table NOT_NULL.baja_afiliado
+(
+	baja_afiliado_id numeric(18,0) identity (1,1) primary key,
+	baja_afiliado_nro numeric(18,0) foreign key references NOT_NULL.afiliado(afiliado_nro),
+	baja_afiliado_fecha datetime
+)
+go
+
+
 
 insert into NOT_NULL.compra_bono (compra_cantidad, compra_afiliado, compra_fecha)
 	select count(Compra_Bono_Fecha), afiliado_nro, Compra_Bono_Fecha
@@ -823,12 +835,13 @@ GO
   go
 
   --CREAR AFILIADO
-  CREATE PROCEDURE NOT_NULL.Afiliado_Add(@Username varchar(50), @Nombre varchar(50),@Apellido varchar(50), @Dni numeric(8,0), @Mail varchar(50),@Telefono varchar(20), @Direccion varchar(50), @CantHijos numeric(2,0), @EstadoCivil char(1), @Fecha datetime, @Plan numeric(18,0), @Sexo char(1))
+  CREATE PROCEDURE NOT_NULL.Afiliado_Add(@Username varchar(50), @Nombre varchar(50),@Apellido varchar(50), @TipoDocumento char(1), @Dni numeric(8,0), @Mail varchar(50),@Telefono varchar(20), @Direccion varchar(50), @CantHijos numeric(2,0), @EstadoCivil char(1), @Fecha datetime, @Plan numeric(18,0), @Sexo char(1))
   AS
 	BEGIN
 	SET NOCOUNT ON;
-		INSERT INTO NOT_NULL.afiliado(usuario_id,afiliado_nombre,afiliado_apellido,afiliado_dni,afiliado_mail,afiliado_telefono,afiliado_direccion,afiliado_cant_hijos,afiliado_estado_civil, afiliado_fecha_nac, afiliado_plan, afiliado_sexo)
-		VALUES (@Username, @Nombre, @Apellido, @Dni, @Mail, @Telefono,@Direccion, 0, @EstadoCivil, @Fecha, @Plan, @Sexo)
+		
+		INSERT INTO NOT_NULL.afiliado(usuario_id,afiliado_nombre,afiliado_apellido,afiliado_tipo_dni,afiliado_dni,afiliado_mail,afiliado_telefono,afiliado_direccion,afiliado_cant_hijos,afiliado_estado_civil, afiliado_fecha_nac, afiliado_plan, afiliado_sexo)
+		VALUES (@Username, @Nombre, @Apellido,@TipoDocumento, @Dni, @Mail, @Telefono,@Direccion, 0, @EstadoCivil, @Fecha, @Plan, @Sexo)
 		--INSERT INTO NOT_NULL.rolXusuario(usuario_id, rol_id)
 		--VALUES (@Username, 2)
 	END
@@ -935,7 +948,7 @@ GO
 	set nocount on;
 	insert into modificacion_plan (modif_afiliado, modif_plan_viejo, modif_motivo, modif_plan_fecha, modif_plan_nuevo)
 	values((select afiliado_nro from afiliado where usuario_id = @Username),
-	(select afiliado_plan from afiliado where usuario_id = @Username), @Motivo, GETDATE(), @PlanNuevoId)
+	(select afiliado_plan from afiliado where usuario_id = @Username), @Motivo, NOT_NULL.Obtener_Fecha(), @PlanNuevoId)
 	end
   go
 
@@ -1048,11 +1061,12 @@ GO
 	END
   GO
 
+
 --OBTENER AFILIADO SEGUN NRO DE AFILIADO QUE ESTEN ACTIVOS
   create procedure NOT_NULL.Afiliado_GetAfiliadoSegunNro (@nroAfil int)
   as
 	begin 
-		select afiliado_nombre, afiliado_apellido, afiliado_cant_hijos, afiliado_direccion, afiliado_dni, afiliado_estado_civil, afiliado_fecha_nac,afiliado_mail, afiliado_nro, afiliado_plan, afiliado_sexo, afiliado_telefono, afiliado.usuario_id
+		select afiliado_nombre, afiliado_apellido, afiliado_cant_hijos, afiliado_direccion,afiliado_tipo_dni,  afiliado_dni, afiliado_estado_civil, afiliado_fecha_nac,afiliado_mail, afiliado_nro, afiliado_plan, afiliado_sexo, afiliado_telefono, afiliado.usuario_id
 		 from NOT_NULL.afiliado,rolXusuario where afiliado_nro = @nroAfil and afiliado.usuario_id = rolXusuario.usuario_id and rolXusuario.rol_id = 2 and rolXusuario_habilitado = 1
 	end
   go
@@ -1161,6 +1175,7 @@ GO
 		--set @ret = (select count(*) from NOT_NULL.rolXusuario where usuario_id = @UsuarioId and rol_id = 2 and rolXusuario_habilitado = 0) 
 		--LE DOY DE BAJA A SUS TURNOS Y LOS PONGO COMO DISPONIBLES
 		update NOT_NULL.turno set turno_estado = 'D', afiliado_nro = null where (select top 1 usuario_id from afiliado where afiliado_nro = turno.afiliado_nro) = @UsuarioId
+		insert into NOT_NULL.baja_afiliado (baja_afiliado_nro, baja_afiliado_fecha) (select top 1 afiliado_nro, GETDATE() from afiliado where usuario_id = @UsuarioId)
 	end
   go
 
@@ -1169,7 +1184,7 @@ GO
 
 
   /*AGREGAR UN FAMILIAR AL AFIIADO*/
-  create procedure NOT_NULL.Afiliado_Agregar_Familiar (@Afiliado_nro_familiar int, @Username varchar(50), @Nombre varchar(50),@Apellido varchar(50), @Dni numeric(8,0), @Mail varchar(50),@Telefono varchar(20), @Direccion varchar(50), @CantHijos numeric(2,0), @EstadoCivil char(1), @Fecha datetime, @Plan numeric(18,0), @Sexo char(1))
+  create procedure NOT_NULL.Afiliado_Agregar_Familiar (@Afiliado_nro_familiar int, @Username varchar(50), @Nombre varchar(50),@Apellido varchar(50),@TipoDocumento char(1), @Dni numeric(8,0), @Mail varchar(50),@Telefono varchar(20), @Direccion varchar(50), @CantHijos numeric(2,0), @EstadoCivil char(1), @Fecha datetime, @Plan numeric(18,0), @Sexo char(1))
   as
 	begin;
 		DISABLE TRIGGER NOT_NULL.crear_usuario ON NOT_NULL.afiliado
@@ -1179,8 +1194,8 @@ GO
 			--set @nroafil = @Afiliado_nro_familiar + 1
 			insert into NOT_NULL.usuario (usuario_id, usuario_cant_intentos, usuario_descripcion, usuario_password, usuario_habilitado)
 			values (@Nombre + @Apellido + CAST(@Dni as varchar(8)), 0, 'Afiliado',HASHBYTES('SHA2_256', 'afiliado'), 1)
-			insert into NOT_NULL.afiliado (afiliado_nro, usuario_id, afiliado_nombre, afiliado_apellido, afiliado_dni, afiliado_cant_hijos, afiliado_direccion, afiliado_estado_civil, afiliado_fecha_nac, afiliado_mail, afiliado_plan, afiliado_sexo, afiliado_telefono)
-		     values(@nroafil, @Nombre + @Apellido + CAST(@Dni as varchar(8)), @Nombre, @Apellido, @Dni, @CantHijos, @Direccion, @EstadoCivil, @Fecha, @Mail, @Plan, @Sexo, @Telefono) 
+			insert into NOT_NULL.afiliado (afiliado_nro, usuario_id, afiliado_nombre, afiliado_apellido, afiliado_tipo_dni,afiliado_dni, afiliado_cant_hijos, afiliado_direccion, afiliado_estado_civil, afiliado_fecha_nac, afiliado_mail, afiliado_plan, afiliado_sexo, afiliado_telefono)
+		     values(@nroafil, @Nombre + @Apellido + CAST(@Dni as varchar(8)), @Nombre, @Apellido, @TipoDocumento ,@Dni, @CantHijos, @Direccion, @EstadoCivil, @Fecha, @Mail, @Plan, @Sexo, @Telefono) 
 			insert into NOT_NULL.rolXusuario (rolXusuario_habilitado, rol_id, usuario_id) 
 			values (1, 2, @Nombre + @Apellido + CAST(@Dni as varchar(8)))
 			SET IDENTITY_INSERT NOT_NULL.afiliado OFF;
@@ -1285,25 +1300,40 @@ GO
   create procedure NOT_NULL.Get_Turnos_Today
   as
 	begin
-		select * from NOT_NULL.turno where turno_fecha = CONVERT(DATE, GETDATE());
+		select * from NOT_NULL.turno where turno_fecha = CONVERT(DATE, NOT_NULL.Obtener_Fecha());
 	end
   go
-  
+    
   /* --------------------------------------------------------------------------------------------------------------------- */
-  -- FILTRADO DE DIAS DE TURNOS SEGUN CODIGO_PROFESIONAL
-  CREATE PROCEDURE NOT_NULL.turnos_GetByFilerProfesional @profesional varchar(20), @especialidad varchar(20)
+  CREATE PROCEDURE NOT_NULL.reservarTurno_GetByFilerProfesional @afiliado varchar(20), @nro_turno varchar(20)
   AS
 	BEGIN
 	SET NOCOUNT ON;
-	SELECT day(turno_hora_llegada) as dia, month(turno_hora_llegada) as mes, CONVERT(varchar(20), turno_hora_llegada, 114) as hora
+	UPDATE NOT_NULL.turno
+	SET afiliado_nro = @afiliado,
+		turno_estado = 'R'
+	 WHERE turno_nro = @nro_turno
+	END
+   GO   
+
+
+  -- FILTRADO DE DIAS DE TURNOS SEGUN CODIGO_PROFESIONAL
+  CREATE PROCEDURE NOT_NULL.turnos_GetByFilerProfesional @profesional int, @especialidad numeric(18,0) /* fecha_archivo */
+  AS
+	BEGIN
+	SET NOCOUNT ON;
+	SELECT str(turno_nro) as turno,
+		   str(day(turno_fecha)) as dia,
+		   str(month(turno_fecha)) as mes,
+		   CONVERT(nvarchar(MAX), turno_fecha, 8) as hora
 	FROM not_null.turno
-	 WHERE turno_fecha > '2015/01/01'
+	 WHERE turno_fecha >= CONVERT(date,NOT_NULL.Obtener_Fecha()) /* fecha_archivo */
 	  and afiliado_nro is null 
-	  and turno_estado = 'U' 
+	  and turno_estado = 'D' 
 	  and turno_medico_especialidad_id = (select top 1 medxesp_id from NOT_NULL.medicoXespecialidad where medxesp_profesional = @profesional and medxesp_especialidad = @especialidad)
 	END
-  GO 
-  
+  GO   
+
   --FILTRADO DE PROFESIONALES POR ESPECIALIDAD - OK
   CREATE PROCEDURE NOT_NULL.profesional_GetByFilerEspecialidad (@especialidad varchar(20))
   AS
@@ -1334,6 +1364,7 @@ CREATE PROCEDURE NOT_NULL.especialidades_GetByFilerEspecialidad (@especialidad v
 		WHERE especialidad_descripcion LIKE ('%' + @especialidad + '%')
 	END
   GO  
+  
   /* ------------------------------------------------------------------------------------------------------------------------------*/
    -- Registrar Compra Bono
   CREATE PROCEDURE NOT_NULL.Comprar_Bono(@cantidad int, @precio int, @afiliado numeric(18,0), @fecha datetime, @plan numeric(18,0))
@@ -1515,7 +1546,7 @@ go
 	begin 
 		select Convert(date, turno_fecha) as turno_fecha from NOT_NULL.turno, NOT_NULL.medicoXespecialidad
 		where turno_medico_especialidad_id = medxesp_id and medxesp_profesional = @matricula
-			and (turno_estado = 'D' or turno_estado = 'R') and turno_fecha >= Convert(date, GETDATE()+1)
+			and (turno_estado = 'D' or turno_estado = 'R') and turno_fecha >= Convert(date, NOT_NULL.Obtener_Fecha()+1)
 		group by Convert(date, turno_fecha)
 		order by Convert(date, turno_fecha)
 	end
@@ -1539,7 +1570,7 @@ go
 		where YEAR(turno_fecha) = YEAR(@fecha) and MONTH(turno_fecha)=MONTH(@fecha) and DAY(turno_fecha)=DAY(@fecha)
 			and turno_medico_especialidad_id = (select medicoXespecialidad.medxesp_id from NOT_NULL.medicoXespecialidad where medxesp_profesional = @matricula)
 	insert into NOT_NULL.cancelacion_turno (cancel_fecha, cancel_motivo, cancel_profesional, cancel_tipo, cancel_turno)
-		values(GETDATE(), @motivo +' : Fue una cancelacion por dia', @matricula, @tipo, null)
+		values(NOT_NULL.Obtener_Fecha(), @motivo +' : Fue una cancelacion por dia', @matricula, @tipo, null)
 
 	end
  go
@@ -1558,14 +1589,14 @@ create procedure NOT_NULL.Cancelar_Turnos_ProfxFranja(@motivo varchar(255), @tip
 			set @turno = isnull(( select top 1 turno_nro from NOT_NULL.turno, NOT_NULL.medicoXespecialidad
 				where turno_medico_especialidad_id = medxesp_id and medxesp_profesional = @matricula
 					and day(turno_fecha) = day(@fecha) and month(turno_fecha) = month(@fecha) and year(turno_fecha) = year(@fecha)
-					and Convert(date, turno_fecha) > Convert(date, GETDATE())
+					and Convert(date, turno_fecha) > Convert(date, NOT_NULL.Obtener_Fecha())
 					and	DATEPART( hour, Convert(time, turno_fecha)) = @hora and	DATEPART( minute, Convert(time, turno_fecha)) = @minuto), -1)
 			
 			if(@turno <> -1)
 			Begin
 				update NOT_NULL.turno set turno_estado = 'C', afiliado_nro = null where turno_nro = @turno
 				insert into NOT_NULL.cancelacion_turno (cancel_fecha, cancel_motivo, cancel_profesional, cancel_tipo, cancel_turno)
-					values(GETDATE(), @motivo+' :Fue una cancelacion por franja', @matricula, @tipo, @turno)
+					values(NOT_NULL.Obtener_Fecha(), @motivo+' :Fue una cancelacion por franja', @matricula, @tipo, @turno)
 			End
 
 			if @minuto = 0
@@ -1601,3 +1632,42 @@ create procedure NOT_NULL.Cancelar_Turnos_Varios_Dias(@motivo varchar(255), @tip
 		End
 	end
  go
+ 
+ 
+ /*Fechas config*/
+ CREATE TABLE NOT_NULL.Fecha_Config(
+	id int primary key,
+	fecha datetime,
+	now_viejo datetime
+ )
+ GO
+ 
+ CREATE PROCEDURE NOT_NULL.Reestablecer_Fecha (@fecha datetime, @now_viejo datetime)
+ AS BEGIN
+ 
+	--Borro el valor anterior
+	DELETE FROM NOT_NULL.Fecha_Config
+	
+	INSERT INTO NOT_NULL.Fecha_Config (id,fecha,now_viejo)
+	VALUES(1,@fecha,@now_viejo)
+	
+ END
+ GO
+ 
+ CREATE FUNCTION NOT_NULL.Obtener_Fecha()
+ RETURNS datetime
+ AS BEGIN
+	
+	DECLARE @fecha_tabla datetime
+	DECLARE @now_viejo datetime
+	
+	SET @fecha_tabla = (SELECT f.fecha FROM NOT_NULL.Fecha_Config f
+						WHERE f.id=1)
+	SET @now_viejo = (SELECT f.now_viejo FROM NOT_NULL.Fecha_Config f
+					  WHERE f.id=1)
+	
+	--retorno la fecha tabla + dif entre now y el now_viejo
+	RETURN DATEADD(minute, DATEDIFF(minute,@now_viejo,GETDATE()), @fecha_tabla )
+	
+END
+GO

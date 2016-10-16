@@ -1,0 +1,7 @@
+System.TypeInitializationException: Se produjo una excepción en el inicializador de tipo de 'Helpers.DBHelper'. ---> System.NullReferenceException: Referencia a objeto no establecida como instancia de un objeto.
+   en Helpers.DBHelper.ExecuteNonQuery(String SP, Dictionary`2 parametros) en d:\UTN\Gestion de Datos\repo\gdd2016\Aplicacion Desktop\ClinicaFrba\Helpers\DBHelper.cs:línea 27
+   en Helpers.ConfigTime.getFecha() en d:\UTN\Gestion de Datos\repo\gdd2016\Aplicacion Desktop\ClinicaFrba\Helpers\ConfigTime.cs:línea 40
+   en Helpers.DBHelper..cctor() en d:\UTN\Gestion de Datos\repo\gdd2016\Aplicacion Desktop\ClinicaFrba\Helpers\DBHelper.cs:línea 16
+   --- Fin del seguimiento de la pila de la excepción interna ---
+   en Helpers.DBHelper.ExecuteReader(String SP, Dictionary`2 parametros)
+   en ClinicaFrba.formInicioSesion.button_iniciar_sesion_Click(Object sender, EventArgs e) en d:\UTN\Gestion de Datos\repo\gdd2016\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\LogIn.cs:línea 40

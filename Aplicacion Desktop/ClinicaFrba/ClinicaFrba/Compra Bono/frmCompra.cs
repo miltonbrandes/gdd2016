@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Clases;
 using System.Data.SqlClient;
 using Helpers;
+using System.Configuration;
 
 namespace ClinicaFrba.Compra_Bono
 {
@@ -130,12 +131,16 @@ namespace ClinicaFrba.Compra_Bono
         {
             try
             {
+            	int horas = ConfigTime.getFecha().Hour;
+                int minutos = ConfigTime.getFecha().Minute;
+                int segundos = ConfigTime.getFecha().Second;
+                DateTime fechaactual = ConfigTime.getFechaSinHora().AddHours(horas).AddMinutes(minutos).AddSeconds(segundos);
                 DBHelper.ExecuteReader("Comprar_Bono",
                         new Dictionary<string, object> { 
                     { "@cantidad", cantidad },
                     { "@precio", precio },
                     { "@afiliado", afiliado.NroAfiliado },
-                    { "@fecha", DateTime.Now },
+                    { "@fecha", fechaactual },
                     { "@plan", afiliado.PlanUsuario }
                     });
                 MessageBox.Show("Compra Registrada", "Ok", MessageBoxButtons.OK, MessageBoxIcon.Information);
