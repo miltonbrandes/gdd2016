@@ -89,6 +89,30 @@ namespace ClinicaFrba.Registro_Llegada
                 List<Turno> listaTurnos = new List<Turno>();
                 listaTurnos = DBHelper.ExecuteReader("Get_Turnos_Prof_Reservados", parametros).ToTurno();
                 dgvTurnos.DataSource = listaTurnos;
+                dgvTurnos.Columns.Clear();
+                dgvTurnos.AutoGenerateColumns = false;
+
+                dgvTurnos.Columns.Add(new DataGridViewTextBoxColumn()
+                {
+                    DataPropertyName = "Id",
+                    HeaderText = "Codigo",
+                    Width = 128,
+                    ReadOnly = true
+                });
+                dgvTurnos.Columns.Add(new DataGridViewTextBoxColumn()
+                {
+                    DataPropertyName = "Afiliado",
+                    HeaderText = "Nro Afiliado",
+                    Width = 128,
+                    ReadOnly = true
+                });
+                dgvTurnos.Columns.Add(new DataGridViewTextBoxColumn()
+                {
+                    DataPropertyName = "Fecha",
+                    HeaderText = "Fecha",
+                    Width = 128,
+                    ReadOnly = true
+                });
                 
             }
         }

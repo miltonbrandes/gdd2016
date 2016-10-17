@@ -48,8 +48,7 @@ namespace ClinicaFrba.Registro_Resultado
             lista = DBHelper.ExecuteReader("GetTurnosDiaLlegaron", parametros2).ToTurno();
 
             dataGridView1.DataSource = lista;
-            //FALTA MOSTRAR ACA SOLO LAS COLUMNAS QUE ME INTERESAN
-            /*dataGridView1.Columns.Clear();
+            dataGridView1.Columns.Clear();
             dataGridView1.AutoGenerateColumns = false;
 
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn()
@@ -62,18 +61,18 @@ namespace ClinicaFrba.Registro_Resultado
 
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn()
             {
-                DataPropertyName = "Descripcion",
-                HeaderText = "Especialidad",
+                DataPropertyName = "Afiliado",
+                HeaderText = "Nro Afiliado",
                 Width = 128,
                 ReadOnly = true
             });
 
             dataGridView1.Columns.Add(new DataGridViewColumn(){
-                DataPropertyName = "Nombre",
-                HeaderText = "Nombre",
+                DataPropertyName = "Fecha",
+                HeaderText = "Fecha",
                 Width = 128,
                 ReadOnly = true
-            });*/
+            });
             }
 
         private void dataGridView1_DoubleClick(object sender, EventArgs e)

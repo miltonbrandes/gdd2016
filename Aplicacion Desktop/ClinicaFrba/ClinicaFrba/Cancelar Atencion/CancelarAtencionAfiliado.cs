@@ -38,7 +38,7 @@ namespace ClinicaFrba.Cancelar_Atencion
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn()
             {
                 DataPropertyName = "Id",
-                HeaderText = "Id",
+                HeaderText = "Codigo",
                 Width = 150,
                 ReadOnly = true
             });
