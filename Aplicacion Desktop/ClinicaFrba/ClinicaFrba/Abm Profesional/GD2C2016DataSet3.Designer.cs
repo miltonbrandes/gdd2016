@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace ClinicaFrba {
+namespace ClinicaFrba.Abm_Profesional {
     
     
     /// <summary>
@@ -20,17 +20,17 @@ namespace ClinicaFrba {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("GD2C2016DataSet4")]
+    [global::System.Xml.Serialization.XmlRootAttribute("GD2C2016DataSet3")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
-    public partial class GD2C2016DataSet4 : global::System.Data.DataSet {
+    public partial class GD2C2016DataSet3 : global::System.Data.DataSet {
         
-        private Get_MedicoXEsp_AllDataTable tableGet_MedicoXEsp_All;
+        private Get_Especialidades_AllDataTable tableGet_Especialidades_All;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public GD2C2016DataSet4() {
+        public GD2C2016DataSet3() {
             this.BeginInit();
             this.InitClass();
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
@@ -41,7 +41,7 @@ namespace ClinicaFrba {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        protected GD2C2016DataSet4(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+        protected GD2C2016DataSet3(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
             if ((this.IsBinarySerialized(info, context) == true)) {
                 this.InitVars(false);
@@ -54,8 +54,8 @@ namespace ClinicaFrba {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["Get_MedicoXEsp_All"] != null)) {
-                    base.Tables.Add(new Get_MedicoXEsp_AllDataTable(ds.Tables["Get_MedicoXEsp_All"]));
+                if ((ds.Tables["Get_Especialidades_All"] != null)) {
+                    base.Tables.Add(new Get_Especialidades_AllDataTable(ds.Tables["Get_Especialidades_All"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -79,9 +79,9 @@ namespace ClinicaFrba {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public Get_MedicoXEsp_AllDataTable Get_MedicoXEsp_All {
+        public Get_Especialidades_AllDataTable Get_Especialidades_All {
             get {
-                return this.tableGet_MedicoXEsp_All;
+                return this.tableGet_Especialidades_All;
             }
         }
         
@@ -127,7 +127,7 @@ namespace ClinicaFrba {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public override global::System.Data.DataSet Clone() {
-            GD2C2016DataSet4 cln = ((GD2C2016DataSet4)(base.Clone()));
+            GD2C2016DataSet3 cln = ((GD2C2016DataSet3)(base.Clone()));
             cln.InitVars();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
@@ -152,8 +152,8 @@ namespace ClinicaFrba {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["Get_MedicoXEsp_All"] != null)) {
-                    base.Tables.Add(new Get_MedicoXEsp_AllDataTable(ds.Tables["Get_MedicoXEsp_All"]));
+                if ((ds.Tables["Get_Especialidades_All"] != null)) {
+                    base.Tables.Add(new Get_Especialidades_AllDataTable(ds.Tables["Get_Especialidades_All"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -188,10 +188,10 @@ namespace ClinicaFrba {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         internal void InitVars(bool initTable) {
-            this.tableGet_MedicoXEsp_All = ((Get_MedicoXEsp_AllDataTable)(base.Tables["Get_MedicoXEsp_All"]));
+            this.tableGet_Especialidades_All = ((Get_Especialidades_AllDataTable)(base.Tables["Get_Especialidades_All"]));
             if ((initTable == true)) {
-                if ((this.tableGet_MedicoXEsp_All != null)) {
-                    this.tableGet_MedicoXEsp_All.InitVars();
+                if ((this.tableGet_Especialidades_All != null)) {
+                    this.tableGet_Especialidades_All.InitVars();
                 }
             }
         }
@@ -199,18 +199,18 @@ namespace ClinicaFrba {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "GD2C2016DataSet4";
+            this.DataSetName = "GD2C2016DataSet3";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/GD2C2016DataSet4.xsd";
+            this.Namespace = "http://tempuri.org/GD2C2016DataSet3.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tableGet_MedicoXEsp_All = new Get_MedicoXEsp_AllDataTable();
-            base.Tables.Add(this.tableGet_MedicoXEsp_All);
+            this.tableGet_Especialidades_All = new Get_Especialidades_AllDataTable();
+            base.Tables.Add(this.tableGet_Especialidades_All);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerializeGet_MedicoXEsp_All() {
+        private bool ShouldSerializeGet_Especialidades_All() {
             return false;
         }
         
@@ -225,7 +225,7 @@ namespace ClinicaFrba {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedDataSetSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-            GD2C2016DataSet4 ds = new GD2C2016DataSet4();
+            GD2C2016DataSet3 ds = new GD2C2016DataSet3();
             global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
             global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
             global::System.Xml.Schema.XmlSchemaAny any = new global::System.Xml.Schema.XmlSchemaAny();
@@ -270,29 +270,21 @@ namespace ClinicaFrba {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void Get_MedicoXEsp_AllRowChangeEventHandler(object sender, Get_MedicoXEsp_AllRowChangeEvent e);
+        public delegate void Get_Especialidades_AllRowChangeEventHandler(object sender, Get_Especialidades_AllRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class Get_MedicoXEsp_AllDataTable : global::System.Data.TypedTableBase<Get_MedicoXEsp_AllRow> {
-            
-            private global::System.Data.DataColumn columnmedxesp_id;
-            
-            private global::System.Data.DataColumn columnprofesional_nombre;
-            
-            private global::System.Data.DataColumn columnprofesional_apellido;
-            
-            private global::System.Data.DataColumn columnprofesional_direccion;
+        public partial class Get_Especialidades_AllDataTable : global::System.Data.TypedTableBase<Get_Especialidades_AllRow> {
             
             private global::System.Data.DataColumn columnespecialidad_descripcion;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public Get_MedicoXEsp_AllDataTable() {
-                this.TableName = "Get_MedicoXEsp_All";
+            public Get_Especialidades_AllDataTable() {
+                this.TableName = "Get_Especialidades_All";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -300,7 +292,7 @@ namespace ClinicaFrba {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal Get_MedicoXEsp_AllDataTable(global::System.Data.DataTable table) {
+            internal Get_Especialidades_AllDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -317,41 +309,9 @@ namespace ClinicaFrba {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected Get_MedicoXEsp_AllDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected Get_Especialidades_AllDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn medxesp_idColumn {
-                get {
-                    return this.columnmedxesp_id;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn profesional_nombreColumn {
-                get {
-                    return this.columnprofesional_nombre;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn profesional_apellidoColumn {
-                get {
-                    return this.columnprofesional_apellido;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn profesional_direccionColumn {
-                get {
-                    return this.columnprofesional_direccion;
-                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -373,56 +333,45 @@ namespace ClinicaFrba {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public Get_MedicoXEsp_AllRow this[int index] {
+            public Get_Especialidades_AllRow this[int index] {
                 get {
-                    return ((Get_MedicoXEsp_AllRow)(this.Rows[index]));
+                    return ((Get_Especialidades_AllRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event Get_MedicoXEsp_AllRowChangeEventHandler Get_MedicoXEsp_AllRowChanging;
+            public event Get_Especialidades_AllRowChangeEventHandler Get_Especialidades_AllRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event Get_MedicoXEsp_AllRowChangeEventHandler Get_MedicoXEsp_AllRowChanged;
+            public event Get_Especialidades_AllRowChangeEventHandler Get_Especialidades_AllRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event Get_MedicoXEsp_AllRowChangeEventHandler Get_MedicoXEsp_AllRowDeleting;
+            public event Get_Especialidades_AllRowChangeEventHandler Get_Especialidades_AllRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event Get_MedicoXEsp_AllRowChangeEventHandler Get_MedicoXEsp_AllRowDeleted;
+            public event Get_Especialidades_AllRowChangeEventHandler Get_Especialidades_AllRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AddGet_MedicoXEsp_AllRow(Get_MedicoXEsp_AllRow row) {
+            public void AddGet_Especialidades_AllRow(Get_Especialidades_AllRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public Get_MedicoXEsp_AllRow AddGet_MedicoXEsp_AllRow(string profesional_nombre, string profesional_apellido, string profesional_direccion, string especialidad_descripcion) {
-                Get_MedicoXEsp_AllRow rowGet_MedicoXEsp_AllRow = ((Get_MedicoXEsp_AllRow)(this.NewRow()));
+            public Get_Especialidades_AllRow AddGet_Especialidades_AllRow(string especialidad_descripcion) {
+                Get_Especialidades_AllRow rowGet_Especialidades_AllRow = ((Get_Especialidades_AllRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        null,
-                        profesional_nombre,
-                        profesional_apellido,
-                        profesional_direccion,
                         especialidad_descripcion};
-                rowGet_MedicoXEsp_AllRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowGet_MedicoXEsp_AllRow);
-                return rowGet_MedicoXEsp_AllRow;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public Get_MedicoXEsp_AllRow FindBymedxesp_id(int medxesp_id) {
-                return ((Get_MedicoXEsp_AllRow)(this.Rows.Find(new object[] {
-                            medxesp_id})));
+                rowGet_Especialidades_AllRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowGet_Especialidades_AllRow);
+                return rowGet_Especialidades_AllRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                Get_MedicoXEsp_AllDataTable cln = ((Get_MedicoXEsp_AllDataTable)(base.Clone()));
+                Get_Especialidades_AllDataTable cln = ((Get_Especialidades_AllDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -430,68 +379,47 @@ namespace ClinicaFrba {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new Get_MedicoXEsp_AllDataTable();
+                return new Get_Especialidades_AllDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
-                this.columnmedxesp_id = base.Columns["medxesp_id"];
-                this.columnprofesional_nombre = base.Columns["profesional_nombre"];
-                this.columnprofesional_apellido = base.Columns["profesional_apellido"];
-                this.columnprofesional_direccion = base.Columns["profesional_direccion"];
                 this.columnespecialidad_descripcion = base.Columns["especialidad_descripcion"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             private void InitClass() {
-                this.columnmedxesp_id = new global::System.Data.DataColumn("medxesp_id", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnmedxesp_id);
-                this.columnprofesional_nombre = new global::System.Data.DataColumn("profesional_nombre", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnprofesional_nombre);
-                this.columnprofesional_apellido = new global::System.Data.DataColumn("profesional_apellido", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnprofesional_apellido);
-                this.columnprofesional_direccion = new global::System.Data.DataColumn("profesional_direccion", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnprofesional_direccion);
                 this.columnespecialidad_descripcion = new global::System.Data.DataColumn("especialidad_descripcion", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnespecialidad_descripcion);
-                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnmedxesp_id}, true));
-                this.columnmedxesp_id.AutoIncrement = true;
-                this.columnmedxesp_id.AllowDBNull = false;
-                this.columnmedxesp_id.ReadOnly = true;
-                this.columnmedxesp_id.Unique = true;
-                this.columnprofesional_nombre.MaxLength = 50;
-                this.columnprofesional_apellido.MaxLength = 50;
-                this.columnprofesional_direccion.MaxLength = 50;
                 this.columnespecialidad_descripcion.MaxLength = 255;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public Get_MedicoXEsp_AllRow NewGet_MedicoXEsp_AllRow() {
-                return ((Get_MedicoXEsp_AllRow)(this.NewRow()));
+            public Get_Especialidades_AllRow NewGet_Especialidades_AllRow() {
+                return ((Get_Especialidades_AllRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new Get_MedicoXEsp_AllRow(builder);
+                return new Get_Especialidades_AllRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(Get_MedicoXEsp_AllRow);
+                return typeof(Get_Especialidades_AllRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.Get_MedicoXEsp_AllRowChanged != null)) {
-                    this.Get_MedicoXEsp_AllRowChanged(this, new Get_MedicoXEsp_AllRowChangeEvent(((Get_MedicoXEsp_AllRow)(e.Row)), e.Action));
+                if ((this.Get_Especialidades_AllRowChanged != null)) {
+                    this.Get_Especialidades_AllRowChanged(this, new Get_Especialidades_AllRowChangeEvent(((Get_Especialidades_AllRow)(e.Row)), e.Action));
                 }
             }
             
@@ -499,8 +427,8 @@ namespace ClinicaFrba {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.Get_MedicoXEsp_AllRowChanging != null)) {
-                    this.Get_MedicoXEsp_AllRowChanging(this, new Get_MedicoXEsp_AllRowChangeEvent(((Get_MedicoXEsp_AllRow)(e.Row)), e.Action));
+                if ((this.Get_Especialidades_AllRowChanging != null)) {
+                    this.Get_Especialidades_AllRowChanging(this, new Get_Especialidades_AllRowChangeEvent(((Get_Especialidades_AllRow)(e.Row)), e.Action));
                 }
             }
             
@@ -508,8 +436,8 @@ namespace ClinicaFrba {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.Get_MedicoXEsp_AllRowDeleted != null)) {
-                    this.Get_MedicoXEsp_AllRowDeleted(this, new Get_MedicoXEsp_AllRowChangeEvent(((Get_MedicoXEsp_AllRow)(e.Row)), e.Action));
+                if ((this.Get_Especialidades_AllRowDeleted != null)) {
+                    this.Get_Especialidades_AllRowDeleted(this, new Get_Especialidades_AllRowChangeEvent(((Get_Especialidades_AllRow)(e.Row)), e.Action));
                 }
             }
             
@@ -517,14 +445,14 @@ namespace ClinicaFrba {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.Get_MedicoXEsp_AllRowDeleting != null)) {
-                    this.Get_MedicoXEsp_AllRowDeleting(this, new Get_MedicoXEsp_AllRowChangeEvent(((Get_MedicoXEsp_AllRow)(e.Row)), e.Action));
+                if ((this.Get_Especialidades_AllRowDeleting != null)) {
+                    this.Get_Especialidades_AllRowDeleting(this, new Get_Especialidades_AllRowChangeEvent(((Get_Especialidades_AllRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemoveGet_MedicoXEsp_AllRow(Get_MedicoXEsp_AllRow row) {
+            public void RemoveGet_Especialidades_AllRow(Get_Especialidades_AllRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -533,7 +461,7 @@ namespace ClinicaFrba {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                GD2C2016DataSet4 ds = new GD2C2016DataSet4();
+                GD2C2016DataSet3 ds = new GD2C2016DataSet3();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -551,7 +479,7 @@ namespace ClinicaFrba {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "Get_MedicoXEsp_AllDataTable";
+                attribute2.FixedValue = "Get_Especialidades_AllDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -595,77 +523,15 @@ namespace ClinicaFrba {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class Get_MedicoXEsp_AllRow : global::System.Data.DataRow {
+        public partial class Get_Especialidades_AllRow : global::System.Data.DataRow {
             
-            private Get_MedicoXEsp_AllDataTable tableGet_MedicoXEsp_All;
+            private Get_Especialidades_AllDataTable tableGet_Especialidades_All;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal Get_MedicoXEsp_AllRow(global::System.Data.DataRowBuilder rb) : 
+            internal Get_Especialidades_AllRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableGet_MedicoXEsp_All = ((Get_MedicoXEsp_AllDataTable)(this.Table));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int medxesp_id {
-                get {
-                    return ((int)(this[this.tableGet_MedicoXEsp_All.medxesp_idColumn]));
-                }
-                set {
-                    this[this.tableGet_MedicoXEsp_All.medxesp_idColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string profesional_nombre {
-                get {
-                    try {
-                        return ((string)(this[this.tableGet_MedicoXEsp_All.profesional_nombreColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'profesional_nombre\' de la tabla \'Get_MedicoXEsp_All\' es D" +
-                                "BNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableGet_MedicoXEsp_All.profesional_nombreColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string profesional_apellido {
-                get {
-                    try {
-                        return ((string)(this[this.tableGet_MedicoXEsp_All.profesional_apellidoColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'profesional_apellido\' de la tabla \'Get_MedicoXEsp_All\' es" +
-                                " DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableGet_MedicoXEsp_All.profesional_apellidoColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string profesional_direccion {
-                get {
-                    try {
-                        return ((string)(this[this.tableGet_MedicoXEsp_All.profesional_direccionColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'profesional_direccion\' de la tabla \'Get_MedicoXEsp_All\' e" +
-                                "s DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableGet_MedicoXEsp_All.profesional_direccionColumn] = value;
-                }
+                this.tableGet_Especialidades_All = ((Get_Especialidades_AllDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -673,64 +539,28 @@ namespace ClinicaFrba {
             public string especialidad_descripcion {
                 get {
                     try {
-                        return ((string)(this[this.tableGet_MedicoXEsp_All.especialidad_descripcionColumn]));
+                        return ((string)(this[this.tableGet_Especialidades_All.especialidad_descripcionColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'especialidad_descripcion\' de la tabla \'Get_MedicoXEsp_All" +
-                                "\' es DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'especialidad_descripcion\' de la tabla \'Get_Especialidades" +
+                                "_All\' es DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableGet_MedicoXEsp_All.especialidad_descripcionColumn] = value;
+                    this[this.tableGet_Especialidades_All.especialidad_descripcionColumn] = value;
                 }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Isprofesional_nombreNull() {
-                return this.IsNull(this.tableGet_MedicoXEsp_All.profesional_nombreColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setprofesional_nombreNull() {
-                this[this.tableGet_MedicoXEsp_All.profesional_nombreColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Isprofesional_apellidoNull() {
-                return this.IsNull(this.tableGet_MedicoXEsp_All.profesional_apellidoColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setprofesional_apellidoNull() {
-                this[this.tableGet_MedicoXEsp_All.profesional_apellidoColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Isprofesional_direccionNull() {
-                return this.IsNull(this.tableGet_MedicoXEsp_All.profesional_direccionColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setprofesional_direccionNull() {
-                this[this.tableGet_MedicoXEsp_All.profesional_direccionColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool Isespecialidad_descripcionNull() {
-                return this.IsNull(this.tableGet_MedicoXEsp_All.especialidad_descripcionColumn);
+                return this.IsNull(this.tableGet_Especialidades_All.especialidad_descripcionColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void Setespecialidad_descripcionNull() {
-                this[this.tableGet_MedicoXEsp_All.especialidad_descripcionColumn] = global::System.Convert.DBNull;
+                this[this.tableGet_Especialidades_All.especialidad_descripcionColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -738,22 +568,22 @@ namespace ClinicaFrba {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class Get_MedicoXEsp_AllRowChangeEvent : global::System.EventArgs {
+        public class Get_Especialidades_AllRowChangeEvent : global::System.EventArgs {
             
-            private Get_MedicoXEsp_AllRow eventRow;
+            private Get_Especialidades_AllRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public Get_MedicoXEsp_AllRowChangeEvent(Get_MedicoXEsp_AllRow row, global::System.Data.DataRowAction action) {
+            public Get_Especialidades_AllRowChangeEvent(Get_Especialidades_AllRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public Get_MedicoXEsp_AllRow Row {
+            public Get_Especialidades_AllRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -769,7 +599,7 @@ namespace ClinicaFrba {
         }
     }
 }
-namespace ClinicaFrba.GD2C2016DataSet4TableAdapters {
+namespace ClinicaFrba.Abm_Profesional.GD2C2016DataSet3TableAdapters {
     
     
     /// <summary>
@@ -781,7 +611,7 @@ namespace ClinicaFrba.GD2C2016DataSet4TableAdapters {
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class Get_MedicoXEsp_AllTableAdapter : global::System.ComponentModel.Component {
+    public partial class Get_Especialidades_AllTableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.SqlClient.SqlDataAdapter _adapter;
         
@@ -795,7 +625,7 @@ namespace ClinicaFrba.GD2C2016DataSet4TableAdapters {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public Get_MedicoXEsp_AllTableAdapter() {
+        public Get_Especialidades_AllTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -892,11 +722,7 @@ namespace ClinicaFrba.GD2C2016DataSet4TableAdapters {
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "Get_MedicoXEsp_All";
-            tableMapping.ColumnMappings.Add("medxesp_id", "medxesp_id");
-            tableMapping.ColumnMappings.Add("profesional_nombre", "profesional_nombre");
-            tableMapping.ColumnMappings.Add("profesional_apellido", "profesional_apellido");
-            tableMapping.ColumnMappings.Add("profesional_direccion", "profesional_direccion");
+            tableMapping.DataSetTable = "Get_Especialidades_All";
             tableMapping.ColumnMappings.Add("especialidad_descripcion", "especialidad_descripcion");
             this._adapter.TableMappings.Add(tableMapping);
         }
@@ -914,7 +740,7 @@ namespace ClinicaFrba.GD2C2016DataSet4TableAdapters {
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "NOT_NULL.Get_MedicoXEsp_All";
+            this._commandCollection[0].CommandText = "NOT_NULL.Get_Especialidades_All";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.StoredProcedure;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
@@ -923,7 +749,7 @@ namespace ClinicaFrba.GD2C2016DataSet4TableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(GD2C2016DataSet4.Get_MedicoXEsp_AllDataTable dataTable) {
+        public virtual int Fill(GD2C2016DataSet3.Get_Especialidades_AllDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -936,9 +762,9 @@ namespace ClinicaFrba.GD2C2016DataSet4TableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual GD2C2016DataSet4.Get_MedicoXEsp_AllDataTable GetData() {
+        public virtual GD2C2016DataSet3.Get_Especialidades_AllDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            GD2C2016DataSet4.Get_MedicoXEsp_AllDataTable dataTable = new GD2C2016DataSet4.Get_MedicoXEsp_AllDataTable();
+            GD2C2016DataSet3.Get_Especialidades_AllDataTable dataTable = new GD2C2016DataSet3.Get_Especialidades_AllDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -1012,7 +838,7 @@ namespace ClinicaFrba.GD2C2016DataSet4TableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateUpdatedRows(GD2C2016DataSet4 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateUpdatedRows(GD2C2016DataSet3 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             return result;
         }
@@ -1022,7 +848,7 @@ namespace ClinicaFrba.GD2C2016DataSet4TableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateInsertedRows(GD2C2016DataSet4 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateInsertedRows(GD2C2016DataSet3 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             return result;
         }
@@ -1032,7 +858,7 @@ namespace ClinicaFrba.GD2C2016DataSet4TableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateDeletedRows(GD2C2016DataSet4 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
+        private int UpdateDeletedRows(GD2C2016DataSet3 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
             return result;
         }
@@ -1066,7 +892,7 @@ namespace ClinicaFrba.GD2C2016DataSet4TableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public virtual int UpdateAll(GD2C2016DataSet4 dataSet) {
+        public virtual int UpdateAll(GD2C2016DataSet3 dataSet) {
             if ((dataSet == null)) {
                 throw new global::System.ArgumentNullException("dataSet");
             }

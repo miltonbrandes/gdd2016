@@ -169,5 +169,79 @@ namespace ClinicaFrba.Pedir_Turno
             });
         }
 
+        private void frmPedidoTurno_Load(object sender, EventArgs e)
+        {
+            List<Especialidad> especialidades = new List<Especialidad>();
+            var parametros = new Dictionary<string, object>() {
+                    { "@especialidad", textEspecialidad.Text}
+                };
+
+            try
+            {
+                especialidades = DBHelper.ExecuteReader("especialidades_GetByFilerEspecialidad", parametros).ToEspecialidad2();
+            }
+            catch
+            {
+                MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            dgvEspecialidades.Focus();
+            dgvEspecialidades.DataSource = especialidades;
+            dgvEspecialidades.Columns.Clear();
+            dgvEspecialidades.AutoGenerateColumns = false;
+
+            dgvEspecialidades.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                DataPropertyName = "Id",
+                HeaderText = "Codigo",
+                Width = 128,
+                ReadOnly = true
+            });
+
+            dgvEspecialidades.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                DataPropertyName = "Descripcion",
+                HeaderText = "Especialidad",
+                Width = 128,
+                ReadOnly = true
+            });
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            List<Especialidad> especialidades = new List<Especialidad>();
+            var parametros = new Dictionary<string, object>() {
+                    { "@especialidad", textEspecialidad.Text}
+                };
+
+            try
+            {
+                especialidades = DBHelper.ExecuteReader("especialidades_GetByFilerEspecialidad", parametros).ToEspecialidad2();
+            }
+            catch
+            {
+                MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            dgvEspecialidades.Focus();
+            dgvEspecialidades.DataSource = especialidades;
+            dgvEspecialidades.Columns.Clear();
+            dgvEspecialidades.AutoGenerateColumns = false;
+
+            dgvEspecialidades.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                DataPropertyName = "Id",
+                HeaderText = "Codigo",
+                Width = 128,
+                ReadOnly = true
+            });
+
+            dgvEspecialidades.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                DataPropertyName = "Descripcion",
+                HeaderText = "Especialidad",
+                Width = 128,
+                ReadOnly = true
+            });
+        }
+
     }
 }

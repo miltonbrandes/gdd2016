@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace ClinicaFrba {
+namespace ClinicaFrba.Abm_Profesional {
     
     
     /// <summary>
@@ -20,9 +20,9 @@ namespace ClinicaFrba {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("GD2C2016DataSet")]
+    [global::System.Xml.Serialization.XmlRootAttribute("GD2C2016DataSet1")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
-    public partial class GD2C2016DataSet : global::System.Data.DataSet {
+    public partial class GD2C2016DataSet1 : global::System.Data.DataSet {
         
         private Modif_Plan_Get_AllDataTable tableModif_Plan_Get_All;
         
@@ -30,7 +30,7 @@ namespace ClinicaFrba {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public GD2C2016DataSet() {
+        public GD2C2016DataSet1() {
             this.BeginInit();
             this.InitClass();
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
@@ -41,7 +41,7 @@ namespace ClinicaFrba {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        protected GD2C2016DataSet(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+        protected GD2C2016DataSet1(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
             if ((this.IsBinarySerialized(info, context) == true)) {
                 this.InitVars(false);
@@ -127,7 +127,7 @@ namespace ClinicaFrba {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public override global::System.Data.DataSet Clone() {
-            GD2C2016DataSet cln = ((GD2C2016DataSet)(base.Clone()));
+            GD2C2016DataSet1 cln = ((GD2C2016DataSet1)(base.Clone()));
             cln.InitVars();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
@@ -199,9 +199,9 @@ namespace ClinicaFrba {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "GD2C2016DataSet";
+            this.DataSetName = "GD2C2016DataSet1";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/GD2C2016DataSet.xsd";
+            this.Namespace = "http://tempuri.org/GD2C2016DataSet1.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
             this.tableModif_Plan_Get_All = new Modif_Plan_Get_AllDataTable();
@@ -225,7 +225,7 @@ namespace ClinicaFrba {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedDataSetSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-            GD2C2016DataSet ds = new GD2C2016DataSet();
+            GD2C2016DataSet1 ds = new GD2C2016DataSet1();
             global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
             global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
             global::System.Xml.Schema.XmlSchemaAny any = new global::System.Xml.Schema.XmlSchemaAny();
@@ -279,17 +279,17 @@ namespace ClinicaFrba {
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class Modif_Plan_Get_AllDataTable : global::System.Data.TypedTableBase<Modif_Plan_Get_AllRow> {
             
-            private global::System.Data.DataColumn columnmodif_id;
+            private global::System.Data.DataColumn columnafiliado_nombre;
             
-            private global::System.Data.DataColumn columnmodif_afiliado;
+            private global::System.Data.DataColumn columnafiliado_apellido;
             
-            private global::System.Data.DataColumn columnmodif_plan_viejo;
-            
-            private global::System.Data.DataColumn columnmodif_plan_nuevo;
+            private global::System.Data.DataColumn columnmodif_motivo;
             
             private global::System.Data.DataColumn columnmodif_plan_fecha;
             
-            private global::System.Data.DataColumn columnmodif_motivo;
+            private global::System.Data.DataColumn columnplan_descripcion;
+            
+            private global::System.Data.DataColumn columnplan_descripcion1;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -326,33 +326,25 @@ namespace ClinicaFrba {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn modif_idColumn {
+            public global::System.Data.DataColumn afiliado_nombreColumn {
                 get {
-                    return this.columnmodif_id;
+                    return this.columnafiliado_nombre;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn modif_afiliadoColumn {
+            public global::System.Data.DataColumn afiliado_apellidoColumn {
                 get {
-                    return this.columnmodif_afiliado;
+                    return this.columnafiliado_apellido;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn modif_plan_viejoColumn {
+            public global::System.Data.DataColumn modif_motivoColumn {
                 get {
-                    return this.columnmodif_plan_viejo;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn modif_plan_nuevoColumn {
-                get {
-                    return this.columnmodif_plan_nuevo;
+                    return this.columnmodif_motivo;
                 }
             }
             
@@ -366,9 +358,17 @@ namespace ClinicaFrba {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn modif_motivoColumn {
+            public global::System.Data.DataColumn plan_descripcionColumn {
                 get {
-                    return this.columnmodif_motivo;
+                    return this.columnplan_descripcion;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn plan_descripcion1Column {
+                get {
+                    return this.columnplan_descripcion1;
                 }
             }
             
@@ -409,25 +409,18 @@ namespace ClinicaFrba {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public Modif_Plan_Get_AllRow AddModif_Plan_Get_AllRow(decimal modif_afiliado, decimal modif_plan_viejo, decimal modif_plan_nuevo, System.DateTime modif_plan_fecha, string modif_motivo) {
+            public Modif_Plan_Get_AllRow AddModif_Plan_Get_AllRow(string afiliado_nombre, string afiliado_apellido, string modif_motivo, System.DateTime modif_plan_fecha, string plan_descripcion, string plan_descripcion1) {
                 Modif_Plan_Get_AllRow rowModif_Plan_Get_AllRow = ((Modif_Plan_Get_AllRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        null,
-                        modif_afiliado,
-                        modif_plan_viejo,
-                        modif_plan_nuevo,
+                        afiliado_nombre,
+                        afiliado_apellido,
+                        modif_motivo,
                         modif_plan_fecha,
-                        modif_motivo};
+                        plan_descripcion,
+                        plan_descripcion1};
                 rowModif_Plan_Get_AllRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowModif_Plan_Get_AllRow);
                 return rowModif_Plan_Get_AllRow;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public Modif_Plan_Get_AllRow FindBymodif_id(decimal modif_id) {
-                return ((Modif_Plan_Get_AllRow)(this.Rows.Find(new object[] {
-                            modif_id})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -447,36 +440,34 @@ namespace ClinicaFrba {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
-                this.columnmodif_id = base.Columns["modif_id"];
-                this.columnmodif_afiliado = base.Columns["modif_afiliado"];
-                this.columnmodif_plan_viejo = base.Columns["modif_plan_viejo"];
-                this.columnmodif_plan_nuevo = base.Columns["modif_plan_nuevo"];
-                this.columnmodif_plan_fecha = base.Columns["modif_plan_fecha"];
+                this.columnafiliado_nombre = base.Columns["afiliado_nombre"];
+                this.columnafiliado_apellido = base.Columns["afiliado_apellido"];
                 this.columnmodif_motivo = base.Columns["modif_motivo"];
+                this.columnmodif_plan_fecha = base.Columns["modif_plan_fecha"];
+                this.columnplan_descripcion = base.Columns["plan_descripcion"];
+                this.columnplan_descripcion1 = base.Columns["plan_descripcion1"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             private void InitClass() {
-                this.columnmodif_id = new global::System.Data.DataColumn("modif_id", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnmodif_id);
-                this.columnmodif_afiliado = new global::System.Data.DataColumn("modif_afiliado", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnmodif_afiliado);
-                this.columnmodif_plan_viejo = new global::System.Data.DataColumn("modif_plan_viejo", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnmodif_plan_viejo);
-                this.columnmodif_plan_nuevo = new global::System.Data.DataColumn("modif_plan_nuevo", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnmodif_plan_nuevo);
-                this.columnmodif_plan_fecha = new global::System.Data.DataColumn("modif_plan_fecha", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnmodif_plan_fecha);
+                this.columnafiliado_nombre = new global::System.Data.DataColumn("afiliado_nombre", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnafiliado_nombre);
+                this.columnafiliado_apellido = new global::System.Data.DataColumn("afiliado_apellido", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnafiliado_apellido);
                 this.columnmodif_motivo = new global::System.Data.DataColumn("modif_motivo", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnmodif_motivo);
-                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnmodif_id}, true));
-                this.columnmodif_id.AutoIncrement = true;
-                this.columnmodif_id.AllowDBNull = false;
-                this.columnmodif_id.ReadOnly = true;
-                this.columnmodif_id.Unique = true;
+                this.columnmodif_plan_fecha = new global::System.Data.DataColumn("modif_plan_fecha", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmodif_plan_fecha);
+                this.columnplan_descripcion = new global::System.Data.DataColumn("plan_descripcion", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnplan_descripcion);
+                this.columnplan_descripcion1 = new global::System.Data.DataColumn("plan_descripcion1", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnplan_descripcion1);
+                this.columnafiliado_nombre.MaxLength = 255;
+                this.columnafiliado_apellido.MaxLength = 255;
                 this.columnmodif_motivo.MaxLength = 255;
+                this.columnplan_descripcion.MaxLength = 255;
+                this.columnplan_descripcion1.MaxLength = 255;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -544,7 +535,7 @@ namespace ClinicaFrba {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                GD2C2016DataSet ds = new GD2C2016DataSet();
+                GD2C2016DataSet1 ds = new GD2C2016DataSet1();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -619,80 +610,35 @@ namespace ClinicaFrba {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal modif_id {
+            public string afiliado_nombre {
                 get {
-                    return ((decimal)(this[this.tableModif_Plan_Get_All.modif_idColumn]));
+                    try {
+                        return ((string)(this[this.tableModif_Plan_Get_All.afiliado_nombreColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'afiliado_nombre\' de la tabla \'Modif_Plan_Get_All\' es DBNu" +
+                                "ll.", e);
+                    }
                 }
                 set {
-                    this[this.tableModif_Plan_Get_All.modif_idColumn] = value;
+                    this[this.tableModif_Plan_Get_All.afiliado_nombreColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal modif_afiliado {
+            public string afiliado_apellido {
                 get {
                     try {
-                        return ((decimal)(this[this.tableModif_Plan_Get_All.modif_afiliadoColumn]));
+                        return ((string)(this[this.tableModif_Plan_Get_All.afiliado_apellidoColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'modif_afiliado\' de la tabla \'Modif_Plan_Get_All\' es DBNul" +
-                                "l.", e);
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'afiliado_apellido\' de la tabla \'Modif_Plan_Get_All\' es DB" +
+                                "Null.", e);
                     }
                 }
                 set {
-                    this[this.tableModif_Plan_Get_All.modif_afiliadoColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal modif_plan_viejo {
-                get {
-                    try {
-                        return ((decimal)(this[this.tableModif_Plan_Get_All.modif_plan_viejoColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'modif_plan_viejo\' de la tabla \'Modif_Plan_Get_All\' es DBN" +
-                                "ull.", e);
-                    }
-                }
-                set {
-                    this[this.tableModif_Plan_Get_All.modif_plan_viejoColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal modif_plan_nuevo {
-                get {
-                    try {
-                        return ((decimal)(this[this.tableModif_Plan_Get_All.modif_plan_nuevoColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'modif_plan_nuevo\' de la tabla \'Modif_Plan_Get_All\' es DBN" +
-                                "ull.", e);
-                    }
-                }
-                set {
-                    this[this.tableModif_Plan_Get_All.modif_plan_nuevoColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime modif_plan_fecha {
-                get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tableModif_Plan_Get_All.modif_plan_fechaColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'modif_plan_fecha\' de la tabla \'Modif_Plan_Get_All\' es DBN" +
-                                "ull.", e);
-                    }
-                }
-                set {
-                    this[this.tableModif_Plan_Get_All.modif_plan_fechaColumn] = value;
+                    this[this.tableModif_Plan_Get_All.afiliado_apellidoColumn] = value;
                 }
             }
             
@@ -715,38 +661,89 @@ namespace ClinicaFrba {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Ismodif_afiliadoNull() {
-                return this.IsNull(this.tableModif_Plan_Get_All.modif_afiliadoColumn);
+            public System.DateTime modif_plan_fecha {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tableModif_Plan_Get_All.modif_plan_fechaColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'modif_plan_fecha\' de la tabla \'Modif_Plan_Get_All\' es DBN" +
+                                "ull.", e);
+                    }
+                }
+                set {
+                    this[this.tableModif_Plan_Get_All.modif_plan_fechaColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setmodif_afiliadoNull() {
-                this[this.tableModif_Plan_Get_All.modif_afiliadoColumn] = global::System.Convert.DBNull;
+            public string plan_descripcion {
+                get {
+                    try {
+                        return ((string)(this[this.tableModif_Plan_Get_All.plan_descripcionColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'plan_descripcion\' de la tabla \'Modif_Plan_Get_All\' es DBN" +
+                                "ull.", e);
+                    }
+                }
+                set {
+                    this[this.tableModif_Plan_Get_All.plan_descripcionColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Ismodif_plan_viejoNull() {
-                return this.IsNull(this.tableModif_Plan_Get_All.modif_plan_viejoColumn);
+            public string plan_descripcion1 {
+                get {
+                    try {
+                        return ((string)(this[this.tableModif_Plan_Get_All.plan_descripcion1Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'plan_descripcion1\' de la tabla \'Modif_Plan_Get_All\' es DB" +
+                                "Null.", e);
+                    }
+                }
+                set {
+                    this[this.tableModif_Plan_Get_All.plan_descripcion1Column] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setmodif_plan_viejoNull() {
-                this[this.tableModif_Plan_Get_All.modif_plan_viejoColumn] = global::System.Convert.DBNull;
+            public bool Isafiliado_nombreNull() {
+                return this.IsNull(this.tableModif_Plan_Get_All.afiliado_nombreColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Ismodif_plan_nuevoNull() {
-                return this.IsNull(this.tableModif_Plan_Get_All.modif_plan_nuevoColumn);
+            public void Setafiliado_nombreNull() {
+                this[this.tableModif_Plan_Get_All.afiliado_nombreColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setmodif_plan_nuevoNull() {
-                this[this.tableModif_Plan_Get_All.modif_plan_nuevoColumn] = global::System.Convert.DBNull;
+            public bool Isafiliado_apellidoNull() {
+                return this.IsNull(this.tableModif_Plan_Get_All.afiliado_apellidoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setafiliado_apellidoNull() {
+                this[this.tableModif_Plan_Get_All.afiliado_apellidoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismodif_motivoNull() {
+                return this.IsNull(this.tableModif_Plan_Get_All.modif_motivoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmodif_motivoNull() {
+                this[this.tableModif_Plan_Get_All.modif_motivoColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -763,14 +760,26 @@ namespace ClinicaFrba {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Ismodif_motivoNull() {
-                return this.IsNull(this.tableModif_Plan_Get_All.modif_motivoColumn);
+            public bool Isplan_descripcionNull() {
+                return this.IsNull(this.tableModif_Plan_Get_All.plan_descripcionColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setmodif_motivoNull() {
-                this[this.tableModif_Plan_Get_All.modif_motivoColumn] = global::System.Convert.DBNull;
+            public void Setplan_descripcionNull() {
+                this[this.tableModif_Plan_Get_All.plan_descripcionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isplan_descripcion1Null() {
+                return this.IsNull(this.tableModif_Plan_Get_All.plan_descripcion1Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setplan_descripcion1Null() {
+                this[this.tableModif_Plan_Get_All.plan_descripcion1Column] = global::System.Convert.DBNull;
             }
         }
         
@@ -809,7 +818,7 @@ namespace ClinicaFrba {
         }
     }
 }
-namespace ClinicaFrba.GD2C2016DataSetTableAdapters {
+namespace ClinicaFrba.Abm_Profesional.GD2C2016DataSet1TableAdapters {
     
     
     /// <summary>
@@ -933,12 +942,12 @@ namespace ClinicaFrba.GD2C2016DataSetTableAdapters {
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "Modif_Plan_Get_All";
-            tableMapping.ColumnMappings.Add("modif_id", "modif_id");
-            tableMapping.ColumnMappings.Add("modif_afiliado", "modif_afiliado");
-            tableMapping.ColumnMappings.Add("modif_plan_viejo", "modif_plan_viejo");
-            tableMapping.ColumnMappings.Add("modif_plan_nuevo", "modif_plan_nuevo");
-            tableMapping.ColumnMappings.Add("modif_plan_fecha", "modif_plan_fecha");
+            tableMapping.ColumnMappings.Add("afiliado_nombre", "afiliado_nombre");
+            tableMapping.ColumnMappings.Add("afiliado_apellido", "afiliado_apellido");
             tableMapping.ColumnMappings.Add("modif_motivo", "modif_motivo");
+            tableMapping.ColumnMappings.Add("modif_plan_fecha", "modif_plan_fecha");
+            tableMapping.ColumnMappings.Add("plan_descripcion", "plan_descripcion");
+            tableMapping.ColumnMappings.Add("plan_descripcion1", "plan_descripcion1");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -964,7 +973,7 @@ namespace ClinicaFrba.GD2C2016DataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(GD2C2016DataSet.Modif_Plan_Get_AllDataTable dataTable) {
+        public virtual int Fill(GD2C2016DataSet1.Modif_Plan_Get_AllDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -977,9 +986,9 @@ namespace ClinicaFrba.GD2C2016DataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual GD2C2016DataSet.Modif_Plan_Get_AllDataTable GetData() {
+        public virtual GD2C2016DataSet1.Modif_Plan_Get_AllDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            GD2C2016DataSet.Modif_Plan_Get_AllDataTable dataTable = new GD2C2016DataSet.Modif_Plan_Get_AllDataTable();
+            GD2C2016DataSet1.Modif_Plan_Get_AllDataTable dataTable = new GD2C2016DataSet1.Modif_Plan_Get_AllDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -1053,7 +1062,7 @@ namespace ClinicaFrba.GD2C2016DataSetTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateUpdatedRows(GD2C2016DataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateUpdatedRows(GD2C2016DataSet1 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             return result;
         }
@@ -1063,7 +1072,7 @@ namespace ClinicaFrba.GD2C2016DataSetTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateInsertedRows(GD2C2016DataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateInsertedRows(GD2C2016DataSet1 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             return result;
         }
@@ -1073,7 +1082,7 @@ namespace ClinicaFrba.GD2C2016DataSetTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateDeletedRows(GD2C2016DataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
+        private int UpdateDeletedRows(GD2C2016DataSet1 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
             return result;
         }
@@ -1107,7 +1116,7 @@ namespace ClinicaFrba.GD2C2016DataSetTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public virtual int UpdateAll(GD2C2016DataSet dataSet) {
+        public virtual int UpdateAll(GD2C2016DataSet1 dataSet) {
             if ((dataSet == null)) {
                 throw new global::System.ArgumentNullException("dataSet");
             }

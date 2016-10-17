@@ -114,6 +114,7 @@ CREATE TABLE NOT_NULL.tipo_especialidad(
 ) ON [PRIMARY]
 GO
 
+set nocount on;
 insert into NOT_NULL.tipo_especialidad
 (tipo_especialidad_codigo, tipo_especialidad_descripcion)
 select Tipo_Especialidad_Codigo, Tipo_Especialidad_Descripcion
@@ -142,6 +143,7 @@ GO
 ALTER TABLE NOT_NULL.especialidad CHECK CONSTRAINT [FK_especialidad_tipo_especialidad1]
 GO
 
+set nocount on;
 insert into NOT_NULL.especialidad
 (especialidad_codigo, especialidad_descripcion, especialidad_tipo)
 select Especialidad_Codigo, Especialidad_Descripcion, Tipo_Especialidad_Codigo
@@ -183,6 +185,7 @@ create trigger NOT_NULL.crear_usuario_profesional on NOT_NULL.profesional for in
 as
 Begin
 	--declare @afiliado_usuario varchar(50)
+	set nocount on;
 	insert into NOT_NULL.usuario (usuario_id, usuario_cant_intentos, usuario_descripcion, usuario_password, usuario_habilitado)
 	select profesional_nombre + profesional_apellido + CAST(profesional_dni as varchar(8)), 0, 'Profesional',HASHBYTES('SHA2_256', 'profesional'), 1 from inserted where inserted.profesional_nombre is not null and inserted.profesional_apellido is not null and inserted.profesional_dni is not null
 	insert into NOT_NULL.rolXusuario (usuario_id, rolXusuario_habilitado, rol_id)
@@ -191,6 +194,7 @@ End
 go
 
 
+set nocount on;
 insert into NOT_NULL.profesional
 (profesional_nombre, profesional_apellido, profesional_dni, profesional_direccion, profesional_telefono, profesional_mail, profesional_fecha_nacimiento, profesional_sexo, profesional_tipo_doc)
 select Medico_Nombre, Medico_Apellido, Medico_Dni, Medico_Direccion, Medico_Telefono, Medico_Mail, Medico_Fecha_Nac, 'N', 'D' 
@@ -199,6 +203,7 @@ select Medico_Nombre, Medico_Apellido, Medico_Dni, Medico_Direccion, Medico_Tele
 	group by Medico_Nombre, Medico_Apellido, Medico_Dni, Medico_Direccion, Medico_Telefono, Medico_Mail, Medico_Fecha_Nac 
 go
 
+set nocount on;
 update NOT_NULL.profesional set NOT_NULL.profesional.usuario_id = profesional_nombre + profesional_apellido + cast(profesional_dni as varchar(8)) 
 go
 
@@ -230,6 +235,7 @@ GO
 ALTER TABLE NOT_NULL.medicoXespecialidad CHECK CONSTRAINT [FK_NOT_NULL.medicoXespecialidad_profesional]
 GO
 
+set nocount on;
 insert into NOT_NULL.medicoXespecialidad (medxesp_profesional, medxesp_especialidad) 
 select profesional_matricula, Especialidad_Codigo
 	from gd_esquema.Maestra, NOT_NULL.profesional
@@ -248,6 +254,7 @@ create table NOT_NULL.plan_medico (
 )
 go
 
+set nocount on;
 insert into NOT_NULL.plan_medico
 (plan_id, plan_descripcion, plan_precio_bono_consulta)
 select Plan_Med_Codigo, Plan_Med_Descripcion, Plan_Med_Precio_Bono_Consulta 
@@ -312,6 +319,7 @@ as
 		set @ultimoCon1 = (select top 1 afiliado_nro from NOT_NULL.afiliado where RIGHT(afiliado_nro,1) = 1 order by afiliado_nro desc);
 		if(RIGHT(@ultimoafiliado,1) = 1 or @ultimoafiliado is null)
 		begin
+		set nocount on;
 			insert into NOT_NULL.usuario (usuario_id, usuario_cant_intentos, usuario_descripcion, usuario_password, usuario_habilitado)
 			select afiliado_nombre + afiliado_apellido + CAST(afiliado_dni as varchar(8)), 0, 'Afiliado',HASHBYTES('SHA2_256', 'afiliado'), 1 from inserted where inserted.afiliado_nombre is not null and inserted.afiliado_apellido is not null and inserted.afiliado_dni is not null;
 			insert into NOT_NULL.afiliado (usuario_id, afiliado_nombre, afiliado_apellido, afiliado_tipo_dni,afiliado_dni, afiliado_cant_hijos, afiliado_direccion, afiliado_estado_civil, afiliado_fecha_nac, afiliado_mail, afiliado_plan, afiliado_sexo, afiliado_telefono)
@@ -323,6 +331,7 @@ as
 		end
 		else
 		begin
+		set nocount on;
 			insert into NOT_NULL.usuario (usuario_id, usuario_cant_intentos, usuario_descripcion, usuario_password, usuario_habilitado)
 			select afiliado_nombre + afiliado_apellido + CAST(afiliado_dni as varchar(8)), 0, 'Afiliado',HASHBYTES('SHA2_256', 'afiliado'), 1 from inserted where inserted.afiliado_nombre is not null and inserted.afiliado_apellido is not null and inserted.afiliado_dni is not null;
 			SET IDENTITY_INSERT NOT_NULL.afiliado ON
@@ -337,6 +346,7 @@ as
 	End
 go
 
+set nocount on;
 insert into NOT_NULL.afiliado
 (afiliado_nombre, afiliado_apellido,  afiliado_tipo_dni,afiliado_dni, afiliado_estado_civil, 
 afiliado_sexo, afiliado_fecha_nac, afiliado_telefono, afiliado_mail, afiliado_direccion, afiliado_cant_hijos, afiliado_plan)
@@ -431,6 +441,7 @@ GO
 ALTER TABLE NOT_NULL.turno CHECK CONSTRAINT [FK_NOT_NULL.turno_medicoXespecialidad]
 GO
 
+set nocount on;
 insert into NOT_NULL.turno(turno_nro, afiliado_nro, turno_fecha, turno_estado, turno_hora_llegada, turno_sintomas , turno_enfermedades, turno_medico_especialidad_id, turno_tiempo)
 select Turno_Numero, afiliado_nro, Turno_Fecha, 'U', Bono_Consulta_Fecha_Impresion, Consulta_Sintomas, Consulta_Enfermedades, medxesp_id, 1
 	from gd_esquema.Maestra, NOT_NULL.afiliado, NOT_NULL.medicoXespecialidad, NOT_NULL.profesional
@@ -545,6 +556,7 @@ Begin
 End
 go
 
+set nocount on;
 insert into NOT_NULL.bono_consulta (bono_id, bono_afiliado, bono_plan, bono_fecha_compra, bono_utilizado )
 select Bono_Consulta_Numero, afiliado_nro, Plan_Med_Codigo, Compra_Bono_Fecha, 'S'
 	from gd_esquema.Maestra, NOT_NULL.afiliado
@@ -552,9 +564,11 @@ select Bono_Consulta_Numero, afiliado_nro, Plan_Med_Codigo, Compra_Bono_Fecha, '
 	order by Bono_Consulta_Numero, Paciente_Dni, Plan_Med_Codigo, Compra_Bono_Fecha
 go
 
+set nocount on;
 update NOT_NULL.bono_consulta set bono_turno = Turno_Numero from gd_esquema.Maestra where bono_id = Bono_Consulta_Numero and Compra_Bono_Fecha is null
 go
 
+set nocount on;
 exec NOT_NULL.asignar_nro_bonos_afiliado																				/*		Comentar para que no tarde		*/
 go
 
@@ -579,7 +593,7 @@ create table NOT_NULL.baja_afiliado
 go
 
 
-
+set nocount on;
 insert into NOT_NULL.compra_bono (compra_cantidad, compra_afiliado, compra_fecha)
 	select count(Compra_Bono_Fecha), afiliado_nro, Compra_Bono_Fecha
 	from gd_esquema.Maestra, NOT_NULL.afiliado
@@ -588,12 +602,14 @@ insert into NOT_NULL.compra_bono (compra_cantidad, compra_afiliado, compra_fecha
 		Turno_Numero is null and Compra_Bono_Fecha = Bono_Consulta_Fecha_Impresion
 	group by Compra_Bono_Fecha, afiliado_nro
 
+	set nocount on;
 /*AGREGO USUARIOS, ROLES y FUNCIONES*/
 INSERT INTO NOT_NULL.Funcion(funcion_descripcion)
   VALUES ('ABM Rol'), ('ABM Usuario'),('ABM Afiliado'),('ABM Plan'),('ABM Profesional'),('ABM Especialidades'),
     ('Registrar Agenda'),('Comprar Bonos'), ('Pedir Turno'),('Registrar llegada'),('Registrar resultado'),('Listado Estadistico'), ('Cancelar atencion')
 GO
   
+  set nocount on;
   -- Roles administrador
   INSERT INTO NOT_NULL.funcionXrol(rol_id, funcion_id)
   VALUES (1, 1),(1, 2),(1, 3),(1, 4),(1, 5),(1, 6),(1,8) , (1,10), (1,12)
@@ -1161,6 +1177,7 @@ GO
   go
 
   /*LE AGREGO UNA ESPECIALIDAD AL ADMINISTRADOR*/
+  set nocount on;
   insert into NOT_NULL.medicoXespecialidad(medxesp_especialidad, medxesp_profesional)
   values (10018, 290)
   go
@@ -1265,6 +1282,7 @@ GO
   GO
   
   
+  set nocount on;
   update NOT_NULL.plan_medico set plan_cuota_precio = 500 where plan_id = 555555
   update NOT_NULL.plan_medico set plan_cuota_precio = 1000 where plan_id = 555556
   update NOT_NULL.plan_medico set plan_cuota_precio = 2000 where plan_id = 555557

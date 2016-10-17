@@ -107,21 +107,44 @@ namespace ClinicaFrba.Pedir_Turno
 
         private void dgvTurnos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            string nro_turno = dgvTurnos.CurrentCell.Value.ToString();
-            //string nro_turno = dgvTurnos.SelectedCells[0].Value.ToString();
-            var parametros = new Dictionary<string, object>() {
+            if (dgvTurnos.CurrentCell.ColumnIndex == 0)
+            {
+                string nro_turno = dgvTurnos.CurrentCell.Value.ToString();
+                //string nro_turno = dgvTurnos.SelectedCells[0].Value.ToString();
+                var parametros = new Dictionary<string, object>() {
                     { "@afiliado", nro_afiliado},
                     { "@nro_turno", nro_turno}
                 };
-            try
-            {
-                DBHelper.ExecuteReader("reservarTurno_GetByFilerProfesional", parametros);
+                try
+                {
+                    DBHelper.ExecuteReader("reservarTurno_GetByFilerProfesional", parametros);
+                }
+                catch
+                {
+                    MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                MessageBox.Show("Reservado con exito", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Hide();
+                Main acerrar = null;
+                FormCollection fc = Application.OpenForms;
+                foreach (Form frm in fc)
+                {
+                    if (frm.Name == "Main")
+                    {
+                        acerrar = (Main)frm;
+
+                    }
+                }
+                if (acerrar != null)
+                {
+                    acerrar.Show();
+                }
             }
-            catch
+            else
             {
-                MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Seleccione el nro de turno a utilizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            MessageBox.Show("Reservado con exito", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

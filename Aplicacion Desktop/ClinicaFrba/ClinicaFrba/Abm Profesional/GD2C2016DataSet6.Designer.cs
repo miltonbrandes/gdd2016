@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace ClinicaFrba {
+namespace ClinicaFrba.Abm_Profesional {
     
     
     /// <summary>
@@ -876,7 +876,7 @@ namespace ClinicaFrba {
         }
     }
 }
-namespace ClinicaFrba.GD2C2016DataSet6TableAdapters {
+namespace ClinicaFrba.Abm_Profesional.GD2C2016DataSet6TableAdapters {
     
     
     /// <summary>
