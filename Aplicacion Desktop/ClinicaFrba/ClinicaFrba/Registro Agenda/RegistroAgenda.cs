@@ -245,12 +245,10 @@ namespace ClinicaFrba.Registro_Agenda
 								if(matrizHoras[i,j].hora < horaAperturaSemana || matrizHoras[i,j].hora > horaCierreSemana || matrizHoras[h,j].hora > horaCierreSemana){
 									resultado = false;
 									clinicaAbierta = true;
-                                    
 								}
 							}else if(matrizHoras[i,j].hora < horaAperturaSabado || matrizHoras[i,j].hora > horaCierreSabado || matrizHoras[h,j].hora > horaCierreSabado){
 								resultado = false;
-								clinicaAbierta = true;
-                                
+                                clinicaAbierta = true;
 							}
 						}
 					}

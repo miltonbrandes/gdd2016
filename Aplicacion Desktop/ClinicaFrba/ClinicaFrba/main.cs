@@ -105,7 +105,6 @@ namespace ClinicaFrba
             afiliado = null;
             profesional = null;
             usuario = null;
-            
             FormCollection fc = Application.OpenForms;
             List<Form> acerrar = new List<Form>();
             foreach (Form frm in fc)
@@ -119,6 +118,7 @@ namespace ClinicaFrba
             }
             var login = new formInicioSesion();
             login.Show();
+            
         }
 
 
@@ -214,7 +214,6 @@ namespace ClinicaFrba
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Application.Exit();
         }
 
     
@@ -230,9 +229,17 @@ namespace ClinicaFrba
 
         private void button16_Click(object sender, EventArgs e)
         {
-            DialogResult d = MessageBox.Show("¿Seguro que desea cerrar sesion?", "Cerrar sesion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (d == DialogResult.Yes)
-                CerrarSesion(sender, e);
+            if (i == 0)
+            {
+                i++;
+                DialogResult d = MessageBox.Show("¿Seguro que desea cerrar sesion?", "Cerrar sesion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (d == DialogResult.Yes)
+                    CerrarSesion(sender, e);
+            }
+            else
+            {
+                i = 0;
+            }
         }
     }
 }
