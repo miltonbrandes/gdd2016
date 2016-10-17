@@ -66,7 +66,7 @@ namespace ClinicaFrba.Cancelar_Atencion
                                 int.TryParse(minuto1.Text, out minin) &&
                                 int.TryParse(minuto2.Text, out minfi))
                                 {
-                                    if (drop_fecha.SelectedText != string.Empty && horain < 24 && horain >= 0 && horafi < 24 && horain >= 0 && minin < 60 && minin >= 00 && minfi < 60 && minfi >= 0)
+                                    if (horain < 24 && horain >= 0 && horafi < 24 && horafi >= 0 && minin < 60 && minin >= 0 && minfi < 60 && minfi >= 0)
                                     {
                                         DateTime d = ((Fecha)drop_fecha.SelectedItem).DiaMesAnio;
                                         DateTime dInicio = new DateTime(DateTime.Parse(ConfigurationManager.AppSettings["fecha"]).Year, 1, 1, Int32.Parse(hora1.Text), Int32.Parse(minuto1.Text), 0);

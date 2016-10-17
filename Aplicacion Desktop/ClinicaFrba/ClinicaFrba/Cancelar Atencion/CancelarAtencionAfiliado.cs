@@ -26,13 +26,35 @@ namespace ClinicaFrba.Cancelar_Atencion
             usuario = us;
         }
 
-        private void frmCancelarAtencionAfiliado_Load(object sender, EventArgs e)
+        void load_datagrid()
         {
-            dtpFecha.Value = ConfigTime.getFechaSinHora().AddDays(1);
             Dictionary<string, object> parametros = new Dictionary<string, object>() { { "@nroafiliado", afiliado.NroAfiliado }, { "@fecha", dtpFecha.Value.Date } };
             List<Turno> t = new List<Turno>();
             t = DBHelper.ExecuteReader("Turnos_Afiliado_Mayor", parametros).ToTurno();
             dataGridView1.DataSource = t;
+            dataGridView1.Columns.Clear();
+            dataGridView1.AutoGenerateColumns = false;
+
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                DataPropertyName = "Id",
+                HeaderText = "Id",
+                Width = 150,
+                ReadOnly = true
+            });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                DataPropertyName = "Fecha",
+                HeaderText = "Fecha",
+                Width = 150,
+                ReadOnly = true
+            });
+        }
+
+        private void frmCancelarAtencionAfiliado_Load(object sender, EventArgs e)
+        {
+            dtpFecha.Value = ConfigTime.getFechaSinHora().AddDays(1);
+            load_datagrid();
         }
 
         private void btnCancelarTurno_Click(object sender, EventArgs e)
@@ -102,11 +124,7 @@ namespace ClinicaFrba.Cancelar_Atencion
         {
             if (dtpFecha.Value > ConfigTime.getFechaSinHora())
             {
-
-                Dictionary<string, object> parametros = new Dictionary<string, object>() { { "@nroafiliado",  afiliado.NroAfiliado},{"@fecha", dtpFecha.Value.Date} };
-                List<Turno> t = new List<Turno>();
-                t = DBHelper.ExecuteReader("Turnos_Afiliado", parametros).ToTurno();
-                dataGridView1.DataSource = t;
+                load_datagrid();
             }
             else
             {
