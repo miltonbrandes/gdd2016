@@ -437,7 +437,7 @@ namespace ClinicaFrba.Registro_Agenda
             {
                 button1.Visible = true;
                 btnHorarios.Visible = true;
-//                label11.Visible = true;
+                label1.Visible = true;
                 if (conIntervalo)
                 {
                     horaInicio2Martes.Visible = true;
@@ -467,7 +467,7 @@ namespace ClinicaFrba.Registro_Agenda
             {
                 button1.Visible = true;
                 btnHorarios.Visible = true;
-  //              label11.Visible = true;
+                label1.Visible = true;
                 if (conIntervalo)
                 {
                     horaInicio2Miercoles.Visible = true;
@@ -495,7 +495,7 @@ namespace ClinicaFrba.Registro_Agenda
 
             if (checkBox4.Checked)
             {
-    //            label11.Visible = true;
+                label1.Visible = true;
                 button1.Visible = true;
                 btnHorarios.Visible = true;
                 if (conIntervalo)
@@ -524,7 +524,7 @@ namespace ClinicaFrba.Registro_Agenda
 
             if (checkBox5.Checked)
             {
-      //          label11.Visible = true;
+                label1.Visible = true;
                 button1.Visible = true;
                 btnHorarios.Visible = true;
                 if(conIntervalo){
@@ -552,7 +552,7 @@ namespace ClinicaFrba.Registro_Agenda
 
             if (checkBox6.Checked)
             {
-        //        label11.Visible = true;
+                label1.Visible = true;
                 btnHorarios.Visible = true;
                 if (conIntervalo)
                 {
