@@ -37,6 +37,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.btnTodos = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,9 +59,9 @@
             // 
             // btnFiltrar
             // 
-            this.btnFiltrar.Location = new System.Drawing.Point(363, 14);
+            this.btnFiltrar.Location = new System.Drawing.Point(363, 12);
             this.btnFiltrar.Name = "btnFiltrar";
-            this.btnFiltrar.Size = new System.Drawing.Size(155, 22);
+            this.btnFiltrar.Size = new System.Drawing.Size(155, 24);
             this.btnFiltrar.TabIndex = 2;
             this.btnFiltrar.Text = "Filtrar";
             this.btnFiltrar.UseVisualStyleBackColor = true;
@@ -122,11 +123,22 @@
             this.label3.TabIndex = 9;
             this.label3.Text = "Indique tipo cancelacion";
             // 
+            // btnTodos
+            // 
+            this.btnTodos.Location = new System.Drawing.Point(524, 12);
+            this.btnTodos.Name = "btnTodos";
+            this.btnTodos.Size = new System.Drawing.Size(155, 24);
+            this.btnTodos.TabIndex = 11;
+            this.btnTodos.Text = "Mostrar Todos";
+            this.btnTodos.UseVisualStyleBackColor = true;
+            this.btnTodos.Click += new System.EventHandler(this.btnTodos_Click);
+            // 
             // frmCancelarAtencionAfiliado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(773, 532);
+            this.Controls.Add(this.btnTodos);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -156,5 +168,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnTodos;
     }
 }
