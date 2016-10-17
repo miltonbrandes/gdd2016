@@ -124,12 +124,21 @@ namespace ClinicaFrba.Cancelar_Atencion
         {
             if (dtpFecha.Value > ConfigTime.getFechaSinHora())
             {
-                load_datagrid();
+                Dictionary<string, object> parametros = new Dictionary<string, object>() { { "@nroafiliado", afiliado.NroAfiliado }, { "@fecha", dtpFecha.Value.Date } };
+                List < Turno > t = new List<Turno>();
+                t = DBHelper.ExecuteReader("Turnos_Afiliado", parametros).ToTurno();
+                dataGridView1.DataSource = t;
+                //load_datagrid();
             }
             else
             {
                 MessageBox.Show("Debe ingresar una fecha mayor a la de hoy", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnTodos_Click(object sender, EventArgs e)
+        {
+            load_datagrid();
         }
     }
 }
