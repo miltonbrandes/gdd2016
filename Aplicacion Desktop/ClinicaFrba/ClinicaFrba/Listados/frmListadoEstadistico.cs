@@ -237,14 +237,29 @@ namespace ClinicaFrba.Listados
                 switch (cmbTipo.SelectedIndex)
                 {
                     case 0:
-                        List<Listado_1> lista_1 = DBHelper.ExecuteReader("listado_Mas_Cancelaciones_Especialidad", (new Dictionary<string, object> { { "@fecha1", fecha1 }, { "@fecha2", fecha2 } })).ToListado_1();
-                        Load_Listado_1(lista_1);
+                        if (cmb_filtro.SelectedItem.Equals("Afiliado"))
+                        {
+                            List<Listado_1> lista_1 = DBHelper.ExecuteReader("listado_Mas_Cancelaciones_Especialidad_Afiliado", (new Dictionary<string, object> { { "@fecha1", fecha1 }, { "@fecha2", fecha2 } })).ToListado_1();
+                            Load_Listado_1(lista_1);
+                        }
+                        if (cmb_filtro.SelectedItem.Equals("Profesional"))
+                        {
+                            List<Listado_1> lista_1 = DBHelper.ExecuteReader("listado_Mas_Cancelaciones_Especialidad_Profesional", (new Dictionary<string, object> { { "@fecha1", fecha1 }, { "@fecha2", fecha2 } })).ToListado_1();
+                            Load_Listado_1(lista_1);
+                        }
+                        if (cmb_filtro.SelectedItem.Equals("Ambos"))
+                        {
+                            List<Listado_1> lista_1 = DBHelper.ExecuteReader("listado_Mas_Cancelaciones_Especialidad", (new Dictionary<string, object> { { "@fecha1", fecha1 }, { "@fecha2", fecha2 } })).ToListado_1();
+                            Load_Listado_1(lista_1);
+                        }
+
+                        
                         break;
                     case 1:
                         var parametros = new Dictionary<string, object> { 
                             { "@fecha1", fecha1 }, 
                             { "@fecha2", fecha2 }, 
-                            { "@plan", ((Plan)cmbPlan.SelectedItem).Descripcion },
+                            { "@plan", ((Plan)cmb_filtro.SelectedItem).Descripcion },
                             };
                         List<Listado_2> lista_2 = DBHelper.ExecuteReader("listado_Profesionales_Consultados", parametros).ToListado_2();
                         Load_Listado_2(lista_2);
@@ -253,7 +268,7 @@ namespace ClinicaFrba.Listados
                         parametros = new Dictionary<string, object> { 
                             { "@fecha1", fecha1 }, 
                             { "@fecha2", fecha2 },
-                            { "@especialidad ", ((Especialidad)cmbEspecialidad.SelectedItem).Descripcion } 
+                            { "@especialidad ", ((Especialidad)cmb_filtro.SelectedItem).Descripcion } 
                             };
                         List<Listado_3> lista_3 = DBHelper.ExecuteReader("listado_Profesionales_Menos_Horas", parametros).ToListado_3();
                         Load_Listado_3(lista_3);
@@ -275,23 +290,26 @@ namespace ClinicaFrba.Listados
 
         }
 
-
+        public void funcion_para_listado_1()
+        {
+            List<string> filtro = new List<string>();
+            filtro.Add("Afiliado");
+            filtro.Add("Profesional");
+            filtro.Add("Ambos");
+            cmb_filtro.DataSource = filtro;
+        }
         public void funcion_para_listado_2()
         {
             List<Plan> planes = DBHelper.ExecuteReader("Planes_GetAll").ToPlanes();
-            cmbPlan.DataSource = planes;
-            cmbPlan.DisplayMember = "Descripcion";
+            cmb_filtro.DataSource = planes;
+            cmb_filtro.DisplayMember = "Descripcion";
         }
 
         public void funcion_para_listado_3()
         {
-            List<Plan> planes = DBHelper.ExecuteReader("Planes_GetAll").ToPlanes();
-            cmbPlan.DataSource = planes;
-            cmbPlan.DisplayMember = "Descripcion";
-
             List<Especialidad> especialidad = DBHelper.ExecuteReader("Get_Especialidades_All_2").ToEspecialidad();
-            cmbEspecialidad.DataSource = especialidad;
-            cmbEspecialidad.DisplayMember = "Descripcion";
+            cmb_filtro.DataSource = especialidad;
+            cmb_filtro.DisplayMember = "Descripcion";
 
         }
 
@@ -299,17 +317,23 @@ namespace ClinicaFrba.Listados
         {
             switch(cmbTipo.SelectedIndex)
             {
+                case 0:
+                    label_filtro.Visible = cmb_filtro.Visible = true;
+                    label_filtro.Text = "Filtro";
+                    funcion_para_listado_1();
+                    break;
                 case 1:
-                    label_plan.Visible = cmbPlan.Visible = true;
-                    label_especialidad.Visible = cmbEspecialidad.Visible = false;
+                    label_filtro.Visible = cmb_filtro.Visible = true;
+                    label_filtro.Text = "Plan";
                     funcion_para_listado_2();
                     break;
                 case 2:
-                    label_especialidad.Visible = cmbEspecialidad.Visible = true;
+                    label_filtro.Visible = cmb_filtro.Visible = true;
+                    label_filtro.Text = "Especialidad";
                     funcion_para_listado_3();
                     break;
                 default:
-                    label_plan.Visible = label_especialidad.Visible = cmbPlan.Visible = cmbEspecialidad.Visible = false;
+                    label_filtro.Visible = cmb_filtro.Visible = false;
                     break;
             }
         }
