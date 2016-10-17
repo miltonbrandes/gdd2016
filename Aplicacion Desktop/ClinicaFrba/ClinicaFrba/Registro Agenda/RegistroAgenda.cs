@@ -236,18 +236,21 @@ namespace ClinicaFrba.Registro_Agenda
 			//Valido que la clinica este abierta
 			bool clinicaAbierta = false;
 			if(resultado){
-				
+                int h = 1;
 				for(i=0;i<4;i=i+2){
+                    if (i == 2) { h = 3; }
 					for(j=0;j<6;j++){
 						if(matrizHoras[i,j] != null){ 
 							if( j != 5 ){
-								if(matrizHoras[i,j].hora < horaAperturaSemana || matrizHoras[i,j].hora > horaCierreSemana){
+								if(matrizHoras[i,j].hora < horaAperturaSemana || matrizHoras[i,j].hora > horaCierreSemana || matrizHoras[h,j].hora > horaCierreSemana){
 									resultado = false;
 									clinicaAbierta = true;
+                                    break;
 								}
-							}else if(matrizHoras[i,j].hora < horaAperturaSabado || matrizHoras[i,j].hora > horaCierreSabado){
+							}else if(matrizHoras[i,j].hora < horaAperturaSabado || matrizHoras[i,j].hora > horaCierreSabado || matrizHoras[h,j].hora > horaCierreSabado){
 								resultado = false;
 								clinicaAbierta = true;
+                                break;
 							}
 						}
 					}

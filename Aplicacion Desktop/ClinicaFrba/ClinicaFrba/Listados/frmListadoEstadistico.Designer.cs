@@ -43,9 +43,10 @@
             // 
             // dtpAnio
             // 
-            this.dtpAnio.Location = new System.Drawing.Point(298, 14);
+            this.dtpAnio.Location = new System.Drawing.Point(397, 17);
+            this.dtpAnio.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dtpAnio.Name = "dtpAnio";
-            this.dtpAnio.Size = new System.Drawing.Size(237, 20);
+            this.dtpAnio.Size = new System.Drawing.Size(315, 22);
             this.dtpAnio.TabIndex = 32;
             // 
             // dgvResultado
@@ -55,17 +56,19 @@
             this.dgvResultado.AllowUserToResizeColumns = false;
             this.dgvResultado.AllowUserToResizeRows = false;
             this.dgvResultado.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvResultado.Location = new System.Drawing.Point(10, 152);
+            this.dgvResultado.Location = new System.Drawing.Point(13, 187);
+            this.dgvResultado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgvResultado.Name = "dgvResultado";
             this.dgvResultado.ReadOnly = true;
-            this.dgvResultado.Size = new System.Drawing.Size(632, 169);
+            this.dgvResultado.Size = new System.Drawing.Size(843, 208);
             this.dgvResultado.TabIndex = 29;
             // 
             // btnCalcular
             // 
-            this.btnCalcular.Location = new System.Drawing.Point(520, 327);
+            this.btnCalcular.Location = new System.Drawing.Point(693, 402);
+            this.btnCalcular.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCalcular.Name = "btnCalcular";
-            this.btnCalcular.Size = new System.Drawing.Size(122, 23);
+            this.btnCalcular.Size = new System.Drawing.Size(163, 28);
             this.btnCalcular.TabIndex = 28;
             this.btnCalcular.Text = "Calcular Estadisticas";
             this.btnCalcular.UseVisualStyleBackColor = true;
@@ -74,9 +77,10 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(153, 82);
+            this.label3.Location = new System.Drawing.Point(204, 101);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(80, 13);
+            this.label3.Size = new System.Drawing.Size(104, 17);
             this.label3.TabIndex = 27;
             this.label3.Text = "Seleccione tipo";
             // 
@@ -90,18 +94,20 @@
             "Profesionales con menos horas trabajadas por especialidad",
             "Afiliados con mas bonos comprados",
             "Especialidades con mas bonos de consulta utilizados"});
-            this.cmbTipo.Location = new System.Drawing.Point(298, 79);
+            this.cmbTipo.Location = new System.Drawing.Point(397, 97);
+            this.cmbTipo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbTipo.Name = "cmbTipo";
-            this.cmbTipo.Size = new System.Drawing.Size(237, 21);
+            this.cmbTipo.Size = new System.Drawing.Size(315, 24);
             this.cmbTipo.TabIndex = 26;
             this.cmbTipo.SelectedIndexChanged += new System.EventHandler(this.cmbTipo_SelectedIndexChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(79, 51);
+            this.label2.Location = new System.Drawing.Point(105, 63);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(154, 13);
+            this.label2.Size = new System.Drawing.Size(204, 17);
             this.label2.TabIndex = 25;
             this.label2.Text = "Seleccione semestre a calcular";
             // 
@@ -112,17 +118,19 @@
             this.cmbSemestre.Items.AddRange(new object[] {
             "1",
             "2"});
-            this.cmbSemestre.Location = new System.Drawing.Point(371, 43);
+            this.cmbSemestre.Location = new System.Drawing.Point(495, 53);
+            this.cmbSemestre.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbSemestre.Name = "cmbSemestre";
-            this.cmbSemestre.Size = new System.Drawing.Size(89, 21);
+            this.cmbSemestre.Size = new System.Drawing.Size(117, 24);
             this.cmbSemestre.TabIndex = 24;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(110, 21);
+            this.label1.Location = new System.Drawing.Point(147, 26);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(123, 13);
+            this.label1.Size = new System.Drawing.Size(163, 17);
             this.label1.TabIndex = 23;
             this.label1.Text = "Ingrese el año a calcular";
             // 
@@ -130,27 +138,29 @@
             // 
             this.cmb_filtro.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmb_filtro.FormattingEnabled = true;
-            this.cmb_filtro.Location = new System.Drawing.Point(298, 114);
+            this.cmb_filtro.Location = new System.Drawing.Point(397, 140);
+            this.cmb_filtro.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmb_filtro.Name = "cmb_filtro";
-            this.cmb_filtro.Size = new System.Drawing.Size(237, 21);
+            this.cmb_filtro.Size = new System.Drawing.Size(315, 24);
             this.cmb_filtro.TabIndex = 36;
             this.cmb_filtro.Visible = false;
             // 
             // label_filtro
             // 
             this.label_filtro.AutoSize = true;
-            this.label_filtro.Location = new System.Drawing.Point(166, 117);
+            this.label_filtro.Location = new System.Drawing.Point(221, 144);
+            this.label_filtro.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label_filtro.Name = "label_filtro";
-            this.label_filtro.Size = new System.Drawing.Size(67, 13);
+            this.label_filtro.Size = new System.Drawing.Size(88, 17);
             this.label_filtro.TabIndex = 35;
             this.label_filtro.Text = "Especialidad";
             this.label_filtro.Visible = false;
             // 
             // frmListadoEstadistico
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(652, 354);
+            this.ClientSize = new System.Drawing.Size(869, 436);
             this.Controls.Add(this.cmb_filtro);
             this.Controls.Add(this.label_filtro);
             this.Controls.Add(this.dtpAnio);
@@ -161,9 +171,10 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cmbSemestre);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "frmListadoEstadistico";
             this.Text = "Listado Estadistico";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmListadoEstadistico_FormClosed);
             this.Load += new System.EventHandler(this.frmListadoEstadistico_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvResultado)).EndInit();
             this.ResumeLayout(false);

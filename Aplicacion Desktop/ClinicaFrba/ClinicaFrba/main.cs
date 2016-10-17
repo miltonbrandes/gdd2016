@@ -17,12 +17,14 @@ namespace ClinicaFrba
     {
         public static Usuario usuario { get; private set; }
         public static Rol rol;
+        public static int i = 0;
         public static Profesional profesional;
         public static Afiliado afiliado;
         public static int load = 0;
         public Main(Usuario us, Rol ro)
         {
             InitializeComponent();
+            i = 0;
             usuario = us;
             rol = ro;
             DateTime f = ConfigTime.getFecha();
@@ -52,8 +54,7 @@ namespace ClinicaFrba
                 botones[i].Click += dicFunciones[fun.Id];
                 i++;
             }
-          this.Size = new Size(this.Width, (tamanio*cantbot)+150);
-          //  this.Size= new Size((tamanio*cantbot)+70, this.Height);
+          this.Size = new Size(this.Width, (tamanio*(cantbot+1))+150);
           load+= 1;
         }
 
@@ -97,7 +98,28 @@ namespace ClinicaFrba
             { 13, new EventHandler(CancelarTurno)},
             { 12, new EventHandler(HistorialUsuario)}
         };
-        
+
+
+        public static void CerrarSesion(object sender, EventArgs e)
+        {
+            afiliado = null;
+            profesional = null;
+            usuario = null;
+            
+            FormCollection fc = Application.OpenForms;
+            List<Form> acerrar = new List<Form>();
+            foreach (Form frm in fc)
+            {
+                acerrar.Add(frm);
+            }
+            if (acerrar != null)
+            {
+                for (int i = 0; i < acerrar.Count; i++)
+                    acerrar[i].Close();
+            }
+            var login = new formInicioSesion();
+            login.Show();
+        }
 
 
         public static void ABMRol(object sender, EventArgs e) {
@@ -192,13 +214,25 @@ namespace ClinicaFrba
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //Application.Exit();
+            Application.Exit();
         }
 
     
         private void Main_Activated(object sender, EventArgs e)
         {
         
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            DialogResult d = MessageBox.Show("¿Seguro que desea cerrar sesion?", "Cerrar sesion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (d == DialogResult.Yes)
+                CerrarSesion(sender, e);
         }
     }
 }

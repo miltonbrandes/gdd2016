@@ -41,7 +41,7 @@ namespace ClinicaFrba.Listados
             }
             if (acerrar != null)
             {
-                acerrar.Close();
+                acerrar.Hide();
             }
         }
 
@@ -335,6 +335,24 @@ namespace ClinicaFrba.Listados
                 default:
                     label_filtro.Visible = cmb_filtro.Visible = false;
                     break;
+            }
+        }
+
+        private void frmListadoEstadistico_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Main aabrir = null;
+            FormCollection fc = Application.OpenForms;
+            foreach (Form frm in fc)
+            {
+                if (frm.Name == "Main")
+                {
+                    aabrir = (Main)frm;
+
+                }
+            }
+            if (aabrir != null)
+            {
+                aabrir.Show();
             }
         }
 
