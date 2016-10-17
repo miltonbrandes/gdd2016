@@ -235,11 +235,9 @@ namespace ClinicaFrba
                 DialogResult d = MessageBox.Show("¿Seguro que desea cerrar sesion?", "Cerrar sesion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (d == DialogResult.Yes)
                     CerrarSesion(sender, e);
-            }
-            else
-            {
                 i = 0;
             }
+            
         }
     }
 }
