@@ -101,12 +101,17 @@ namespace ClinicaFrba.Pedir_Turno
                 {
                     MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+                btnVolver.Visible = true;
                 LoadProfesionales(profesionalesFiltrados);
                 dgvProfesionales.Visible = true;
                 labelProfesional.Visible = true;
                 this.Width = 575;
                 dgvEspecialidades.Visible = false;
                 labelEspecialidad.Visible = false;
+                button1.Visible = false;
+                label2.Visible = false;
+                textEspecialidad.Visible = false;
+                filtrarEspecialidades.Visible = false;
             }
             else 
             {
@@ -256,6 +261,21 @@ namespace ClinicaFrba.Pedir_Turno
                 Width = 128,
                 ReadOnly = true
             });
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            btnVolver.Visible = false;
+            dgvProfesionales.Visible = false;
+            labelProfesional.Visible = false;
+            this.Width = 400;
+            dgvEspecialidades.Visible = true;
+            labelEspecialidad.Visible = true;
+            button1.Visible = true;
+            label2.Visible = true;
+            textEspecialidad.Visible = true;
+            filtrarEspecialidades.Visible = true;
+            frmPedidoTurno_Load(sender, e);
         }
 
     }

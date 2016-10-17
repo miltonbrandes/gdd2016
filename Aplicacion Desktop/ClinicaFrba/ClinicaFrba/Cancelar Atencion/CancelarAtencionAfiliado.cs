@@ -29,6 +29,10 @@ namespace ClinicaFrba.Cancelar_Atencion
         private void frmCancelarAtencionAfiliado_Load(object sender, EventArgs e)
         {
             dtpFecha.Value = ConfigTime.getFechaSinHora().AddDays(1);
+            Dictionary<string, object> parametros = new Dictionary<string, object>() { { "@nroafiliado", afiliado.NroAfiliado }, { "@fecha", dtpFecha.Value.Date } };
+            List<Turno> t = new List<Turno>();
+            t = DBHelper.ExecuteReader("Turnos_Afiliado_Mayor", parametros).ToTurno();
+            dataGridView1.DataSource = t;
         }
 
         private void btnCancelarTurno_Click(object sender, EventArgs e)

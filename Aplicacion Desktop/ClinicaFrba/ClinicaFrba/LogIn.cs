@@ -42,11 +42,9 @@ namespace ClinicaFrba
                     catch(Exception excepcion)
                     {
                     	MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        
                     	System.IO.StreamWriter file = new System.IO.StreamWriter(Application.StartupPath + "/debug.txt");
                     	file.WriteLine(excepcion.ToString());
 						file.Close();
-		
                     	return;
                     } 
                     if (usuario != null && !usuario.Activo)
@@ -66,7 +64,6 @@ namespace ClinicaFrba
                     {
                         MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                    
                     if (usuario != null)
                     {
                         //OBTENGO LOS ROLES DEL USUARIO
@@ -77,8 +74,7 @@ namespace ClinicaFrba
                         catch
                         {
                             MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        
+                        }            
                         if (roles.Count > 1)
                         {
                             cmbRol.Visible = true;
@@ -105,14 +101,6 @@ namespace ClinicaFrba
                         try
                         {
                             DBHelper.ExecuteNonQuery("Usuario_SumarIntento", new Dictionary<string, object>() { { "@Username", username } });
-                        }
-                        catch
-                        {
-                            MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        try
-                        {
-                            
                         }
                         catch
                         {

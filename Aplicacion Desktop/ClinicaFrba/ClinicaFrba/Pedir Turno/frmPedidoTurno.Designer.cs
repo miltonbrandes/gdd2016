@@ -37,6 +37,7 @@
             this.labelEspecialidad = new System.Windows.Forms.Label();
             this.labelProfesional = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.btnVolver = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEspecialidades)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProfesionales)).BeginInit();
             this.SuspendLayout();
@@ -44,7 +45,7 @@
             // filtrarEspecialidades
             // 
             this.filtrarEspecialidades.Location = new System.Drawing.Point(307, 62);
-            this.filtrarEspecialidades.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.filtrarEspecialidades.Margin = new System.Windows.Forms.Padding(4);
             this.filtrarEspecialidades.Name = "filtrarEspecialidades";
             this.filtrarEspecialidades.Size = new System.Drawing.Size(105, 25);
             this.filtrarEspecialidades.TabIndex = 0;
@@ -67,7 +68,7 @@
             // textEspecialidad
             // 
             this.textEspecialidad.Location = new System.Drawing.Point(113, 62);
-            this.textEspecialidad.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textEspecialidad.Margin = new System.Windows.Forms.Padding(4);
             this.textEspecialidad.Name = "textEspecialidad";
             this.textEspecialidad.Size = new System.Drawing.Size(184, 22);
             this.textEspecialidad.TabIndex = 2;
@@ -86,7 +87,7 @@
             // 
             this.dgvEspecialidades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEspecialidades.Location = new System.Drawing.Point(16, 113);
-            this.dgvEspecialidades.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvEspecialidades.Margin = new System.Windows.Forms.Padding(4);
             this.dgvEspecialidades.Name = "dgvEspecialidades";
             this.dgvEspecialidades.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvEspecialidades.Size = new System.Drawing.Size(423, 234);
@@ -97,7 +98,7 @@
             // 
             this.dgvProfesionales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvProfesionales.Location = new System.Drawing.Point(16, 113);
-            this.dgvProfesionales.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvProfesionales.Margin = new System.Windows.Forms.Padding(4);
             this.dgvProfesionales.Name = "dgvProfesionales";
             this.dgvProfesionales.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvProfesionales.Size = new System.Drawing.Size(701, 234);
@@ -134,11 +135,23 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // btnVolver
+            // 
+            this.btnVolver.Location = new System.Drawing.Point(15, 62);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(192, 25);
+            this.btnVolver.TabIndex = 18;
+            this.btnVolver.Text = "Volver a especialidades";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Visible = false;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
+            // 
             // frmPedidoTurno
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(733, 361);
+            this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.labelProfesional);
             this.Controls.Add(this.labelEspecialidad);
@@ -148,7 +161,7 @@
             this.Controls.Add(this.textEspecialidad);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.filtrarEspecialidades);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmPedidoTurno";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.frmPedidoTurno_Load);
@@ -170,5 +183,6 @@
         private System.Windows.Forms.Label labelEspecialidad;
         private System.Windows.Forms.Label labelProfesional;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnVolver;
     }
 }

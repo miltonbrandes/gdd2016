@@ -1581,6 +1581,16 @@ go
  create procedure NOT_NULL.Turnos_Afiliado(@nroafiliado numeric(18,0), @fecha datetime)
  as
 	begin
+		select * from turno where afiliado_nro = @nroafiliado and YEAR(turno_fecha) = YEAR(@fecha) and MONTH(turno_fecha) = MONTH(@fecha)
+		and DAY(turno_fecha) = DAY(@fecha) and turno_estado = 'R'
+	end
+ go
+
+
+/*TRAIGO TODOS LOS TURNOS DE UN AFILIADO MAYOR A FECHA*/
+ create procedure NOT_NULL.Turnos_Afiliado_Mayor(@nroafiliado numeric(18,0), @fecha datetime)
+ as
+	begin
 		select * from turno where afiliado_nro = @nroafiliado and turno_fecha > @fecha and turno_estado = 'R'
 	end
  go

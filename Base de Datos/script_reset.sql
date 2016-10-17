@@ -205,7 +205,7 @@ drop procedure NOT_NULL.Cancelar_Turnos_Profesional
 drop procedure NOT_NULL.Cancelar_Turnos_ProfxFranja 
 drop procedure NOT_NULL.Cancelar_Turnos_Varios_Dias 
 drop procedure NOT_NULL.reservarTurno_GetByFilerProfesional
-
+drop procedure NOT_NULL.Turnos_Afiliado_Mayor
 DROP PROCEDURE NOT_NULL.Reestablecer_Fecha
 DROP FUNCTION NOT_NULL.Obtener_Fecha
 
