@@ -1421,6 +1421,34 @@ as
 	end
 go
 
+CREATE PROCEDURE NOT_NULL.listado_Mas_Cancelaciones_Especialidad_Afiliado (@fecha1 datetime, @fecha2 datetime)
+as
+	begin
+		 select top 5 especialidad_descripcion, count(cancel_turno) as cantidad_cancelaciones
+			from NOT_NULL.especialidad, NOT_NULL.medicoXespecialidad, NOT_NULL.cancelacion_turno, NOT_NULL.turno
+			where turno_nro = cancel_turno and turno_medico_especialidad_id = medxesp_id and especialidad_codigo = medxesp_especialidad 
+				and cancel_fecha >= @fecha1 and cancel_fecha < @fecha2
+				and cancel_afiliado is not null
+			group by especialidad_descripcion
+			order by count(cancel_turno) desc
+	end
+go
+
+
+CREATE PROCEDURE NOT_NULL.listado_Mas_Cancelaciones_Especialidad_Profesional (@fecha1 datetime, @fecha2 datetime)
+as
+	begin
+		 select top 5 especialidad_descripcion, count(cancel_turno) as cantidad_cancelaciones
+			from NOT_NULL.especialidad, NOT_NULL.medicoXespecialidad, NOT_NULL.cancelacion_turno, NOT_NULL.turno
+			where turno_nro = cancel_turno and turno_medico_especialidad_id = medxesp_id and especialidad_codigo = medxesp_especialidad 
+				and cancel_fecha >= @fecha1 and cancel_fecha < @fecha2
+				and cancel_profesional is not null
+			group by especialidad_descripcion
+			order by count(cancel_turno) desc
+	end
+go
+
+
 
   --           Top 5 de los profesionales más consultados por Plan, detallando también bajo que Especialidad
 CREATE PROCEDURE NOT_NULL.listado_Profesionales_Consultados (@fecha1 datetime, @fecha2 datetime, @plan varchar(255))

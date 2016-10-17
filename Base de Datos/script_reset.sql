@@ -183,6 +183,8 @@ drop procedure NOT_NULL.turnos_GetByFilerProfesional
 drop procedure NOT_NULL.profesional_GetByFilerEspecialidad
 drop procedure NOT_NULL.Comprar_Bono
 drop PROCEDURE NOT_NULL.listado_Mas_Cancelaciones_Especialidad 
+drop PROCEDURE NOT_NULL.listado_Mas_Cancelaciones_Especialidad_Afiliado
+drop PROCEDURE NOT_NULL.listado_Mas_Cancelaciones_Especialidad_Profesional
 drop PROCEDURE NOT_NULL.listado_Profesionales_Consultados
 drop PROCEDURE NOT_NULL.listado_Profesionales_Menos_Horas 
 drop PROCEDURE NOT_NULL.listado_Afiliado_Mas_Bonos
