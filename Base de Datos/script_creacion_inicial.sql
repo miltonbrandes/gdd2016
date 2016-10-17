@@ -1272,7 +1272,7 @@ GO
 	if((select count(*) from turno where turno.turno_fecha = @fecha and turno.turno_medico_especialidad_id = @medxesp_id) = 0)
 	begin
 		if((select count(*) from turno where turno_fecha =  @fecha and turno.turno_medico_especialidad_id = 
-		(select medicoXespecialidad.medxesp_id from medicoXespecialidad where medxesp_profesional = @matricula and medxesp_id <> @medxesp_id))=0)
+		(select top 1 medicoXespecialidad.medxesp_id from medicoXespecialidad where medxesp_profesional = @matricula and medxesp_id <> @medxesp_id))=0)
 		begin
 			INSERT INTO NOT_NULL.turno(turno_nro,turno_fecha,turno_medico_especialidad_id)
 			values(@turnonro,@fecha,@medxesp_id)
