@@ -16,6 +16,7 @@ namespace ClinicaFrba.Registro_Llegada
 {
     public partial class frmLlegadaPaciente : Form
     {
+        int i = 0;
         string medxespid;
         DateTime fecha;
         public frmLlegadaPaciente()
@@ -81,39 +82,67 @@ namespace ClinicaFrba.Registro_Llegada
 
             if (dgvMedicoXEspecialidad.SelectedRows.Count == 1)
             {
-                Dictionary<string, object> parametros = new Dictionary<string, object>(){
+                
+                
+                int a;
+                if (int.TryParse(txtNroAfiliado.Text, out a))
+                {
+                    Dictionary<string, object> parametros = new Dictionary<string, object>(){
 					{"@medxespid",medxespid},
 					{"@fecha",fecha},
                     {"@nroafiliado",txtNroAfiliado.Text}
 				};
-                List<Turno> listaTurnos = new List<Turno>();
-                listaTurnos = DBHelper.ExecuteReader("Get_Turnos_Prof_Reservados", parametros).ToTurno();
-                dgvTurnos.DataSource = listaTurnos;
-                dgvTurnos.Columns.Clear();
-                dgvTurnos.AutoGenerateColumns = false;
+                    List<Turno> listaTurnos = new List<Turno>();
+                    listaTurnos = DBHelper.ExecuteReader("Get_Turnos_Prof_Reservados", parametros).ToTurno();
+                    dgvTurnos.DataSource = listaTurnos;
+                    dgvTurnos.Columns.Clear();
+                    dgvTurnos.AutoGenerateColumns = false;
 
-                dgvTurnos.Columns.Add(new DataGridViewTextBoxColumn()
+                    dgvTurnos.Columns.Add(new DataGridViewTextBoxColumn()
+                    {
+                        DataPropertyName = "Id",
+                        HeaderText = "Codigo",
+                        Width = 128,
+                        ReadOnly = true
+                    });
+                    dgvTurnos.Columns.Add(new DataGridViewTextBoxColumn()
+                    {
+                        DataPropertyName = "Afiliado",
+                        HeaderText = "Nro Afiliado",
+                        Width = 128,
+                        ReadOnly = true
+                    });
+                    dgvTurnos.Columns.Add(new DataGridViewTextBoxColumn()
+                    {
+                        DataPropertyName = "Fecha",
+                        HeaderText = "Fecha",
+                        Width = 128,
+                        ReadOnly = true
+                    });
+                }
+                else
                 {
-                    DataPropertyName = "Id",
-                    HeaderText = "Codigo",
-                    Width = 128,
-                    ReadOnly = true
-                });
-                dgvTurnos.Columns.Add(new DataGridViewTextBoxColumn()
-                {
-                    DataPropertyName = "Afiliado",
-                    HeaderText = "Nro Afiliado",
-                    Width = 128,
-                    ReadOnly = true
-                });
-                dgvTurnos.Columns.Add(new DataGridViewTextBoxColumn()
-                {
-                    DataPropertyName = "Fecha",
-                    HeaderText = "Fecha",
-                    Width = 128,
-                    ReadOnly = true
-                });
-                
+                    if (txtNroAfiliado.Text.Length > 1)
+                    {
+                        MessageBox.Show("Debe ingresar unicamente numeros", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        txtNroAfiliado.Text = txtNroAfiliado.Text.Substring(0, txtNroAfiliado.Text.Length - 1);
+                    }
+                    else
+                    {
+                        if (i == 0)
+                        {
+                            MessageBox.Show("Debe ingresar unicamente numeros", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            i = 1;
+                            txtNroAfiliado.Clear();
+                            
+                        }
+                        else
+                        {
+                            txtNroAfiliado.Clear();
+                            //i = 0;
+                        }
+                    }
+                }
             }
         }
 
