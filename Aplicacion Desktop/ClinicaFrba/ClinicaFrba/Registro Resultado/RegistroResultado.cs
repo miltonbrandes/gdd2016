@@ -67,7 +67,9 @@ namespace ClinicaFrba.Registro_Resultado
                 ReadOnly = true
             });
 
-            dataGridView1.Columns.Add(new DataGridViewColumn(){
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+               // dataGrid.Columns[2].DefaultCellStyle.Format = "MM/dd/yyyy HH:mm:ss";
                 DataPropertyName = "Fecha",
                 HeaderText = "Fecha",
                 Width = 128,
@@ -111,9 +113,10 @@ namespace ClinicaFrba.Registro_Resultado
                     DBHelper.ExecuteNonQuery("Registrar_Resultado", parametros2);
                     
                 }
-                catch { MessageBox.Show("Se registro el resultado con exito", "Registrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                catch { MessageBox.Show("No se registro el resultado. Intente nuevamente", "Registrado", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
                 }
+                 MessageBox.Show("Se registro el resultado con exito", "Registrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
             Hide();

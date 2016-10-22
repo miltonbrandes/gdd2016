@@ -56,14 +56,13 @@ DROP TABLE NOT_NULL.bono_consulta
 GO
 DROP TABLE NOT_NULL.cancelacion_turno
 GO
-
+DROP TABLE NOT_NULL.consulta
+GO
 DROP TABLE NOT_NULL.turno
 GO
-
 /*drop tablas relacion*/
 DROP TABLE NOT_NULL.funcionXrol
 GO
-
 DROP TABLE NOT_NULL.rolXusuario
 GO
 

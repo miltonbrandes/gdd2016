@@ -436,7 +436,7 @@ namespace Helpers
                 {
                     llegada = ConfigTime.getFechaSinHora();
                 }
-                if (rdr["turno_sintomas"].ToString() != "")
+                /*if (rdr["turno_sintomas"].ToString() != "")
                 {
                     sintomas = (string)rdr["turno_sintomas"];
                 }
@@ -451,7 +451,7 @@ namespace Helpers
                 else
                 {
                     enfermedades = "";
-                }
+                }*/
                 int idmedicoespecialidad = (int)rdr["turno_medico_especialidad_id"];
                 list.Add(new Turno()
                    {
@@ -461,8 +461,8 @@ namespace Helpers
                        Fecha = fecha,
                        Estado = estado,
                        Llegada = llegada,
-                       Sintomas = sintomas,
-                       Enfermedades = enfermedades,
+                      // Sintomas = sintomas,
+                       //Enfermedades = enfermedades,
                        IdMedicoEspecialidad = idmedicoespecialidad,
                        Tiempo = tiempo,
                    });

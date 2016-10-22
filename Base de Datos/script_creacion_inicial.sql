@@ -417,8 +417,8 @@ CREATE TABLE NOT_NULL.turno(
 	turno_fecha datetime NULL,
 	turno_estado char(1) default 'D' NULL , --ESTADO D disponible R reservado U usado L llego
 	turno_hora_llegada datetime NULL,
-	turno_sintomas varchar(255) NULL,
-	turno_enfermedades varchar(255) NULL,
+	--turno_sintomas varchar(255) NULL,
+	--turno_enfermedades varchar(255) NULL,
 	turno_medico_especialidad_id int NULL,
 	turno_tiempo bit NULL,
 	CONSTRAINT [PK_NOT_NULL.turno] PRIMARY KEY CLUSTERED 
@@ -442,14 +442,22 @@ ALTER TABLE NOT_NULL.turno CHECK CONSTRAINT [FK_NOT_NULL.turno_medicoXespecialid
 GO
 
 set nocount on;
-insert into NOT_NULL.turno(turno_nro, afiliado_nro, turno_fecha, turno_estado, turno_hora_llegada, turno_sintomas , turno_enfermedades, turno_medico_especialidad_id, turno_tiempo)
-select Turno_Numero, afiliado_nro, Turno_Fecha, 'U', Bono_Consulta_Fecha_Impresion, Consulta_Sintomas, Consulta_Enfermedades, medxesp_id, 1
+insert into NOT_NULL.turno(turno_nro, afiliado_nro, turno_fecha, turno_estado, turno_hora_llegada, /*turno_sintomas , turno_enfermedades,*/ turno_medico_especialidad_id, turno_tiempo)
+select Turno_Numero, afiliado_nro, Turno_Fecha, 'U', Bono_Consulta_Fecha_Impresion, /*Consulta_Sintomas, Consulta_Enfermedades,*/ medxesp_id, 1
 	from gd_esquema.Maestra, NOT_NULL.afiliado, NOT_NULL.medicoXespecialidad, NOT_NULL.profesional
 	where afiliado_dni = Paciente_Dni and medxesp_especialidad = Especialidad_Codigo and medXesp_profesional = profesional_matricula
 		and profesional_dni = Medico_Dni
 		and Bono_Consulta_Fecha_Impresion is not null and Bono_Consulta_Numero is not null and Turno_Numero is not null  order by Turno_Numero 
 go
 
+set nocount on;
+create table NOT_NULL.consulta(
+	consulta_id int identity(1,1) NOT NULL,
+	consulta_sintomas varchar(255) NULL,
+	consulta_enfermedades varchar(255) NULL,
+	consulta_turno numeric(18,0) NOT NULL foreign key references NOT_NULL.turno(turno_nro) 
+)
+go
 
 /*CREAR TABLA CANCELACION TURNOS*/
 CREATE TABLE NOT_NULL.cancelacion_turno(
@@ -1527,8 +1535,9 @@ go
  create procedure NOT_NULL.Registrar_Resultado(@sintomas varchar(255), @enfermedades varchar(255), @turnoid numeric(18,0), @tiempo bit)
  as 
 	begin
-		update NOT_NULL.turno set turno_sintomas = @sintomas, turno_enfermedades = @enfermedades, turno_tiempo = @tiempo, turno_estado = 'U'
+		update NOT_NULL.turno set turno_estado = 'U', turno_tiempo = @tiempo
 		where turno_nro = @turnoid
+		insert into NOT_NULL.consulta (consulta_sintomas,consulta_enfermedades, consulta_turno) values ( @sintomas, @enfermedades, @turnoid)  
 	end
  go
 
