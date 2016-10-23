@@ -289,10 +289,6 @@ namespace ClinicaFrba.Abm_Profesional {
             
             private global::System.Data.DataColumn columnturno_hora_llegada;
             
-            private global::System.Data.DataColumn columnturno_sintomas;
-            
-            private global::System.Data.DataColumn columnturno_enfermedades;
-            
             private global::System.Data.DataColumn columnturno_medico_especialidad_id;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -370,22 +366,6 @@ namespace ClinicaFrba.Abm_Profesional {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn turno_sintomasColumn {
-                get {
-                    return this.columnturno_sintomas;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn turno_enfermedadesColumn {
-                get {
-                    return this.columnturno_enfermedades;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn turno_medico_especialidad_idColumn {
                 get {
                     return this.columnturno_medico_especialidad_id;
@@ -429,7 +409,7 @@ namespace ClinicaFrba.Abm_Profesional {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public Get_Turnos_TodayRow AddGet_Turnos_TodayRow(decimal turno_nro, decimal afiliado_nro, System.DateTime turno_fecha, string turno_estado, System.DateTime turno_hora_llegada, string turno_sintomas, string turno_enfermedades, int turno_medico_especialidad_id) {
+            public Get_Turnos_TodayRow AddGet_Turnos_TodayRow(decimal turno_nro, decimal afiliado_nro, System.DateTime turno_fecha, string turno_estado, System.DateTime turno_hora_llegada, int turno_medico_especialidad_id) {
                 Get_Turnos_TodayRow rowGet_Turnos_TodayRow = ((Get_Turnos_TodayRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         turno_nro,
@@ -437,8 +417,6 @@ namespace ClinicaFrba.Abm_Profesional {
                         turno_fecha,
                         turno_estado,
                         turno_hora_llegada,
-                        turno_sintomas,
-                        turno_enfermedades,
                         turno_medico_especialidad_id};
                 rowGet_Turnos_TodayRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowGet_Turnos_TodayRow);
@@ -474,8 +452,6 @@ namespace ClinicaFrba.Abm_Profesional {
                 this.columnturno_fecha = base.Columns["turno_fecha"];
                 this.columnturno_estado = base.Columns["turno_estado"];
                 this.columnturno_hora_llegada = base.Columns["turno_hora_llegada"];
-                this.columnturno_sintomas = base.Columns["turno_sintomas"];
-                this.columnturno_enfermedades = base.Columns["turno_enfermedades"];
                 this.columnturno_medico_especialidad_id = base.Columns["turno_medico_especialidad_id"];
             }
             
@@ -492,10 +468,6 @@ namespace ClinicaFrba.Abm_Profesional {
                 base.Columns.Add(this.columnturno_estado);
                 this.columnturno_hora_llegada = new global::System.Data.DataColumn("turno_hora_llegada", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnturno_hora_llegada);
-                this.columnturno_sintomas = new global::System.Data.DataColumn("turno_sintomas", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnturno_sintomas);
-                this.columnturno_enfermedades = new global::System.Data.DataColumn("turno_enfermedades", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnturno_enfermedades);
                 this.columnturno_medico_especialidad_id = new global::System.Data.DataColumn("turno_medico_especialidad_id", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnturno_medico_especialidad_id);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
@@ -504,8 +476,6 @@ namespace ClinicaFrba.Abm_Profesional {
                 this.columnturno_nro.Unique = true;
                 this.columnafiliado_nro.AllowDBNull = false;
                 this.columnturno_estado.MaxLength = 1;
-                this.columnturno_sintomas.MaxLength = 255;
-                this.columnturno_enfermedades.MaxLength = 255;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -719,40 +689,6 @@ namespace ClinicaFrba.Abm_Profesional {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string turno_sintomas {
-                get {
-                    try {
-                        return ((string)(this[this.tableGet_Turnos_Today.turno_sintomasColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'turno_sintomas\' de la tabla \'Get_Turnos_Today\' es DBNull." +
-                                "", e);
-                    }
-                }
-                set {
-                    this[this.tableGet_Turnos_Today.turno_sintomasColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string turno_enfermedades {
-                get {
-                    try {
-                        return ((string)(this[this.tableGet_Turnos_Today.turno_enfermedadesColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'turno_enfermedades\' de la tabla \'Get_Turnos_Today\' es DBN" +
-                                "ull.", e);
-                    }
-                }
-                set {
-                    this[this.tableGet_Turnos_Today.turno_enfermedadesColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public int turno_medico_especialidad_id {
                 get {
                     try {
@@ -802,30 +738,6 @@ namespace ClinicaFrba.Abm_Profesional {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void Setturno_hora_llegadaNull() {
                 this[this.tableGet_Turnos_Today.turno_hora_llegadaColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Isturno_sintomasNull() {
-                return this.IsNull(this.tableGet_Turnos_Today.turno_sintomasColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setturno_sintomasNull() {
-                this[this.tableGet_Turnos_Today.turno_sintomasColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Isturno_enfermedadesNull() {
-                return this.IsNull(this.tableGet_Turnos_Today.turno_enfermedadesColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setturno_enfermedadesNull() {
-                this[this.tableGet_Turnos_Today.turno_enfermedadesColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1005,8 +917,6 @@ namespace ClinicaFrba.Abm_Profesional.GD2C2016DataSet6TableAdapters {
             tableMapping.ColumnMappings.Add("turno_fecha", "turno_fecha");
             tableMapping.ColumnMappings.Add("turno_estado", "turno_estado");
             tableMapping.ColumnMappings.Add("turno_hora_llegada", "turno_hora_llegada");
-            tableMapping.ColumnMappings.Add("turno_sintomas", "turno_sintomas");
-            tableMapping.ColumnMappings.Add("turno_enfermedades", "turno_enfermedades");
             tableMapping.ColumnMappings.Add("turno_medico_especialidad_id", "turno_medico_especialidad_id");
             this._adapter.TableMappings.Add(tableMapping);
         }

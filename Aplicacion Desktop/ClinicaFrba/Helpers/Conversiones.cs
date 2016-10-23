@@ -404,10 +404,10 @@ namespace Helpers
             while (milector.Read())
             {
 
-                string enfermedades;
+                //string enfermedades;
                 decimal afiliado;
                 DateTime llegada;
-                string sintomas;
+                //string sintomas;
                 bool tiempo = false; ;
                 decimal id = (decimal)rdr["turno_nro"];
                 if (rdr["afiliado_nro"].ToString() != "")

@@ -26,8 +26,6 @@
               <Mapping SourceColumn="turno_fecha" DataSetColumn="turno_fecha" />
               <Mapping SourceColumn="turno_estado" DataSetColumn="turno_estado" />
               <Mapping SourceColumn="turno_hora_llegada" DataSetColumn="turno_hora_llegada" />
-              <Mapping SourceColumn="turno_sintomas" DataSetColumn="turno_sintomas" />
-              <Mapping SourceColumn="turno_enfermedades" DataSetColumn="turno_enfermedades" />
               <Mapping SourceColumn="turno_medico_especialidad_id" DataSetColumn="turno_medico_especialidad_id" />
             </Mappings>
             <Sources />
@@ -40,7 +38,7 @@
   <xs:element name="GD2C2016DataSet6" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="GD2C2016DataSet6" msprop:Generator_UserDSName="GD2C2016DataSet6">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="Get_Turnos_Today" msprop:Generator_TableClassName="Get_Turnos_TodayDataTable" msprop:Generator_TableVarName="tableGet_Turnos_Today" msprop:Generator_TablePropName="Get_Turnos_Today" msprop:Generator_RowDeletingName="Get_Turnos_TodayRowDeleting" msprop:Generator_RowChangingName="Get_Turnos_TodayRowChanging" msprop:Generator_RowEvHandlerName="Get_Turnos_TodayRowChangeEventHandler" msprop:Generator_RowDeletedName="Get_Turnos_TodayRowDeleted" msprop:Generator_UserTableName="Get_Turnos_Today" msprop:Generator_RowChangedName="Get_Turnos_TodayRowChanged" msprop:Generator_RowEvArgName="Get_Turnos_TodayRowChangeEvent" msprop:Generator_RowClassName="Get_Turnos_TodayRow">
+        <xs:element name="Get_Turnos_Today" msprop:Generator_TableClassName="Get_Turnos_TodayDataTable" msprop:Generator_TableVarName="tableGet_Turnos_Today" msprop:Generator_RowChangedName="Get_Turnos_TodayRowChanged" msprop:Generator_TablePropName="Get_Turnos_Today" msprop:Generator_RowDeletingName="Get_Turnos_TodayRowDeleting" msprop:Generator_RowChangingName="Get_Turnos_TodayRowChanging" msprop:Generator_RowEvHandlerName="Get_Turnos_TodayRowChangeEventHandler" msprop:Generator_RowDeletedName="Get_Turnos_TodayRowDeleted" msprop:Generator_RowClassName="Get_Turnos_TodayRow" msprop:Generator_UserTableName="Get_Turnos_Today" msprop:Generator_RowEvArgName="Get_Turnos_TodayRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="turno_nro" msprop:Generator_ColumnVarNameInTable="columnturno_nro" msprop:Generator_ColumnPropNameInRow="turno_nro" msprop:Generator_ColumnPropNameInTable="turno_nroColumn" msprop:Generator_UserColumnName="turno_nro" type="xs:decimal" />
@@ -54,20 +52,6 @@
                 </xs:simpleType>
               </xs:element>
               <xs:element name="turno_hora_llegada" msprop:Generator_ColumnVarNameInTable="columnturno_hora_llegada" msprop:Generator_ColumnPropNameInRow="turno_hora_llegada" msprop:Generator_ColumnPropNameInTable="turno_hora_llegadaColumn" msprop:Generator_UserColumnName="turno_hora_llegada" type="xs:dateTime" minOccurs="0" />
-              <xs:element name="turno_sintomas" msprop:Generator_ColumnVarNameInTable="columnturno_sintomas" msprop:Generator_ColumnPropNameInRow="turno_sintomas" msprop:Generator_ColumnPropNameInTable="turno_sintomasColumn" msprop:Generator_UserColumnName="turno_sintomas" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="255" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="turno_enfermedades" msprop:Generator_ColumnVarNameInTable="columnturno_enfermedades" msprop:Generator_ColumnPropNameInRow="turno_enfermedades" msprop:Generator_ColumnPropNameInTable="turno_enfermedadesColumn" msprop:Generator_UserColumnName="turno_enfermedades" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="255" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
               <xs:element name="turno_medico_especialidad_id" msprop:Generator_ColumnVarNameInTable="columnturno_medico_especialidad_id" msprop:Generator_ColumnPropNameInRow="turno_medico_especialidad_id" msprop:Generator_ColumnPropNameInTable="turno_medico_especialidad_idColumn" msprop:Generator_UserColumnName="turno_medico_especialidad_id" type="xs:int" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
