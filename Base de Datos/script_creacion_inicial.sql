@@ -1252,10 +1252,41 @@ GO
   CREATE PROCEDURE NOT_NULL.Franja_Agregar(@id_agenda int, @dia int, @hora_inicio int, @minuto_inicio int, @hora_fin int, @minuto_fin int)
   AS BEGIN;
 	--SET IDENTITY_INSERT NOT_NULL.Agenda ON;
-	INSERT INTO NOT_NULL.franja_horaria(agenda_id, dia, hora_inicio, minuto_inicio, hora_fin, minuto_fin) 
-	values(@id_agenda,@dia,@hora_inicio,@minuto_inicio,@hora_fin,@minuto_fin);
-	--SET IDENTITY_INSERT NOT_NULL.Agenda OFF;
+
+	DECLARE @horaInicio int
+	DECLARE @minutoInicio int
+	DECLARE @horaFin int
+	DECLARE @minutoFin int
+
+	DECLARE @totalMinutos int
+
+	--Lo inicializo con los minutos ingresados
+	SET @totalMinutos = (@hora_fin*60 + @minuto_fin) - (@hora_inicio*60 + @minuto_inicio)
+
+	DECLARE cursorFranjas CURSOR
+	FOR	(SELECT f.hora_inicio,f.minuto_inicio,f.hora_fin,f.minuto_fin
+		 FROM NOT_NULL.agenda a, NOT_NULL.franja_horaria f
+		 WHERE f.agenda_id = a.agenda_id)
+
+	OPEN cursorFranjas
+	FETCH cursorFranjas INTO @horaInicio,@minutoInicio,@horaFin,@minutoFin
+
+	--Le sumo todos los minutos que ya tenga
+	WHILE(@@FETCH_STATUS = 0)
+	BEGIN
+		SET @totalMinutos = @totalMinutos + (@horaFin*60 + @minutoFin) - (@horaInicio*60 + @minutoInicio)
+
+		FETCH cursorFranjas INTO @horaInicio,@minutoInicio,@horaFin,@minutoFin
 	END
+
+	--Si no se excede de las 48 horas
+	IF(@totalMinutos <= 48*60)
+	BEGIN
+		INSERT INTO NOT_NULL.franja_horaria(agenda_id, dia, hora_inicio, minuto_inicio, hora_fin, minuto_fin) 
+		values(@id_agenda,@dia,@hora_inicio,@minuto_inicio,@hora_fin,@minuto_fin);
+		--SET IDENTITY_INSERT NOT_NULL.Agenda OFF;
+	END
+  END
   GO
   
   CREATE PROCEDURE NOT_NULL.Get_medxesp_id(@matricula int, @especialidad int)
