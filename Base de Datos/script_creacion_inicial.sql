@@ -1279,6 +1279,9 @@ GO
 		FETCH cursorFranjas INTO @horaInicio,@minutoInicio,@horaFin,@minutoFin
 	END
 
+	CLOSE cursorFranjas
+	DEALLOCATE cursorFranjas
+
 	--Si no se excede de las 48 horas
 	IF(@totalMinutos <= 48*60)
 	BEGIN
