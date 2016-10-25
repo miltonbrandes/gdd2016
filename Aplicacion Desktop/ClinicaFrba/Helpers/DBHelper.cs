@@ -62,6 +62,10 @@ namespace Helpers
         public static int ExecuteNonQueryWithReturn(string SP, Dictionary<string, object> parametros = null)
         {        	
             if (parametros == null) parametros = new Dictionary<string, object>();
+            if (DB != null && DB.State == ConnectionState.Open)
+            {
+                DB.Close();
+            }
             DB.Open();
             SqlCommand command = new SqlCommand("NOT_NULL." + SP, DB);
             command.CommandType = System.Data.CommandType.StoredProcedure;
@@ -76,8 +80,9 @@ namespace Helpers
             command.Parameters.Add(returnParameter);
 
             command.ExecuteNonQuery();
-            
+            //DB.Close();
             return (int)returnParameter.Value;
+            
         }
 
         public static SqlDataReader ExecuteReader(string SP, Dictionary<string, object> parametros = null)

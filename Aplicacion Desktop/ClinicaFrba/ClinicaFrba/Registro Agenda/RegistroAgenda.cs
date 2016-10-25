@@ -110,7 +110,7 @@ namespace ClinicaFrba.Registro_Agenda
 			
 			//Ya agregue la agenda, ahora tengo que enviar todas las franjas
 			DBHelper.DB.Open();
-			SqlTransaction transaction = DBHelper.DB.BeginTransaction();
+			//SqlTransaction transaction = DBHelper.DB.BeginTransaction();
 			bool transaccionFallida = false;
 			int i,j;
 			for(i=0;i<4;i=i+2){
@@ -133,13 +133,13 @@ namespace ClinicaFrba.Registro_Agenda
 			}
 			
 			if(transaccionFallida){
-				transaction.Rollback();
+				//transaction.Rollback();
 				MessageBox.Show("La cantidad de horas introducidas entre todas las especialidades superan las 48.",
 				                "Cantidad de horas superan 48",
 				                MessageBoxButtons.OK,
 				                MessageBoxIcon.Error);
 			}
-			else transaction.Commit();
+			//else transaction.Commit();
 			DBHelper.DB.Close();
 			
 			//for(DateTime date = StartDate; date.Date <= EndDate.Date; date = date.AddDays(1))
