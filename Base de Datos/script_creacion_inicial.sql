@@ -1312,6 +1312,14 @@ GO
 
 	DECLARE @agendaId int
 	DECLARE @i int
+	DECLARE @cantTurnos int
+	DECLARE @fechaInicio datetime
+	DECLARE @fechaFin datetime
+	DECLARE @fechaIterador datetime
+
+	SET @fechaInicio = DATEFROMPARTS(2016,10,1)
+	SET @fechaFin = DATEFROMPARTS(2017,10,1)
+	SET @fechaIterador = @fechaInicio
 
 	DECLARE cursorEsp cursor
 	FOR SELECT mxe.medxesp_id,mxe.medxesp_profesional FROM NOT_NULL.medicoXespecialidad mxe
@@ -1329,7 +1337,7 @@ GO
 		ELSE SET @contEspecialidades = 0
 		
 		INSERT INTO NOT_NULL.agenda(agenda_fecha_inicio,agenda_fecha_fin)
-		values(DATEFROMPARTS(2016,10,1),DATEFROMPARTS(2017,10,1))
+		values(@fechaInicio,@fechaFin)
 		
 		SET @agendaId = @@IDENTITY
 
@@ -1343,6 +1351,19 @@ GO
 		BEGIN
 			INSERT INTO NOT_NULL.franja_horaria(dia,agenda_id,hora_inicio,minuto_inicio,hora_fin,minuto_fin)
 			values(@i,@agendaId,10 + 2*@contEspecialidades,0,12 + 2*@contEspecialidades,0)
+
+			--Agrego los turnos
+			WHILE(@fechaIterador < @fechaFin)
+			BEGIN
+				SET @cantTurnos = 0
+				WHILE(@cantTurnos < 4)
+				BEGIN
+					INSERT INTO NOT_NULL.turno(turno_medico_especialidad_id,turno_hora_llegada)
+					values(@medxesp_id, DATEADD(minute,@fechaIterador,30*@cantTurnos + 60*(10+2*@contEspecialidades)) )
+				END
+
+				SET @fechaIterador = DATEADD(day,@fechaIterador,7)
+			END
 
 			SET @i = @i + 1
 		END
