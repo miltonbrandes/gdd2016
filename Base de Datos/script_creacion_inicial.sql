@@ -1299,6 +1299,63 @@ GO
   END
   GO
   
+  CREATE PROCEDURE NOT_NULL.Agregar_Franja_A_Todos_Los_Medicos
+  AS BEGIN
+	
+	DECLARE @ultimoMedico int
+	DECLARE @medicoActual int
+	DECLARE @medxesp_id int
+	DECLARE @contEspecialidades int
+
+	SET @ultimoMedico = 0
+	SET @contEspecialidades = 0
+
+	DECLARE @agendaId int
+	DECLARE @i int
+
+	DECLARE cursorEsp cursor
+	FOR SELECT mxe.medxesp_id,mxe.medxesp_profesional FROM NOT_NULL.medicoXespecialidad mxe
+	ORDER BY mxe.medxesp_profesional
+
+	OPEN cursorEsp
+
+	FETCH cursorEsp INTO @medxesp_id,@medicoActual
+	
+	WHILE(@@FETCH_STATUS = 0)
+	BEGIN
+
+		IF(@medicoActual = @ultimoMedico)
+			SET @contEspecialidades = @contEspecialidades + 1
+		ELSE SET @contEspecialidades = 0
+		
+		INSERT INTO NOT_NULL.agenda(agenda_fecha_inicio,agenda_fecha_fin)
+		values(DATEFROMPARTS(2016,10,1),DATEFROMPARTS(2017,10,1))
+		
+		SET @agendaId = @@IDENTITY
+
+		UPDATE NOT_NULL.medicoXespecialidad
+		SET medxesp_agenda = @agendaId
+		WHERE medxesp_id = @medxesp_id
+
+		--Inserto las franjas
+		SET @i = 0
+		WHILE(@i <= 5)
+		BEGIN
+			INSERT INTO NOT_NULL.franja_horaria(dia,agenda_id,hora_inicio,minuto_inicio,hora_fin,minuto_fin)
+			values(@i,@agendaId,10 + 2*@contEspecialidades,0,12 + 2*@contEspecialidades,0)
+
+			SET @i = @i + 1
+		END
+
+		FETCH cursorEsp INTO @medxesp_id,@medicoActual
+	END
+
+	CLOSE cursorEsp
+	DEALLOCATE cursorEsp
+
+  END
+  GO
+
   CREATE PROCEDURE NOT_NULL.Get_medxesp_id(@matricula int, @especialidad int)
   AS BEGIN
 	

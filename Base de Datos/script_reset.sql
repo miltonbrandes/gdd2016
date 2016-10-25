@@ -207,6 +207,7 @@ drop procedure NOT_NULL.reservarTurno_GetByFilerProfesional
 drop procedure NOT_NULL.Turnos_Afiliado_Mayor
 DROP PROCEDURE NOT_NULL.Reestablecer_Fecha
 DROP FUNCTION NOT_NULL.Obtener_Fecha
+DROP PROCEDURE NOT_NULL.Agregar_Franja_A_Todos_Los_Medicos
 
 DROP SCHEMA NOT_NULL
 GO
