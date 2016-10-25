@@ -109,22 +109,38 @@ namespace ClinicaFrba.Registro_Agenda
 			agenda_id = (int)sqlParameters[parametros.Count].Value;
 			
 			//Ya agregue la agenda, ahora tengo que enviar todas las franjas
+			DBHelper.DB.Open();
+			SqlTransaction transaction = DBHelper.DB.BeginTransaction();
+			bool transaccionFallida = false;
 			int i,j;
 			for(i=0;i<4;i=i+2){
 				for(j=0;j<6;j++){
 					if(matrizHoras[i,j] != null){
 						parametros = new Dictionary<string, object>(){
 							{"@id_agenda",agenda_id},
+							{"@matricula",profesional.Matricula},
 							{"@dia",j},
 							{"@hora_inicio",matrizHoras[i,j].hora},
 							{"@minuto_inicio",matrizHoras[i,j].minuto},
 							{"@hora_fin",matrizHoras[i+1,j].hora},
 							{"@minuto_fin",matrizHoras[i+1,j].minuto},
 						};
-						DBHelper.ExecuteNonQuery("Franja_Agregar",parametros);
+						
+						if(DBHelper.ExecuteNonQueryWithReturn("Franja_Agregar",parametros) != 0)
+							transaccionFallida = true;
 					}
 				}
 			}
+			
+			if(transaccionFallida){
+				transaction.Rollback();
+				MessageBox.Show("La cantidad de horas introducidas entre todas las especialidades superan las 48.",
+				                "Cantidad de horas superan 48",
+				                MessageBoxButtons.OK,
+				                MessageBoxIcon.Error);
+			}
+			else transaction.Commit();
+			DBHelper.DB.Close();
 			
 			//for(DateTime date = StartDate; date.Date <= EndDate.Date; date = date.AddDays(1))
 			for(DateTime fecha = monthCalendar1.SelectionStart;

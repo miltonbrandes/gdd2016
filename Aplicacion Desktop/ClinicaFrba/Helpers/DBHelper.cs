@@ -57,6 +57,27 @@ namespace Helpers
             DB.Close();
             
             return command.Parameters;
+        }     
+        
+        public static int ExecuteNonQueryWithReturn(string SP, Dictionary<string, object> parametros = null)
+        {        	
+            if (parametros == null) parametros = new Dictionary<string, object>();
+            DB.Open();
+            SqlCommand command = new SqlCommand("NOT_NULL." + SP, DB);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            foreach (var parametro in parametros)
+            {
+                command.Parameters.Add(new SqlParameter(parametro.Key, parametro.Value));
+            }
+            
+            SqlParameter returnParameter = new SqlParameter();
+            returnParameter.Direction = ParameterDirection.ReturnValue;
+            
+            command.Parameters.Add(returnParameter);
+
+            command.ExecuteNonQuery();
+            
+            return (int)returnParameter.Value;
         }
 
         public static SqlDataReader ExecuteReader(string SP, Dictionary<string, object> parametros = null)
@@ -76,6 +97,6 @@ namespace Helpers
             SqlDataReader result = command.ExecuteReader();
             return result;
         }
-        
+
     }
 }

@@ -1249,7 +1249,8 @@ GO
   GO
   
   --AGREGAR FRANJA
-  CREATE PROCEDURE NOT_NULL.Franja_Agregar(@id_agenda int, @dia int, @hora_inicio int, @minuto_inicio int, @hora_fin int, @minuto_fin int)
+  CREATE PROCEDURE NOT_NULL.Franja_Agregar(@id_agenda int, @matricula int, 
+				@dia int, @hora_inicio int, @minuto_inicio int, @hora_fin int, @minuto_fin int)
   AS BEGIN;
 	--SET IDENTITY_INSERT NOT_NULL.Agenda ON;
 
@@ -1260,13 +1261,17 @@ GO
 
 	DECLARE @totalMinutos int
 
+	DECLARE @result int --valor de retorno
+
 	--Lo inicializo con los minutos ingresados
 	SET @totalMinutos = (@hora_fin*60 + @minuto_fin) - (@hora_inicio*60 + @minuto_inicio)
 
 	DECLARE cursorFranjas CURSOR
 	FOR	(SELECT f.hora_inicio,f.minuto_inicio,f.hora_fin,f.minuto_fin
-		 FROM NOT_NULL.agenda a, NOT_NULL.franja_horaria f
-		 WHERE f.agenda_id = a.agenda_id)
+		 FROM NOT_NULL.agenda a, NOT_NULL.franja_horaria f, NOT_NULL.medicoXespecialidad mxe
+		 WHERE f.agenda_id = a.agenda_id
+			AND mxe.medxesp_profesional = @matricula
+			AND mxe.medxesp_agenda = a.agenda_id)
 
 	OPEN cursorFranjas
 	FETCH cursorFranjas INTO @horaInicio,@minutoInicio,@horaFin,@minutoFin
@@ -1288,7 +1293,9 @@ GO
 		INSERT INTO NOT_NULL.franja_horaria(agenda_id, dia, hora_inicio, minuto_inicio, hora_fin, minuto_fin) 
 		values(@id_agenda,@dia,@hora_inicio,@minuto_inicio,@hora_fin,@minuto_fin);
 		--SET IDENTITY_INSERT NOT_NULL.Agenda OFF;
+		RETURN(0)
 	END
+	ELSE RETURN(1)
   END
   GO
   
