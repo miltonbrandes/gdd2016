@@ -1318,8 +1318,13 @@ GO
 	DECLARE @fechaIterador datetime
 
 	SET @fechaInicio = DATEFROMPARTS(2016,10,1)
-	SET @fechaFin = DATEFROMPARTS(2017,10,1)
+	SET @fechaFin = DATEFROMPARTS(2016,10,10)
 	SET @fechaIterador = @fechaInicio
+
+	DECLARE @ultimoTurno int
+
+	SET @ultimoTurno = (SELECT TOP 1 t.turno_nro FROM NOT_NULL.turno t
+						ORDER BY t.turno_nro desc) + 1
 
 	DECLARE cursorEsp cursor
 	FOR SELECT mxe.medxesp_id,mxe.medxesp_profesional FROM NOT_NULL.medicoXespecialidad mxe
@@ -1347,22 +1352,30 @@ GO
 
 		--Inserto las franjas
 		SET @i = 0
-		WHILE(@i <= 5)
+		WHILE(@i < 5)
 		BEGIN
 			INSERT INTO NOT_NULL.franja_horaria(dia,agenda_id,hora_inicio,minuto_inicio,hora_fin,minuto_fin)
 			values(@i,@agendaId,10 + 2*@contEspecialidades,0,12 + 2*@contEspecialidades,0)
-
+			
 			--Agrego los turnos
+			SET @fechaIterador = @fechaInicio
 			WHILE(@fechaIterador < @fechaFin)
 			BEGIN
 				SET @cantTurnos = 0
 				WHILE(@cantTurnos < 4)
 				BEGIN
-					INSERT INTO NOT_NULL.turno(turno_medico_especialidad_id,turno_hora_llegada)
-					values(@medxesp_id, DATEADD(minute,@fechaIterador,30*@cantTurnos + 60*(10+2*@contEspecialidades)) )
+					--Le saco minutos y segundos
+					SET @fechaIterador = DATEADD(hour,-DATEPART(hour,@fechaIterador),@fechaIterador)
+					SET @fechaIterador = DATEADD(minute,-DATEPART(minute,@fechaIterador),@fechaIterador)
+
+					INSERT INTO NOT_NULL.turno(turno_nro,turno_medico_especialidad_id,turno_hora_llegada)
+					values(@ultimoTurno,@medxesp_id, DATEADD(minute,30*@cantTurnos + 60*(10+2*@contEspecialidades),@fechaIterador) )
+
+					SET @ultimoTurno = @ultimoTurno + 1
+					SET @cantTurnos = @cantTurnos + 1
 				END
 
-				SET @fechaIterador = DATEADD(day,@fechaIterador,7)
+				SET @fechaIterador = DATEADD(day,7,@fechaIterador)
 			END
 
 			SET @i = @i + 1
@@ -1854,4 +1867,7 @@ create procedure NOT_NULL.Cancelar_Turnos_Varios_Dias(@motivo varchar(255), @tip
 	RETURN DATEADD(minute, DATEDIFF(minute,@now_viejo,GETDATE()), @fecha_tabla )
 	
 END
+GO
+
+EXECUTE NOT_NULL.Agregar_Franja_A_Todos_Los_Medicos
 GO
