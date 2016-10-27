@@ -25,7 +25,7 @@ namespace ClinicaFrba.AbmRol
             var rol = (Rol)cmbRoles.SelectedItem;
             try
             {
-                DBHelper.ExecuteNonQuery("Rol_Deactivate", new Dictionary<string, object>() { { "@rol", rol.Id } });
+                ConexionesDB.ExecuteNonQuery("Rol_Deactivate", new Dictionary<string, object>() { { "@rol", rol.Id } });
             }
             catch { MessageBox.Show("Error al acceder a database", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information); }
             
@@ -36,7 +36,7 @@ namespace ClinicaFrba.AbmRol
         {
             try
             {
-                roles = DBHelper.ExecuteReader("Rol_GetAll").ToRoles();
+                roles = ConexionesDB.ExecuteReader("Rol_GetAll").ToRoles();
             }
             catch { MessageBox.Show("Error al acceder a database", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information); }
             

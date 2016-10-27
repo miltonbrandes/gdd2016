@@ -42,7 +42,7 @@ namespace ClinicaFrba.Abm_Afiliado
             {
                 acerrar.Close();
             } 
-            LoadAfiliados(DBHelper.ExecuteReader("Afiliado_GetAll").ToAfiliado());
+            LoadAfiliados(ConexionesDB.ExecuteReader("Afiliado_GetAll").ToAfiliado());
         }
         private void LoadAfiliados(List<Afiliado> afiliados)
         {
@@ -97,7 +97,7 @@ namespace ClinicaFrba.Abm_Afiliado
         {
             try
             {
-                LoadAfiliados(DBHelper.ExecuteReader("Afiliado_GetAll").ToAfiliado());
+                LoadAfiliados(ConexionesDB.ExecuteReader("Afiliado_GetAll").ToAfiliado());
             }
             catch
             {
@@ -118,7 +118,7 @@ namespace ClinicaFrba.Abm_Afiliado
                 };
                 try
                 {
-                    afiladosFiltrados = DBHelper.ExecuteReader("Afiliado_GetByFilters", parametros).ToAfiliado();
+                    afiladosFiltrados = ConexionesDB.ExecuteReader("Afiliado_GetByFilters", parametros).ToAfiliado();
                 }
                 catch
                 {
@@ -130,7 +130,7 @@ namespace ClinicaFrba.Abm_Afiliado
             {
                 try
                 {
-                    afiladosFiltrados = DBHelper.ExecuteReader("Afiliado_GetByDni", new Dictionary<string, object> { { "@dni", txtDni.Text } }).ToAfiliado();
+                    afiladosFiltrados = ConexionesDB.ExecuteReader("Afiliado_GetByDni", new Dictionary<string, object> { { "@dni", txtDni.Text } }).ToAfiliado();
                 }
                 catch
                 {
@@ -199,7 +199,7 @@ namespace ClinicaFrba.Abm_Afiliado
                     
                     try
                     {
-                        DBHelper.ExecuteNonQuery("Afiliado_Baja_Logica", (new Dictionary<string, object> { { "@UsuarioId", user }/*, {"@ret", resp} */}));
+                        ConexionesDB.ExecuteNonQuery("Afiliado_Baja_Logica", (new Dictionary<string, object> { { "@UsuarioId", user }/*, {"@ret", resp} */}));
                         
                     }
                     catch
@@ -211,7 +211,7 @@ namespace ClinicaFrba.Abm_Afiliado
                         MessageBox.Show("Se dio de baja al afiliado: " + afil.Username, "Baja", MessageBoxButtons.OK, MessageBoxIcon.Information); 
                  //   else
                   //      MessageBox.Show("No se dio de baja al afiliado: " + afil.Username + "porque no tenia ningun rol o porque ya estaba de baja", "Baja", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    DBHelper.DB.Close();
+                    ConexionesDB.DB.Close();
                     return;
                     
                 }

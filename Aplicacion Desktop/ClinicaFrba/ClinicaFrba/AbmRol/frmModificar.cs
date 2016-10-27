@@ -24,7 +24,7 @@ namespace ClinicaFrba.AbmRol
         {
             try
             {
-                roles = DBHelper.ExecuteReader("Rol_GetAll").ToRoles();
+                roles = ConexionesDB.ExecuteReader("Rol_GetAll").ToRoles();
             }
             catch { MessageBox.Show("Error al acceder a database", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information); }
             
@@ -41,12 +41,12 @@ namespace ClinicaFrba.AbmRol
                 {
                     if (txtNombre.Text != rolAsignado.Descripcion.Trim())
                     {
-                        var rol = DBHelper.ExecuteReader("Rol_Exists", new Dictionary<string, object>() { { "@rol", txtNombre.Text } }).ToRol();
+                        var rol = ConexionesDB.ExecuteReader("Rol_Exists", new Dictionary<string, object>() { { "@rol", txtNombre.Text } }).ToRol();
                         if (rol == null)
                         {
                             try
                             {
-                                DBHelper.ExecuteNonQuery("Rol_ModifyName", new Dictionary<string, object>() { { "@nombre", txtNombre.Text }, { "@id", rolAsignado.Id } });
+                                ConexionesDB.ExecuteNonQuery("Rol_ModifyName", new Dictionary<string, object>() { { "@nombre", txtNombre.Text }, { "@id", rolAsignado.Id } });
                                 
                             }
                             catch { MessageBox.Show("Error al acceder a database", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information); }
@@ -70,7 +70,7 @@ namespace ClinicaFrba.AbmRol
                             {
                                 try
                                 {
-                                    DBHelper.ExecuteNonQuery("RolXFuncion_Add", new Dictionary<string, object>() { { "@rol", rolAsignado.Id }, { "@funcion", funciones.First(x => x.Descripcion == nombre).Id } });
+                                    ConexionesDB.ExecuteNonQuery("RolXFuncion_Add", new Dictionary<string, object>() { { "@rol", rolAsignado.Id }, { "@funcion", funciones.First(x => x.Descripcion == nombre).Id } });
                                     
                                 }
                                 catch { MessageBox.Show("Error al acceder a database", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information); }
@@ -84,7 +84,7 @@ namespace ClinicaFrba.AbmRol
                             {
                                 try
                                 {
-                                    DBHelper.ExecuteNonQuery("RolXFuncion_Remove", new Dictionary<string, object>() { { "@rol", ((Rol)cmbRoles.SelectedItem).Id }, { "@funcion", funciones.First(x => x.Descripcion == nombre).Id } });
+                                    ConexionesDB.ExecuteNonQuery("RolXFuncion_Remove", new Dictionary<string, object>() { { "@rol", ((Rol)cmbRoles.SelectedItem).Id }, { "@funcion", funciones.First(x => x.Descripcion == nombre).Id } });
                                 }
                                 catch { MessageBox.Show("Error al acceder a database", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information); }
                                 
@@ -125,7 +125,7 @@ namespace ClinicaFrba.AbmRol
             var rolAsignado = (Rol)cmbRoles.SelectedItem;
             try
             {
-                DBHelper.ExecuteNonQuery("Rol_Activate", new Dictionary<string, object>() { { "@rol", rolAsignado.Id } });
+                ConexionesDB.ExecuteNonQuery("Rol_Activate", new Dictionary<string, object>() { { "@rol", rolAsignado.Id } });
                 
             }
             catch { MessageBox.Show("Error al acceder a database", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information); }
@@ -140,7 +140,7 @@ namespace ClinicaFrba.AbmRol
             var rol = (Rol)cmbRoles.SelectedItem;
             try
             {
-                funcionesXRol = DBHelper.ExecuteReader("RolXFuncion_Active", new Dictionary<string, object>() { { "@rol", rol.Descripcion } }).ToFunciones();
+                funcionesXRol = ConexionesDB.ExecuteReader("RolXFuncion_Active", new Dictionary<string, object>() { { "@rol", rol.Descripcion } }).ToFunciones();
             }
             catch { MessageBox.Show("Error al acceder a database", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information); }
             
@@ -158,7 +158,7 @@ namespace ClinicaFrba.AbmRol
         {
             try
             {
-                funciones = DBHelper.ExecuteReader("Funciones_GetAll").ToFunciones();
+                funciones = ConexionesDB.ExecuteReader("Funciones_GetAll").ToFunciones();
             }
             catch { MessageBox.Show("Error al acceder a database", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information); }
             

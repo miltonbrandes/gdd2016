@@ -54,7 +54,7 @@ namespace ClinicaFrba.Pedir_Turno
 
                 try
                 {
-                    especialidadesFiltradas = DBHelper.ExecuteReader("especialidades_GetByFilerEspecialidad", parametros).ToEspecialidad2();
+                    especialidadesFiltradas = ConexionesDB.ExecuteReader("especialidades_GetByFilerEspecialidad", parametros).ToEspecialidad2();
                 }
                 catch
                 {
@@ -95,7 +95,7 @@ namespace ClinicaFrba.Pedir_Turno
 
                 try
                 {
-                    profesionalesFiltrados = DBHelper.ExecuteReader("profesional_GetByFilerEspecialidad", parametros).ToProfesional2();
+                    profesionalesFiltrados = ConexionesDB.ExecuteReader("profesional_GetByFilerEspecialidad", parametros).ToProfesional2();
                 }
                 catch
                 {
@@ -198,7 +198,7 @@ namespace ClinicaFrba.Pedir_Turno
 
             try
             {
-                especialidades = DBHelper.ExecuteReader("especialidades_GetByFilerEspecialidad", parametros).ToEspecialidad2();
+                especialidades = ConexionesDB.ExecuteReader("especialidades_GetByFilerEspecialidad", parametros).ToEspecialidad2();
             }
             catch
             {
@@ -235,7 +235,7 @@ namespace ClinicaFrba.Pedir_Turno
 
             try
             {
-                especialidades = DBHelper.ExecuteReader("especialidades_GetByFilerEspecialidad", parametros).ToEspecialidad2();
+                especialidades = ConexionesDB.ExecuteReader("especialidades_GetByFilerEspecialidad", parametros).ToEspecialidad2();
             }
             catch
             {

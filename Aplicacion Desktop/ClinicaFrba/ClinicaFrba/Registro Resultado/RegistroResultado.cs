@@ -31,7 +31,7 @@ namespace ClinicaFrba.Registro_Resultado
             
             Dictionary<string, object> parametros = new Dictionary<string, object>()
         		{ {"@matricula", profesional.Matricula} };
-            profesional.Especialidades = DBHelper.ExecuteReader("Especialidad_GetByMatricula", parametros).ToEspecialidad();
+            profesional.Especialidades = ConexionesDB.ExecuteReader("Especialidad_GetByMatricula", parametros).ToEspecialidad();
             cmbEspecialidad.DataSource = profesional.Especialidades;
             cmbEspecialidad.DisplayMember = "Descripcion";
 
@@ -45,7 +45,7 @@ namespace ClinicaFrba.Registro_Resultado
             Dictionary<string, object> parametros2 = new Dictionary<string, object>()
         		{ {"@fecha", dtpFechaTurno.Value}, {"@matricula", profesional.Matricula},{"@especialidad", ((Especialidad)cmbEspecialidad.SelectedItem).Id} };
             List<Turno> lista = new List<Turno>();
-            lista = DBHelper.ExecuteReader("GetTurnosDiaLlegaron", parametros2).ToTurno();
+            lista = ConexionesDB.ExecuteReader("GetTurnosDiaLlegaron", parametros2).ToTurno();
 
             dataGridView1.DataSource = lista;
             dataGridView1.Columns.Clear();
@@ -110,7 +110,7 @@ namespace ClinicaFrba.Registro_Resultado
                     , { "@sintomas", txtSintomas.Text }, { "@enfermedades", txtDiagnostico.Text }, {"@tiempo",ckbHorario.Checked } };
                 try
                 {
-                    DBHelper.ExecuteNonQuery("Registrar_Resultado", parametros2);
+                    ConexionesDB.ExecuteNonQuery("Registrar_Resultado", parametros2);
                     
                 }
                 catch { MessageBox.Show("No se registro el resultado. Intente nuevamente", "Registrado", MessageBoxButtons.OK, MessageBoxIcon.Error);

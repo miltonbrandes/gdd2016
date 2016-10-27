@@ -37,7 +37,7 @@ namespace Helpers
 					{"@fecha",Fecha},
 					{"@now_viejo",NowViejo}
 				};
-				DBHelper.ExecuteNonQuery("Reestablecer_Fecha",parametros);
+				ConexionesDB.ExecuteNonQuery("Reestablecer_Fecha",parametros);
 			}
 			
 			return Fecha.Add(DateTime.Now.Subtract(NowViejo));

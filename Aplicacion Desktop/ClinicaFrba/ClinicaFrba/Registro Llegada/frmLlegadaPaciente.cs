@@ -93,7 +93,7 @@ namespace ClinicaFrba.Registro_Llegada
                     {"@nroafiliado",txtNroAfiliado.Text}
 				};
                     List<Turno> listaTurnos = new List<Turno>();
-                    listaTurnos = DBHelper.ExecuteReader("Get_Turnos_Prof_Reservados", parametros).ToTurno();
+                    listaTurnos = ConexionesDB.ExecuteReader("Get_Turnos_Prof_Reservados", parametros).ToTurno();
                     dgvTurnos.DataSource = listaTurnos;
                     dgvTurnos.Columns.Clear();
                     dgvTurnos.AutoGenerateColumns = false;
@@ -162,7 +162,7 @@ namespace ClinicaFrba.Registro_Llegada
 					{"@nroafiliado", t.Afiliado}
 				};
                 List<Bono> lista = new List<Bono>();
-                lista = DBHelper.ExecuteReader("Get_Bonos_Afiliado", parametros).ToBono();
+                lista = ConexionesDB.ExecuteReader("Get_Bonos_Afiliado", parametros).ToBono();
                 //dgvTurnos.DataSource = listaTurnos;
                 if (lista.Count != 0) {
                     Dictionary<string, object> parametros2 = new Dictionary<string, object>(){
@@ -170,7 +170,7 @@ namespace ClinicaFrba.Registro_Llegada
 				};
                     try
                     {
-                        DBHelper.ExecuteNonQuery("Registrar_Llegada", parametros2);
+                        ConexionesDB.ExecuteNonQuery("Registrar_Llegada", parametros2);
                         MessageBox.Show("Se registro la llegada correctamente del horario: "+ t.Fecha.ToString(), "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     }

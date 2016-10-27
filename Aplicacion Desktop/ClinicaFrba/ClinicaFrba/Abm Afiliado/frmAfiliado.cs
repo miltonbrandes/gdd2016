@@ -95,13 +95,13 @@ namespace ClinicaFrba.Abm_Afiliado
                     {
                         var parametros = new Dictionary<string, object>() {
                     { "@username", afiliadoModificar.Username.Substring(0,5)}};
-                        roles = DBHelper.ExecuteReader("UsuarioXRol_GetRolesByUser", parametros).ToRoles();
+                        roles = ConexionesDB.ExecuteReader("UsuarioXRol_GetRolesByUser", parametros).ToRoles();
                     }
                     else
                     {
                         var parametros = new Dictionary<string, object>() {
                     { "@username", afiliadoModificar.Username}};
-                        roles = DBHelper.ExecuteReader("UsuarioXRol_GetRolesByUser", parametros).ToRoles();
+                        roles = ConexionesDB.ExecuteReader("UsuarioXRol_GetRolesByUser", parametros).ToRoles();
                     
                     }
                 }
@@ -140,7 +140,7 @@ namespace ClinicaFrba.Abm_Afiliado
                 };
             try
             {
-                plan = DBHelper.ExecuteReader("Planes_GetPorId", parametros).ToPlanes();
+                plan = ConexionesDB.ExecuteReader("Planes_GetPorId", parametros).ToPlanes();
             }
             catch
             {
@@ -149,7 +149,7 @@ namespace ClinicaFrba.Abm_Afiliado
             List<Plan> otrosPlanes = null;
             try
             {
-                otrosPlanes = DBHelper.ExecuteReader("Planes_GetAll", null).ToPlanes();
+                otrosPlanes = ConexionesDB.ExecuteReader("Planes_GetAll", null).ToPlanes();
             }
             catch
             {
@@ -175,7 +175,7 @@ namespace ClinicaFrba.Abm_Afiliado
             List<Plan> otrosPlanes = null;
             try
             {
-                otrosPlanes = DBHelper.ExecuteReader("Planes_GetAll", null).ToPlanes();
+                otrosPlanes = ConexionesDB.ExecuteReader("Planes_GetAll", null).ToPlanes();
             }
             catch
             {
@@ -432,7 +432,7 @@ namespace ClinicaFrba.Abm_Afiliado
 
                     try
                     {
-                        DBHelper.ExecuteNonQuery("Agregar_Modif_Plan", planmodif);
+                        ConexionesDB.ExecuteNonQuery("Agregar_Modif_Plan", planmodif);
                     }
                     catch
                     {
@@ -454,7 +454,7 @@ namespace ClinicaFrba.Abm_Afiliado
             }
             try
             {
-                DBHelper.ExecuteNonQuery("Afiliado_Modify", afiliado);
+                ConexionesDB.ExecuteNonQuery("Afiliado_Modify", afiliado);
             }
             catch 
             {
@@ -473,7 +473,7 @@ namespace ClinicaFrba.Abm_Afiliado
                 Usuario user;
                 try
                 {
-                    user = DBHelper.ExecuteReader("Usuario_Exists", new Dictionary<string, object>() { { "@usuarioid", txtNombre.Text + txtApellido.Text + txtDni.Text } }).ToUsuario();
+                    user = ConexionesDB.ExecuteReader("Usuario_Exists", new Dictionary<string, object>() { { "@usuarioid", txtNombre.Text + txtApellido.Text + txtDni.Text } }).ToUsuario();
 
                 }
                 catch
@@ -486,7 +486,7 @@ namespace ClinicaFrba.Abm_Afiliado
                     Afiliado afil;
                     try
                     {
-                        afil = DBHelper.ExecuteReader("Afiliado_MismoDni", new Dictionary<string, object>() { { "@dni", txtDni.Text } }).ToAfiliados();
+                        afil = ConexionesDB.ExecuteReader("Afiliado_MismoDni", new Dictionary<string, object>() { { "@dni", txtDni.Text } }).ToAfiliados();
 
                     }
                     catch
@@ -499,7 +499,7 @@ namespace ClinicaFrba.Abm_Afiliado
                     {
                         try
                         {
-                            DBHelper.ExecuteNonQuery("Afiliado_Agregar_Familiar", afiliado);
+                            ConexionesDB.ExecuteNonQuery("Afiliado_Agregar_Familiar", afiliado);
                         }
                         catch
                         {
@@ -515,7 +515,7 @@ namespace ClinicaFrba.Abm_Afiliado
                             try
                             {
                                 var dict = new Dictionary<string, object>() { { "@username", txtNombre.Text + txtApellido.Text + txtDni.Text.ToString() } };
-                                afilAgregado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", dict).ToAfiliados();
+                                afilAgregado = ConexionesDB.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", dict).ToAfiliados();
                             }
                             catch
                             {
@@ -552,7 +552,7 @@ namespace ClinicaFrba.Abm_Afiliado
                 Usuario user;
                 try
                 {
-                    user = DBHelper.ExecuteReader("Usuario_Exists", new Dictionary<string, object>() { { "@usuarioid", txtNombre.Text + txtApellido.Text + txtDni.Text } }).ToUsuario();
+                    user = ConexionesDB.ExecuteReader("Usuario_Exists", new Dictionary<string, object>() { { "@usuarioid", txtNombre.Text + txtApellido.Text + txtDni.Text } }).ToUsuario();
 
                 }
                 catch
@@ -565,7 +565,7 @@ namespace ClinicaFrba.Abm_Afiliado
                     Afiliado afil;
                     try
                     {
-                        afil = DBHelper.ExecuteReader("Afiliado_MismoDni", new Dictionary<string, object>() { { "@dni", txtDni.Text } }).ToAfiliados();
+                        afil = ConexionesDB.ExecuteReader("Afiliado_MismoDni", new Dictionary<string, object>() { { "@dni", txtDni.Text } }).ToAfiliados();
 
                     }
                     catch
@@ -578,8 +578,8 @@ namespace ClinicaFrba.Abm_Afiliado
                     {
                         try
                         {
-                            DBHelper.ExecuteNonQuery("Afiliado_Add", afiliado);
-                            DBHelper.ExecuteNonQuery("Hijos_En_Cero", new Dictionary<string, object> { { "@username", txtNombre.Text + txtApellido.Text + txtDni.Text.ToString() } });
+                            ConexionesDB.ExecuteNonQuery("Afiliado_Add", afiliado);
+                            ConexionesDB.ExecuteNonQuery("Hijos_En_Cero", new Dictionary<string, object> { { "@username", txtNombre.Text + txtApellido.Text + txtDni.Text.ToString() } });
                         }
                         catch
                         {
@@ -599,7 +599,7 @@ namespace ClinicaFrba.Abm_Afiliado
                                 try
                                 {
                                     var dict = new Dictionary<string, object>() { { "@username", txtNombre.Text + txtApellido.Text + txtDni.Text.ToString() } };
-                                    afilAgregado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", dict).ToAfiliados();
+                                    afilAgregado = ConexionesDB.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", dict).ToAfiliados();
                                 }
                                 catch
                                 {
@@ -625,7 +625,7 @@ namespace ClinicaFrba.Abm_Afiliado
                                     try
                                     {
                                         var dict = new Dictionary<string, object>() { { "@username", txtNombre.Text + txtApellido.Text + txtDni.Text.ToString() } };
-                                        afilAgregado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", dict).ToAfiliados();
+                                        afilAgregado = ConexionesDB.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", dict).ToAfiliados();
                                     }
                                     catch
                                     {
@@ -653,7 +653,7 @@ namespace ClinicaFrba.Abm_Afiliado
                                 try
                                 {
                                     var dict = new Dictionary<string, object>() { { "@username", txtNombre.Text + txtApellido.Text + txtDni.Text.ToString() } };
-                                    afilAgregado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", dict).ToAfiliados();
+                                    afilAgregado = ConexionesDB.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", dict).ToAfiliados();
                                 }
                                 catch
                                 {
@@ -687,7 +687,7 @@ namespace ClinicaFrba.Abm_Afiliado
                 Usuario user;
                 try
                 {
-                    user = DBHelper.ExecuteReader("Usuario_Exists", new Dictionary<string, object>() { { "@usuarioid", txtNombre.Text + txtApellido.Text + txtDni.Text } }).ToUsuario();
+                    user = ConexionesDB.ExecuteReader("Usuario_Exists", new Dictionary<string, object>() { { "@usuarioid", txtNombre.Text + txtApellido.Text + txtDni.Text } }).ToUsuario();
 
                 }
                 catch
@@ -700,7 +700,7 @@ namespace ClinicaFrba.Abm_Afiliado
                     Afiliado afil;
                     try
                     {
-                        afil = DBHelper.ExecuteReader("Afiliado_MismoDni", new Dictionary<string, object>() { { "@dni", txtDni.Text } }).ToAfiliados();
+                        afil = ConexionesDB.ExecuteReader("Afiliado_MismoDni", new Dictionary<string, object>() { { "@dni", txtDni.Text } }).ToAfiliados();
 
                     }
                     catch
@@ -713,7 +713,7 @@ namespace ClinicaFrba.Abm_Afiliado
                     {
                         try
                         {
-                            DBHelper.ExecuteNonQuery("Afiliado_Agregar_Familiar", afiliado);
+                            ConexionesDB.ExecuteNonQuery("Afiliado_Agregar_Familiar", afiliado);
                         }
                         catch
                         {
@@ -729,7 +729,7 @@ namespace ClinicaFrba.Abm_Afiliado
                             try
                             {
                                 var dict = new Dictionary<string, object>() { { "@username", txtNombre.Text + txtApellido.Text + txtDni.Text.ToString() } };
-                                afilAgregado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", dict).ToAfiliados();
+                                afilAgregado = ConexionesDB.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", dict).ToAfiliados();
                             }
                             catch
                             {
@@ -914,14 +914,14 @@ namespace ClinicaFrba.Abm_Afiliado
                 {
                     var parametros = new Dictionary<string, object>() {
                     { "@username", afiliadoModificar.Username.Substring(0,5)}};
-                    roles = DBHelper.ExecuteReader("UsuarioXRol_GetRolesInhabxUser", parametros).ToRoles();
+                    roles = ConexionesDB.ExecuteReader("UsuarioXRol_GetRolesInhabxUser", parametros).ToRoles();
                     usu = afiliadoModificar.Username.Substring(0, 5);
                 }
                 else
                 {
                     var parametros = new Dictionary<string, object>() {
                     { "@username", afiliadoModificar.Username}};
-                    roles = DBHelper.ExecuteReader("UsuarioXRol_GetRolesInhabxUser", parametros).ToRoles();
+                    roles = ConexionesDB.ExecuteReader("UsuarioXRol_GetRolesInhabxUser", parametros).ToRoles();
                     usu = afiliadoModificar.Username;
                 }
             }
@@ -942,7 +942,7 @@ namespace ClinicaFrba.Abm_Afiliado
                 }
                 try
                 {
-                    DBHelper.ExecuteNonQuery("RolXUsuario_Activate", new Dictionary<string, object>() { { "@rol", rolAsignado.Id }, { "@usuario", usu } });
+                    ConexionesDB.ExecuteNonQuery("RolXUsuario_Activate", new Dictionary<string, object>() { { "@rol", rolAsignado.Id }, { "@usuario", usu } });
 
                 }
                 catch { MessageBox.Show("Error al acceder a database", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information); }

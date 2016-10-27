@@ -37,7 +37,7 @@ namespace ClinicaFrba
                     //OBTENGO EL USUARIO Y ME FIJO SI ESTA ACTIVO
                     try
                     {
-                        usuario = DBHelper.ExecuteReader("Usuario_Get", new Dictionary<string, object>() { { "@usuario", username } }).ToUsuario();
+                        usuario = ConexionesDB.ExecuteReader("Usuario_Get", new Dictionary<string, object>() { { "@usuario", username } }).ToUsuario();
                     }
                     catch(Exception excepcion)
                     {
@@ -58,7 +58,7 @@ namespace ClinicaFrba
                     //REALIZO EL LOGIN
                     try
                     {
-                        usuario = DBHelper.ExecuteReader("Usuario_LogIn", parametros).ToUsuario();
+                        usuario = ConexionesDB.ExecuteReader("Usuario_LogIn", parametros).ToUsuario();
                     }
                     catch
                     {
@@ -69,7 +69,7 @@ namespace ClinicaFrba
                         //OBTENGO LOS ROLES DEL USUARIO
                         try
                         {
-                            roles = DBHelper.ExecuteReader("UsuarioXRol_GetRolesByUser", new Dictionary<string, object>() { { "@Username", usuario.Username } }).ToRoles();
+                            roles = ConexionesDB.ExecuteReader("UsuarioXRol_GetRolesByUser", new Dictionary<string, object>() { { "@Username", usuario.Username } }).ToRoles();
                         }
                         catch
                         {
@@ -100,19 +100,19 @@ namespace ClinicaFrba
                         //LE SUMO UN INTENTO PORQUE FALLO LA CONTRASEÑA
                         try
                         {
-                            DBHelper.ExecuteNonQuery("Usuario_SumarIntento", new Dictionary<string, object>() { { "@Username", username } });
+                            ConexionesDB.ExecuteNonQuery("Usuario_SumarIntento", new Dictionary<string, object>() { { "@Username", username } });
                         }
                         catch
                         {
                             MessageBox.Show("Hubo un error al acceder a la base de datos, intente nuevamente", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
-                        var usu = DBHelper.ExecuteReader("Usuario_Get", new Dictionary<string, object>() { { "@usuario", username } }).ToUsuario();
+                        var usu = ConexionesDB.ExecuteReader("Usuario_Get", new Dictionary<string, object>() { { "@usuario", username } }).ToUsuario();
                         if (usu != null && usu.Intentos >= 3)
                         {
                             //LO INHABILITO SI YA HIZO 3 INTENTOS MAL
                             try
                             {
-                                DBHelper.ExecuteNonQuery("Usuario_Inhabilitar", new Dictionary<string, object> { { "@Username", username } });
+                                ConexionesDB.ExecuteNonQuery("Usuario_Inhabilitar", new Dictionary<string, object> { { "@Username", username } });
                             }
                             catch
                             {

@@ -33,7 +33,7 @@ namespace ClinicaFrba
         {
             int tamanio = 0;
             int cantbot = 0;
-            var funciones = DBHelper.ExecuteReader("RolXFuncion_GetFunByRol", new Dictionary<string, object>() { { "@rol", rol.Id } }).ToFunciones();
+            var funciones = ConexionesDB.ExecuteReader("RolXFuncion_GetFunByRol", new Dictionary<string, object>() { { "@rol", rol.Id } }).ToFunciones();
             var botones = new List<Control>();
             //Obtengo los botones de la vista
             foreach (Control control in Controls)
@@ -62,23 +62,23 @@ namespace ClinicaFrba
             //if(usuario.Username == "admin"
         	Dictionary<string, object> parametros = new Dictionary<string, object>()
         		{ {"@username", usuario.Username} };
-        	profesional = DBHelper.ExecuteReader("Profesional_GetProfesionalSegunUsuario", parametros).ToProfesionales();
+        	profesional = ConexionesDB.ExecuteReader("Profesional_GetProfesionalSegunUsuario", parametros).ToProfesionales();
         	
         	parametros = new Dictionary<string, object>()
         		{ {"@matricula",profesional.Matricula} };
-        	profesional.Especialidades = DBHelper.ExecuteReader("Especialidad_GetByMatricula",parametros).ToEspecialidad();
+        	profesional.Especialidades = ConexionesDB.ExecuteReader("Especialidad_GetByMatricula",parametros).ToEspecialidad();
         }
         public static void cargarAfiliado()
         {
             if (usuario.Username == "admin")
             {   
                 Dictionary<string, object> parametros = new Dictionary<string, object>() { { "@username",  "administrador32405354"} };
-                afiliado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", parametros).ToAfiliados();
+                afiliado = ConexionesDB.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", parametros).ToAfiliados();
             }
             else
             {
                 Dictionary<string, object> parametros = new Dictionary<string, object>() { { "@username", usuario.Username } };
-                afiliado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", parametros).ToAfiliados();
+                afiliado = ConexionesDB.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", parametros).ToAfiliados();
             }
         }
         

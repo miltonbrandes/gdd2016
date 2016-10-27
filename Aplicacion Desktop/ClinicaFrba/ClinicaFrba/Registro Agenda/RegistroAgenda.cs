@@ -64,7 +64,7 @@ namespace ClinicaFrba.Registro_Agenda
 			Dictionary<string,object> parametros = new Dictionary<string,object>(){
 				{"@matricula",profesional.Matricula},
 			};
-			profesional.Especialidades = DBHelper.ExecuteReader("Get_Especialidades_Sin_Agenda",parametros).ToEspecialidad();
+			profesional.Especialidades = ConexionesDB.ExecuteReader("Get_Especialidades_Sin_Agenda",parametros).ToEspecialidad();
             if (profesional.Especialidades.Count != 0)
             {
                 listaEspecialidades.DataSource = profesional.Especialidades;
@@ -80,6 +80,10 @@ namespace ClinicaFrba.Registro_Agenda
                 sinEspecialidades = true;
             }
 		}
+        bool validarHorasGuardadas()
+        {
+            return true;
+        }
 		
 		void ButtonOKClick(object sender, EventArgs e)
 		{
@@ -94,6 +98,11 @@ namespace ClinicaFrba.Registro_Agenda
                 MessageBox.Show("Debe seleccionar una especialidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            if (!validarHorasGuardadas())
+            {
+                MessageBox.Show("Este profesional tiene mas de 48 hs por semana", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 			
 			//Ahora tengo que enviarlo a la bd.
 			int agenda_id;
@@ -105,12 +114,11 @@ namespace ClinicaFrba.Registro_Agenda
 				{"@fecha_fin",monthCalendar2.SelectionStart}
 			};
 			List<string> outputParam = new List<string>(){"@id_agenda"};
-			SqlParameterCollection sqlParameters = DBHelper.ExecuteNonQueryWithOutput("Agenda_Agregar",outputParam,parametros);
+			SqlParameterCollection sqlParameters = ConexionesDB.ExecuteNonQueryWithOutput("Agenda_Agregar",outputParam,parametros);
 			agenda_id = (int)sqlParameters[parametros.Count].Value;
 			
 			//Ya agregue la agenda, ahora tengo que enviar todas las franjas
-			DBHelper.DB.Open();
-			//SqlTransaction transaction = DBHelper.DB.BeginTransaction();
+            ConexionesDB.DB.Open();
 			bool transaccionFallida = false;
 			int i,j;
 			for(i=0;i<4;i=i+2){
@@ -126,7 +134,7 @@ namespace ClinicaFrba.Registro_Agenda
 							{"@minuto_fin",matrizHoras[i+1,j].minuto},
 						};
 						
-						if(DBHelper.ExecuteNonQueryWithReturn("Franja_Agregar",parametros) != 0)
+						if(ConexionesDB.ExecuteNonQueryWithReturn("Franja_Agregar",parametros) != 0)
 							transaccionFallida = true;
 					}
 				}
@@ -135,12 +143,15 @@ namespace ClinicaFrba.Registro_Agenda
 			if(transaccionFallida){
 				//transaction.Rollback();
 				MessageBox.Show("La cantidad de horas introducidas entre todas las especialidades superan las 48.",
-				                "Cantidad de horas superan 48",
+				                "Cantidad de horas superan 48, No se pudo registrar la agenda",
 				                MessageBoxButtons.OK,
 				                MessageBoxIcon.Error);
+                ConexionesDB.ExecuteNonQuery("Borrar_Franjas_Agenda", new Dictionary<string, object>() {{ "@agenda", agenda_id}});
+                ConexionesDB.DB.Close();
+                return;
 			}
 			//else transaction.Commit();
-			DBHelper.DB.Close();
+			ConexionesDB.DB.Close();
 			
 			//for(DateTime date = StartDate; date.Date <= EndDate.Date; date = date.AddDays(1))
 			for(DateTime fecha = monthCalendar1.SelectionStart;
@@ -191,7 +202,7 @@ namespace ClinicaFrba.Registro_Agenda
 					{"@especialidad",profesional.Especialidades[listaEspecialidades.SelectedIndex].Id},
 					{"@fecha",fecha}
 				};
-				DBHelper.ExecuteNonQuery("Turno_Agregar",parametros);
+				ConexionesDB.ExecuteNonQuery("Turno_Agregar",parametros);
                 fecha = fecha.AddHours(-aux.hora);
                 fecha = fecha.AddMinutes(-aux.minuto);
 			}

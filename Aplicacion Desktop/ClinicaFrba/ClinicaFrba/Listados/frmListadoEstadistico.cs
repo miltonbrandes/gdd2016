@@ -305,17 +305,17 @@ namespace ClinicaFrba.Listados
                     case 0:
                         if (cmb_filtro.SelectedItem.Equals("Afiliado"))
                         {
-                            List<Listado_1> lista_1 = DBHelper.ExecuteReader("listado_Mas_Cancelaciones_Especialidad_Afiliado", (new Dictionary<string, object> { { "@fecha1", fecha1 }, { "@fecha2", fecha2 } })).ToListado_1();
+                            List<Listado_1> lista_1 = ConexionesDB.ExecuteReader("listado_Mas_Cancelaciones_Especialidad_Afiliado", (new Dictionary<string, object> { { "@fecha1", fecha1 }, { "@fecha2", fecha2 } })).ToListado_1();
                             Load_Listado_1(lista_1);
                         }
                         if (cmb_filtro.SelectedItem.Equals("Profesional"))
                         {
-                            List<Listado_1> lista_1 = DBHelper.ExecuteReader("listado_Mas_Cancelaciones_Especialidad_Profesional", (new Dictionary<string, object> { { "@fecha1", fecha1 }, { "@fecha2", fecha2 } })).ToListado_1();
+                            List<Listado_1> lista_1 = ConexionesDB.ExecuteReader("listado_Mas_Cancelaciones_Especialidad_Profesional", (new Dictionary<string, object> { { "@fecha1", fecha1 }, { "@fecha2", fecha2 } })).ToListado_1();
                             Load_Listado_1(lista_1);
                         }
                         if (cmb_filtro.SelectedItem.Equals("Ambos"))
                         {
-                            List<Listado_1> lista_1 = DBHelper.ExecuteReader("listado_Mas_Cancelaciones_Especialidad", (new Dictionary<string, object> { { "@fecha1", fecha1 }, { "@fecha2", fecha2 } })).ToListado_1();
+                            List<Listado_1> lista_1 = ConexionesDB.ExecuteReader("listado_Mas_Cancelaciones_Especialidad", (new Dictionary<string, object> { { "@fecha1", fecha1 }, { "@fecha2", fecha2 } })).ToListado_1();
                             Load_Listado_1(lista_1);
                         }
 
@@ -327,7 +327,7 @@ namespace ClinicaFrba.Listados
                             { "@fecha2", fecha2 }, 
                             { "@plan", ((Plan)cmb_filtro.SelectedItem).Descripcion },
                             };
-                        List<Listado_2> lista_2 = DBHelper.ExecuteReader("listado_Profesionales_Consultados", parametros).ToListado_2();
+                        List<Listado_2> lista_2 = ConexionesDB.ExecuteReader("listado_Profesionales_Consultados", parametros).ToListado_2();
                         Load_Listado_2(lista_2);
                         break;
                     case 2:
@@ -336,15 +336,15 @@ namespace ClinicaFrba.Listados
                             { "@fecha2", fecha2 },
                             { "@especialidad ", ((Especialidad)cmb_filtro.SelectedItem).Descripcion } 
                             };
-                        List<Listado_3> lista_3 = DBHelper.ExecuteReader("listado_Profesionales_Menos_Horas", parametros).ToListado_3();
+                        List<Listado_3> lista_3 = ConexionesDB.ExecuteReader("listado_Profesionales_Menos_Horas", parametros).ToListado_3();
                         Load_Listado_3(lista_3);
                         break;
                     case 3:
-                        List<Listado_4> lista_4 = DBHelper.ExecuteReader("listado_Afiliado_Mas_Bonos", (new Dictionary<string, object> { { "@fecha1", fecha1 }, { "@fecha2", fecha2 } })).ToListado_4();
+                        List<Listado_4> lista_4 = ConexionesDB.ExecuteReader("listado_Afiliado_Mas_Bonos", (new Dictionary<string, object> { { "@fecha1", fecha1 }, { "@fecha2", fecha2 } })).ToListado_4();
                         Load_Listado_4(lista_4);
                         break;
                     case 4:
-                        List<Listado_5> lista_5 = DBHelper.ExecuteReader("listado_Especialidad_Mas_Bonos", (new Dictionary<string, object> { { "@fecha1", fecha1 }, { "@fecha2", fecha2 } })).ToListado_5();
+                        List<Listado_5> lista_5 = ConexionesDB.ExecuteReader("listado_Especialidad_Mas_Bonos", (new Dictionary<string, object> { { "@fecha1", fecha1 }, { "@fecha2", fecha2 } })).ToListado_5();
                         Load_Listado_5(lista_5);
                         break;
                 }
@@ -366,14 +366,14 @@ namespace ClinicaFrba.Listados
         }
         public void funcion_para_listado_2()
         {
-            List<Plan> planes = DBHelper.ExecuteReader("Planes_GetAll").ToPlanes();
+            List<Plan> planes = ConexionesDB.ExecuteReader("Planes_GetAll").ToPlanes();
             cmb_filtro.DataSource = planes;
             cmb_filtro.DisplayMember = "Descripcion";
         }
 
         public void funcion_para_listado_3()
         {
-            List<Especialidad> especialidad = DBHelper.ExecuteReader("Get_Especialidades_All_2").ToEspecialidad();
+            List<Especialidad> especialidad = ConexionesDB.ExecuteReader("Get_Especialidades_All_2").ToEspecialidad();
             cmb_filtro.DataSource = especialidad;
             cmb_filtro.DisplayMember = "Descripcion";
 

@@ -30,7 +30,7 @@ namespace ClinicaFrba.Cancelar_Atencion
         {
             Dictionary<string, object> parametros = new Dictionary<string, object>() { { "@nroafiliado", afiliado.NroAfiliado }, { "@fecha", dtpFecha.Value.Date } };
             List<Turno> t = new List<Turno>();
-            t = DBHelper.ExecuteReader("Turnos_Afiliado_Mayor", parametros).ToTurno();
+            t = ConexionesDB.ExecuteReader("Turnos_Afiliado_Mayor", parametros).ToTurno();
             dataGridView1.DataSource = t;
             dataGridView1.Columns.Clear();
             dataGridView1.AutoGenerateColumns = false;
@@ -77,7 +77,7 @@ namespace ClinicaFrba.Cancelar_Atencion
                         List<Turno> t = new List<Turno>();
                         try
                         {
-                            t = DBHelper.ExecuteReader("Cancelar_Turno_Afiliado", parametros).ToTurno();
+                            t = ConexionesDB.ExecuteReader("Cancelar_Turno_Afiliado", parametros).ToTurno();
                             //dataGridView1.DataSource = t;
                         }
                         catch {
@@ -126,7 +126,7 @@ namespace ClinicaFrba.Cancelar_Atencion
             {
                 Dictionary<string, object> parametros = new Dictionary<string, object>() { { "@nroafiliado", afiliado.NroAfiliado }, { "@fecha", dtpFecha.Value.Date } };
                 List < Turno > t = new List<Turno>();
-                t = DBHelper.ExecuteReader("Turnos_Afiliado", parametros).ToTurno();
+                t = ConexionesDB.ExecuteReader("Turnos_Afiliado", parametros).ToTurno();
                 dataGridView1.DataSource = t;
                 //load_datagrid();
             }

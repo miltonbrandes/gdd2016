@@ -37,7 +37,7 @@ namespace ClinicaFrba.Cancelar_Atencion
             try
             {
                 List<Fecha> f = new List<Fecha>();
-                f = DBHelper.ExecuteReader("Get_Dias_Turno_Prof", parametros).ToFecha();
+                f = ConexionesDB.ExecuteReader("Get_Dias_Turno_Prof", parametros).ToFecha();
                 drop_fecha.DataSource = f;
                 drop_fecha.DisplayMember = "DiaMesAnio";
             }
@@ -84,7 +84,7 @@ namespace ClinicaFrba.Cancelar_Atencion
                                     };
                                         try
                                         {
-                                            DBHelper.ExecuteNonQuery("Cancelar_Turnos_ProfxFranja", parametros);
+                                            ConexionesDB.ExecuteNonQuery("Cancelar_Turnos_ProfxFranja", parametros);
                                         }
                                         catch
                                         {
@@ -131,7 +131,7 @@ namespace ClinicaFrba.Cancelar_Atencion
 
                             try
                             {
-                                DBHelper.ExecuteNonQuery("Cancelar_Turnos_ProfxFranja", parametros);
+                                ConexionesDB.ExecuteNonQuery("Cancelar_Turnos_ProfxFranja", parametros);
                             }
                             catch
                             {
@@ -159,7 +159,7 @@ namespace ClinicaFrba.Cancelar_Atencion
                                 };
                                 try
                                 {
-                                    DBHelper.ExecuteNonQuery("Cancelar_Turnos_Varios_Dias", parametros);
+                                    ConexionesDB.ExecuteNonQuery("Cancelar_Turnos_Varios_Dias", parametros);
                                 }
                                 catch
                                 {

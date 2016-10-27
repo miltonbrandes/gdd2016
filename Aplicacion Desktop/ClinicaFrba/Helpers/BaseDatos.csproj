@@ -44,8 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigTime.cs" />
-    <Compile Include="Conversiones.cs" />
-    <Compile Include="DBHelper.cs" />
+    <Compile Include="ConversionesAObjetos.cs" />
+    <Compile Include="ConexionesDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

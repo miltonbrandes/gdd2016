@@ -8,14 +8,14 @@ using System.Data;
 namespace Helpers
 {
     //http://www.codeproject.com/Articles/4416/Beginners-guide-to-accessing-SQL-Server-through-C
-    public static class DBHelper
+    public static class ConexionesDB
     {
         //DB: DataBase
         public static SqlConnection DB;
         static string conn = ConfigurationManager.AppSettings["connection-string"];
         //public static DateTime fecha = ConfigTime.getFecha();
 
-        static DBHelper()
+        static ConexionesDB()
         {
             DB = new SqlConnection(conn);
         }
@@ -24,6 +24,10 @@ namespace Helpers
         public static void ExecuteNonQuery(string SP, Dictionary<string, object> parametros = null)
         {
             if (parametros == null) parametros = new Dictionary<string, object>();
+            if (DB != null && DB.State == ConnectionState.Open)
+            {
+                DB.Close();
+            }
             DB.Open();
             SqlCommand command = new SqlCommand("NOT_NULL." + SP, DB);
             command.CommandType = System.Data.CommandType.StoredProcedure;
@@ -39,6 +43,10 @@ namespace Helpers
         public static SqlParameterCollection ExecuteNonQueryWithOutput(string SP, List<string> outputParam, Dictionary<string, object> parametros = null )
         {
             if (parametros == null) parametros = new Dictionary<string, object>();
+            if (DB != null && DB.State == ConnectionState.Open)
+            {
+                DB.Close();
+            }
             DB.Open();
             SqlCommand command = new SqlCommand("NOT_NULL." + SP, DB);
             command.CommandType = System.Data.CommandType.StoredProcedure;

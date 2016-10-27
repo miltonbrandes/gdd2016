@@ -1247,7 +1247,43 @@ GO
 	SET @id_agenda = @@IDENTITY
 	END
   GO
-  
+  CREATE PROCEDURE NOT_NULL.Borrar_Franjas_Agenda(@agenda int)
+  as
+  begin
+	delete from NOT_NULL.franja_horaria where agenda_id = @agenda
+	delete from NOT_NULL.agenda where agenda_id = @agenda
+	update NOT_NULL.medicoXespecialidad set medxesp_agenda = null where medxesp_agenda = @agenda
+  end
+  go
+
+  CREATE PROCEDURE NOT_NULL.Obtener_Horas_Profesional(@matricula int)
+  AS BEGIN;
+	DECLARE @horaInicio int
+	DECLARE @minutoInicio int
+	DECLARE @horaFin int
+	DECLARE @minutoFin int
+	DECLARE @HorasMedico int
+	DECLARE cursorFranjas CURSOR
+	FOR	(SELECT f.hora_inicio,f.minuto_inicio,f.hora_fin,f.minuto_fin
+		 FROM NOT_NULL.agenda a, NOT_NULL.franja_horaria f, NOT_NULL.medicoXespecialidad mxe
+		 WHERE f.agenda_id = a.agenda_id
+			AND mxe.medxesp_profesional = @matricula
+			AND mxe.medxesp_agenda = a.agenda_id)
+	OPEN cursorFranjas
+	FETCH cursorFranjas INTO @horaInicio,@minutoInicio,@horaFin,@minutoFin
+
+	--Le sumo todos los minutos que ya tenga
+	WHILE(@@FETCH_STATUS = 0)
+	BEGIN
+		SET @HorasMedico = @HorasMedico + (@horaFin*60 + @minutoFin) - (@horaInicio*60 + @minutoInicio)
+		FETCH cursorFranjas INTO @horaInicio,@minutoInicio,@horaFin,@minutoFin
+	END
+	CLOSE cursorFranjas
+	DEALLOCATE cursorFranjas
+	RETURN @HorasMedico
+  END
+  GO
+
   --AGREGAR FRANJA
   CREATE PROCEDURE NOT_NULL.Franja_Agregar(@id_agenda int, @matricula int, 
 				@dia int, @hora_inicio int, @minuto_inicio int, @hora_fin int, @minuto_fin int)
@@ -1299,7 +1335,7 @@ GO
   END
   GO
   
-  CREATE PROCEDURE NOT_NULL.Agregar_Franja_A_Todos_Los_Medicos
+  /*CREATE PROCEDURE NOT_NULL.Agregar_Franja_A_Todos_Los_Medicos
   AS BEGIN
 	
 	DECLARE @ultimoMedico int
@@ -1405,7 +1441,7 @@ GO
 	DEALLOCATE cursorEsp
 
   END
-  GO
+  GO*/
 
   CREATE PROCEDURE NOT_NULL.Get_medxesp_id(@matricula int, @especialidad int)
   AS BEGIN
@@ -1886,5 +1922,5 @@ create procedure NOT_NULL.Cancelar_Turnos_Varios_Dias(@motivo varchar(255), @tip
 END
 GO
 SET NOCOUNT ON;
-EXECUTE NOT_NULL.Agregar_Franja_A_Todos_Los_Medicos
-GO
+/*EXECUTE NOT_NULL.Agregar_Franja_A_Todos_Los_Medicos
+GO*/

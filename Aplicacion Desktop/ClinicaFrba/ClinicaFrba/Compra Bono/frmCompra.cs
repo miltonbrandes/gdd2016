@@ -49,7 +49,7 @@ namespace ClinicaFrba.Compra_Bono
                         int.TryParse(textBox_cantidad.Text, out cant);
                         if (cant > 0)
                         {
-                            afiliado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunNro", new Dictionary<string, object> { { "@nroAfil", nro } }).ToAfiliados();
+                            afiliado = ConexionesDB.ExecuteReader("Afiliado_GetAfiliadoSegunNro", new Dictionary<string, object> { { "@nroAfil", nro } }).ToAfiliados();
                         }
                         else {
                             label_cantidad.Text = "Cantidad:";
@@ -78,7 +78,7 @@ namespace ClinicaFrba.Compra_Bono
                         int.TryParse(textBox_cantidad.Text, out cant);
                         if (cant > 0)
                         {
-                            afiliado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", new Dictionary<string, object> { { "@username", "administrador32405354" } }).ToAfiliados();
+                            afiliado = ConexionesDB.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", new Dictionary<string, object> { { "@username", "administrador32405354" } }).ToAfiliados();
                         }
                         else
                         {
@@ -92,7 +92,7 @@ namespace ClinicaFrba.Compra_Bono
                         int.TryParse(textBox_cantidad.Text, out cant);
                         if (cant > 0)
                         {
-                            afiliado = DBHelper.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", new Dictionary<string, object> { { "@username", usuario.Username } }).ToAfiliados();
+                            afiliado = ConexionesDB.ExecuteReader("Afiliado_GetAfiliadoSegunUsuario", new Dictionary<string, object> { { "@username", usuario.Username } }).ToAfiliados();
                         }
                         else
                         {
@@ -106,7 +106,7 @@ namespace ClinicaFrba.Compra_Bono
                 }
                 if (afiliado != null)
                 {
-                    plan = DBHelper.ExecuteReader("Planes_GetPlanAfiliado", new Dictionary<string, object> { { "@Afiliado_nro", afiliado.NroAfiliado } }).ToPlan();
+                    plan = ConexionesDB.ExecuteReader("Planes_GetPlanAfiliado", new Dictionary<string, object> { { "@Afiliado_nro", afiliado.NroAfiliado } }).ToPlan();
                     cantidad = Int32.Parse(textBox_cantidad.Text);
                     label_cantidad.Text = "Cantidad: " + cantidad;
 
@@ -135,7 +135,7 @@ namespace ClinicaFrba.Compra_Bono
                 int minutos = ConfigTime.getFecha().Minute;
                 int segundos = ConfigTime.getFecha().Second;
                 DateTime fechaactual = ConfigTime.getFechaSinHora().AddHours(horas).AddMinutes(minutos).AddSeconds(segundos);
-                DBHelper.ExecuteReader("Comprar_Bono",
+                ConexionesDB.ExecuteReader("Comprar_Bono",
                         new Dictionary<string, object> { 
                     { "@cantidad", cantidad },
                     { "@precio", precio },

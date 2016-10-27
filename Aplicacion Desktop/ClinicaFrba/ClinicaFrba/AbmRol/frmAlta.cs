@@ -20,7 +20,7 @@ namespace ClinicaFrba.AbmRol
             InitializeComponent();
             try
             {
-                funciones = DBHelper.ExecuteReader("Funciones_GetAll").ToFunciones();
+                funciones = ConexionesDB.ExecuteReader("Funciones_GetAll").ToFunciones();
             }
             catch { MessageBox.Show("Error al acceder a database", "Intente nuevamente", MessageBoxButtons.OK, MessageBoxIcon.Information); }
             foreach (var fun in funciones)
@@ -38,7 +38,7 @@ namespace ClinicaFrba.AbmRol
         private void btnCrear_Click_1(object sender, EventArgs e)
         {
             var nombre = txtNombre.Text;
-            var rol = DBHelper.ExecuteReader("Rol_Exists", new Dictionary<string, object>() { { "@rol", nombre } }).ToRol();
+            var rol = ConexionesDB.ExecuteReader("Rol_Exists", new Dictionary<string, object>() { { "@rol", nombre } }).ToRol();
             if (rol == null)
             {
                 var funcionesSeleccionadas = lstFunciones.CheckedItems;
@@ -46,12 +46,12 @@ namespace ClinicaFrba.AbmRol
                 {
                     try
                     {
-                        DBHelper.ExecuteNonQuery("Rol_Add", new Dictionary<string, object>() { { "@rol", nombre } });
-                        rol = DBHelper.ExecuteReader("Rol_GetByName", new Dictionary<string, object>() { { "@nombre", nombre } }).ToRol();
+                        ConexionesDB.ExecuteNonQuery("Rol_Add", new Dictionary<string, object>() { { "@rol", nombre } });
+                        rol = ConexionesDB.ExecuteReader("Rol_GetByName", new Dictionary<string, object>() { { "@nombre", nombre } }).ToRol();
                         foreach (string fun in funcionesSeleccionadas)
                         {
                             var id = funciones.FirstOrDefault(x => x.Descripcion == fun).Id;
-                            DBHelper.ExecuteNonQuery("RolXFuncion_Add", new Dictionary<string, object>() { { "@rol", rol.Id }, { "@funcion", id } });
+                            ConexionesDB.ExecuteNonQuery("RolXFuncion_Add", new Dictionary<string, object>() { { "@rol", rol.Id }, { "@funcion", id } });
                         }
                         MessageBox.Show("Insertado con exito", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         txtNombre.Text = "";

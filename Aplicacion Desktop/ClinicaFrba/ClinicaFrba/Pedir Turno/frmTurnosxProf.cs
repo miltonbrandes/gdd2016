@@ -47,7 +47,7 @@ namespace ClinicaFrba.Pedir_Turno
 
             try
             {
-                turnosFiltrados = DBHelper.ExecuteReader("turnos_GetByFilerProfesional", parametros).ToTurnosProc();
+                turnosFiltrados = ConexionesDB.ExecuteReader("turnos_GetByFilerProfesional", parametros).ToTurnosProc();
             }
             catch
             {
@@ -117,7 +117,7 @@ namespace ClinicaFrba.Pedir_Turno
                 };
                 try
                 {
-                    DBHelper.ExecuteReader("reservarTurno_GetByFilerProfesional", parametros);
+                    ConexionesDB.ExecuteReader("reservarTurno_GetByFilerProfesional", parametros);
                 }
                 catch
                 {

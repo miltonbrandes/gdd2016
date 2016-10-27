@@ -8,7 +8,7 @@ using System.Configuration;
 
 namespace Helpers
 {
-    public static class Conversiones
+    public static class ConversionesAObjetos
     {
         #region USUARIO
         public static Usuario ToUsuario(this SqlDataReader rdr)
@@ -29,7 +29,7 @@ namespace Helpers
                     Intentos = (int)rdr["usuario_cant_intentos"]
                 });
             }
-            DBHelper.DB.Close();
+            ConexionesDB.DB.Close();
             return list;
         }
         #endregion
@@ -64,7 +64,7 @@ namespace Helpers
                 });
 
             }
-            DBHelper.DB.Close();
+            ConexionesDB.DB.Close();
             return list;
         }
         #endregion
@@ -89,7 +89,7 @@ namespace Helpers
                     PlanViejo = (decimal)rdr["modif_plan_viejo"],
                 });
             }
-            DBHelper.DB.Close();
+            ConexionesDB.DB.Close();
             return list;
         }
         #endregion
@@ -123,7 +123,7 @@ namespace Helpers
                        TipoDocumento = (string)rdr["afiliado_tipo_dni"],
                    });
             }
-            DBHelper.DB.Close();
+            ConexionesDB.DB.Close();
             return list;
         }
         #endregion
@@ -154,7 +154,7 @@ namespace Helpers
 
                 });
             }
-            DBHelper.DB.Close();
+            ConexionesDB.DB.Close();
             return list;
         }
         #endregion
@@ -176,7 +176,7 @@ namespace Helpers
                     Direccion = (string)rdr["profesional_direccion"]
                 });
             }
-            DBHelper.DB.Close();
+            ConexionesDB.DB.Close();
             return list;
         }
         #endregion
@@ -198,7 +198,7 @@ namespace Helpers
                     Habilitado = (bool)rdr["rol_habilitado"]
                 });
             }
-            DBHelper.DB.Close();
+            ConexionesDB.DB.Close();
             return list;
         }
         #endregion
@@ -220,7 +220,7 @@ namespace Helpers
                     //Activo = (bool)rdr["funcionXrol_activo"]
                 });
             }
-            DBHelper.DB.Close();
+            ConexionesDB.DB.Close();
             return list;
         }
         #endregion
@@ -244,7 +244,7 @@ namespace Helpers
                     Tipo = (string)rdr["tipo_especialidad_descripcion"]
                 });
             }
-            DBHelper.DB.Close();
+            ConexionesDB.DB.Close();
             return list;
         }
         #endregion
@@ -264,7 +264,7 @@ namespace Helpers
                     Tipo = (string)rdr["especialidad_tipo"]
                 });
             }
-            DBHelper.DB.Close();
+            ConexionesDB.DB.Close();
             return list;
         }
         #endregion
@@ -301,7 +301,7 @@ namespace Helpers
                     Afiliado = afil,
                 });
             }
-            DBHelper.DB.Close();
+            ConexionesDB.DB.Close();
             return list;
         }
         #endregion
@@ -319,7 +319,7 @@ namespace Helpers
                     Cantidad = (int)rdr["cantidad_cancelaciones"],
                 });
             }
-            DBHelper.DB.Close();
+            ConexionesDB.DB.Close();
             return list;
         }
         public static List<Listado_2> ToListado_2(this SqlDataReader rdr)
@@ -337,7 +337,7 @@ namespace Helpers
                     Especialidad = (string)rdr["especialidad_descripcion"],
                 });
             }
-            DBHelper.DB.Close();
+            ConexionesDB.DB.Close();
             return list;
         }
         public static List<Listado_3> ToListado_3(this SqlDataReader rdr)
@@ -354,7 +354,7 @@ namespace Helpers
                     Cantidad = (decimal)rdr["cantidad_horas"],
                 });
             }
-            DBHelper.DB.Close();
+            ConexionesDB.DB.Close();
             return list;
         }
         public static List<Listado_4> ToListado_4(this SqlDataReader rdr)
@@ -372,7 +372,7 @@ namespace Helpers
                     Grupo_Familiar = (string)rdr["pertenece_grupo_familiar"],
                 });
             }
-            DBHelper.DB.Close();
+            ConexionesDB.DB.Close();
             return list;
         }
         public static List<Listado_5> ToListado_5(this SqlDataReader rdr)
@@ -387,7 +387,7 @@ namespace Helpers
                     Cantidad = (int)rdr["cantidad_bonos"],
                 });
             }
-            DBHelper.DB.Close();
+            ConexionesDB.DB.Close();
             return list;
         }
         #endregion
@@ -467,7 +467,7 @@ namespace Helpers
                        Tiempo = tiempo,
                    });
             }
-            DBHelper.DB.Close();
+            ConexionesDB.DB.Close();
             return list;
         }
         #endregion
@@ -487,7 +487,7 @@ namespace Helpers
                     
                 });
             }
-            DBHelper.DB.Close();
+            ConexionesDB.DB.Close();
             return list;
         }
         #endregion
@@ -506,7 +506,7 @@ namespace Helpers
                     horario = (string)rdr["hora"]
                 });
             }
-            DBHelper.DB.Close();
+            ConexionesDB.DB.Close();
             return list;
         }
         #endregion
@@ -553,7 +553,7 @@ namespace Helpers
                     NroBonoAfiliado = nrobono,
                 });
             }
-            DBHelper.DB.Close();
+            ConexionesDB.DB.Close();
             return list;
         }
         #endregion
@@ -573,7 +573,7 @@ namespace Helpers
                     DiaMesAnio = (DateTime)rdr["turno_fecha"],
                 });
             }
-            DBHelper.DB.Close();
+            ConexionesDB.DB.Close();
             return list;
         }
         #endregion
