@@ -29,6 +29,7 @@ namespace ClinicaFrba.Listados
 
         private void frmListadoEstadistico_Load(object sender, EventArgs e)
         {
+            
             Main acerrar = null;
             FormCollection fc = Application.OpenForms;
             foreach (Form frm in fc)
@@ -353,6 +354,30 @@ namespace ClinicaFrba.Listados
             if (aabrir != null)
             {
                 aabrir.Show();
+            }
+        }
+
+        private void cmbSemestre_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbSemestre.SelectedItem.ToString() == "1")
+            {
+                comboBox1.Items.Clear();
+                comboBox1.Items.Add(1);
+                comboBox1.Items.Add(2);
+                comboBox1.Items.Add(3);
+                comboBox1.Items.Add(4);
+                comboBox1.Items.Add(5);
+                comboBox1.Items.Add(6);
+            }
+            else if (cmbSemestre.SelectedItem.ToString() == "2")
+            {
+                comboBox1.Items.Clear();
+                comboBox1.Items.Add(7);
+                comboBox1.Items.Add(8);
+                comboBox1.Items.Add(9);
+                comboBox1.Items.Add(10);
+                comboBox1.Items.Add(11);
+                comboBox1.Items.Add(12);
             }
         }
 
