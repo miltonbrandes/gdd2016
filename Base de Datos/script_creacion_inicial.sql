@@ -1321,6 +1321,12 @@ GO
 	SET @fechaFin = DATEFROMPARTS(2016,10,10)
 	SET @fechaIterador = @fechaInicio
 
+	--valido fechaInicio
+	IF(DATEPART(weekday,@fechaInicio) = 6)
+		SET @fechaInicio = DATEADD(day,2,@fechaInicio)
+	IF(DATEPART(weekday,@fechaInicio) = 7)
+		SET @fechaInicio = DATEADD(day,1,@fechaInicio)
+
 	DECLARE @ultimoTurno int
 
 	SET @ultimoTurno = (SELECT TOP 1 t.turno_nro FROM NOT_NULL.turno t
@@ -1339,8 +1345,11 @@ GO
 
 		IF(@medicoActual = @ultimoMedico)
 			SET @contEspecialidades = @contEspecialidades + 1
-		ELSE SET @contEspecialidades = 0
-		
+		ELSE BEGIN
+			SET @contEspecialidades = 0
+			SET @ultimoMedico = @medicoActual
+		END
+
 		INSERT INTO NOT_NULL.agenda(agenda_fecha_inicio,agenda_fecha_fin)
 		values(@fechaInicio,@fechaFin)
 		
@@ -1351,14 +1360,20 @@ GO
 		WHERE medxesp_id = @medxesp_id
 
 		--Inserto las franjas
-		SET @i = 0
-		WHILE(@i < 5)
+		SET @i = 2
+		WHILE(@i <= 6)
 		BEGIN
 			INSERT INTO NOT_NULL.franja_horaria(dia,agenda_id,hora_inicio,minuto_inicio,hora_fin,minuto_fin)
 			values(@i,@agendaId,10 + 2*@contEspecialidades,0,12 + 2*@contEspecialidades,0)
 			
+			--Setteo la fecha iterador
+			IF(DATEPART(WEEKDAY,@fechaInicio) = @i)
+				SET @fechaIterador = @fechaInicio
+			ELSE IF(DATEPART(WEEKDAY,@fechaInicio) < @i)
+				SET @fechaIterador = DATEADD(DAY,7 + DATEPART(WEEKDAY,@fechaInicio) - @i,@fechaInicio)
+			ELSE SET @fechaIterador = DATEADD(DAY,DATEPART(WEEKDAY,@fechaInicio) - @i,@fechaInicio)
+
 			--Agrego los turnos
-			SET @fechaIterador = @fechaInicio
 			WHILE(@fechaIterador < @fechaFin)
 			BEGIN
 				SET @cantTurnos = 0
@@ -1368,7 +1383,7 @@ GO
 					SET @fechaIterador = DATEADD(hour,-DATEPART(hour,@fechaIterador),@fechaIterador)
 					SET @fechaIterador = DATEADD(minute,-DATEPART(minute,@fechaIterador),@fechaIterador)
 
-					INSERT INTO NOT_NULL.turno(turno_nro,turno_medico_especialidad_id,turno_hora_llegada)
+					INSERT INTO NOT_NULL.turno(turno_nro,turno_medico_especialidad_id,turno_fecha)
 					values(@ultimoTurno,@medxesp_id, DATEADD(minute,30*@cantTurnos + 60*(10+2*@contEspecialidades),@fechaIterador) )
 
 					SET @ultimoTurno = @ultimoTurno + 1
@@ -1869,5 +1884,5 @@ create procedure NOT_NULL.Cancelar_Turnos_Varios_Dias(@motivo varchar(255), @tip
 END
 GO
 
-EXECUTE NOT_NULL.Agregar_Franja_A_Todos_Los_Medicos
-GO
+--EXECUTE NOT_NULL.Agregar_Franja_A_Todos_Los_Medicos
+--GO
