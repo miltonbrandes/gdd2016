@@ -279,7 +279,7 @@ namespace Helpers
             List<Franja> list = new List<Franja>();
             while (rdr.Read())
             {
-                string afil;
+                /*string afil;
                 if (rdr["id_afiliado"].ToString() != string.Empty)
                 {
                     afil = "";
@@ -287,7 +287,7 @@ namespace Helpers
                 else
                 {
                     afil = (string)rdr["id_afiliado"].ToString();
-                }
+                }*/
                 list.Add(new Franja()
                 {
                     Dia = (int)rdr["dia"],
@@ -298,7 +298,7 @@ namespace Helpers
                     Id = (int)rdr["franja_id"],
                     Cancelada = (bool)rdr["franja_cancelada"],
                     Agenda = (int)rdr["agenda_id"],
-                    Afiliado = afil,
+                //    Afiliado = afil,
                 });
             }
             ConexionesDB.DB.Close();

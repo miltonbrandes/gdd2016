@@ -16,6 +16,6 @@ namespace Clases
         public int MinutoFin { get;set; }
         public int Agenda { get; set; }
         public bool Cancelada { get; set; }
-        public string Afiliado { get; set; }
+        //public string Afiliado { get; set; }
     }
 }

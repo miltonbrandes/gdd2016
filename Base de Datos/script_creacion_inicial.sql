@@ -513,7 +513,7 @@ CREATE TABLE NOT_NULL.franja_horaria(
 	hora_fin int NOT NULL CHECK(hora_fin<24 AND hora_fin>=0),
 	minuto_fin int NOT NULL CHECK(minuto_fin<60 AND minuto_fin>=0),
 	franja_cancelada bit default 0	,
-	id_afiliado varchar(20) NULL,
+	--id_afiliado varchar(20) NULL,
 	agenda_id int foreign key references NOT_NULL.agenda(agenda_id))
 GO
 
