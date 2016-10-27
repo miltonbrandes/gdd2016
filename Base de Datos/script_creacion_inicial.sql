@@ -1317,8 +1317,8 @@ GO
 	DECLARE @fechaFin datetime
 	DECLARE @fechaIterador datetime
 
-	SET @fechaInicio = DATEFROMPARTS(2016,10,1)
-	SET @fechaFin = DATEFROMPARTS(2016,10,10)
+	SET @fechaInicio = DATEFROMPARTS(2016,11,1)
+	SET @fechaFin = DATEFROMPARTS(2016,11,10)
 	SET @fechaIterador = @fechaInicio
 
 	DECLARE @ultimoTurno int
@@ -1339,7 +1339,11 @@ GO
 
 		IF(@medicoActual = @ultimoMedico)
 			SET @contEspecialidades = @contEspecialidades + 1
-		ELSE SET @contEspecialidades = 0
+		ELSE 
+		BEGIN
+			SET @contEspecialidades = 0
+			SET @ultimoMedico = @medicoActual
+		END
 		
 		INSERT INTO NOT_NULL.agenda(agenda_fecha_inicio,agenda_fecha_fin)
 		values(@fechaInicio,@fechaFin)
@@ -1356,8 +1360,9 @@ GO
 		BEGIN
 			INSERT INTO NOT_NULL.franja_horaria(dia,agenda_id,hora_inicio,minuto_inicio,hora_fin,minuto_fin)
 			values(@i,@agendaId,10 + 2*@contEspecialidades,0,12 + 2*@contEspecialidades,0)
-			
-			--Agrego los turnos
+			SET @i = @i + 1
+		END
+		--Agrego los turnos
 			SET @fechaIterador = @fechaInicio
 			WHILE(@fechaIterador < @fechaFin)
 			BEGIN
@@ -1368,18 +1373,15 @@ GO
 					SET @fechaIterador = DATEADD(hour,-DATEPART(hour,@fechaIterador),@fechaIterador)
 					SET @fechaIterador = DATEADD(minute,-DATEPART(minute,@fechaIterador),@fechaIterador)
 
-					INSERT INTO NOT_NULL.turno(turno_nro,turno_medico_especialidad_id,turno_hora_llegada)
+					INSERT INTO NOT_NULL.turno(turno_nro,turno_medico_especialidad_id,turno_fecha)
 					values(@ultimoTurno,@medxesp_id, DATEADD(minute,30*@cantTurnos + 60*(10+2*@contEspecialidades),@fechaIterador) )
 
 					SET @ultimoTurno = @ultimoTurno + 1
 					SET @cantTurnos = @cantTurnos + 1
 				END
 
-				SET @fechaIterador = DATEADD(day,7,@fechaIterador)
+				SET @fechaIterador = DATEADD(day,1,@fechaIterador)
 			END
-
-			SET @i = @i + 1
-		END
 
 		FETCH cursorEsp INTO @medxesp_id,@medicoActual
 	END
