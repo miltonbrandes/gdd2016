@@ -1317,8 +1317,8 @@ GO
 	DECLARE @fechaFin datetime
 	DECLARE @fechaIterador datetime
 
-	SET @fechaInicio = DATEFROMPARTS(2016,10,1)
-	SET @fechaFin = DATEFROMPARTS(2016,10,10)
+	SET @fechaInicio = DATEFROMPARTS(2016,10,5)
+	SET @fechaFin = DATEFROMPARTS(2016,10,15)
 	SET @fechaIterador = @fechaInicio
 
 	--valido fechaInicio
@@ -1326,6 +1326,8 @@ GO
 		SET @fechaInicio = DATEADD(day,2,@fechaInicio)
 	IF(DATEPART(weekday,@fechaInicio) = 7)
 		SET @fechaInicio = DATEADD(day,1,@fechaInicio)
+
+	print @fechaInicio
 
 	DECLARE @ultimoTurno int
 
@@ -1369,9 +1371,9 @@ GO
 			--Setteo la fecha iterador
 			IF(DATEPART(WEEKDAY,@fechaInicio) = @i)
 				SET @fechaIterador = @fechaInicio
-			ELSE IF(DATEPART(WEEKDAY,@fechaInicio) < @i)
-				SET @fechaIterador = DATEADD(DAY,7 + DATEPART(WEEKDAY,@fechaInicio) - @i,@fechaInicio)
-			ELSE SET @fechaIterador = DATEADD(DAY,DATEPART(WEEKDAY,@fechaInicio) - @i,@fechaInicio)
+			ELSE IF(DATEPART(WEEKDAY,@fechaInicio) > @i)
+				SET @fechaIterador = DATEADD(DAY,7 + @i - DATEPART(WEEKDAY,@fechaInicio),@fechaInicio)
+			ELSE SET @fechaIterador = DATEADD(DAY,@i - DATEPART(WEEKDAY,@fechaInicio),@fechaInicio)
 
 			--Agrego los turnos
 			WHILE(@fechaIterador < @fechaFin)
