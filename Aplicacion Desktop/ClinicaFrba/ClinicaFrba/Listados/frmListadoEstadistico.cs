@@ -226,13 +226,78 @@ namespace ClinicaFrba.Listados
             {
                 fecha1 = new DateTime(Int32.Parse(dtpAnio.Text), 1, 1);     //  formato año/mes/dia - no se porque
                 fecha2 = new DateTime(Int32.Parse(dtpAnio.Text), 7, 1);
+                if(comboBox1.SelectedItem != null && comboBox1.SelectedItem.ToString() != "Todos"){
+                    if (comboBox1.SelectedIndex == 0)
+                    {
+                        fecha1 = new DateTime(Int32.Parse(dtpAnio.Text), 1, 1);
+                        fecha2 = new DateTime(Int32.Parse(dtpAnio.Text),1,31);
+                    }
+                    else if (comboBox1.SelectedIndex == 1)
+                    {
+                        fecha1 = new DateTime(Int32.Parse(dtpAnio.Text), 2, 1);
+                        fecha2 = new DateTime(Int32.Parse(dtpAnio.Text), 2, 28);
+                    }
+                    else if (comboBox1.SelectedIndex == 2)
+                    {
+                        fecha1 = new DateTime(Int32.Parse(dtpAnio.Text), 3, 1);
+                        fecha2 = new DateTime(Int32.Parse(dtpAnio.Text), 3, 31);
+                    }
+                    else if (comboBox1.SelectedIndex == 3)
+                    {
+                        fecha1 = new DateTime(Int32.Parse(dtpAnio.Text), 4, 1);
+                        fecha2 = new DateTime(Int32.Parse(dtpAnio.Text), 4, 30);
+                    }
+                    else if (comboBox1.SelectedIndex == 4)
+                    {
+                        fecha1 = new DateTime(Int32.Parse(dtpAnio.Text), 5, 1);
+                        fecha2 = new DateTime(Int32.Parse(dtpAnio.Text), 5, 31);
+                    }
+                    else if (comboBox1.SelectedIndex == 5)
+                    {
+                        fecha1 = new DateTime(Int32.Parse(dtpAnio.Text), 6, 1);
+                        fecha2 = new DateTime(Int32.Parse(dtpAnio.Text), 6, 30);
+                    }
+                }
             }
             else if (cmbSemestre.SelectedIndex.Equals(1))
             {
                 fecha1 = new DateTime(Int32.Parse(dtpAnio.Text), 7, 1);
                 fecha2 = new DateTime(Int32.Parse(dtpAnio.Text) + 1, 1, 1);
+                if (comboBox1.SelectedItem != null && comboBox1.SelectedItem.ToString() != "Todos")
+                {
+                    if (comboBox1.SelectedIndex == 0)
+                    {
+                        fecha1 = new DateTime(Int32.Parse(dtpAnio.Text), 7, 1);
+                        fecha2 = new DateTime(Int32.Parse(dtpAnio.Text), 7, 31);
+                    }
+                    else if (comboBox1.SelectedIndex == 1)
+                    {
+                        fecha1 = new DateTime(Int32.Parse(dtpAnio.Text), 8, 1);
+                        fecha2 = new DateTime(Int32.Parse(dtpAnio.Text), 8, 31);
+                    }
+                    else if (comboBox1.SelectedIndex == 2)
+                    {
+                        fecha1 = new DateTime(Int32.Parse(dtpAnio.Text), 9, 1);
+                        fecha2 = new DateTime(Int32.Parse(dtpAnio.Text), 9, 30);
+                    }
+                    else if (comboBox1.SelectedIndex == 3)
+                    {
+                        fecha1 = new DateTime(Int32.Parse(dtpAnio.Text), 10, 1);
+                        fecha2 = new DateTime(Int32.Parse(dtpAnio.Text), 10, 31);
+                    }
+                    else if (comboBox1.SelectedIndex == 4)
+                    {
+                        fecha1 = new DateTime(Int32.Parse(dtpAnio.Text), 11, 1);
+                        fecha2 = new DateTime(Int32.Parse(dtpAnio.Text), 11, 30);
+                    }
+                    else if (comboBox1.SelectedIndex == 5)
+                    {
+                        fecha1 = new DateTime(Int32.Parse(dtpAnio.Text), 12, 1);
+                        fecha2 = new DateTime(Int32.Parse(dtpAnio.Text), 12, 31);
+                    }
+                }
             }
-
+            
             try
             {
                 switch (cmbTipo.SelectedIndex)
@@ -362,6 +427,7 @@ namespace ClinicaFrba.Listados
             if (cmbSemestre.SelectedItem.ToString() == "1")
             {
                 comboBox1.Items.Clear();
+                comboBox1.Items.Add("Todos");
                 comboBox1.Items.Add(1);
                 comboBox1.Items.Add(2);
                 comboBox1.Items.Add(3);
@@ -372,6 +438,7 @@ namespace ClinicaFrba.Listados
             else if (cmbSemestre.SelectedItem.ToString() == "2")
             {
                 comboBox1.Items.Clear();
+                comboBox1.Items.Add("Todos");
                 comboBox1.Items.Add(7);
                 comboBox1.Items.Add(8);
                 comboBox1.Items.Add(9);

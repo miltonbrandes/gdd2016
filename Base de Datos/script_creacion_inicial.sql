@@ -1317,8 +1317,8 @@ GO
 	DECLARE @fechaFin datetime
 	DECLARE @fechaIterador datetime
 
-	SET @fechaInicio = DATEFROMPARTS(2016,10,5)
-	SET @fechaFin = DATEFROMPARTS(2016,10,15)
+	SET @fechaInicio = DATEFROMPARTS(2016,10,30)
+	SET @fechaFin = DATEFROMPARTS(2016,11,30)
 	SET @fechaIterador = @fechaInicio
 
 	--valido fechaInicio
@@ -1327,7 +1327,7 @@ GO
 	IF(DATEPART(weekday,@fechaInicio) = 7)
 		SET @fechaInicio = DATEADD(day,1,@fechaInicio)
 
-	print @fechaInicio
+	
 
 	DECLARE @ultimoTurno int
 
@@ -1376,7 +1376,7 @@ GO
 			ELSE SET @fechaIterador = DATEADD(DAY,@i - DATEPART(WEEKDAY,@fechaInicio),@fechaInicio)
 
 			--Agrego los turnos
-			WHILE(@fechaIterador < @fechaFin)
+			WHILE(@fechaIterador <= @fechaFin)
 			BEGIN
 				SET @cantTurnos = 0
 				WHILE(@cantTurnos < 4)
@@ -1885,6 +1885,6 @@ create procedure NOT_NULL.Cancelar_Turnos_Varios_Dias(@motivo varchar(255), @tip
 	
 END
 GO
-
---EXECUTE NOT_NULL.Agregar_Franja_A_Todos_Los_Medicos
---GO
+SET NOCOUNT ON;
+EXECUTE NOT_NULL.Agregar_Franja_A_Todos_Los_Medicos
+GO
