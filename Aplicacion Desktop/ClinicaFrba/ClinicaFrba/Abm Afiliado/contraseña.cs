@@ -40,7 +40,7 @@ namespace ClinicaFrba.Abm_Afiliado
                 else {
                 try
                 {
-                    DBHelper.ExecuteNonQuery("Usuario_CambiarContrasenia", new Dictionary<string, object>() { { "@Username", afiliadoCambiar.Username }, { "@Password", txtNueva.Text }, {"@cambiada", cambio} });
+                    ConexionesDB.ExecuteNonQuery("Usuario_CambiarContrasenia", new Dictionary<string, object>() { { "@Username", afiliadoCambiar.Username }, { "@Password", txtNueva.Text }, {"@cambiada", cambio} });
                     //if(cambio == 1)
                     //    MessageBox.Show("Contraseña cambiada");
                     //TODO: ver porque no me devuelve 1 aca
