@@ -1940,20 +1940,19 @@ as begin
 	declare @fecha_inicio datetime
 	declare @fecha_fin datetime
 	declare @agenda_id int
-	declare @matricula decimal(18,0)
 
 	declare cursorFranja cursor for	
-		(select i.franja_id, i.dia, i.hora_inicio, i.minuto_inicio, i.hora_fin, i.minuto_fin, a.agenda_fecha_inicio, a.agenda_fecha_fin, m.medxesp_profesional, i.agenda_id
-			from inserted i, NOT_NULL.medicoXespecialidad m, NOT_NULL.agenda a
-			where i.agenda_id = a.agenda_id and i.agenda_id = m.medxesp_agenda)
+		(select i.franja_id, i.dia, i.hora_inicio, i.minuto_inicio, i.hora_fin, i.minuto_fin, a.agenda_fecha_inicio, a.agenda_fecha_fin, i.agenda_id
+			from inserted i, NOT_NULL.agenda a 
+			where i.agenda_id = a.agenda_id)
 	open cursorFranja
-	fetch cursorFranja into @franja_id, @dia, @hora_inicio, @minuto_inicio, @hora_fin, @minuto_fin, @fecha_inicio, @fecha_fin, @matricula, @agenda_id
+	fetch cursorFranja into @franja_id, @dia, @hora_inicio, @minuto_inicio, @hora_fin, @minuto_fin, @fecha_inicio, @fecha_fin, @agenda_id
 	WHILE(@@FETCH_STATUS = 0)
 	BEGIN
 		set @totalMinutos = -- Busco cant horas semanales ya registradas
 			(select sum( (f.hora_fin*60 + f.minuto_fin) - (f.hora_inicio*60 + f.minuto_inicio) )
 				from NOT_NULL.franja_horaria f, NOT_NULL.medicoXespecialidad m, NOT_NULL.agenda a
-				where f.agenda_id = a.agenda_id  and f.agenda_id = m.medxesp_agenda and m.medxesp_profesional = @matricula
+				where f.agenda_id = a.agenda_id  and f.agenda_id = @agenda_id
 					and datepart(week, @fecha_inicio + @dia) = datepart(week, cast(a.agenda_fecha_inicio as datetime) + f.dia) 
 				group by a.agenda_id )
 
@@ -1965,7 +1964,7 @@ as begin
 			insert into NOT_NULL.franja_horaria (dia, hora_inicio, minuto_inicio, hora_fin, minuto_fin, agenda_id, franja_cancelada)
 				values (@dia, @hora_inicio, @minuto_inicio, @hora_fin, @minuto_fin, @agenda_id, 0)
 
-		fetch cursorFranja into @franja_id, @dia, @hora_inicio, @minuto_inicio, @hora_fin, @minuto_fin, @fecha_inicio, @fecha_fin, @matricula, @agenda_id
+		fetch cursorFranja into @franja_id, @dia, @hora_inicio, @minuto_inicio, @hora_fin, @minuto_fin, @fecha_inicio, @fecha_fin, @agenda_id
 	END
 	close cursorFranja
 	deallocate cursorFranja
