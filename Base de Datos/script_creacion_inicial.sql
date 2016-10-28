@@ -1927,8 +1927,9 @@ GO*/
 go
 
 
- CREATE PROCEDURE NOT_NULL.contar_horas_semanales (@matricula decimal(18,0))	-- por ahora es un sp que chequea cada franja y tira error si supera las 48hs semanales -> falta convertirlo en un trigger
- as begin
+create trigger NOT_NULL.contar_horas_semanales on NOT_NULL.franja_horaria instead of insert		-- not tested yet
+as begin
+	SET IDENTITY_INSERT NOT_NULL.franja_horaria ON;  
 	declare @totalMinutos int
 	set @totalMinutos = 0
 	declare @franja_id int
@@ -1939,28 +1940,36 @@ go
 	declare @minuto_fin int
 	declare @fecha_inicio datetime
 	declare @fecha_fin datetime
+	declare @agenda_id int
+	declare @matricula decimal(18,0)
+
 	declare cursorFranja cursor for	
-		(select f.franja_id, f.dia, f.hora_inicio, f.minuto_inicio, f.hora_fin, f.minuto_fin, a.agenda_fecha_inicio, a.agenda_fecha_fin
-			from NOT_NULL.franja_horaria f, NOT_NULL.medicoXespecialidad m, NOT_NULL.agenda a
-			where f.agenda_id = a.agenda_id  and f.agenda_id = m.medxesp_agenda and m.medxesp_profesional = @matricula)
+		(select i.franja_id, i.dia, i.hora_inicio, i.minuto_inicio, i.hora_fin, i.minuto_fin, a.agenda_fecha_inicio, a.agenda_fecha_fin, m.medxesp_profesional, i.agenda_id
+			from inserted i, NOT_NULL.medicoXespecialidad m, NOT_NULL.agenda a
+			where i.agenda_id = a.agenda_id and i.agenda_id = m.medxesp_agenda)
 	open cursorFranja
-	fetch cursorFranja into @franja_id, @dia, @hora_inicio, @minuto_inicio, @hora_fin, @minuto_fin, @fecha_inicio, @fecha_fin
+	fetch cursorFranja into @franja_id, @dia, @hora_inicio, @minuto_inicio, @hora_fin, @minuto_fin, @fecha_inicio, @fecha_fin, @matricula, @agenda_id
 	WHILE(@@FETCH_STATUS = 0)
 	BEGIN
-		set @totalMinutos = 
+		set @totalMinutos = -- Busco cant horas semanales ya registradas
 			(select sum( (f.hora_fin*60 + f.minuto_fin) - (f.hora_inicio*60 + f.minuto_inicio) )
 				from NOT_NULL.franja_horaria f, NOT_NULL.medicoXespecialidad m, NOT_NULL.agenda a
 				where f.agenda_id = a.agenda_id  and f.agenda_id = m.medxesp_agenda and m.medxesp_profesional = @matricula
 					and datepart(week, @fecha_inicio + @dia) = datepart(week, cast(a.agenda_fecha_inicio as datetime) + f.dia) 
 				group by a.agenda_id )
 
-		if @totalMinutos/60 > 48
-			raiserror('Limite de horas superado', 10, 1, 'Limite de horas superado');
-		-- select @fecha_inicio + @dia as fecha, @totalMinutos as minutos, @totalMinutos/60 as horas // descomentar para probar
+		set @totalMinutos = @totalMinutos + (@hora_fin*60 + @minuto_fin) - (@hora_inicio*60 + @minuto_inicio) -- Le agrego las nuevas horas
 
-		fetch cursorFranja into @franja_id, @dia, @hora_inicio, @minuto_inicio, @hora_fin, @minuto_fin, @fecha_inicio, @fecha_fin
+		if @totalMinutos/60 > 48
+			raiserror('Limite de horas superado', 10, 1, 'Limite de horas superado');	-- tiro el error o directamente no lo inserto? -- si tiro error sigue ejecutando el resto?
+		else
+			insert into NOT_NULL.franja_horaria (franja_id, dia, hora_inicio, minuto_inicio, hora_fin, minuto_fin, agenda_id, franja_cancelada)
+				values (@franja_id, @dia, @hora_inicio, @minuto_inicio, @hora_fin, @minuto_fin, @agenda_id, 0)
+
+		fetch cursorFranja into @franja_id, @dia, @hora_inicio, @minuto_inicio, @hora_fin, @minuto_fin, @fecha_inicio, @fecha_fin, @matricula, @agenda_id
 	END
 	close cursorFranja
 	deallocate cursorFranja
+	SET IDENTITY_INSERT NOT_NULL.franja_horaria OFF;  
 end
 go
