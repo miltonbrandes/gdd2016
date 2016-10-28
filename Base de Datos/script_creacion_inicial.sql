@@ -1929,7 +1929,6 @@ go
 
 create trigger NOT_NULL.contar_horas_semanales on NOT_NULL.franja_horaria instead of insert		-- not tested yet
 as begin
-	SET IDENTITY_INSERT NOT_NULL.franja_horaria ON;  
 	declare @totalMinutos int
 	set @totalMinutos = 0
 	declare @franja_id int
@@ -1963,13 +1962,12 @@ as begin
 		if @totalMinutos/60 > 48
 			raiserror('Limite de horas superado', 10, 1, 'Limite de horas superado');	-- tiro el error o directamente no lo inserto? -- si tiro error sigue ejecutando el resto?
 		else
-			insert into NOT_NULL.franja_horaria (franja_id, dia, hora_inicio, minuto_inicio, hora_fin, minuto_fin, agenda_id, franja_cancelada)
-				values (@franja_id, @dia, @hora_inicio, @minuto_inicio, @hora_fin, @minuto_fin, @agenda_id, 0)
+			insert into NOT_NULL.franja_horaria (dia, hora_inicio, minuto_inicio, hora_fin, minuto_fin, agenda_id, franja_cancelada)
+				values (@dia, @hora_inicio, @minuto_inicio, @hora_fin, @minuto_fin, @agenda_id, 0)
 
 		fetch cursorFranja into @franja_id, @dia, @hora_inicio, @minuto_inicio, @hora_fin, @minuto_fin, @fecha_inicio, @fecha_fin, @matricula, @agenda_id
 	END
 	close cursorFranja
 	deallocate cursorFranja
-	SET IDENTITY_INSERT NOT_NULL.franja_horaria OFF;  
 end
 go
