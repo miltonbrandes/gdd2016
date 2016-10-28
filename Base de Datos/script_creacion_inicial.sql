@@ -1937,15 +1937,15 @@ as begin
 
 	set @totalMinutos = -- Busco cant horas semanales ya registradas
 		isnull((select sum( (f.hora_fin*60 + f.minuto_fin) - (f.hora_inicio*60 + f.minuto_inicio) )
-			from NOT_NULL.franja_horaria f, NOT_NULL.medicoXespecialidad m, NOT_NULL.agenda a
-			where f.agenda_id = a.agenda_id  and f.agenda_id = @id_agenda
+			from NOT_NULL.franja_horaria f, NOT_NULL.agenda a, NOT_NULL.medicoXespecialidad m
+			where f.agenda_id = a.agenda_id and m.medxesp_agenda = a.agenda_id and m.medxesp_profesional = @matricula
 				and datepart(week, @fecha_inicio + @dia) = datepart(week, cast(a.agenda_fecha_inicio as datetime) + f.dia) 
-			group by a.agenda_id ), 0)
-
+			group by m.medxesp_profesional), 0)
+	--select @totalMinutos
 	set @totalMinutos = @totalMinutos + (@hora_fin*60 + @minuto_fin) - (@hora_inicio*60 + @minuto_inicio) -- Le agrego las nuevas horas
-	
-	if @totalMinutos/60 > 48  -- Si supera las 48hs retorno -1, sino lo agrego
-		RETURN(-1)
+	--select @totalMinutos
+	if @totalMinutos > 48*60  -- Si supera las 48hs retorno 1, sino lo agrego
+		RETURN(1)
 	else
 		insert into NOT_NULL.franja_horaria (dia, hora_inicio, minuto_inicio, hora_fin, minuto_fin, agenda_id, franja_cancelada)
 			values (@dia, @hora_inicio, @minuto_inicio, @hora_fin, @minuto_fin, @id_agenda, 0)
