@@ -210,5 +210,6 @@ DROP FUNCTION NOT_NULL.Obtener_Fecha
 /*DROP PROCEDURE NOT_NULL.Agregar_Franja_A_Todos_Los_Medicos*/
 DROP PROCEDURE NOT_NULL.Obtener_Horas_Profesional
 DROP PROCEDURE NOT_NULL.Borrar_Franjas_Agenda
+DROP PROCEDURE NOT_NULL.contar_horas_semanales
 DROP SCHEMA NOT_NULL
 GO

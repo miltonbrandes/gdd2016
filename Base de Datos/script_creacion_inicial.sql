@@ -1924,3 +1924,43 @@ GO
 SET NOCOUNT ON;
 /*EXECUTE NOT_NULL.Agregar_Franja_A_Todos_Los_Medicos
 GO*/
+go
+
+
+ CREATE PROCEDURE NOT_NULL.contar_horas_semanales (@matricula decimal(18,0))	-- por ahora es un sp que chequea cada franja y tira error si supera las 48hs semanales -> falta convertirlo en un trigger
+ as begin
+	declare @totalMinutos int
+	set @totalMinutos = 0
+	declare @franja_id int
+	declare @dia int
+	declare @hora_inicio int
+	declare @hora_fin int
+	declare @minuto_inicio int
+	declare @minuto_fin int
+	declare @fecha_inicio datetime
+	declare @fecha_fin datetime
+	declare cursorFranja cursor for	
+		(select f.franja_id, f.dia, f.hora_inicio, f.minuto_inicio, f.hora_fin, f.minuto_fin, a.agenda_fecha_inicio, a.agenda_fecha_fin
+			from NOT_NULL.franja_horaria f, NOT_NULL.medicoXespecialidad m, NOT_NULL.agenda a
+			where f.agenda_id = a.agenda_id  and f.agenda_id = m.medxesp_agenda and m.medxesp_profesional = @matricula)
+	open cursorFranja
+	fetch cursorFranja into @franja_id, @dia, @hora_inicio, @minuto_inicio, @hora_fin, @minuto_fin, @fecha_inicio, @fecha_fin
+	WHILE(@@FETCH_STATUS = 0)
+	BEGIN
+		set @totalMinutos = 
+			(select sum( (f.hora_fin*60 + f.minuto_fin) - (f.hora_inicio*60 + f.minuto_inicio) )
+				from NOT_NULL.franja_horaria f, NOT_NULL.medicoXespecialidad m, NOT_NULL.agenda a
+				where f.agenda_id = a.agenda_id  and f.agenda_id = m.medxesp_agenda and m.medxesp_profesional = @matricula
+					and datepart(week, @fecha_inicio + @dia) = datepart(week, cast(a.agenda_fecha_inicio as datetime) + f.dia) 
+				group by a.agenda_id )
+
+		if @totalMinutos/60 > 48
+			raiserror('Limite de horas superado', 10, 1, 'Limite de horas superado');
+		-- select @fecha_inicio + @dia as fecha, @totalMinutos as minutos, @totalMinutos/60 as horas // descomentar para probar
+
+		fetch cursorFranja into @franja_id, @dia, @hora_inicio, @minuto_inicio, @hora_fin, @minuto_fin, @fecha_inicio, @fecha_fin
+	END
+	close cursorFranja
+	deallocate cursorFranja
+end
+go
