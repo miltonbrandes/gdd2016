@@ -1283,7 +1283,7 @@ GO
 	RETURN @HorasMedico
   END
   GO
-
+  /*
   --AGREGAR FRANJA
   CREATE PROCEDURE NOT_NULL.Franja_Agregar(@id_agenda int, @matricula int, 
 				@dia int, @hora_inicio int, @minuto_inicio int, @hora_fin int, @minuto_fin int)
@@ -1333,7 +1333,7 @@ GO
 	END
 	ELSE RETURN(1)
   END
-  GO
+  GO*/
   
   /*CREATE PROCEDURE NOT_NULL.Agregar_Franja_A_Todos_Los_Medicos
   AS BEGIN
@@ -1926,47 +1926,29 @@ SET NOCOUNT ON;
 GO*/
 go
 
-
-create trigger NOT_NULL.contar_horas_semanales on NOT_NULL.franja_horaria instead of insert		-- not tested yet
+CREATE PROCEDURE NOT_NULL.Franja_Agregar(@id_agenda int, @matricula int, @dia int, @hora_inicio int, @minuto_inicio int, @hora_fin int, @minuto_fin int)
 as begin
 	declare @totalMinutos int
 	set @totalMinutos = 0
-	declare @franja_id int
-	declare @dia int
-	declare @hora_inicio int
-	declare @hora_fin int
-	declare @minuto_inicio int
-	declare @minuto_fin int
 	declare @fecha_inicio datetime
 	declare @fecha_fin datetime
-	declare @agenda_id int
 
-	declare cursorFranja cursor for	
-		(select i.franja_id, i.dia, i.hora_inicio, i.minuto_inicio, i.hora_fin, i.minuto_fin, a.agenda_fecha_inicio, a.agenda_fecha_fin, i.agenda_id
-			from inserted i, NOT_NULL.agenda a 
-			where i.agenda_id = a.agenda_id)
-	open cursorFranja
-	fetch cursorFranja into @franja_id, @dia, @hora_inicio, @minuto_inicio, @hora_fin, @minuto_fin, @fecha_inicio, @fecha_fin, @agenda_id
-	WHILE(@@FETCH_STATUS = 0)
-	BEGIN
-		set @totalMinutos = -- Busco cant horas semanales ya registradas
-			(select sum( (f.hora_fin*60 + f.minuto_fin) - (f.hora_inicio*60 + f.minuto_inicio) )
-				from NOT_NULL.franja_horaria f, NOT_NULL.medicoXespecialidad m, NOT_NULL.agenda a
-				where f.agenda_id = a.agenda_id  and f.agenda_id = @agenda_id
-					and datepart(week, @fecha_inicio + @dia) = datepart(week, cast(a.agenda_fecha_inicio as datetime) + f.dia) 
-				group by a.agenda_id )
+	select @fecha_inicio = agenda_fecha_inicio, @fecha_fin = agenda_fecha_fin from agenda where agenda_id = @id_agenda
 
-		set @totalMinutos = @totalMinutos + (@hora_fin*60 + @minuto_fin) - (@hora_inicio*60 + @minuto_inicio) -- Le agrego las nuevas horas
+	set @totalMinutos = -- Busco cant horas semanales ya registradas
+		isnull((select sum( (f.hora_fin*60 + f.minuto_fin) - (f.hora_inicio*60 + f.minuto_inicio) )
+			from NOT_NULL.franja_horaria f, NOT_NULL.medicoXespecialidad m, NOT_NULL.agenda a
+			where f.agenda_id = a.agenda_id  and f.agenda_id = @id_agenda
+				and datepart(week, @fecha_inicio + @dia) = datepart(week, cast(a.agenda_fecha_inicio as datetime) + f.dia) 
+			group by a.agenda_id ), 0)
 
-		if @totalMinutos/60 > 48
-			raiserror('Limite de horas superado', 10, 1, 'Limite de horas superado');	-- tiro el error o directamente no lo inserto? -- si tiro error sigue ejecutando el resto?
-		else
-			insert into NOT_NULL.franja_horaria (dia, hora_inicio, minuto_inicio, hora_fin, minuto_fin, agenda_id, franja_cancelada)
-				values (@dia, @hora_inicio, @minuto_inicio, @hora_fin, @minuto_fin, @agenda_id, 0)
-
-		fetch cursorFranja into @franja_id, @dia, @hora_inicio, @minuto_inicio, @hora_fin, @minuto_fin, @fecha_inicio, @fecha_fin, @agenda_id
-	END
-	close cursorFranja
-	deallocate cursorFranja
+	set @totalMinutos = @totalMinutos + (@hora_fin*60 + @minuto_fin) - (@hora_inicio*60 + @minuto_inicio) -- Le agrego las nuevas horas
+	
+	if @totalMinutos/60 > 48  -- Si supera las 48hs retorno -1, sino lo agrego
+		RETURN(-1)
+	else
+		insert into NOT_NULL.franja_horaria (dia, hora_inicio, minuto_inicio, hora_fin, minuto_fin, agenda_id, franja_cancelada)
+			values (@dia, @hora_inicio, @minuto_inicio, @hora_fin, @minuto_fin, @id_agenda, 0)
+	RETURN(0)
 end
 go
