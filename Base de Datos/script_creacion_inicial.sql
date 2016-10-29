@@ -1927,20 +1927,29 @@ GO*/
 go
 --drop procedure NOT_NULL.Franja_Agregar
 --exec NOT_NULL.Franja_Agregar 2, 30, 4, 08, 00, 12, 00
+
 CREATE PROCEDURE NOT_NULL.Franja_Agregar(@id_agenda int, @matricula int, @dia int, @hora_inicio int, @minuto_inicio int, @hora_fin int, @minuto_fin int)
 as begin
 	declare @totalMinutos int
 	set @totalMinutos = 0
 	declare @fecha_inicio datetime
 	declare @fecha_fin datetime
+	declare @semana int
+
 	select @fecha_inicio = agenda_fecha_inicio, @fecha_fin = agenda_fecha_fin from agenda where agenda_id = @id_agenda
+	if datepart(weekday, @fecha_inicio) - 1 > @dia				-- si x ej es lunes @dia es 0 y weekday es 1 => resto 1 a weekday
+		set @semana = datepart(week, @fecha_inicio + (7 - @dia))
+	else
+		set @semana = datepart(week, @fecha_inicio + @dia - (datepart(weekday, @fecha_inicio) - 1))
+
 	set @totalMinutos = -- Busco cant horas semanales ya registradas
-		isnull((select sum( (f.hora_fin*60 + f.minuto_fin) - (f.hora_inicio*60 + f.minuto_inicio) )
-			from NOT_NULL.franja_horaria f, NOT_NULL.agenda a, NOT_NULL.medicoXespecialidad m
-			where f.agenda_id = a.agenda_id and m.medxesp_agenda = a.agenda_id and m.medxesp_profesional = @matricula
-				and datepart(week, DATEADD(d, DATEDIFF(day,0, @fecha_inicio) /7*7, 0)+7) = datepart(week, DATEADD(d, DATEDIFF(day,0, a.agenda_fecha_inicio) /7*7, 0)+7) 
-			group by m.medxesp_profesional), 0)
+		isnull((select count(t.turno_nro)*30
+			from NOT_NULL.medicoXespecialidad m, NOT_NULL.turno t
+			where t.turno_medico_especialidad_id = m.medxesp_id and m.medxesp_profesional = @matricula
+					and @semana = datepart(week, turno_fecha) and year(@fecha_inicio) = year(turno_fecha)), 0)
+	select @semana, @totalMinutos
 	set @totalMinutos = @totalMinutos + (@hora_fin*60 + @minuto_fin) - (@hora_inicio*60 + @minuto_inicio) -- Le agrego las nuevas horas
+	select @totalMinutos
 	if @totalMinutos > 48*60  -- Si supera las 48hs retorno 1, sino lo agrego
 		RETURN(1)
 	else
