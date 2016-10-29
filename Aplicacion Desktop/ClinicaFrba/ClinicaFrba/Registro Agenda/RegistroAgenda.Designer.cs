@@ -368,7 +368,7 @@ namespace ClinicaFrba.Registro_Agenda
             // 
             // monthCalendar1
             // 
-            this.monthCalendar1.Location = new System.Drawing.Point(138, 361);
+            this.monthCalendar1.Location = new System.Drawing.Point(23, 361);
             this.monthCalendar1.Margin = new System.Windows.Forms.Padding(12, 11, 12, 11);
             this.monthCalendar1.Name = "monthCalendar1";
             this.monthCalendar1.TabIndex = 34;
@@ -376,7 +376,7 @@ namespace ClinicaFrba.Registro_Agenda
             // 
             // monthCalendar2
             // 
-            this.monthCalendar2.Location = new System.Drawing.Point(382, 361);
+            this.monthCalendar2.Location = new System.Drawing.Point(311, 361);
             this.monthCalendar2.Margin = new System.Windows.Forms.Padding(12, 11, 12, 11);
             this.monthCalendar2.Name = "monthCalendar2";
             this.monthCalendar2.TabIndex = 35;
@@ -386,7 +386,7 @@ namespace ClinicaFrba.Registro_Agenda
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(214, 343);
+            this.label11.Location = new System.Drawing.Point(99, 343);
             this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(83, 17);
@@ -397,7 +397,7 @@ namespace ClinicaFrba.Registro_Agenda
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(467, 343);
+            this.label12.Location = new System.Drawing.Point(396, 343);
             this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(70, 17);

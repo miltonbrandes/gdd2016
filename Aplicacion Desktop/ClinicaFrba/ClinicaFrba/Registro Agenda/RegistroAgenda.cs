@@ -142,7 +142,7 @@ namespace ClinicaFrba.Registro_Agenda
 			
 			if(transaccionFallida){
 				//transaction.Rollback();
-				MessageBox.Show("La cantidad de horas introducidas entre todas las especialidades superan las 48.",
+				MessageBox.Show("La cantidad de horas introducidas entre todas las especialidades para esta semana superan las 48.",
 				                "Cantidad de horas superan 48, No se pudo registrar la agenda",
 				                MessageBoxButtons.OK,
 				                MessageBoxIcon.Error);

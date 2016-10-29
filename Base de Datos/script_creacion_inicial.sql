@@ -3,7 +3,7 @@ go
 
 create schema NOT_NULL authorization gd
 go
-
+set nocount on;
 /*USUARIO*/
 CREATE TABLE NOT_NULL.usuario(
 	usuario_id varchar(50) NOT NULL,
@@ -1947,10 +1947,10 @@ as begin
 		isnull((select count(t.turno_nro)*30
 			from NOT_NULL.medicoXespecialidad m, NOT_NULL.turno t
 			where t.turno_medico_especialidad_id = m.medxesp_id and m.medxesp_profesional = @matricula
-					and @semana = datepart(week, turno_fecha) and year(@fecha_inicio) = year(turno_fecha) and month(@fecha_inicio) = month(turno_fecha)), 0)
+					and @semana = datepart(week, turno_fecha) and year(@fecha_inicio) = year(turno_fecha)), 0)
 	--select @semana, @totalMinutos
 	set @totalMinutos = @totalMinutos + isnull((select sum((f1.hora_fin*60 + f1.minuto_fin) - (f1.hora_inicio*60 + f1.minuto_inicio))
-	from NOT_NULL.franja_horaria f1 where f1.agenda_id = @id_agenda and f1.dia < @dia),0)
+	from NOT_NULL.franja_horaria f1 where f1.agenda_id = @id_agenda and f1.dia <= @dia),0)
 	set @totalMinutos = @totalMinutos + (@hora_fin*60 + @minuto_fin) - (@hora_inicio*60 + @minuto_inicio) -- Le agrego las nuevas horas
 	--select @totalMinutos
 	if @totalMinutos > 48*60  -- Si supera las 48hs retorno 1, sino lo agrego
