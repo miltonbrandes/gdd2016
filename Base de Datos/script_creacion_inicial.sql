@@ -388,7 +388,7 @@ BEGIN
 END
 GO
 /* OBTENER UN USUARIO */
-CREATE PROCEDURE NOT_NULL.Usuario_Get(@usuario varchar(20))
+CREATE PROCEDURE NOT_NULL.Usuario_Get(@usuario varchar(50))
 AS
 BEGIN
   SET NOCOUNT ON;
