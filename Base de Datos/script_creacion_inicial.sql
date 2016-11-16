@@ -43,6 +43,7 @@ CREATE TABLE NOT_NULL.rol(
 ) ON [PRIMARY]
 
 GO
+--Creo los roles existentes
 Insert INTO NOT_NULL.Rol(rol_descripcion)
   VALUES ('Administrador'), ('Afiliado'), ('Profesional')
 GO
@@ -114,6 +115,7 @@ CREATE TABLE NOT_NULL.tipo_especialidad(
 ) ON [PRIMARY]
 GO
 
+--migro los datos de tipos de especialidad
 set nocount on;
 insert into NOT_NULL.tipo_especialidad
 (tipo_especialidad_codigo, tipo_especialidad_descripcion)
@@ -143,6 +145,7 @@ GO
 ALTER TABLE NOT_NULL.especialidad CHECK CONSTRAINT [FK_especialidad_tipo_especialidad1]
 GO
 
+--migro los datos de especialidades
 set nocount on;
 insert into NOT_NULL.especialidad
 (especialidad_codigo, especialidad_descripcion, especialidad_tipo)
@@ -180,7 +183,7 @@ GO
 ALTER TABLE [NOT_NULL].[profesional] CHECK CONSTRAINT [FK_profesional_usuario]
 GO
 
-
+--creo un usuario para un profesional
 create trigger NOT_NULL.crear_usuario_profesional on NOT_NULL.profesional for insert
 as
 Begin
@@ -194,6 +197,7 @@ End
 go
 
 
+--migro los datos de los profesionales
 set nocount on;
 insert into NOT_NULL.profesional
 (profesional_nombre, profesional_apellido, profesional_dni, profesional_direccion, profesional_telefono, profesional_mail, profesional_fecha_nacimiento, profesional_sexo, profesional_tipo_doc)
@@ -235,6 +239,7 @@ GO
 ALTER TABLE NOT_NULL.medicoXespecialidad CHECK CONSTRAINT [FK_NOT_NULL.medicoXespecialidad_profesional]
 GO
 
+--inserto los datos en medicoxespecialidad
 set nocount on;
 insert into NOT_NULL.medicoXespecialidad (medxesp_profesional, medxesp_especialidad) 
 select profesional_matricula, Especialidad_Codigo
@@ -254,6 +259,8 @@ create table NOT_NULL.plan_medico (
 )
 go
 
+
+--migro los datos de planes
 set nocount on;
 insert into NOT_NULL.plan_medico
 (plan_id, plan_descripcion, plan_precio_bono_consulta)
@@ -283,6 +290,7 @@ create table NOT_NULL.afiliado (
 go
 
 
+--triger que aumenta la cantidad de hijos cuando se inserta un afiliado
 create trigger NOT_NULL.aumentar_cantidad_hijos on NOT_NULL.afiliado for insert
 as
 Begin
@@ -296,6 +304,8 @@ Begin
 End
 go
 
+
+--trigger que reduce la cantidad de hijos cuando se elimina un afiliado
 create trigger NOT_NULL.reducir_cantidad_hijos on NOT_NULL.afiliado for delete
 as
 Begin
@@ -310,6 +320,7 @@ End
 go
 
 
+--trigger para crear un usuario nuevo
 create trigger NOT_NULL.crear_usuario on NOT_NULL.afiliado instead of insert
 as
 	Begin
@@ -346,6 +357,7 @@ as
 	End
 go
 
+--migro los afiliados
 set nocount on;
 insert into NOT_NULL.afiliado
 (afiliado_nombre, afiliado_apellido,  afiliado_tipo_dni,afiliado_dni, afiliado_estado_civil, 
@@ -355,7 +367,7 @@ select Paciente_Nombre, Paciente_Apellido,'D',Paciente_Dni, 'N', 'N', Paciente_F
 	group by Paciente_Nombre, Paciente_Apellido, Paciente_Dni, Paciente_Fecha_Nac, Paciente_Telefono, Paciente_Mail, Paciente_Direccion, Plan_Med_Codigo
 go
 
-
+--pongo los hijos en 0 de un afiliado
 create procedure NOT_NULL.Hijos_En_Cero(@username varchar(50))
 as
 	begin 
@@ -379,6 +391,7 @@ BEGIN
 END
 GO
 
+--reseteo los intentos de un usuario
 CREATE PROCEDURE NOT_NULL.Usuario_ResetearIntentos (@Username varchar(50))
 AS
 BEGIN
@@ -1173,14 +1186,18 @@ GO
   update NOT_NULL.afiliado set afiliado_plan = (select top 1 NOT_NULL.plan_medico.plan_id from NOT_NULL.plan_medico) where usuario_id = 'administrador32405354'
   go
 
-/*TRAER ESPECIALIDADES POR MEDICO QUE NO TENGAN AGENDA ASIGNADA*/
-  create procedure NOT_NULL.Get_Especialidades_Sin_Agenda(@matricula int)
+
+/*TRAER ESPECIALIDADES POR MEDICO QUE NO TENGAN AGENDA ASIGNADA QUE NO ESTE EXPIRADA*/
+create procedure NOT_NULL.Get_Especialidades_Sin_Agenda(@matricula int)
   as
 	begin
 		SELECT e.especialidad_codigo, e.especialidad_descripcion, et.tipo_especialidad_descripcion
 		FROM NOT_NULL.especialidad e, NOT_NULL.tipo_especialidad et, NOT_NULL.medicoXespecialidad mxe
 		WHERE mxe.medxesp_profesional = @matricula AND e.especialidad_codigo = mxe.medxesp_especialidad
-			AND et.tipo_especialidad_codigo = e.especialidad_tipo AND mxe.medxesp_agenda is null
+			AND et.tipo_especialidad_codigo = e.especialidad_tipo AND ((mxe.medxesp_agenda is null) or 
+			exists((select a.agenda_id from NOT_NULL.agenda a, NOT_NULL.Fecha_Config f
+			where mxe.medxesp_agenda = a.agenda_id
+			AND a.agenda_fecha_fin < f.fecha)))
 	end
   go
 
