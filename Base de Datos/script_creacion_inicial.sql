@@ -1980,23 +1980,51 @@ as begin
 end
 go
 
-
-declare @diaparafranja int
-set @diaparafranja = 1
-while @diaparafranja < 7
+create procedure NOT_NULL.Asignar_agendas
+as
 begin
-	insert into NOT_NULL.franja_horaria
-		select  @diaparafranja,	-- dia semana
-				min(  DATEPART(hour, Turno_fecha) ), min(  DATEPART(minute, Turno_fecha) ),
-				max(  DATEPART(hour, Turno_fecha) ), max(  DATEPART(minute, Turno_fecha) ),0,
-				min( cast(Turno_Fecha as date) ),
-				max( cast(Turno_Fecha as date) ), 
-				0, -- franja_cancelada
-				medxesp_agenda	
+	insert into NOT_NULL.agenda
+	select  min( cast(Turno_Fecha as date) ), max( cast(Turno_Fecha as date) )
+		from gd_esquema.Maestra
+		where Medico_Dni is not null
+		group by Medico_Dni, Especialidad_Descripcion
 
-		from gd_esquema.Maestra, NOT_NULL.medicoXespecialidad, NOT_NULL.profesional
-		where medxesp_profesional = profesional_matricula and profesional_dni = Medico_Dni and medxesp_especialidad = Especialidad_Codigo
-		group by Medico_Dni, Especialidad_Descripcion, medxesp_agenda
+	declare @idmedicoxesp int, @agenda int
+	declare cAgendaMedico cursor for (select medxesp_id from NOT_NULL.medicoXespecialidad)
+	set @agenda = 0
+	open cAgendaMedico
+	fetch next from cAgendaMedico into @idmedicoxesp
+	while @@FETCH_STATUS = 0
+	Begin
+		update NOT_NULL.medicoXespecialidad set medxesp_agenda = @agenda 
+			where medxesp_id = @idmedicoxesp
+		set @agenda = @agenda + 1
+		fetch next from cAgendaMedico into @idmedicoxesp
+	End
+	close cAgendaMedico
+	deallocate cAgendaMedico
 
-	set @diaparafranja = @diaparafranja + 1
+	declare @diaparafranja int
+	set @diaparafranja = 1
+	while @diaparafranja < 7
+	begin
+		insert into NOT_NULL.franja_horaria
+			select  @diaparafranja,	-- dia semana
+					min(  DATEPART(hour, Turno_fecha) ), min(  DATEPART(minute, Turno_fecha) ),
+					max(  DATEPART(hour, Turno_fecha) ), max(  DATEPART(minute, Turno_fecha) ),
+					0, -- franja_cancelada
+					min( cast(Turno_Fecha as date) ),
+					max( cast(Turno_Fecha as date) ),
+					medxesp_agenda	
+
+			from gd_esquema.Maestra, NOT_NULL.medicoXespecialidad, NOT_NULL.profesional
+			where medxesp_profesional = profesional_matricula and profesional_dni = Medico_Dni and medxesp_especialidad = Especialidad_Codigo
+			group by Medico_Dni, Especialidad_Descripcion, medxesp_agenda
+
+		set @diaparafranja = @diaparafranja + 1
+	end
 end
+go
+
+exec NOT_NULL.Asignar_agendas
+go
