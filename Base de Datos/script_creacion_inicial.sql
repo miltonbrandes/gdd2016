@@ -1259,6 +1259,7 @@ create procedure NOT_NULL.Get_Especialidades_Sin_Agenda(@matricula int)
 	END
   GO
 
+  
   CREATE PROCEDURE NOT_NULL.Borrar_Franjas_Agenda(@agenda int)
   as
   begin
@@ -1266,7 +1267,9 @@ create procedure NOT_NULL.Get_Especialidades_Sin_Agenda(@matricula int)
 	declare @fechafin date
 	select @fechain = agenda_fecha_inicio, @fechafin = agenda_fecha_fin from agenda where agenda_id = @agenda
 	delete from NOT_NULL.franja_horaria where agenda_id = @agenda and franja_fecha_inicio = @fechain and franja_fecha_fin = @fechafin
-	--update NOT_NULL.agenda set agenda_fecha_inicio =  where agenda_id = @agenda
+	update NOT_NULL.agenda set agenda_fecha_inicio = (select top 1 franja_fecha_inicio from franja_horaria f1 where f1.agenda_id = @agenda
+	order by franja_id desc), agenda_fecha_fin = (select top 1 franja_fecha_fin from franja_horaria f1 where f1.agenda_id = @agenda
+	order by franja_id desc) where agenda_id = @agenda
 	--update NOT_NULL.medicoXespecialidad set medxesp_agenda = null where medxesp_agenda = @agenda
   end
   go
