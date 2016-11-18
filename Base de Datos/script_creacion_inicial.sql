@@ -1694,7 +1694,8 @@ create procedure NOT_NULL.Cancelar_Turnos_ProfxFranja(@motivo varchar(255), @tip
 		declare @minuto int
 		set @hora = DATEPART( hour, @horain )
 		set @minuto = DATEPART( minute, @horain )
-		while (@hora <= DATEPART( hour, @horafin ) and @minuto <= DATEPART( minute, @horafin ) and @hora < 24 and @hora >= 0 )
+		while (	((@hora = DATEPART( hour, @horafin ) and @minuto < DATEPART( minute, @horafin )) or (@hora < DATEPART( hour, @horafin )))
+				and @hora < 24 and @hora >= 0 )
 		Begin
 			set @turno = isnull(( select top 1 turno_nro from NOT_NULL.turno, NOT_NULL.medicoXespecialidad
 				where turno_medico_especialidad_id = medxesp_id and medxesp_profesional = @matricula
