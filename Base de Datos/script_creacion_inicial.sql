@@ -1678,7 +1678,7 @@ go
 	begin
 	update NOT_NULL.turno set turno_estado = 'C', afiliado_nro = null 
 		where YEAR(turno_fecha) = YEAR(@fecha) and MONTH(turno_fecha)=MONTH(@fecha) and DAY(turno_fecha)=DAY(@fecha)
-			and turno_medico_especialidad_id = (select medicoXespecialidad.medxesp_id from NOT_NULL.medicoXespecialidad where medxesp_profesional = @matricula)
+			and turno_estado <> 'U' and turno_medico_especialidad_id = (select medicoXespecialidad.medxesp_id from NOT_NULL.medicoXespecialidad where medxesp_profesional = @matricula)
 	insert into NOT_NULL.cancelacion_turno (cancel_fecha, cancel_motivo, cancel_profesional, cancel_tipo, cancel_turno)
 		values(NOT_NULL.Obtener_Fecha(), @motivo +' : Fue una cancelacion por dia', @matricula, @tipo, null)
 
@@ -1704,7 +1704,7 @@ create procedure NOT_NULL.Cancelar_Turnos_ProfxFranja(@motivo varchar(255), @tip
 			
 			if(@turno <> -1)
 			Begin
-				update NOT_NULL.turno set turno_estado = 'C', afiliado_nro = null where turno_nro = @turno
+				update NOT_NULL.turno set turno_estado = 'C', afiliado_nro = null where turno_nro = @turno and turno_estado <> 'U'
 				insert into NOT_NULL.cancelacion_turno (cancel_fecha, cancel_motivo, cancel_profesional, cancel_tipo, cancel_turno)
 					values(NOT_NULL.Obtener_Fecha(), @motivo+' :Fue una cancelacion por franja', @matricula, @tipo, @turno)
 			End
