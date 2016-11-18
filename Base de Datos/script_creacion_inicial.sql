@@ -1250,21 +1250,15 @@ create procedure NOT_NULL.Get_Especialidades_Sin_Agenda(@matricula int)
   --AGREGAR AGENDA
   CREATE PROCEDURE NOT_NULL.Agenda_Agregar(@matricula int, @especialidad varchar(255), @fecha_inicio datetime, @fecha_fin datetime, @id_agenda int OUTPUT)
   AS BEGIN
-	Declare @especialidad_id numeric(18,0);
+	Declare @especialidad_id numeric(18,0), @agendaid int
 	set @especialidad_id = (Select top 1 especialidad.especialidad_codigo from especialidad where especialidad.especialidad_descripcion = @especialidad);
-	INSERT INTO NOT_NULL.Agenda(agenda_fecha_inicio,agenda_fecha_fin)
-	VALUES(@fecha_inicio, @fecha_fin)
 	
-	UPDATE NOT_NULL.medicoXespecialidad
-	SET medxesp_agenda = @@IDENTITY
-	WHERE medxesp_profesional = @matricula 
-		AND medxesp_especialidad = (SELECT TOP 1 e.especialidad_codigo 
-										FROM NOT_NULL.especialidad e
-										WHERE e.especialidad_descripcion = @especialidad)
-	
-	SET @id_agenda = @@IDENTITY
+	set @agendaid = (Select top 1 medxesp_agenda from medicoXespecialidad where medxesp_profesional = @matricula and medxesp_especialidad = @especialidad_id)
+
+	update NOT_NULL.Agenda set agenda_fecha_inicio = @fecha_inicio, agenda_fecha_fin = @fecha_fin where agenda_id = @agendaid
 	END
   GO
+
   CREATE PROCEDURE NOT_NULL.Borrar_Franjas_Agenda(@agenda int)
   as
   begin
@@ -1974,8 +1968,8 @@ as begin
 	if @totalMinutos > 48*60  -- Si supera las 48hs retorno 1, sino lo agrego
 		RETURN(1)
 	else
-		insert into NOT_NULL.franja_horaria (dia, hora_inicio, minuto_inicio, hora_fin, minuto_fin, agenda_id, franja_cancelada)
-			values (@dia, @hora_inicio, @minuto_inicio, @hora_fin, @minuto_fin, @id_agenda, 0)
+		insert into NOT_NULL.franja_horaria (dia, hora_inicio, minuto_inicio, hora_fin, minuto_fin, agenda_id, franja_cancelada, franja_fecha_inicio, franja_fecha_fin)
+			values (@dia, @hora_inicio, @minuto_inicio, @hora_fin, @minuto_fin, @id_agenda, 0, @fecha_inicio, @fecha_fin)
 	RETURN(0)
 end
 go
