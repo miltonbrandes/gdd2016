@@ -1254,7 +1254,7 @@ create procedure NOT_NULL.Get_Especialidades_Sin_Agenda(@matricula int)
 	set @especialidad_id = (Select top 1 especialidad.especialidad_codigo from especialidad where especialidad.especialidad_descripcion = @especialidad);
 	
 	set @agendaid = (Select top 1 medxesp_agenda from medicoXespecialidad where medxesp_profesional = @matricula and medxesp_especialidad = @especialidad_id)
-
+	set @id_agenda = @agendaid
 	update NOT_NULL.Agenda set agenda_fecha_inicio = @fecha_inicio, agenda_fecha_fin = @fecha_fin where agenda_id = @agendaid
 	END
   GO
@@ -1262,9 +1262,12 @@ create procedure NOT_NULL.Get_Especialidades_Sin_Agenda(@matricula int)
   CREATE PROCEDURE NOT_NULL.Borrar_Franjas_Agenda(@agenda int)
   as
   begin
-	delete from NOT_NULL.franja_horaria where agenda_id = @agenda
-	delete from NOT_NULL.agenda where agenda_id = @agenda
-	update NOT_NULL.medicoXespecialidad set medxesp_agenda = null where medxesp_agenda = @agenda
+	declare @fechain date
+	declare @fechafin date
+	select @fechain = agenda_fecha_inicio, @fechafin = agenda_fecha_fin from agenda where agenda_id = @agenda
+	delete from NOT_NULL.franja_horaria where agenda_id = @agenda and franja_fecha_inicio = @fechain and franja_fecha_fin = @fechafin
+	--update NOT_NULL.agenda set agenda_fecha_inicio =  where agenda_id = @agenda
+	--update NOT_NULL.medicoXespecialidad set medxesp_agenda = null where medxesp_agenda = @agenda
   end
   go
 
@@ -1280,7 +1283,9 @@ create procedure NOT_NULL.Get_Especialidades_Sin_Agenda(@matricula int)
 		 FROM NOT_NULL.agenda a, NOT_NULL.franja_horaria f, NOT_NULL.medicoXespecialidad mxe
 		 WHERE f.agenda_id = a.agenda_id
 			AND mxe.medxesp_profesional = @matricula
-			AND mxe.medxesp_agenda = a.agenda_id)
+			AND mxe.medxesp_agenda = a.agenda_id
+			AND f.franja_fecha_inicio = a.agenda_fecha_inicio
+			AND f.franja_fecha_fin = a.agenda_fecha_fin)
 	OPEN cursorFranjas
 	FETCH cursorFranjas INTO @horaInicio,@minutoInicio,@horaFin,@minutoFin
 
@@ -1295,165 +1300,7 @@ create procedure NOT_NULL.Get_Especialidades_Sin_Agenda(@matricula int)
 	RETURN @HorasMedico
   END
   GO
-  /*
-  --AGREGAR FRANJA
-  CREATE PROCEDURE NOT_NULL.Franja_Agregar(@id_agenda int, @matricula int, 
-				@dia int, @hora_inicio int, @minuto_inicio int, @hora_fin int, @minuto_fin int)
-  AS BEGIN;
-	--SET IDENTITY_INSERT NOT_NULL.Agenda ON;
-
-	DECLARE @horaInicio int
-	DECLARE @minutoInicio int
-	DECLARE @horaFin int
-	DECLARE @minutoFin int
-
-	DECLARE @totalMinutos int
-
-	DECLARE @result int --valor de retorno
-
-	--Lo inicializo con los minutos ingresados
-	SET @totalMinutos = (@hora_fin*60 + @minuto_fin) - (@hora_inicio*60 + @minuto_inicio)
-
-	DECLARE cursorFranjas CURSOR
-	FOR	(SELECT f.hora_inicio,f.minuto_inicio,f.hora_fin,f.minuto_fin
-		 FROM NOT_NULL.agenda a, NOT_NULL.franja_horaria f, NOT_NULL.medicoXespecialidad mxe
-		 WHERE f.agenda_id = a.agenda_id
-			AND mxe.medxesp_profesional = @matricula
-			AND mxe.medxesp_agenda = a.agenda_id)
-
-	OPEN cursorFranjas
-	FETCH cursorFranjas INTO @horaInicio,@minutoInicio,@horaFin,@minutoFin
-
-	--Le sumo todos los minutos que ya tenga
-	WHILE(@@FETCH_STATUS = 0)
-	BEGIN
-		SET @totalMinutos = @totalMinutos + (@horaFin*60 + @minutoFin) - (@horaInicio*60 + @minutoInicio)
-
-		FETCH cursorFranjas INTO @horaInicio,@minutoInicio,@horaFin,@minutoFin
-	END
-
-	CLOSE cursorFranjas
-	DEALLOCATE cursorFranjas
-
-	--Si no se excede de las 48 horas
-	IF(@totalMinutos <= 48*60)
-	BEGIN
-		INSERT INTO NOT_NULL.franja_horaria(agenda_id, dia, hora_inicio, minuto_inicio, hora_fin, minuto_fin) 
-		values(@id_agenda,@dia,@hora_inicio,@minuto_inicio,@hora_fin,@minuto_fin);
-		--SET IDENTITY_INSERT NOT_NULL.Agenda OFF;
-		RETURN(0)
-	END
-	ELSE RETURN(1)
-  END
-  GO*/
   
-  /*CREATE PROCEDURE NOT_NULL.Agregar_Franja_A_Todos_Los_Medicos
-  AS BEGIN
-	
-	DECLARE @ultimoMedico int
-	DECLARE @medicoActual int
-	DECLARE @medxesp_id int
-	DECLARE @contEspecialidades int
-
-	SET @ultimoMedico = 0
-	SET @contEspecialidades = 0
-
-	DECLARE @agendaId int
-	DECLARE @i int
-	DECLARE @cantTurnos int
-	DECLARE @fechaInicio datetime
-	DECLARE @fechaFin datetime
-	DECLARE @fechaIterador datetime
-
-	SET @fechaInicio = DATEFROMPARTS(2016,10,30)
-	SET @fechaFin = DATEFROMPARTS(2016,11,30)
-	SET @fechaIterador = @fechaInicio
-
-	--valido fechaInicio
-	IF(DATEPART(weekday,@fechaInicio) = 6)
-		SET @fechaInicio = DATEADD(day,2,@fechaInicio)
-	IF(DATEPART(weekday,@fechaInicio) = 7)
-		SET @fechaInicio = DATEADD(day,1,@fechaInicio)
-
-	
-
-	DECLARE @ultimoTurno int
-
-	SET @ultimoTurno = (SELECT TOP 1 t.turno_nro FROM NOT_NULL.turno t
-						ORDER BY t.turno_nro desc) + 1
-
-	DECLARE cursorEsp cursor
-	FOR SELECT mxe.medxesp_id,mxe.medxesp_profesional FROM NOT_NULL.medicoXespecialidad mxe
-	ORDER BY mxe.medxesp_profesional
-
-	OPEN cursorEsp
-
-	FETCH cursorEsp INTO @medxesp_id,@medicoActual
-	
-	WHILE(@@FETCH_STATUS = 0)
-	BEGIN
-
-		IF(@medicoActual = @ultimoMedico)
-			SET @contEspecialidades = @contEspecialidades + 1
-		ELSE BEGIN
-			SET @contEspecialidades = 0
-			SET @ultimoMedico = @medicoActual
-		END
-
-		INSERT INTO NOT_NULL.agenda(agenda_fecha_inicio,agenda_fecha_fin)
-		values(@fechaInicio,@fechaFin)
-		
-		SET @agendaId = @@IDENTITY
-
-		UPDATE NOT_NULL.medicoXespecialidad
-		SET medxesp_agenda = @agendaId
-		WHERE medxesp_id = @medxesp_id
-
-		--Inserto las franjas
-		SET @i = 1
-		WHILE(@i <= 5)
-		BEGIN
-			INSERT INTO NOT_NULL.franja_horaria(dia,agenda_id,hora_inicio,minuto_inicio,hora_fin,minuto_fin)
-			values(@i,@agendaId,10 + 2*@contEspecialidades,0,12 + 2*@contEspecialidades,0)
-			
-			--Setteo la fecha iterador
-			IF(DATEPART(WEEKDAY,@fechaInicio) = @i)
-				SET @fechaIterador = @fechaInicio
-			ELSE IF(DATEPART(WEEKDAY,@fechaInicio) > @i)
-				SET @fechaIterador = DATEADD(DAY,7 + @i - DATEPART(WEEKDAY,@fechaInicio),@fechaInicio)
-			ELSE SET @fechaIterador = DATEADD(DAY,@i - DATEPART(WEEKDAY,@fechaInicio),@fechaInicio)
-
-			--Agrego los turnos
-			WHILE(@fechaIterador <= @fechaFin)
-			BEGIN
-				SET @cantTurnos = 0
-				WHILE(@cantTurnos < 4)
-				BEGIN
-					--Le saco minutos y segundos
-					SET @fechaIterador = DATEADD(hour,-DATEPART(hour,@fechaIterador),@fechaIterador)
-					SET @fechaIterador = DATEADD(minute,-DATEPART(minute,@fechaIterador),@fechaIterador)
-
-					INSERT INTO NOT_NULL.turno(turno_nro,turno_medico_especialidad_id,turno_fecha)
-					values(@ultimoTurno,@medxesp_id, DATEADD(minute,30*@cantTurnos + 60*(10+2*@contEspecialidades),@fechaIterador) )
-
-					SET @ultimoTurno = @ultimoTurno + 1
-					SET @cantTurnos = @cantTurnos + 1
-				END
-
-				SET @fechaIterador = DATEADD(day,7,@fechaIterador)
-			END
-			
-			SET @i = @i + 1
-		END
-
-		FETCH cursorEsp INTO @medxesp_id,@medicoActual
-	END
-
-	CLOSE cursorEsp
-	DEALLOCATE cursorEsp
-
-  END
-  GO*/
 
   CREATE PROCEDURE NOT_NULL.Get_medxesp_id(@matricula int, @especialidad int)
   AS BEGIN
@@ -1820,7 +1667,8 @@ go
 	begin
 		select * from NOT_NULL.franja_horaria
 		where franja_horaria.agenda_id = (select agenda_id from NOT_NULL.agenda where agenda_id = (select medxesp_agenda from NOT_NULL.medicoXespecialidad where medxesp_profesional = @matricula))
-		and franja_cancelada = 0 
+		and franja_cancelada = 0 and franja_fecha_inicio = (select agenda_fecha_inicio from NOT_NULL.agenda a where a.agenda_id = franja_horaria.agenda_id)
+		and franja_fecha_fin = (select agenda_fecha_fin from NOT_NULL.agenda a where a.agenda_id = franja_horaria.agenda_id)
 	end
  go
 
@@ -1940,6 +1788,8 @@ go
 --drop procedure NOT_NULL.Franja_Agregar
 --exec NOT_NULL.Franja_Agregar 6, 30, 1, 08, 00, 20, 00
 
+--exec NOT_NULL.Franja_Agregar 3, 30, 4, 08, 00, 12, 00
+
 CREATE PROCEDURE NOT_NULL.Franja_Agregar(@id_agenda int, @matricula int, @dia int, @hora_inicio int, @minuto_inicio int, @hora_fin int, @minuto_fin int)
 as begin
 	declare @totalMinutos int
@@ -1962,7 +1812,7 @@ as begin
 					and @semana = datepart(week, turno_fecha) and year(@fecha_inicio) = year(turno_fecha)), 0)
 	--select @semana, @totalMinutos
 	set @totalMinutos = @totalMinutos + isnull((select sum((f1.hora_fin*60 + f1.minuto_fin) - (f1.hora_inicio*60 + f1.minuto_inicio))
-	from NOT_NULL.franja_horaria f1 where f1.agenda_id = @id_agenda and f1.dia <= @dia),0)
+	from NOT_NULL.franja_horaria f1 where f1.agenda_id = @id_agenda and f1.dia <= @dia and f1.franja_fecha_inicio = @fecha_inicio and f1.franja_fecha_fin = @fecha_fin),0)
 	set @totalMinutos = @totalMinutos + (@hora_fin*60 + @minuto_fin) - (@hora_inicio*60 + @minuto_inicio) -- Le agrego las nuevas horas
 	--select @totalMinutos
 	if @totalMinutos > 48*60  -- Si supera las 48hs retorno 1, sino lo agrego

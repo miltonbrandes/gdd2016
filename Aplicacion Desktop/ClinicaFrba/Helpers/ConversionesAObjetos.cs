@@ -298,6 +298,8 @@ namespace Helpers
                     Id = (int)rdr["franja_id"],
                     Cancelada = (bool)rdr["franja_cancelada"],
                     Agenda = (int)rdr["agenda_id"],
+                    FechaInicio = (DateTime)rdr["franja_fecha_inicio"],
+                    FechaFin = (DateTime)rdr["franja_fecha_fin"],
                 //    Afiliado = afil,
                 });
             }

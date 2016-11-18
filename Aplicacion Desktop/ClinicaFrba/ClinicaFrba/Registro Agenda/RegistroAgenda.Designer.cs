@@ -124,6 +124,7 @@ namespace ClinicaFrba.Registro_Agenda
             this.horaInicio1Lunes.Name = "horaInicio1Lunes";
             this.horaInicio1Lunes.Size = new System.Drawing.Size(95, 22);
             this.horaInicio1Lunes.TabIndex = 0;
+            this.horaInicio1Lunes.Text = "08:00";
             this.horaInicio1Lunes.Visible = false;
             // 
             // horaFin1Lunes
@@ -133,6 +134,7 @@ namespace ClinicaFrba.Registro_Agenda
             this.horaFin1Lunes.Name = "horaFin1Lunes";
             this.horaFin1Lunes.Size = new System.Drawing.Size(95, 22);
             this.horaFin1Lunes.TabIndex = 1;
+            this.horaFin1Lunes.Text = "12:00";
             this.horaFin1Lunes.Visible = false;
             this.horaFin1Lunes.TextChanged += new System.EventHandler(this.horaFin1Lunes_TextChanged);
             // 
@@ -161,6 +163,7 @@ namespace ClinicaFrba.Registro_Agenda
             this.horaInicio1Martes.Name = "horaInicio1Martes";
             this.horaInicio1Martes.Size = new System.Drawing.Size(95, 22);
             this.horaInicio1Martes.TabIndex = 4;
+            this.horaInicio1Martes.Text = "08:00";
             this.horaInicio1Martes.Visible = false;
             // 
             // horaFin1Martes
@@ -170,6 +173,7 @@ namespace ClinicaFrba.Registro_Agenda
             this.horaFin1Martes.Name = "horaFin1Martes";
             this.horaFin1Martes.Size = new System.Drawing.Size(95, 22);
             this.horaFin1Martes.TabIndex = 5;
+            this.horaFin1Martes.Text = "12:00";
             this.horaFin1Martes.Visible = false;
             // 
             // horaInicio2Martes
@@ -197,6 +201,7 @@ namespace ClinicaFrba.Registro_Agenda
             this.horaInicio1Miercoles.Name = "horaInicio1Miercoles";
             this.horaInicio1Miercoles.Size = new System.Drawing.Size(95, 22);
             this.horaInicio1Miercoles.TabIndex = 8;
+            this.horaInicio1Miercoles.Text = "08:00";
             this.horaInicio1Miercoles.Visible = false;
             // 
             // horaFin1Miercoles
@@ -206,6 +211,7 @@ namespace ClinicaFrba.Registro_Agenda
             this.horaFin1Miercoles.Name = "horaFin1Miercoles";
             this.horaFin1Miercoles.Size = new System.Drawing.Size(95, 22);
             this.horaFin1Miercoles.TabIndex = 9;
+            this.horaFin1Miercoles.Text = "12:00";
             this.horaFin1Miercoles.Visible = false;
             // 
             // horaInicio2Miercoles
@@ -233,6 +239,7 @@ namespace ClinicaFrba.Registro_Agenda
             this.horaInicio1Jueves.Name = "horaInicio1Jueves";
             this.horaInicio1Jueves.Size = new System.Drawing.Size(95, 22);
             this.horaInicio1Jueves.TabIndex = 12;
+            this.horaInicio1Jueves.Text = "08:00";
             this.horaInicio1Jueves.Visible = false;
             // 
             // horaFin1Jueves
@@ -242,6 +249,7 @@ namespace ClinicaFrba.Registro_Agenda
             this.horaFin1Jueves.Name = "horaFin1Jueves";
             this.horaFin1Jueves.Size = new System.Drawing.Size(95, 22);
             this.horaFin1Jueves.TabIndex = 13;
+            this.horaFin1Jueves.Text = "12:00";
             this.horaFin1Jueves.Visible = false;
             // 
             // horaInicio2Jueves
@@ -269,6 +277,7 @@ namespace ClinicaFrba.Registro_Agenda
             this.horaInicio1Viernes.Name = "horaInicio1Viernes";
             this.horaInicio1Viernes.Size = new System.Drawing.Size(95, 22);
             this.horaInicio1Viernes.TabIndex = 16;
+            this.horaInicio1Viernes.Text = "08:00";
             this.horaInicio1Viernes.Visible = false;
             // 
             // horaFin1Viernes
@@ -278,6 +287,7 @@ namespace ClinicaFrba.Registro_Agenda
             this.horaFin1Viernes.Name = "horaFin1Viernes";
             this.horaFin1Viernes.Size = new System.Drawing.Size(95, 22);
             this.horaFin1Viernes.TabIndex = 17;
+            this.horaFin1Viernes.Text = "12:00";
             this.horaFin1Viernes.Visible = false;
             // 
             // horaInicio2Viernes
@@ -305,6 +315,7 @@ namespace ClinicaFrba.Registro_Agenda
             this.horaInicio1Sabado.Name = "horaInicio1Sabado";
             this.horaInicio1Sabado.Size = new System.Drawing.Size(95, 22);
             this.horaInicio1Sabado.TabIndex = 20;
+            this.horaInicio1Sabado.Text = "10:00";
             this.horaInicio1Sabado.Visible = false;
             // 
             // horaFin1Sabado
@@ -314,6 +325,7 @@ namespace ClinicaFrba.Registro_Agenda
             this.horaFin1Sabado.Name = "horaFin1Sabado";
             this.horaFin1Sabado.Size = new System.Drawing.Size(95, 22);
             this.horaFin1Sabado.TabIndex = 21;
+            this.horaFin1Sabado.Text = "12:00";
             this.horaFin1Sabado.Visible = false;
             // 
             // horaInicio2Sabado
