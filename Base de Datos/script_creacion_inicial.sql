@@ -526,6 +526,8 @@ CREATE TABLE NOT_NULL.franja_horaria(
 	hora_fin int NOT NULL CHECK(hora_fin<24 AND hora_fin>=0),
 	minuto_fin int NOT NULL CHECK(minuto_fin<60 AND minuto_fin>=0),
 	franja_cancelada bit default 0	,
+	franja_fecha_inicio date,
+	franja_fecha_fin date,
 	--id_afiliado varchar(20) NULL,
 	agenda_id int foreign key references NOT_NULL.agenda(agenda_id))
 GO
@@ -533,7 +535,6 @@ GO
 ALTER TABLE NOT_NULL.franja_horaria
 	ADD CONSTRAINT hora_fin_mayor_hora_inicio CHECK( (hora_fin * 60 + minuto_fin) > (hora_inicio * 60 + minuto_inicio) )
 GO
-
 
 /*		BONOS		*/
 
@@ -1978,3 +1979,24 @@ as begin
 	RETURN(0)
 end
 go
+
+
+declare @diaparafranja int
+set @diaparafranja = 1
+while @diaparafranja < 7
+begin
+	insert into NOT_NULL.franja_horaria
+		select  @diaparafranja,	-- dia semana
+				min(  DATEPART(hour, Turno_fecha) ), min(  DATEPART(minute, Turno_fecha) ),
+				max(  DATEPART(hour, Turno_fecha) ), max(  DATEPART(minute, Turno_fecha) ),0,
+				min( cast(Turno_Fecha as date) ),
+				max( cast(Turno_Fecha as date) ), 
+				0, -- franja_cancelada
+				medxesp_agenda	
+
+		from gd_esquema.Maestra, NOT_NULL.medicoXespecialidad, NOT_NULL.profesional
+		where medxesp_profesional = profesional_matricula and profesional_dni = Medico_Dni and medxesp_especialidad = Especialidad_Codigo
+		group by Medico_Dni, Especialidad_Descripcion, medxesp_agenda
+
+	set @diaparafranja = @diaparafranja + 1
+end
